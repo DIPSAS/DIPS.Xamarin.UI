@@ -1,4 +1,7 @@
+
+![Nuget](https://img.shields.io/nuget/v/DIPS.Xamarin.UI)
 # DIPS.Xamarin.UI
+![DIPS.Xamarin.UI_icon](https://raw.githubusercontent.com/DIPSAS/DIPS.Xamarin.UI/master/assets/DIPS_Xamarin_UI_128x128.png)
 
 A shared UI library that DIPS use and maintain for their mobile applications. This library will contain different UI controls, behaviors, converters, colors and other UI specific code that can be used by any app. The library will be maintained by DIPS AS, but the public is always welcome to contribute. <3 
 
