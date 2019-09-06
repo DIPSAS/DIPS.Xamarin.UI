@@ -4,9 +4,13 @@
     <id>DIPS.Xamarin.UI</id>
     <version>1.0.0</version>
     <title>DIPS.Xamarin.UI</title>
-    <authors>#team-awesomesauce</authors>
+    <authors>DIPS AS</authors>
     <owners>DIPS AS</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <iconUrl>https://raw.githubusercontent.com/DIPSAS/DIPS.Xamarin.UI/master/assets/DIPS_Xamarin_UI_128x128.png</iconUrl>
+    <tags>xamarin forms xamarinforms xamarin.forms xamarinui xaml</tags>
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <copyright>© DIPS AS. All rights reserved.</copyright>
     <description>A shared UI library that DIPS uses and maintains for their mobile applications.</description>
     <dependencies>
         <group targetFramework="MonoAndroid">
