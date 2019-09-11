@@ -13,11 +13,18 @@
     <copyright>© DIPS AS. All rights reserved.</copyright>
     <description>A shared UI library that DIPS uses and maintains for their mobile applications.</description>
     <dependencies>
+        <group targetFramework="netstandard2.0">
+            <dependency id="Xamarin.Essentials" version="1.3.0" />
+            <dependency id="Xamarin.Forms" version="4.2.0.709249" />
+        </group>
         <group targetFramework="MonoAndroid">
-            <!--MonoAndroid dependencies go here-->
+            <dependency id="Xamarin.Android.Support.v7.AppCompat" version="28.0.0.1" />
+            <dependency id="Xamarin.Essentials" version="1.3.0" />
+            <dependency id="Xamarin.Forms" version="4.2.0.709249"/>
         </group>
         <group targetFramework="Xamarin.iOS10">
-            <!--Xamarin.iOS10 dependencies go here-->
+            <dependency id="Xamarin.Essentials" version="1.3.0" />
+            <dependency id="Xamarin.Forms" version="4.2.0.709249" />
         </group>
     </dependencies>
     </metadata>
