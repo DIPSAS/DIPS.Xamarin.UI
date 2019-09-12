@@ -9,11 +9,11 @@ A shared UI library that DIPS use and maintain for their mobile applications. Th
 
 ## Installation
 
-By using DotNet:
+### By using DotNet:
 
 `dotnet add package DIPS.Xamarin.UI`
 
-or NuGet
+### or NuGet
 
 `Install-Package DIPS.Xamarin.UI`
 
