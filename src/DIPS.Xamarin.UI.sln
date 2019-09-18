@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Xamarin.UI.Samples.And
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Xamarin.UI.Samples.iOS", "Samples\DIPS.Xamarin.UI.Samples.iOS\DIPS.Xamarin.UI.Samples.iOS.csproj", "{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9B622DAC-5171-4E96-B8A1-5BA03F2408F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Xamarin.UI.Tests", "Tests\DIPS.Xamarin.UI.Tests\DIPS.Xamarin.UI.Tests.csproj", "{2FF448DB-3436-440A-9316-30665E1940A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +107,18 @@ Global
 		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}.Release|iPhone.Build.0 = Release|iPhone
 		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Release|iPhone.Build.0 = Release|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{2FF448DB-3436-440A-9316-30665E1940A0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +127,7 @@ Global
 		{2F95D750-C17C-4E75-A6F9-84D410F24150} = {E045B215-78E7-4D81-8CEC-307BDD988901}
 		{CC0145B2-DB26-4C37-B52F-688B65D52EB4} = {E045B215-78E7-4D81-8CEC-307BDD988901}
 		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0} = {E045B215-78E7-4D81-8CEC-307BDD988901}
+		{2FF448DB-3436-440A-9316-30665E1940A0} = {9B622DAC-5171-4E96-B8A1-5BA03F2408F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {714B85C9-E69E-47A0-8834-B73F9A118FC5}
