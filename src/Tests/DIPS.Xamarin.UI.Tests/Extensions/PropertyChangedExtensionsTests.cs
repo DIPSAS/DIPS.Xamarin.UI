@@ -26,6 +26,9 @@ namespace DIPS.Xamarin.UI.Tests.Extensions
             set => this.Set(ref m_myFirstProperty, value, PropertyChanged);
         }
 
+        public string MySecondProperty { get; set; }
+        public string MyThirdProperty { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [Fact]
@@ -88,6 +91,26 @@ namespace DIPS.Xamarin.UI.Tests.Extensions
             PropertyChanged -= OnPropertyChanged;
 
             result.Should().BeTrue(because: "PropertyChanged should always be raised with the correct property");
+        }
+
+        [Fact]
+        public void OnMultiplePropertyChanged_AllPropertiesShouldBeNotified()
+        {
+            var results = new List<bool>();
+
+            void OnPropertyChanged(object sender, PropertyChangedEventArgs e)   
+            {
+                results.Add(e.PropertyName.Equals(nameof(MyFirstProperty)) || e.PropertyName.Equals(nameof(MySecondProperty)) ||
+                            e.PropertyName.Equals(nameof(MyThirdProperty)));
+            }
+
+            PropertyChanged += OnPropertyChanged;
+
+            this.OnMultiplePropertiesChanged(PropertyChanged, nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
+
+            PropertyChanged -= OnPropertyChanged;
+
+            results.Should().Equal(new List<bool>() { true, true, true });
         }
     }
 }
