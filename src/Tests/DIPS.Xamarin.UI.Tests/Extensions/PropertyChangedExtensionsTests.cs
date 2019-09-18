@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text;
 using DIPS.Xamarin.UI.Extensions;
 using FluentAssertions;
 using Xunit;
@@ -35,16 +32,9 @@ namespace DIPS.Xamarin.UI.Tests.Extensions
         public void Set_NewValueIsNotEqualToOldValue_NotifyingPropertyChanged()
         {
             var result = false;
-            void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-            {
-                result = true;
-            }
-
-            PropertyChanged += OnPropertyChanged;
+            PropertyChanged += (sender, e) => result = true;
 
             MyFirstProperty = NewValue;
-
-            PropertyChanged -= OnPropertyChanged;
 
             result.Should().BeTrue(because:"Value is not the same as initial value of the property");
         }
@@ -53,16 +43,9 @@ namespace DIPS.Xamarin.UI.Tests.Extensions
         public void Set_NewValueIsEqualToOldValue_NotNotifyingPropertyChanged()
         {
             var result = false;
-            void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-            {
-                result = true;
-            }
-
-            PropertyChanged += OnPropertyChanged;
+            PropertyChanged += (sender, e) => result = true;
 
             MyFirstProperty = InitialValue;
-
-            PropertyChanged -= OnPropertyChanged;
 
             result.Should().BeFalse(because:"Value was the same as initial value of the property");
         }
@@ -79,36 +62,32 @@ namespace DIPS.Xamarin.UI.Tests.Extensions
         public void OnPropertyChanged_NotifiesPropertyChanged()
         {
             var result = false;
-            void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-            {
-                result = e.PropertyName.Equals(nameof(MyFirstProperty));
-            }
-
-            PropertyChanged += OnPropertyChanged;
+            PropertyChanged += (sender, e) => result = e.PropertyName.Equals(nameof(MyFirstProperty));
 
             this.OnPropertyChanged(PropertyChanged, nameof(MyFirstProperty));
 
-            PropertyChanged -= OnPropertyChanged;
-
             result.Should().BeTrue(because: "PropertyChanged should always be raised with the correct property");
+        }
+        [Fact]
+        public void OnPropertyChanged_MySecondProperty_DoesNotNotifyMyFirstProperty()
+        {
+            var result = false;
+            PropertyChanged += (sender, e) => result = e.PropertyName.Equals(nameof(MyFirstProperty));
+
+            this.OnPropertyChanged(PropertyChanged, nameof(MySecondProperty));
+
+            result.Should().BeFalse(because: "The correct property change should be notified");
         }
 
         [Fact]
         public void OnMultiplePropertyChanged_AllPropertiesShouldBeNotified()
         {
             var results = new List<bool>();
-
-            void OnPropertyChanged(object sender, PropertyChangedEventArgs e)   
-            {
-                results.Add(e.PropertyName.Equals(nameof(MyFirstProperty)) || e.PropertyName.Equals(nameof(MySecondProperty)) ||
-                            e.PropertyName.Equals(nameof(MyThirdProperty)));
-            }
-
-            PropertyChanged += OnPropertyChanged;
+            PropertyChanged += (sender, e) => results.Add(e.PropertyName.Equals(nameof(MyFirstProperty)) 
+                                                          || e.PropertyName.Equals(nameof(MySecondProperty)) 
+                                                          || e.PropertyName.Equals(nameof(MyThirdProperty)));
 
             this.OnMultiplePropertiesChanged(PropertyChanged, nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
-
-            PropertyChanged -= OnPropertyChanged;
 
             results.Should().Equal(new List<bool>() { true, true, true });
         }
