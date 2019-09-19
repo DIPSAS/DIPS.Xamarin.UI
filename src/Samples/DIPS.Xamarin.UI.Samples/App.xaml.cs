@@ -10,6 +10,8 @@ namespace DIPS.Xamarin.UI.Samples
         public App()
         {
             InitializeComponent();
+            //This has to be called once per application in order to use Custom Namespace in XAML : https://github.com/DIPSAS/DIPS.Xamarin.UI/issues/1
+            DIPS.Xamarin.UI.Library.Initialize();
 
             MainPage = new MainPage();
         }
