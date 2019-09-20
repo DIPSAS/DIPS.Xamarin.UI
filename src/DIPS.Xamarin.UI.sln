@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Xamarin.UI.Samples.iOS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9B622DAC-5171-4E96-B8A1-5BA03F2408F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Xamarin.UI.Tests", "Tests\DIPS.Xamarin.UI.Tests\DIPS.Xamarin.UI.Tests.csproj", "{2FF448DB-3436-440A-9316-30665E1940A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIPS.Xamarin.UI.Tests", "Tests\DIPS.Xamarin.UI.Tests\DIPS.Xamarin.UI.Tests.csproj", "{2FF448DB-3436-440A-9316-30665E1940A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

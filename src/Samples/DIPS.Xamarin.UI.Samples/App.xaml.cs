@@ -1,4 +1,5 @@
 ﻿using System;
+using DIPS.Xamarin.UI.Samples.Converters;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
