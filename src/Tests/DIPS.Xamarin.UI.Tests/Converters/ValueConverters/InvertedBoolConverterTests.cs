@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
 using FluentAssertions;
 using Xunit;
@@ -14,34 +15,6 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
             m_invertedBoolConverter = new InvertedBoolConverter();
         }
 
-        [Fact]
-        public void Convert_InvalidValue_ThrowsArgumentException()
-        {
-            try
-            {
-                m_invertedBoolConverter.Convert("Not a bool", null, null, null);
-                true.Should().Be(false);
-            }
-            catch (Exception exception)
-            {
-                exception.Should().BeOfType<ArgumentException>();
-            }
-        }
-
-        [Fact]
-        public void Convert_ValueIsNull_ThrowsArgumentException()
-        {
-            try
-            {
-                m_invertedBoolConverter.Convert(null, null, null, null);
-                true.Should().Be(false);
-            }
-            catch (Exception exception)
-            {
-                exception.Should().BeOfType<ArgumentException>();
-            }
-        }
-
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
@@ -49,6 +22,19 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         {
             var result = m_invertedBoolConverter.Convert(value, null, null, null);
             result.Should().Be(!value);
+        }
+
+
+        [Theory]
+        [InlineData("Not a bool")]
+        [InlineData(0)]
+        [InlineData(0.1)]
+        [InlineData(null)]
+        public void Convert_ValueIsNull_ThrowsArgumentException(object value)
+        {
+            Action act = () => m_invertedBoolConverter.Convert(value, null, null, null);
+
+            act.Should().Throw<ArgumentException>();
         }
 
         [Theory]
