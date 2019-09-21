@@ -19,7 +19,7 @@
   </ItemGroup>
 
     <ItemGroup>
-    <EmbeddedResource Update="Converters\InvertedBoolConverterPage.xaml">
+    <EmbeddedResource Update="Converters\ValueConverters\InvertedBoolConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
