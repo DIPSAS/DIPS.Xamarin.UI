@@ -1,0 +1,39 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.IsEmptyConverterPage"
+             x:DataType="ValueConverters:IsEmptyConverterViewModel">
+    <ContentPage.BindingContext>
+        <ValueConverters:IsEmptyConverterViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Is visible if list is empty"
+                   IsVisible="{Binding EmptyListOfStrings, Converter={dxui:IsEmptyConverter}}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+
+            <Label Text="Is visible if list is not empty"
+                   IsVisible="{Binding NonEmptyListOfStrings, Converter={dxui:IsEmptyConverter Inverted=True}}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+
+            <Label Text="Is visible if string is empty"
+                   IsVisible="{Binding EmptyString, Converter={dxui:IsEmptyConverter}}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+
+            <Label Text="Is visible if string is not empty"
+                   IsVisible="{Binding NonEmptyString, Converter={dxui:IsEmptyConverter Inverted=True}}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
