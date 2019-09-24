@@ -5,11 +5,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dxui="http://dips.xamarin.ui.com"
-             xmlns:convertersSamples="clr-namespace:DIPS.Xamarin.UI.Samples.Converters;assembly=DIPS.Xamarin.UI.Samples"
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.InvertedBoolConverterPage"
-             x:DataType="convertersSamples:InvertedBoolConverterViewModel">
+             x:DataType="ValueConverters:InvertedBoolConverterViewModel">
     <ContentPage.BindingContext>
         <ValueConverters:InvertedBoolConverterViewModel />
     </ContentPage.BindingContext>
