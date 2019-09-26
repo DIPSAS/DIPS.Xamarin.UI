@@ -1,0 +1,6 @@
+<ModulePaths>
+  <Include>
+   <ModulePath>DIPS.Xamarin.UI.dll</ModulePath>
+   <!-- Add more ModulePath nodes here. -->
+  </Include>
+</ModulePaths>
