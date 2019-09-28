@@ -1,4 +1,4 @@
-![PublishStage](https://vsrm.dev.azure.com/dipscloud-public/_apis/public/Release/badge/7072efb1-8a03-410f-a675-60dbf5c9303a/1/1) ![Nuget](https://img.shields.io/nuget/v/dips.xamarin.ui?color=success&logoColor=white&logo=NuGet)
+![PublishStage](https://vsrm.dev.azure.com/dipscloud-public/_apis/public/Release/badge/7072efb1-8a03-410f-a675-60dbf5c9303a/1/1) ![Nuget](https://img.shields.io/nuget/v/dips.xamarin.ui?color=success&logoColor=white&logo=NuGet)![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/dipscloud-public/Public%20Pipelines/1)
 
 # DIPS.Xamarin.UI
 ![DIPS.Xamarin.UI_icon](https://raw.githubusercontent.com/DIPSAS/DIPS.Xamarin.UI/master/assets/DIPS_Xamarin_UI_128x128@slimmed.png)
