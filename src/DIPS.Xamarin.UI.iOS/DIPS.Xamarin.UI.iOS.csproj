@@ -37,6 +37,7 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Renderers\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
