@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Samples="clr-namespace:DIPS.Xamarin.UI.Samples;assembly=DIPS.Xamarin.UI.Samples"
              mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.UI.Samples.MainPage">
+             x:Class="DIPS.Xamarin.UI.Samples.MainPage"
+             x:DataType="Samples:MainViewModel"
+             Title="DIPS.Xamarin.UI">
 
     <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+        <Button Text="Controls" Command="{Binding NavigateToCommand}" CommandParameter="Controls"/>
     </StackLayout>
 
 </ContentPage>

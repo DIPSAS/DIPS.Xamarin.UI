@@ -8,7 +8,7 @@ namespace DIPS.Xamarin.UI.Controls
             nameof(HasBorder),
             typeof(bool),
             typeof(DatePicker),
-            false);
+            true);
 
         /// <summary>
         ///     Gets or sets a value that determines whether the datepicker should have it's native borders. This is a

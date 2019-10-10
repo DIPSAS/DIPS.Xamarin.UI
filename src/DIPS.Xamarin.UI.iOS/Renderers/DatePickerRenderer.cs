@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel;
+using DIPS.Xamarin.UI.iOS.Renderers;
 using UIKit;
+using Xamarin.Forms;
 
+[assembly: ExportRenderer(typeof(DIPS.Xamarin.UI.Controls.DatePicker), typeof(DatePickerRenderer))]
 namespace DIPS.Xamarin.UI.iOS.Renderers
 {
     public class DatePickerRenderer : global::Xamarin.Forms.Platform.iOS.DatePickerRenderer
@@ -11,7 +14,7 @@ namespace DIPS.Xamarin.UI.iOS.Renderers
         {
             base.OnElementPropertyChanged(sender, e);
 
-
+            //Check shared implementation to see if `HasBorder` is set
             TurnOffBorder();
         }
 
