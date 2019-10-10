@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DIPS.Xamarin.UI.iOS.Renderers;
 using Foundation;
 using UIKit;
 

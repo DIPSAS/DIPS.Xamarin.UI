@@ -18,12 +18,6 @@
     <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Controls\DatePicker\DatePickerPage.xaml.cs">
-      <DependentUpon>DatePickerPage.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
     <ItemGroup>
     <EmbeddedResource Update="Controls\ControlsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

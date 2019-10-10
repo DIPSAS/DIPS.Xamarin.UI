@@ -1,17 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
-using DIPS.Xamarin.UI.iOS.Renderers;
+using DIPS.Xamarin.UI.iOS.Renderers.DatePicker;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using DatePicker = DIPS.Xamarin.UI.Controls.DatePicker;
+using DatePicker = DIPS.Xamarin.UI.Controls.DatePicker.DatePicker;
 
 [assembly: ExportRenderer(typeof(DatePicker), typeof(DatePickerImplementation))]
-namespace DIPS.Xamarin.UI.iOS.Renderers
+namespace DIPS.Xamarin.UI.iOS.Renderers.DatePicker
 {
     public class DatePickerImplementation : DatePickerRenderer
     {
-        private Controls.DatePicker m_datePicker;
+        private Controls.DatePicker.DatePicker m_datePicker;
         private nfloat m_defaultLayerBorderWith;
         private UITextBorderStyle m_defaultBorderStyle;
 
@@ -28,7 +28,7 @@ namespace DIPS.Xamarin.UI.iOS.Renderers
 
             if (e.NewElement != null)
             {
-                if (e.NewElement is Controls.DatePicker datePicker)
+                if (e.NewElement is Controls.DatePicker.DatePicker datePicker)
                 {
                     m_datePicker = datePicker;
 

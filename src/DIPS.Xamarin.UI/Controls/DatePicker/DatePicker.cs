@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace DIPS.Xamarin.UI.Controls
+namespace DIPS.Xamarin.UI.Controls.DatePicker
 {
     /// <inheritdoc />
     /// This has extended properties that is not available in the standard Xamarin.Forms.DatePicker

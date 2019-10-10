@@ -4,7 +4,7 @@ using Android.Graphics.Drawables;
 using DIPS.Xamarin.UI.Android.Renderers.DatePicker;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using DatePicker = DIPS.Xamarin.UI.Controls.DatePicker;
+using DatePicker = DIPS.Xamarin.UI.Controls.DatePicker.DatePicker;
 
 [assembly: ExportRenderer(typeof(DatePicker), typeof(DatePickerImplementation))]
 
@@ -12,7 +12,7 @@ namespace DIPS.Xamarin.UI.Android.Renderers.DatePicker
 {
     public class DatePickerImplementation : global::Xamarin.Forms.Platform.Android.DatePickerRenderer
     {
-        private Controls.DatePicker m_datePicker;
+        private Controls.DatePicker.DatePicker m_datePicker;
         private Drawable m_defaultBackground;
         private int m_defaultBottomPadding;
         private LayoutParams m_defaultLayoutParmeters;
@@ -30,7 +30,7 @@ namespace DIPS.Xamarin.UI.Android.Renderers.DatePicker
             if (e.OldElement != null) Unsubscribe();
 
             if (e.NewElement != null)
-                if (e.NewElement is Controls.DatePicker datePicker)
+                if (e.NewElement is Controls.DatePicker.DatePicker datePicker)
                 {
                     m_datePicker = datePicker; ;
 

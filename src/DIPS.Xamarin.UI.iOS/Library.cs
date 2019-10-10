@@ -1,4 +1,4 @@
-﻿using DIPS.Xamarin.UI.iOS.Renderers;
+﻿using DIPS.Xamarin.UI.iOS.Renderers.DatePicker;
 
 namespace DIPS.Xamarin.UI.iOS
 {
