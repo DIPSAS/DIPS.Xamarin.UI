@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderers\DatePickerRenderer.cs" />
+    <Compile Include="Renderers\DatePickerImplementation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj">
