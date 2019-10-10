@@ -21,7 +21,7 @@ namespace DIPS.Xamarin.UI.Android.Renderers.DatePicker
         private int m_defaultTopPadding;
         public DatePickerImplementation(Context context) : base(context) { }
 
-        public static void Init() { }
+        public static void Initialize() { }
 
         protected override void OnElementChanged(ElementChangedEventArgs<global::Xamarin.Forms.DatePicker> e)
         {
