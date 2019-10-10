@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Foundation;
 using UIKit;
 
@@ -23,8 +22,8 @@ namespace DIPS.Xamarin.UI.Samples.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            DIPS.Xamarin.UI.iOS.Library.Init();
             LoadApplication(new App());
-
             return base.FinishedLaunching(app, options);
         }
     }

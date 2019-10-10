@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples
@@ -16,6 +11,11 @@ namespace DIPS.Xamarin.UI.Samples
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        public void OnStart()
+        {
+            BindingContext = new MainViewModel(Application.Current.MainPage.Navigation);
         }
     }
 }
