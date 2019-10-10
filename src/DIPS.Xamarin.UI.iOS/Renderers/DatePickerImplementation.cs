@@ -7,7 +7,6 @@ using Xamarin.Forms.Platform.iOS;
 using DatePicker = DIPS.Xamarin.UI.Controls.DatePicker;
 
 [assembly: ExportRenderer(typeof(DatePicker), typeof(DatePickerImplementation))]
-
 namespace DIPS.Xamarin.UI.iOS.Renderers
 {
     public class DatePickerImplementation : DatePickerRenderer
@@ -16,7 +15,7 @@ namespace DIPS.Xamarin.UI.iOS.Renderers
         private nfloat m_defaultLayerBorderWith;
         private UITextBorderStyle m_defaultBorderStyle;
 
-        public static void Init() { }
+        public new static void Init() { }
 
         protected override void OnElementChanged(ElementChangedEventArgs<global::Xamarin.Forms.DatePicker> e)
         {
