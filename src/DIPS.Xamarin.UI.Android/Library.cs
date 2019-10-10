@@ -4,9 +4,9 @@ namespace DIPS.Xamarin.UI.Android
 {
     public static class Library
     {
-        public static void Init()
+        public static void Initialize()
         {
-            DatePickerImplementation.Init();
+            DatePickerImplementation.Initialize();
         }
     }
 }

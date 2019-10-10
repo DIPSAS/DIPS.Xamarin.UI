@@ -15,7 +15,7 @@ namespace DIPS.Xamarin.UI.iOS.Renderers.DatePicker
         private nfloat m_defaultLayerBorderWith;
         private UITextBorderStyle m_defaultBorderStyle;
 
-        public new static void Init() { }
+        public static void Initialize() { }
 
         protected override void OnElementChanged(ElementChangedEventArgs<global::Xamarin.Forms.DatePicker> e)
         {

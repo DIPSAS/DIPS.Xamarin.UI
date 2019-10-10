@@ -23,7 +23,7 @@ namespace DIPS.Xamarin.UI.Samples.Droid
 
             Essentials.Platform.Init(this, savedInstanceState); //Xamarin essentials
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            DIPS.Xamarin.UI.Android.Library.Init();
+            DIPS.Xamarin.UI.Android.Library.Initialize();
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Content.PM.Permission[] grantResults)
