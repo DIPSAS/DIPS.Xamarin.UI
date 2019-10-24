@@ -20,7 +20,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <param name="propertyName">A nullable property name, if left empty it will pick the caller member name</param>
         /// <remarks>This method does a equality check to see if the value has changed, if you need to notify property changed when the value has not changed, please use <see cref="OnPropertyChanged"/></remarks>
         /// <returns>A boolean value to indicate that the property changed has been invoked</returns>
-        public static bool Set<S>(this INotifyPropertyChanged propertyChangedImplementation, ref S backingStore, S value, PropertyChangedEventHandler propertyChanged, [CallerMemberName] string propertyName = "")
+        public static bool Set<S>(this INotifyPropertyChanged propertyChangedImplementation, ref S backingStore, S value, PropertyChangedEventHandler? propertyChanged, [CallerMemberName] string propertyName = "")
         {
             if (EqualityComparer<S>.Default.Equals(backingStore, value))
                 return false;
@@ -35,7 +35,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <param name="propertyChangedImplementation">The property changed implementation, this is normally a view model </param>
         /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
         /// <param name="propertyName">A nullable property name, if left empty it will pick the caller member name</param>
-        public static void OnPropertyChanged(this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler propertyChanged, [CallerMemberName] string propertyName = "")
+        public static void OnPropertyChanged(this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, [CallerMemberName] string propertyName = "")
         {
             propertyChanged?.Invoke(propertyChangedImplementation, new PropertyChangedEventArgs(propertyName));
         }
@@ -46,7 +46,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <param name="propertyChangedImplementation">The property changed implementation, this is normally a view model</param>
         /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
         /// <param name="properties"></param>
-        public static void OnMultiplePropertiesChanged(this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler propertyChanged, params string[] properties)
+        public static void OnMultiplePropertiesChanged(this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, params string[] properties)
         {
             foreach (var property in properties)
             {
