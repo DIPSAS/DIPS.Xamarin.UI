@@ -1,9 +1,11 @@
-﻿using Xamarin.Forms;
+﻿using System.Diagnostics.CodeAnalysis;
+using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.DatePicker
 {
     /// <inheritdoc />
     /// This has extended properties that is not available in the standard Xamarin.Forms.DatePicker
+    [ExcludeFromCodeCoverage]
     public class DatePicker : global::Xamarin.Forms.DatePicker
     {
         /// <summary>

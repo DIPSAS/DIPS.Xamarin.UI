@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using Xamarin.Forms;
@@ -57,6 +58,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         }
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider) => this;
     }
 }

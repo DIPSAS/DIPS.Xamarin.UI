@@ -75,5 +75,25 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
 
             act.Should().Throw<ArgumentException>();
         }
+
+        [Fact]
+        public void Convert_TrueObjectIsNull_ThrowsArgumentException()
+        {
+            m_boolToObjectConverter.TrueObject = null;
+            m_boolToObjectConverter.FalseObject = "Something";
+            Action act = () => m_boolToObjectConverter.Convert(true, null, null, null);
+
+            act.Should().Throw<ArgumentException>();
+        }
+        
+        [Fact]
+        public void Convert_FalseObjectIsNull_ThrowsArgumentException()
+        {
+            m_boolToObjectConverter.FalseObject = null;
+            m_boolToObjectConverter.TrueObject = "Something";
+            Action act = () => m_boolToObjectConverter.Convert(true, null, null, null);
+
+            act.Should().Throw<ArgumentException>();
+        }
     }
 }
