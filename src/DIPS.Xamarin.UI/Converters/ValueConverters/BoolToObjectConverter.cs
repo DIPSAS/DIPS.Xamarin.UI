@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -29,19 +30,23 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is bool inputValue)) throw new ArgumentException($"Input value has to be of type {nameof(Boolean)}");
-            if (TrueObject?.GetType() != FalseObject?.GetType())
+            if(TrueObject == null) throw new ArgumentException($"{nameof(TrueObject)} can not be null");
+            if(FalseObject == null) throw new ArgumentException($"{nameof(FalseObject)} can not be null");
+            if (TrueObject.GetType() != FalseObject.GetType())
                 throw new ArgumentException($"{nameof(TrueObject)} has to be the same type as {FalseObject}");
 
             return Inverted ? (inputValue) ? FalseObject : TrueObject : (inputValue) ? TrueObject : FalseObject;
         }
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider)
         {
             return this;

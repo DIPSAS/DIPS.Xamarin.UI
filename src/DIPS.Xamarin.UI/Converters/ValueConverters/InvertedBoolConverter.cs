@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using Xamarin.Forms;
@@ -13,6 +14,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
     public class InvertedBoolConverter : IMarkupExtension, IValueConverter
     {
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider) => this;
 
         /// <summary>
