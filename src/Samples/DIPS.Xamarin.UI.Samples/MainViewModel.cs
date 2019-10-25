@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using DIPS.Xamarin.UI.Samples.Controls;
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
+using DIPS.Xamarin.UI.Samples.Converters;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples
@@ -19,8 +20,15 @@ namespace DIPS.Xamarin.UI.Samples
 
         private void NavigateTo(string parameter)
         {
-            if (parameter.Equals("Controls"))
-                m_navigation.PushAsync(new ControlsPage());
+            switch (parameter)
+            {
+                case "Controls":
+                    m_navigation.PushAsync(new ControlsPage());
+                    break;
+                case "Converters":
+                    m_navigation.PushAsync(new ConvertersPage());
+                    break;
+            }
         }
     }
 }
