@@ -8,12 +8,17 @@
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.InvertedBoolConverterPage"
-             x:DataType="ValueConverters:InvertedBoolConverterViewModel">
+             x:DataType="ValueConverters:InvertedBoolConverterViewModel"
+             Title="InvertedBoolConverter">
     <ContentPage.BindingContext>
         <ValueConverters:InvertedBoolConverterViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding SomeLogicalProperty}"/>
+                <Label Text="Invert it!"/>
+            </StackLayout>
             <Label Text="Welcome to Xamarin.Forms!"
                    IsVisible="{Binding SomeLogicalProperty, Converter={dxui:InvertedBoolConverter}}"
                    VerticalOptions="CenterAndExpand"

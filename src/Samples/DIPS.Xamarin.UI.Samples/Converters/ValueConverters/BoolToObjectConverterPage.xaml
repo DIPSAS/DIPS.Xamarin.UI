@@ -1,0 +1,38 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.BoolToObjectConverterPage"
+             Title="BoolToObjectConverter">
+    <ContentPage.BindingContext>
+        <ValueConverters:BoolToObjectConverterViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0"
+                         Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding SomeLogicalProperty}" />
+                <Label Text="Set me" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="1">
+                <Label
+                    Opacity="{Binding SomeLogicalProperty, Converter={dxui:BoolToObjectConverter TrueObject=0.5, FalseObject=1}}"
+                    Text="My opacity changes" />
+                <Label
+                    Opacity="{Binding SomeLogicalProperty, Converter={dxui:BoolToObjectConverter TrueObject=0.5, FalseObject=1, Inverted=True}}"
+                    Text="My opacity is inverted" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

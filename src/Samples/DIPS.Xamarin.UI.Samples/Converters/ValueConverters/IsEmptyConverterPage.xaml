@@ -8,7 +8,8 @@
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.IsEmptyConverterPage"
-             x:DataType="ValueConverters:IsEmptyConverterViewModel">
+             x:DataType="ValueConverters:IsEmptyConverterViewModel"
+             Title="IsEmptyConveter">
     <ContentPage.BindingContext>
         <ValueConverters:IsEmptyConverterViewModel />
     </ContentPage.BindingContext>
