@@ -9,5 +9,6 @@
 - [ ] I have tested on an iOS device.
 - [ ] I have added unit tests
 
->*Please add pictures / Gifs if possible
+>*Please add pictures / Gifs if possible*
 >*Todo List can be checked by putting a `X` inside the brackets*
+>*Remember to update our `wiki` after this PR is merged*
