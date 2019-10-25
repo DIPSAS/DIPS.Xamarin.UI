@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -23,7 +21,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// </summary>
         public object? FalseObject { get; set; }
         /// <summary>
-        /// A boolean value to turn on or inverting of the output values
+        /// A boolean value to set if the output value should be inverted
         /// </summary>
         public bool Inverted { get; set; }
 
