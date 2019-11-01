@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using DIPS.Xamarin.UI.Samples.Commands;
 using DIPS.Xamarin.UI.Samples.Controls;
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Converters;
@@ -27,6 +28,9 @@ namespace DIPS.Xamarin.UI.Samples
                     break;
                 case "Converters":
                     m_navigation.PushAsync(new ConvertersPage());
+                    break;
+                case "Async command":
+                    m_navigation.PushAsync(new AsyncCommandPage());
                     break;
             }
         }
