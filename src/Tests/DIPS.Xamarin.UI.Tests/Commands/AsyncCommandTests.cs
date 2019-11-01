@@ -16,10 +16,12 @@ namespace DIPS.Xamarin.UI.Tests.Commands
         private readonly IAsyncCommand<int> m_commandWithT;
         private readonly IAsyncCommand<int> m_commandWithCanExecuteWithT;
         private readonly int m_input = 42;
+        private bool m_exceptionIsRaised;
         private Action<Exception> m_onException;
 
         public AsyncCommandTests()
         {
+            m_onException = e => m_exceptionIsRaised = true;
             m_command = new AsyncCommand(m_asyncExecutable.Object.Execute, e => m_onException?.Invoke(e));
             m_commandWithCanExecute = new AsyncCommand(m_asyncExecutable.Object.Execute, m_asyncExecutable.Object.CanExecute, e => m_onException?.Invoke(e));
 
@@ -56,27 +58,22 @@ namespace DIPS.Xamarin.UI.Tests.Commands
         [Fact]
         public void Execute_Should_Invoke_OnException_When_Task_Crashes()
         {
-            var hasException = false;
-            m_onException = e => hasException = true;
-            m_asyncExecutable.Setup(e => e.Execute()).Throws(new Exception());
+            m_asyncExecutableWithType.Setup(e => e.Execute(m_input)).Throws(new Exception());
 
-            m_command.Execute(null);
+            m_commandWithT.Execute(m_input);
 
-            hasException.Should().BeTrue();
+            m_exceptionIsRaised.Should().BeTrue();
         }
 
         [Fact]
         public void Execute_Should_Raise_CanExecuteChanged()
         {
-            var invoked = false;
-            m_command.CanExecuteChanged += (s, e) => invoked = true;
+            using var monitoredSubject = m_command.Monitor();
 
             m_command.RaiseCanExecuteChanged();
 
-            invoked.Should().BeTrue();
+            monitoredSubject.Should().Raise(nameof(IAsyncCommand.CanExecuteChanged));
         }
-
-
 
         [Fact]
         public void CanExecute_Is_Called_With_T()
@@ -115,27 +112,22 @@ namespace DIPS.Xamarin.UI.Tests.Commands
         [Fact]
         public void Execute_Should_Invoke_OnException_When_Task_Crashes_With_T()
         {
-            var hasException = false;
-            m_onException = e => hasException = true;
             m_asyncExecutableWithType.Setup(e => e.Execute(m_input)).Throws(new Exception());
 
             m_commandWithT.Execute(m_input);
 
-            hasException.Should().BeTrue();
+            m_exceptionIsRaised.Should().BeTrue();
         }
 
         [Fact]
         public void Execute_Should_Raise_CanExecuteChanged_With_T()
         {
-            var invoked = false;
-            m_commandWithT.CanExecuteChanged += (s, e) => invoked = true;
+            using var monitoredSubject = m_commandWithT.Monitor();
 
             m_commandWithT.RaiseCanExecuteChanged();
 
-            invoked.Should().BeTrue();
+            monitoredSubject.Should().Raise(nameof(IAsyncCommand.CanExecuteChanged));
         }
-
-
 
         public interface IAsyncCommandTest
         {

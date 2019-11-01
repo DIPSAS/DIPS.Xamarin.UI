@@ -4,7 +4,7 @@ using System.Windows.Input;
 namespace DIPS.Xamarin.UI.Commands
 {
     /// <summary>
-    /// Aync command without parameters. Converts command executes to task to simply ViewModel creation.
+    /// Converts command executes to tasks.
     /// </summary>
     public interface IAsyncCommand : ICommand
     {
@@ -15,13 +15,13 @@ namespace DIPS.Xamarin.UI.Commands
         Task ExecuteAsync();
 
         /// <summary>
-        /// Raises the event CanExecuteChanged to refresh the view if CanExecute has changed.
+        /// Raises the CanExecuteChanged event
         /// </summary>
         void RaiseCanExecuteChanged();
     }
 
     /// <summary>
-    /// Aync command with parameters. Converts command executes to task to simply ViewModel creation.
+    /// Converts command executes to tasks with a parameter of type T. Executions without the correct type will be ignored.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IAsyncCommand<T> : ICommand
@@ -35,7 +35,7 @@ namespace DIPS.Xamarin.UI.Commands
         Task ExecuteAsync(T value);
 
         /// <summary>
-        /// Raises the event CanExecuteChanged to refresh the view if CanExecute has changed.
+        /// Raises the CanExecuteChanged event
         /// </summary>
         void RaiseCanExecuteChanged();
     }
