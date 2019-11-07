@@ -42,13 +42,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(DeSelectedColorProperty, value);
         }
 
-        public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(RadioButton), propertyChanged:OnSelectedChanged);
-
-        public bool IsSelected
-        {
-            get => (bool)GetValue(IsSelectedProperty);
-            set => SetValue(IsSelectedProperty, value);
-        }
+        internal bool IsSelected { get; set; }
 
         public static readonly BindableProperty SelectedCommandProperty = BindableProperty.Create(nameof(SelectedCommand), typeof(Command), typeof(RadioButton), defaultBindingMode:BindingMode.TwoWay);
 
@@ -75,32 +69,29 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(IsSelectedInitiallyProperty, value);
         }
 
-        private static void OnSelectedChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is RadioButton radioButton) radioButton.OnSelected((bool)oldvalue, (bool)newvalue);
-        }
 
-
-        private async void OnSelected(bool oldvalue, bool newvalue)
+        internal async Task OnSelected(bool oldvalue)
         {
             if (!oldvalue)
             {
-                await innerFrame.ScaleTo(0.5);
                 innerFrame.BackgroundColor = SelectedColor;
                 outerFrame.BorderColor = SelectedColor;
+                await innerFrame.ScaleTo(0.5);
             }
             else
             {
-                await innerFrame.ScaleTo(0);
                 innerFrame.BackgroundColor = DeSelectedColor;
                 outerFrame.BorderColor = DeSelectedColor;
+                await innerFrame.ScaleTo(0);
+                
             }
         }
 
         public event EventHandler Tapped;
 
-        private void OnTapped(object sender, EventArgs e)
+        private async void OnTapped(object sender, EventArgs e)
         {
+            await OnSelected(IsSelected);
             IsSelected = !IsSelected;
 
             if (IsSelected)

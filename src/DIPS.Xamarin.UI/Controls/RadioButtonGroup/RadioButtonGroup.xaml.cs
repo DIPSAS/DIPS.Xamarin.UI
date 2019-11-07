@@ -30,6 +30,9 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         {
             foreach (var radioButton in RadioButtons)
             {
+                radioButton.SelectedColor = SelectedColor;
+                radioButton.DeSelectedColor = DeSelectedColor;
+
                 radioButtonContainer.Children.Add(radioButton);
                 radioButton.Tapped += OnRadioButtonTapped;
             }
@@ -41,14 +44,34 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(RadioButtonsProperty, value);
         }
 
-        private void OnRadioButtonTapped(object sender, EventArgs e)
+        public static readonly BindableProperty SelectedColorProperty = BindableProperty.Create(nameof(SelectedColor), typeof(Color), typeof(RadioButtonGroup), null);
+
+        public Color SelectedColor
+        {
+            get => (Color)GetValue(SelectedColorProperty);
+            set => SetValue(SelectedColorProperty, value);
+        }
+
+        public static readonly BindableProperty DeSelectedColorProperty = BindableProperty.Create(nameof(DeSelectedColor), typeof(Color), typeof(RadioButtonGroup), null);
+
+        public Color DeSelectedColor
+        {
+            get => (Color)GetValue(DeSelectedColorProperty);
+            set => SetValue(DeSelectedColorProperty, value);
+        }
+
+        private async void OnRadioButtonTapped(object sender, EventArgs e)
         {
             if (!(sender is RadioButton tappedRadioButton)) return;
             foreach (var radioButton in RadioButtons)
             {
                 if (!radioButton.Text.Equals(tappedRadioButton.Text))
                 {
-                    radioButton.IsSelected = false;
+                    if (radioButton.IsSelected)
+                    {
+                        radioButton.IsSelected = false;
+                        await radioButton.OnSelected(true);
+                    }
                 }
             }
         }

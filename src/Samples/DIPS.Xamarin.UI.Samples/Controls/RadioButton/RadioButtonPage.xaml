@@ -21,23 +21,19 @@
 
         <RadioButtonGroup:RadioButtonGroup Grid.Row="1"
                                            VerticalOptions="Center"
-                                           HorizontalOptions="Center">
+                                           HorizontalOptions="Center"
+                                           SelectedColor="Tomato"
+                                           DeSelectedColor="LightGray">
             <RadioButtonGroup:RadioButtonGroup.RadioButtons>
                 <RadioButtonGroup:RadioButton Text="First option"
-                                              SelectedColor="Tomato"
-                                              DeSelectedColor="Tomato"
                                               IsSelectedInitially ="true"
                                               SelectedCommand="{Binding OptionsCommand}"
                                               SelectedCommandParameter="{x:Static local:Options.First}"
                                               />
                 <RadioButtonGroup:RadioButton Text="Second option"
-                                              SelectedColor="Tomato"
-                                              DeSelectedColor="Tomato"
                                               SelectedCommand="{Binding OptionsCommand}"
                                               SelectedCommandParameter="{x:Static local:Options.Second}" />
                 <RadioButtonGroup:RadioButton Text="Third option"
-                                              SelectedColor="Tomato"
-                                              DeSelectedColor="Tomato"
                                               SelectedCommand="{Binding OptionsCommand}"
                                               SelectedCommandParameter="{x:Static local:Options.Third}" />
             </RadioButtonGroup:RadioButtonGroup.RadioButtons>
