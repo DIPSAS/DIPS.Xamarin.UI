@@ -1,0 +1,47 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:RadioButtonGroup="clr-namespace:DIPS.Xamarin.UI.Controls.RadioButtonGroup;assembly=DIPS.Xamarin.UI"
+             xmlns:local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;assembly=DIPS.Xamarin.UI.Samples"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup.RadioButtonGroupPage">
+    <ContentPage.BindingContext>
+        <local:RadioButtonPageViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" /> 
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Text="My awesome radio button group"
+               Grid.Row="0" />
+
+        <RadioButtonGroup:RadioButtonGroup Grid.Row="1"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center">
+            <RadioButtonGroup:RadioButtonGroup.RadioButtons>
+                <RadioButtonGroup:RadioButton Text="First option"
+                                              SelectedColor="Tomato"
+                                              DeSelectedColor="Tomato"
+                                              IsSelectedInitially ="true"
+                                              SelectedCommand="{Binding OptionsCommand}"
+                                              SelectedCommandParameter="{x:Static local:Options.First}"
+                                              />
+                <RadioButtonGroup:RadioButton Text="Second option"
+                                              SelectedColor="Tomato"
+                                              DeSelectedColor="Tomato"
+                                              SelectedCommand="{Binding OptionsCommand}"
+                                              SelectedCommandParameter="{x:Static local:Options.Second}" />
+                <RadioButtonGroup:RadioButton Text="Third option"
+                                              SelectedColor="Tomato"
+                                              DeSelectedColor="Tomato"
+                                              SelectedCommand="{Binding OptionsCommand}"
+                                              SelectedCommandParameter="{x:Static local:Options.Third}" />
+            </RadioButtonGroup:RadioButtonGroup.RadioButtons>
+        </RadioButtonGroup:RadioButtonGroup>
+    </Grid>
+
+</ContentPage>

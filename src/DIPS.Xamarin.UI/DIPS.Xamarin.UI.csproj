@@ -22,4 +22,19 @@
     <PackageReference Include="Xamarin.Forms" Version="4.2.0.815419" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Controls\RadioButtonGroup\RadioButtonGroup.xaml.cs">
+      <DependentUpon>RadioButtonGroup.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Controls\RadioButtonGroup\RadioButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\RadioButtonGroup\RadioButtonGroup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

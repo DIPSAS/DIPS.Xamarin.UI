@@ -18,11 +18,20 @@
     <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Controls\RadioButton\RadioButtonPage.xaml.cs">
+      <DependentUpon>RadioButtonPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
     <ItemGroup>
     <EmbeddedResource Update="Controls\ControlsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\DatePicker\DatePickerPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\RadioButton\RadioButtonPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Converters\ConvertersPage.xaml">

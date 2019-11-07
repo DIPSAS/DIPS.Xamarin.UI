@@ -1,0 +1,50 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButton"
+             x:Name="codeBehind">
+    <Grid BindingContext="{Binding Source={x:Reference codeBehind}}"
+    >
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+        </Grid.GestureRecognizers>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Frame x:Name="outerFrame"
+                   Padding="0"
+                   HeightRequest="25"
+                   WidthRequest="25"
+                   CornerRadius="14.5"
+                   BorderColor="{Binding DeSelectedColor}"
+                   InputTransparent="True"
+                   IsClippedToBounds="True"
+                   Margin="0"
+            />
+            <Frame x:Name="innerFrame"
+                   Grid.Row="0"
+                   Padding="0"
+                   HeightRequest="{Binding Source={x:Reference outerFrame}, Path=HeightRequest}"
+                   WidthRequest="{Binding Source={x:Reference outerFrame}, Path=WidthRequest}"
+                   CornerRadius="{Binding Source={x:Reference outerFrame}, Path=CornerRadius}"
+                   BackgroundColor="{Binding DeSelectedColor}"
+                   Scale="0"
+                   InputTransparent="True"
+                   Margin="0"/>
+        </Grid>
+        <Label Grid.Column="1"
+               Text="{Binding Text}"
+               InputTransparent="True" />
+    </Grid>
+</ContentView>
