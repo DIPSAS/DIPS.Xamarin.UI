@@ -29,7 +29,7 @@
                                               IsSelectedInitially ="true"
                                               SelectedCommand="{Binding OptionsCommand}"
                                               SelectedCommandParameter="{x:Static local:Options.First}"
-                                              />
+                />
                 <RadioButtonGroup:RadioButton Text="Second option"
                                               SelectedCommand="{Binding OptionsCommand}"
                                               SelectedCommandParameter="{x:Static local:Options.Second}" />
