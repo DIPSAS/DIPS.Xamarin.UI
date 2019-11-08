@@ -13,39 +13,68 @@
     </ContentPage.BindingContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" /> 
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <RadioButtonGroup:RadioButtonGroup Grid.Row="1"
-                                           VerticalOptions="Center"
-                                           HorizontalOptions="Center"
-                                           SelectedColor="Tomato"
-                                           DeSelectedColor="Tomato">
+
+        <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
+                                           SelectedColor="{Binding SelectedColor}"
+                                           DeSelectedColor="{Binding DeSelectedColor}" >
             <RadioButtonGroup:RadioButtonGroup.RadioButtons>
                 <RadioButtonGroup:RadioButton Text="First option"
                                               SelectedCommand="{Binding OptionsCommand}"
-                                              SelectedCommandParameter="{x:Static local:Options.First}"
-                />
+                                              SelectedCommandParameter="{x:Static local:Options.First}" />
                 <RadioButtonGroup:RadioButton Text="Second option"
                                               SelectedCommand="{Binding OptionsCommand}"
                                               SelectedCommandParameter="{x:Static local:Options.Second}" />
                 <RadioButtonGroup:RadioButton Text="Third option"
+                                              IsSelectedInitially="True"
                                               SelectedCommand="{Binding OptionsCommand}"
-                                              SelectedCommandParameter="{x:Static local:Options.Third}" />
+                                              SelectedCommandParameter="{x:Static local:Options.Third}"
+                                              />
             </RadioButtonGroup:RadioButtonGroup.RadioButtons>
         </RadioButtonGroup:RadioButtonGroup>
 
-        <Grid Grid.Row="1">
-            <Label Text="Configuration" FontSize="Body"/>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="SelectedColor"/>
-                <Entry Text="{Binding SelectedColor}"/>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="DeSelectedColor"/>
-                <Entry Text="{Binding DeSelectedColor}"/>
-            </StackLayout>
-        </Grid>
+        <Frame Grid.Row="1" CornerRadius="10" BackgroundColor="LightGray" VerticalOptions="StartAndExpand">
+            <Grid RowSpacing="0"
+                  VerticalOptions="End">
+                <Grid.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="FontSize"
+                                Value="Large" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       FontAttributes="Bold"
+                       Text="Configuration" />
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackLayout Grid.Row="0"
+                                 Orientation="Horizontal"
+                                 VerticalOptions="CenterAndExpand">
+                        <Label Text="SelectedColor"
+                               VerticalOptions="CenterAndExpand" />
+                        <Entry Text="{Binding SelectedColor}"
+                               VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="1"
+                                 Orientation="Horizontal"
+                                 VerticalOptions="CenterAndExpand">
+                        <Label Text="DeSelectedColor"
+                               VerticalOptions="CenterAndExpand" />
+                        <Entry Text="{Binding DeSelectedColor}"
+                               VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </Frame>
     </Grid>
 
 </ContentPage>

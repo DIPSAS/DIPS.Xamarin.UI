@@ -7,7 +7,5 @@
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButtonGroup"
              x:Name="codeBehind">
-    <Grid>
-        <FlexLayout x:Name="radioButtonContainer" Direction="Column"  />
-    </Grid>
+    <Grid x:Name="radioButtonContainer" RowSpacing="0"/>
 </ContentView>

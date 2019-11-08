@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
+using DIPS.Xamarin.UI.Controls.RadioButtonGroup.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,13 +9,19 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RadioButton : ContentView
     {
+        private IHandleRadioButtons? m_radioButtonsHandler;
 
         public RadioButton()
         {
             InitializeComponent();
         }
 
-        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton));
+        internal void Initialize(IHandleRadioButtons radioButtonsHandler)
+        {
+            m_radioButtonsHandler = radioButtonsHandler;
+        }
+
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton), defaultBindingMode: BindingMode.TwoWay);
 
         public string Text
         {
@@ -26,7 +29,12 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(TextProperty, value);
         }
 
-        public static readonly BindableProperty SelectedColorProperty = BindableProperty.Create(nameof(SelectedColor), typeof(Color), typeof(RadioButton), Color.LightGray);
+        public static readonly BindableProperty SelectedColorProperty = BindableProperty.Create(
+            nameof(SelectedColor),
+            typeof(Color),
+            typeof(RadioButton),
+            Color.LightGray,
+            BindingMode.TwoWay);
 
         public Color SelectedColor
         {
@@ -34,7 +42,12 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(SelectedColorProperty, value);
         }
 
-        public static readonly BindableProperty DeSelectedColorProperty = BindableProperty.Create(nameof(DeSelectedColor), typeof(Color), typeof(RadioButton), Color.LightGray);
+        public static readonly BindableProperty DeSelectedColorProperty = BindableProperty.Create(
+            nameof(DeSelectedColor),
+            typeof(Color),
+            typeof(RadioButton),
+            Color.LightGray,
+            BindingMode.TwoWay);
 
         public Color DeSelectedColor
         {
@@ -44,7 +57,11 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         internal bool IsSelected { get; set; }
 
-        public static readonly BindableProperty SelectedCommandProperty = BindableProperty.Create(nameof(SelectedCommand), typeof(Command), typeof(RadioButton), defaultBindingMode:BindingMode.TwoWay);
+        public static readonly BindableProperty SelectedCommandProperty = BindableProperty.Create(
+            nameof(SelectedCommand),
+            typeof(Command),
+            typeof(RadioButton),
+            defaultBindingMode: BindingMode.TwoWay);
 
         public Command SelectedCommand
         {
@@ -52,7 +69,11 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(SelectedCommandProperty, value);
         }
 
-        public static readonly BindableProperty SelectedCommandParameterProperty = BindableProperty.Create(nameof(SelectedCommandParameter), typeof(object), typeof(RadioButton), defaultBindingMode:BindingMode.TwoWay);
+        public static readonly BindableProperty SelectedCommandParameterProperty = BindableProperty.Create(
+            nameof(SelectedCommandParameter),
+            typeof(object),
+            typeof(RadioButton),
+            defaultBindingMode: BindingMode.TwoWay);
 
         public object SelectedCommandParameter
         {
@@ -60,8 +81,14 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(SelectedCommandParameterProperty, value);
         }
 
+        public static readonly BindableProperty IsSelectedInitiallyProperty = BindableProperty.Create(
+            nameof(IsSelectedInitially),
+            typeof(bool),
+            typeof(RadioButton),
+            false,
+            BindingMode.TwoWay);
 
-        public static readonly BindableProperty IsSelectedInitiallyProperty = BindableProperty.Create(nameof(IsSelectedInitially), typeof(bool), typeof(RadioButton), false);
+        private double m_highestHeight;
 
         public bool IsSelectedInitially
         {
@@ -69,13 +96,12 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(IsSelectedInitiallyProperty, value);
         }
 
-
         internal async Task Animate(bool wasSelected)
         {
             if (!wasSelected)
             {
                 innerFrame.BackgroundColor = SelectedColor;
-                outerFrame.BorderColor = SelectedColor; 
+                outerFrame.BorderColor = SelectedColor;
                 await innerFrame.ScaleTo(0.5);
             }
             else
@@ -83,11 +109,22 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 innerFrame.BackgroundColor = DeSelectedColor;
                 outerFrame.BorderColor = DeSelectedColor;
                 await innerFrame.ScaleTo(0);
-                
             }
         }
 
-        public event EventHandler Tapped;
+        internal void RefreshColors()
+        {
+            if (IsSelected)
+            {
+                innerFrame.BackgroundColor = SelectedColor;
+                outerFrame.BorderColor = SelectedColor;
+            }
+            else
+            {
+                innerFrame.BackgroundColor = DeSelectedColor;
+                outerFrame.BorderColor = DeSelectedColor;
+            }
+        }
 
         private async void OnTapped(object sender, EventArgs e)
         {
@@ -101,7 +138,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 SelectedCommand?.Execute(SelectedCommandParameter);
             }
 
-            Tapped.Invoke(this, e);
+            m_radioButtonsHandler?.OnRadioButtonTapped(this);
         }
     }
 }

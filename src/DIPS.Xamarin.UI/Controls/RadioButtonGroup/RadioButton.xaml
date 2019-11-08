@@ -16,7 +16,8 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid VerticalOptions="Center">
+        <Grid x:Name="buttonGrid" 
+            VerticalOptions="Center">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -43,7 +44,8 @@
                    InputTransparent="True"
                    Margin="0"/>
         </Grid>
-        <Label Grid.Column="1"
+        <Label x:Name="label"
+                Grid.Column="1"
                VerticalOptions="Center"
                Text="{Binding Text}"
                InputTransparent="True" />

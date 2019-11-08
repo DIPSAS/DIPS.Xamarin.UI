@@ -9,7 +9,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
       <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
       <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <WarningsAsErrors>CS8604</WarningsAsErrors>
+    <WarningsAsErrors>CS8604;CS8602</WarningsAsErrors>
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
