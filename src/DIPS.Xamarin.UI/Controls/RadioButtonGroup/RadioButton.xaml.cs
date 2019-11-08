@@ -57,44 +57,10 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         internal bool IsSelected { get; set; }
 
-        public static readonly BindableProperty SelectedCommandProperty = BindableProperty.Create(
-            nameof(SelectedCommand),
-            typeof(Command),
-            typeof(RadioButton),
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public Command SelectedCommand
-        {
-            get => (Command)GetValue(SelectedCommandProperty);
-            set => SetValue(SelectedCommandProperty, value);
-        }
-
-        public static readonly BindableProperty SelectedCommandParameterProperty = BindableProperty.Create(
-            nameof(SelectedCommandParameter),
-            typeof(object),
-            typeof(RadioButton),
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public object SelectedCommandParameter
-        {
-            get => (object)GetValue(SelectedCommandParameterProperty);
-            set => SetValue(SelectedCommandParameterProperty, value);
-        }
-
-        public static readonly BindableProperty IsSelectedInitiallyProperty = BindableProperty.Create(
-            nameof(IsSelectedInitially),
-            typeof(bool),
-            typeof(RadioButton),
-            false,
-            BindingMode.TwoWay);
 
         private double m_highestHeight;
 
-        public bool IsSelectedInitially
-        {
-            get => (bool)GetValue(IsSelectedInitiallyProperty);
-            set => SetValue(IsSelectedInitiallyProperty, value);
-        }
+        internal object Identifier { get; set; }
 
         internal async Task Animate(bool wasSelected)
         {
@@ -126,19 +92,6 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             }
         }
 
-        private async void OnTapped(object sender, EventArgs e)
-        {
-            if (IsSelected) return;
-
-            await Animate(false);
-            IsSelected = true;
-
-            if (IsSelected)
-            {
-                SelectedCommand?.Execute(SelectedCommandParameter);
-            }
-
-            m_radioButtonsHandler?.OnRadioButtonTapped(this);
-        }
+        private void OnTapped(object sender, EventArgs e) => m_radioButtonsHandler?.OnRadioButtonTapped(this);
     }
 }

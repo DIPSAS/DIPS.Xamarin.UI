@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using DIPS.Xamarin.UI.Controls.RadioButtonGroup;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,18 +17,26 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup
         {
             InitializeComponent();
         }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (BindingContext is RadioButtonPageViewModel RadioButtonPageViewModel){
+                await RadioButtonPageViewModel.Initialize();
+            }
+        }
     }
 
     public class RadioButtonPageViewModel : INotifyPropertyChanged
     {
         private string m_deSelectedColor = "#047F89";
         private string m_selectedColor = "#047F89";
-
-        private Options m_selectedOption;
+        private Option m_selectedOption;
+        private ObservableCollection<Option> m_options;
 
         public RadioButtonPageViewModel()
         {
-            OptionsCommand = new Command<Options>(Execute);
+            Options = new ObservableCollection<Option>();
         }
 
         public string DeSelectedColor
@@ -45,8 +57,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup
             }
         }
 
-        public Command<Options> OptionsCommand { get; }
-
         public string SelectedColor
         {
             get => m_selectedColor;
@@ -65,17 +75,35 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup
             }
         }
 
-        public string SelectedOption { get; set; }
+        public ObservableCollection<Option> Options
+        {
+            get => m_options;
+            set => this.Set(ref m_options, value, PropertyChanged);
+        }
+
+        public Option SelectedOption
+        {
+            get => m_selectedOption;
+            set => this.Set(ref m_selectedOption, value, PropertyChanged);
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private void Execute(Options obj)
+        public Task Initialize()
         {
-            m_selectedOption = obj;
+            var firstOption = new Option(ServerOptions.First, "First option");
+            var secondOption = new Option(ServerOptions.Second, "Second option");
+            var thirdOption = new Option(ServerOptions.Third, "Third option");
+            var listOfOptions = new List<Option>() { firstOption, secondOption, thirdOption };
+
+            Options = new ObservableCollection<Option>(listOfOptions);
+            SelectedOption = firstOption;
+
+            return Task.CompletedTask;
         }
     }
 
-    public enum Options
+    public enum ServerOptions
     {
         First,
         Second,

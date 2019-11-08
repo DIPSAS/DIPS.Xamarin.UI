@@ -19,23 +19,12 @@
 
         <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
                                            SelectedColor="{Binding SelectedColor}"
-                                           DeSelectedColor="{Binding DeSelectedColor}" >
-            <RadioButtonGroup:RadioButtonGroup.RadioButtons>
-                <RadioButtonGroup:RadioButton Text="First option"
-                                              SelectedCommand="{Binding OptionsCommand}"
-                                              SelectedCommandParameter="{x:Static local:Options.First}" />
-                <RadioButtonGroup:RadioButton Text="Second option"
-                                              SelectedCommand="{Binding OptionsCommand}"
-                                              SelectedCommandParameter="{x:Static local:Options.Second}" />
-                <RadioButtonGroup:RadioButton Text="Third option"
-                                              IsSelectedInitially="True"
-                                              SelectedCommand="{Binding OptionsCommand}"
-                                              SelectedCommandParameter="{x:Static local:Options.Third}"
-                                              />
-            </RadioButtonGroup:RadioButtonGroup.RadioButtons>
-        </RadioButtonGroup:RadioButtonGroup>
+                                           DeSelectedColor="{Binding DeSelectedColor}" 
+                                           Options="{Binding Options}"
+                                           IsSelected="{Binding SelectedOption}"/>
+        
 
-        <Frame Grid.Row="1" CornerRadius="10" BackgroundColor="LightGray" VerticalOptions="StartAndExpand">
+            <Frame Grid.Row="1" CornerRadius="10" BackgroundColor="LightGray" VerticalOptions="StartAndExpand">
             <Grid RowSpacing="0"
                   VerticalOptions="End">
                 <Grid.Resources>
