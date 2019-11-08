@@ -16,7 +16,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Grid VerticalOptions="Center">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -44,6 +44,7 @@
                    Margin="0"/>
         </Grid>
         <Label Grid.Column="1"
+               VerticalOptions="Center"
                Text="{Binding Text}"
                InputTransparent="True" />
     </Grid>

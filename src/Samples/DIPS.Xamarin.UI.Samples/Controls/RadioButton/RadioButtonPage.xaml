@@ -13,20 +13,16 @@
     </ContentPage.BindingContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" /> 
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" /> 
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Text="My awesome radio button group"
-               Grid.Row="0" />
-
         <RadioButtonGroup:RadioButtonGroup Grid.Row="1"
                                            VerticalOptions="Center"
                                            HorizontalOptions="Center"
                                            SelectedColor="Tomato"
-                                           DeSelectedColor="LightGray">
+                                           DeSelectedColor="Tomato">
             <RadioButtonGroup:RadioButtonGroup.RadioButtons>
                 <RadioButtonGroup:RadioButton Text="First option"
-                                              IsSelectedInitially ="true"
                                               SelectedCommand="{Binding OptionsCommand}"
                                               SelectedCommandParameter="{x:Static local:Options.First}"
                 />
@@ -38,6 +34,18 @@
                                               SelectedCommandParameter="{x:Static local:Options.Third}" />
             </RadioButtonGroup:RadioButtonGroup.RadioButtons>
         </RadioButtonGroup:RadioButtonGroup>
+
+        <Grid Grid.Row="1">
+            <Label Text="Configuration" FontSize="Body"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="SelectedColor"/>
+                <Entry Text="{Binding SelectedColor}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="DeSelectedColor"/>
+                <Entry Text="{Binding DeSelectedColor}"/>
+            </StackLayout>
+        </Grid>
     </Grid>
 
 </ContentPage>

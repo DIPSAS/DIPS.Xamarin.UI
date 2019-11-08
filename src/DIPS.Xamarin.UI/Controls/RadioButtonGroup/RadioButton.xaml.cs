@@ -70,12 +70,12 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         }
 
 
-        internal async Task OnSelected(bool oldvalue)
+        internal async Task Animate(bool wasSelected)
         {
-            if (!oldvalue)
+            if (!wasSelected)
             {
                 innerFrame.BackgroundColor = SelectedColor;
-                outerFrame.BorderColor = SelectedColor;
+                outerFrame.BorderColor = SelectedColor; 
                 await innerFrame.ScaleTo(0.5);
             }
             else
@@ -91,8 +91,10 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private async void OnTapped(object sender, EventArgs e)
         {
-            await OnSelected(IsSelected);
-            IsSelected = !IsSelected;
+            if (IsSelected) return;
+
+            await Animate(false);
+            IsSelected = true;
 
             if (IsSelected)
             {
