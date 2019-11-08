@@ -24,7 +24,7 @@
                                            IsSelected="{Binding SelectedOption}"/>
         
 
-            <Frame Grid.Row="1" CornerRadius="10" BackgroundColor="LightGray" VerticalOptions="StartAndExpand">
+        <Frame Grid.Row="1" CornerRadius="10" BackgroundColor="LightGray" VerticalOptions="StartAndExpand">
             <Grid RowSpacing="0"
                   VerticalOptions="End">
                 <Grid.Resources>
