@@ -6,33 +6,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButton"
-             x:Name="codeBehind">
-    <Grid BindingContext="{Binding Source={x:Reference codeBehind}}"
-    >
-        <Grid.GestureRecognizers>
-            <TapGestureRecognizer Tapped="OnTapped" />
-        </Grid.GestureRecognizers>
+             x:Name="codeBehind"
+             >
+    <ContentView.GestureRecognizers>
+        <TapGestureRecognizer Tapped="OnTapped" />
+    </ContentView.GestureRecognizers>
+    <Grid BindingContext="{Binding Source={x:Reference codeBehind}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid x:Name="buttonGrid" 
-            VerticalOptions="Center">
+        <Grid x:Name="buttonGrid"
+              VerticalOptions="Center">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Frame x:Name="outerFrame"
                    Padding="0"
-                   HeightRequest="25"
-                   WidthRequest="25"
-                   CornerRadius="14.5"
+                   HeightRequest="30"
+                   WidthRequest="30"
+                   CornerRadius="15"
                    BorderColor="{Binding DeSelectedColor}"
                    InputTransparent="True"
                    IsClippedToBounds="True"
                    Margin="0"
-            />
+                   HasShadow="False"/>
             <Frame x:Name="innerFrame"
                    Grid.Row="0"
                    Padding="0"
@@ -42,10 +42,11 @@
                    BackgroundColor="{Binding DeSelectedColor}"
                    Scale="0"
                    InputTransparent="True"
-                   Margin="0"/>
+                   HasShadow="False"
+                   Margin="0" />
         </Grid>
         <Label x:Name="label"
-                Grid.Column="1"
+               Grid.Column="1"
                VerticalOptions="Center"
                Text="{Binding Text}"
                InputTransparent="True" />

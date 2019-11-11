@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.RadioButtonGroup;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
@@ -31,12 +32,13 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup
     {
         private string m_deSelectedColor = "#047F89";
         private string m_selectedColor = "#047F89";
-        private Option m_selectedOption;
-        private ObservableCollection<Option> m_options;
+        private OptionViewModel m_selectedOption;
+        private ObservableCollection<OptionViewModel> m_options;
 
         public RadioButtonPageViewModel()
         {
-            Options = new ObservableCollection<Option>();
+            Options = new ObservableCollection<OptionViewModel>();
+            AddNewCommand = new Command(() => Options.Add(new OptionViewModel("Forth option", ServerOptions.Forth)));
         }
 
         public string DeSelectedColor
@@ -75,39 +77,54 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup
             }
         }
 
-        public ObservableCollection<Option> Options
+        public ObservableCollection<OptionViewModel> Options
         {
             get => m_options;
             set => this.Set(ref m_options, value, PropertyChanged);
         }
 
-        public Option SelectedOption
+        public OptionViewModel SelectedOption
         {
             get => m_selectedOption;
             set => this.Set(ref m_selectedOption, value, PropertyChanged);
         }
 
+        public ICommand AddNewCommand { get; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public Task Initialize()
         {
-            var firstOption = new Option(ServerOptions.First, "First option");
-            var secondOption = new Option(ServerOptions.Second, "Second option");
-            var thirdOption = new Option(ServerOptions.Third, "Third option");
-            var listOfOptions = new List<Option>() { firstOption, secondOption, thirdOption };
+            var firstOption = new OptionViewModel("A very very very very looooooooooooooooooooooooooooooooooooooooooong option", ServerOptions.First);
+            var secondOption = new OptionViewModel("Second option", ServerOptions.Second);
+            var thirdOption = new OptionViewModel("Third option", ServerOptions.Third);
 
-            Options = new ObservableCollection<Option>(listOfOptions);
-            SelectedOption = firstOption;
+            Options.Add(firstOption);
+            Options.Add(secondOption);
+            Options.Add(thirdOption);
+            SelectedOption = secondOption;
 
             return Task.CompletedTask;
         }
 
         public void OnDone()
         {
-            if ((ServerOptions)SelectedOption.Identifier == ServerOptions.First)
+            if (SelectedOption.ServerOptions == ServerOptions.First)
             {
 
             }
+        }
+    }
+
+    public class OptionViewModel
+    {
+        public string Name { get; }
+        public ServerOptions ServerOptions { get; }
+
+        public OptionViewModel(string name, ServerOptions serverOptions)
+        {
+            Name = name;
+            ServerOptions = serverOptions;
         }
     }
 
@@ -115,6 +132,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup
     {
         First,
         Second,
-        Third
+        Third,
+        Forth
     }
 }

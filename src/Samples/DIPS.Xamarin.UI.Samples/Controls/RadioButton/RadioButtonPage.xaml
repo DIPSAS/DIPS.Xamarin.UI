@@ -15,16 +15,19 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
                                            SelectedColor="{Binding SelectedColor}"
-                                           DeSelectedColor="{Binding DeSelectedColor}" 
-                                           Options="{Binding Options}"
-                                           IsSelected="{Binding SelectedOption}"/>
-        
-
-        <Frame Grid.Row="1" CornerRadius="10" BackgroundColor="LightGray" VerticalOptions="StartAndExpand">
+                                           DeSelectedColor="{Binding DeSelectedColor}"
+                                           ItemsSource="{Binding Options}"
+                                           SelectedItem="{Binding SelectedOption}" />
+        <Frame Grid.Row="1"
+               HasShadow="False"
+               CornerRadius="10"
+               BackgroundColor="LightGray"
+               VerticalOptions="StartAndExpand">
             <Grid RowSpacing="0"
                   VerticalOptions="End">
                 <Grid.Resources>
@@ -64,6 +67,9 @@
                 </Grid>
             </Grid>
         </Frame>
+        <Button Grid.Row="2"
+                Command="{Binding AddNewCommand}"
+                Text="Add new" />
     </Grid>
 
 </ContentPage>

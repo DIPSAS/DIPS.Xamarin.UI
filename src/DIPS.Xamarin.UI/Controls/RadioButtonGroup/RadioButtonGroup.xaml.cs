@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Reflection;
 using DIPS.Xamarin.UI.Controls.RadioButtonGroup.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -10,56 +10,193 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 {
+    /// <summary>
+    /// An vertical oriented radio button group
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RadioButtonGroup : ContentView, IHandleRadioButtons
     {
-        public RadioButtonGroup()
-        {
-            InitializeComponent();
-        }
+        private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
+        private PropertyInfo m_displayMember;
 
-        public static readonly BindableProperty OptionsProperty = BindableProperty.Create(
-            nameof(Options),
-            typeof(ObservableCollection<Option>),
-            typeof(RadioButtonGroup),
-            defaultBindingMode: BindingMode.TwoWay, propertyChanged:OnOptionsPropertyChanged);
-
-        private static void OnOptionsPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if(!(bindable is RadioButtonGroup radioButtonGroup)) return;
-            if(!(newvalue is ObservableCollection<Option> options))return;
-
-            options.CollectionChanged += (o, e) => radioButtonGroup.Initialize(options);
-            radioButtonGroup.Initialize(options);
-        }
-
+        /// <summary>
+        /// <see cref="SelectedColor"/>
+        /// </summary>
         public static readonly BindableProperty SelectedColorProperty = BindableProperty.Create(
             nameof(SelectedColor),
             typeof(Color),
             typeof(RadioButtonGroup),
             null,
-            defaultBindingMode: BindingMode.TwoWay,
+            BindingMode.TwoWay,
             propertyChanged: OnSelectedColorPropertyChanged);
+
+        /// <summary>
+        /// <see cref="DeSelectedColor"/>
+        /// </summary>
+        public static readonly BindableProperty DeSelectedColorProperty = BindableProperty.Create(
+            nameof(DeSelectedColor),
+            typeof(Color),
+            typeof(RadioButtonGroup),
+            null,
+            BindingMode.OneWay,
+            propertyChanged: OnDeSelectedColorPropertyChanged);
+
+        /// <summary>
+        /// <see cref="SeparatorColor"/>
+        /// </summary>
+        public static readonly BindableProperty SeparatorColorProperty = BindableProperty.Create(
+            nameof(SeparatorColor),
+            typeof(Color),
+            typeof(RadioButtonGroup),
+            Color.LightGray);
+
+        /// <summary>
+        /// <see cref="ItemsSource"/>
+        /// </summary>
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
+            nameof(ItemsSource),
+            typeof(IList),
+            typeof(Picker),
+            default(IList),
+            propertyChanged: OnItemsSourcePropertyChanged);
+
+        /// <summary>
+        /// <see cref="DisplayMemberPath"/>
+        /// </summary>
+        public static readonly BindableProperty DisplayMemberPathProperty = BindableProperty.Create(
+            nameof(DisplayMemberPath),
+            typeof(string),
+            typeof(RadioButtonGroup),
+            string.Empty);
+
+        /// <summary>
+        /// <see cref="SelectedItem"/>
+        /// </summary>
+        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
+            nameof(SelectedItem),
+            typeof(object),
+            typeof(RadioButtonGroup),
+            null,
+            BindingMode.TwoWay,
+            propertyChanged: OnIsSelectedPropertyChanged);
+
+        /// <summary>
+        /// Constructs an radio button group
+        /// </summary>
+        public RadioButtonGroup()
+        {
+            InitializeComponent();
+        }
+
+        /// <summary>
+        /// The color for each radio button when it is not selected
+        /// This is a bindable property
+        /// </summary>
+        public Color DeSelectedColor
+        {
+            get => (Color)GetValue(DeSelectedColorProperty);
+            set => SetValue(DeSelectedColorProperty, value);
+        }
+
+        /// <summary>
+        /// The member path to use for the label for each radio button. This have to point at a property in object of <see cref="ItemsSource"/>
+        /// This is a bindable property
+        /// </summary>
+        /// <remarks>If this is not set, the ToString() of each item in the <see cref="ItemsSource"/> will be used</remarks>
+        public string DisplayMemberPath
+        {
+            get => (string)GetValue(DisplayMemberPathProperty);
+            set => SetValue(DisplayMemberPathProperty, value);
+        }
+
+        /// <summary>
+        /// The collection of items that should be used for each radio button, this should have a property that have to be pointed at by the <see cref="DisplayMemberPath"/>
+        /// This is a bindable property
+        /// </summary>
+        public IList ItemsSource
+        {
+            get => (IList)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
+        }
+
+        /// <summary>
+        /// The color for each radio button when it is selected
+        /// This is a bindable property
+        /// </summary>
+        public Color SelectedColor
+        {
+            get => (Color)GetValue(SelectedColorProperty);
+            set => SetValue(SelectedColorProperty, value);
+        }
+
+        /// <summary>
+        /// The selected radio button from the group. This value will be set when the user clicks a radio button and can be used to set it initially.
+        /// This is a bindable property
+        /// </summary>
+        public object SelectedItem
+        {
+            get => GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
+        }
+
+        /// <summary>
+        /// The color of the separator that separates each radio button
+        /// This is a bindable property
+        /// </summary>
+        public Color SeparatorColor
+        {
+            get => (Color)GetValue(SeparatorColorProperty);
+            set => SetValue(SeparatorColorProperty, value);
+        }
+
+        void IHandleRadioButtons.OnRadioButtonTapped(RadioButton tappedRadioButton)
+        {
+            if (SelectedItem == tappedRadioButton.Identifier) return;
+
+            var selectedObject = ItemsSource.Cast<object>().FirstOrDefault(item => tappedRadioButton.Identifier == item);
+
+            if (selectedObject == null) return;
+
+            SelectedItem = selectedObject;
+        }
+
+        private static void OnItemsSourcePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is RadioButtonGroup radioButtonGroup)) return;
+
+            var oldNotifyCollectionChanged = oldvalue as INotifyCollectionChanged;
+            if (oldNotifyCollectionChanged != null)
+            {
+                oldNotifyCollectionChanged.CollectionChanged -= radioButtonGroup.CollectionChanged;
+            }
+
+            var newItemsSource = newvalue as IEnumerable;
+            if (newItemsSource == null) return;
+
+            if (newItemsSource is INotifyCollectionChanged newNotifyCollectionChanged)
+            {
+                newNotifyCollectionChanged.CollectionChanged += radioButtonGroup.CollectionChanged;
+            }
+
+            radioButtonGroup.Initialize(newItemsSource);
+        }
+
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Initialize(e.NewItems);
+        }
 
         private static void OnSelectedColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is RadioButtonGroup radioButtonGroup)) return;
             if (!(newvalue is Color newColor)) return;
 
-            radioButtonGroup.m_radioButtons.ForEach(rb =>
-            {
-                rb.SelectedColor = newColor;
-                rb.RefreshColors();
-            });
+            radioButtonGroup.m_radioButtons.ForEach(
+                rb =>
+                {
+                    rb.SelectedColor = newColor;
+                });
         }
-
-        public static readonly BindableProperty DeSelectedColorProperty = BindableProperty.Create(
-            nameof(DeSelectedColor),
-            typeof(Color),
-            typeof(RadioButtonGroup),
-            null,
-            defaultBindingMode: BindingMode.OneWay,
-            propertyChanged: OnDeSelectedColorPropertyChanged);
 
         private static void OnDeSelectedColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
@@ -68,55 +205,50 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             if (!(newvalue is Color newColor))
                 return;
 
-            radioButtonGroup.m_radioButtons.ForEach(rb =>
+            radioButtonGroup.m_radioButtons.ForEach(
+                rb =>
+                {
+                    rb.DeSelectedColor = newColor;
+                });
+        }
+
+        /// <summary>
+        /// Get the value from the <see cref="DisplayMemberPath"/>
+        /// </summary>
+        /// <param name="item">The object to look for the value of the property</param>
+        /// <returns></returns>
+        private string GetDisplayPath(object item)
+        {
+            if (string.IsNullOrEmpty(DisplayMemberPath))
             {
-                rb.DeSelectedColor = newColor;
-                rb.RefreshColors();
-            });
-        }
+                return item == null ? string.Empty : item.ToString();
+            }
 
-        public static readonly BindableProperty SeparatorColorProperty = BindableProperty.Create(
-            nameof(SeparatorColor),
-            typeof(Color),
-            typeof(RadioButtonGroup),
-            Color.LightGray,
-            defaultBindingMode: BindingMode.OneWay);
-
-        private IList<RadioButton> m_radioButtons = new List<RadioButton>();
-
-        public Color DeSelectedColor
-        {
-            get => (Color)GetValue(DeSelectedColorProperty);
-            set => SetValue(DeSelectedColorProperty, value);
-        }
-
-        public ObservableCollection<Option> Options
-        {
-            get => (ObservableCollection<Option>)GetValue(OptionsProperty);
-            set => SetValue(OptionsProperty, value);
-        }
-
-        public Color SelectedColor
-        {
-            get => (Color)GetValue(SelectedColorProperty);
-            set => SetValue(SelectedColorProperty, value);
-        }
-
-        public Color SeparatorColor
-        {
-            get => (Color)GetValue(SeparatorColorProperty);
-            set => SetValue(SeparatorColorProperty, value);
-        }
-
-        private void Initialize(ObservableCollection<Option> options)
-        {
-            var row = 0;
-            if (options == null) return;
-            m_radioButtons.Clear();
-
-            foreach (var option in options)
+            if (m_displayMember == null)
             {
-                var radioButton = new RadioButton() { Text = option.Name, Identifier = option.Identifier };
+                m_displayMember = item.GetType().GetProperty(DisplayMemberPath);
+            }
+
+            var value = m_displayMember?.GetValue(item, null);
+            return value == null ? string.Empty : value.ToString();
+        }
+
+        private void Initialize(IEnumerable newItems)
+        {
+            if (newItems == null) return;
+
+            var row = radioButtonContainer.Children.Count;
+
+            //Add separator before the first element
+            if (row == 0)
+            {
+                AddSeparator(row);
+                row++;
+            }
+
+            foreach (var item in newItems)
+            {
+                var radioButton = new RadioButton() { Text = GetDisplayPath(item), Identifier = item };
                 //Initialize radio button
                 radioButton.Initialize(this);
 
@@ -125,14 +257,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 radioButton.DeSelectedColor = DeSelectedColor;
 
                 //Set margin for each button
-                radioButton.Margin = new Thickness(0, 15, 0, 15);
-
-                //Add separator before the first element
-                if (options.First() == option)
-                {
-                    AddSeparator(row);
-                    row++;
-                }
+                radioButton.Padding = new Thickness(0, 15, 0, 15);
 
                 //Add each radiobutton to the FlexLayout
                 radioButtonContainer.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -147,25 +272,6 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             }
         }
 
-        public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(Option), typeof(RadioButtonGroup), null, BindingMode.TwoWay, propertyChanged:OnIsSelectedPropertyChanged);
-
-        private static void OnIsSelectedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (!(bindable is RadioButtonGroup radioButtonGroup)) return;
-            if (!(newvalue is Option selectedOption)) return;
-
-            var selectedRadioButton = radioButtonGroup.m_radioButtons.SingleOrDefault(radioButton => radioButton.Identifier == selectedOption.Identifier);
-
-#pragma warning disable 4014
-            selectedRadioButton?.Animate(false);
-#pragma warning restore 4014
-        }
-
-        public Option IsSelected
-        {
-            get => (Option)GetValue(IsSelectedProperty);
-            set => SetValue(IsSelectedProperty, value);
-        }
         private void AddSeparator(int row)
         {
             var boxView = new BoxView() { HeightRequest = 1, BackgroundColor = SeparatorColor };
@@ -174,22 +280,15 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             radioButtonContainer.Children.Add(boxView);
         }
 
-#pragma warning disable 4014
-        void IHandleRadioButtons.OnRadioButtonTapped(RadioButton tappedRadioButton)
+        private static void OnIsSelectedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (tappedRadioButton.IsSelected) return;
-            var selectedOption = Options.FirstOrDefault(o => o.Identifier == tappedRadioButton.Identifier);
-            if (selectedOption == null)
-                return;
-            IsSelected = selectedOption;
+            if (!(bindable is RadioButtonGroup radioButtonGroup)) return;
 
+            var selectedRadioButton = radioButtonGroup.m_radioButtons.SingleOrDefault(radioButton => radioButton.Identifier == newvalue);
+            var unSelectedRadioButton = radioButtonGroup.m_radioButtons.SingleOrDefault(radioButton => radioButton.Identifier == oldvalue);
 
-            foreach (var radioButton in m_radioButtons)
-            {
-                if (radioButton == tappedRadioButton) continue;
-                radioButton.Animate(true);
-            }
+            if (unSelectedRadioButton != null) unSelectedRadioButton.IsSelected = false;
+            if (selectedRadioButton != null) selectedRadioButton.IsSelected = true;
         }
-#pragma warning restore 4014
     }
 }
