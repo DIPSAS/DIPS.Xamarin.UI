@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup.RadioButtonGroupPage">
     <ContentPage.BindingContext>
-        <local:RadioButtonPageViewModel />
+        <local:RadioButtonGroupPageViewModel />
     </ContentPage.BindingContext>
     <Grid>
         <Grid.RowDefinitions>
