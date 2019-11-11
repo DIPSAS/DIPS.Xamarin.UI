@@ -11,7 +11,7 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 {
     /// <summary>
-    /// An vertical oriented radio button group
+    ///     An vertical oriented radio button group
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RadioButtonGroup : ContentView, IHandleRadioButtons
@@ -19,19 +19,21 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
         private PropertyInfo m_displayMember;
 
+        private const string SeparatorAutomationId = "separator";
+
         /// <summary>
-        /// <see cref="SelectedColor"/>
+        ///     <see cref="SelectedColor" />
         /// </summary>
         public static readonly BindableProperty SelectedColorProperty = BindableProperty.Create(
             nameof(SelectedColor),
             typeof(Color),
             typeof(RadioButtonGroup),
             null,
-            BindingMode.TwoWay,
+            BindingMode.OneWay,
             propertyChanged: OnSelectedColorPropertyChanged);
 
         /// <summary>
-        /// <see cref="DeSelectedColor"/>
+        ///     <see cref="DeSelectedColor" />
         /// </summary>
         public static readonly BindableProperty DeSelectedColorProperty = BindableProperty.Create(
             nameof(DeSelectedColor),
@@ -42,16 +44,18 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             propertyChanged: OnDeSelectedColorPropertyChanged);
 
         /// <summary>
-        /// <see cref="SeparatorColor"/>
+        ///     <see cref="SeparatorColor" />
         /// </summary>
         public static readonly BindableProperty SeparatorColorProperty = BindableProperty.Create(
             nameof(SeparatorColor),
             typeof(Color),
             typeof(RadioButtonGroup),
-            Color.LightGray);
+            null,
+            BindingMode.OneWay,
+            propertyChanged:OnSeparatorPropertyChanged);
 
         /// <summary>
-        /// <see cref="ItemsSource"/>
+        ///     <see cref="ItemsSource" />
         /// </summary>
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
             nameof(ItemsSource),
@@ -61,7 +65,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             propertyChanged: OnItemsSourcePropertyChanged);
 
         /// <summary>
-        /// <see cref="DisplayMemberPath"/>
+        ///     <see cref="DisplayMemberPath" />
         /// </summary>
         public static readonly BindableProperty DisplayMemberPathProperty = BindableProperty.Create(
             nameof(DisplayMemberPath),
@@ -70,7 +74,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             string.Empty);
 
         /// <summary>
-        /// <see cref="SelectedItem"/>
+        ///     <see cref="SelectedItem" />
         /// </summary>
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
             nameof(SelectedItem),
@@ -81,7 +85,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             propertyChanged: OnIsSelectedPropertyChanged);
 
         /// <summary>
-        /// Constructs an radio button group
+        ///     Constructs an radio button group
         /// </summary>
         public RadioButtonGroup()
         {
@@ -89,8 +93,8 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         }
 
         /// <summary>
-        /// The color for each radio button when it is not selected
-        /// This is a bindable property
+        ///     The color for each radio button when it is not selected
+        ///     This is a bindable property
         /// </summary>
         public Color DeSelectedColor
         {
@@ -99,10 +103,11 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         }
 
         /// <summary>
-        /// The member path to use for the label for each radio button. This have to point at a property in object of <see cref="ItemsSource"/>
-        /// This is a bindable property
+        ///     The member path to use for the label for each radio button. This have to point at a property in object of
+        ///     <see cref="ItemsSource" />
+        ///     This is a bindable property
         /// </summary>
-        /// <remarks>If this is not set, the ToString() of each item in the <see cref="ItemsSource"/> will be used</remarks>
+        /// <remarks>If this is not set, the ToString() of each item in the <see cref="ItemsSource" /> will be used</remarks>
         public string DisplayMemberPath
         {
             get => (string)GetValue(DisplayMemberPathProperty);
@@ -110,8 +115,9 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         }
 
         /// <summary>
-        /// The collection of items that should be used for each radio button, this should have a property that have to be pointed at by the <see cref="DisplayMemberPath"/>
-        /// This is a bindable property
+        ///     The collection of items that should be used for each radio button, this should have a property that have to be
+        ///     pointed at by the <see cref="DisplayMemberPath" />
+        ///     This is a bindable property
         /// </summary>
         public IList ItemsSource
         {
@@ -120,8 +126,8 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         }
 
         /// <summary>
-        /// The color for each radio button when it is selected
-        /// This is a bindable property
+        ///     The color for each radio button when it is selected
+        ///     This is a bindable property
         /// </summary>
         public Color SelectedColor
         {
@@ -130,8 +136,9 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         }
 
         /// <summary>
-        /// The selected radio button from the group. This value will be set when the user clicks a radio button and can be used to set it initially.
-        /// This is a bindable property
+        ///     The selected radio button from the group. This value will be set when the user clicks a radio button and can be
+        ///     used to set it initially.
+        ///     This is a bindable property
         /// </summary>
         public object SelectedItem
         {
@@ -140,8 +147,8 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         }
 
         /// <summary>
-        /// The color of the separator that separates each radio button
-        /// This is a bindable property
+        ///     The color of the separator that separates each radio button
+        ///     This is a bindable property
         /// </summary>
         public Color SeparatorColor
         {
@@ -158,6 +165,25 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             if (selectedObject == null) return;
 
             SelectedItem = selectedObject;
+        }
+
+        private static void OnSeparatorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is RadioButtonGroup radioButtonGroup)) return;
+            if (!(newvalue is Color newColor)) return;
+            if (!(oldvalue is Color oldColor)) return;
+
+            radioButtonGroup.radioButtonContainer.Children.ForEach(
+                c =>
+                {
+                    if(c.AutomationId != null)
+                    {
+                        if (c.AutomationId.Equals(SeparatorAutomationId))
+                        {
+                            c.BackgroundColor = newColor;
+                        }
+                    }
+                });
         }
 
         private static void OnItemsSourcePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -195,6 +221,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 rb =>
                 {
                     rb.SelectedColor = newColor;
+                    rb.RefreshColor(rb.IsSelected);
                 });
         }
 
@@ -209,11 +236,12 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 rb =>
                 {
                     rb.DeSelectedColor = newColor;
+                    rb.RefreshColor(rb.IsSelected);
                 });
         }
 
         /// <summary>
-        /// Get the value from the <see cref="DisplayMemberPath"/>
+        ///     Get the value from the <see cref="DisplayMemberPath" />
         /// </summary>
         /// <param name="item">The object to look for the value of the property</param>
         /// <returns></returns>
@@ -274,7 +302,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void AddSeparator(int row)
         {
-            var boxView = new BoxView() { HeightRequest = 1, BackgroundColor = SeparatorColor };
+            var boxView = new BoxView() { HeightRequest = 1, BackgroundColor = SeparatorColor, AutomationId = SeparatorAutomationId };
             radioButtonContainer.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             Grid.SetRow(boxView, row);
             radioButtonContainer.Children.Add(boxView);

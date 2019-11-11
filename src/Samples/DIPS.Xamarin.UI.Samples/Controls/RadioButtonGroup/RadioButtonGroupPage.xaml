@@ -14,17 +14,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
-                                           SelectedColor="{Binding SelectedColor}"
-                                           DeSelectedColor="{Binding DeSelectedColor}"
                                            ItemsSource="{Binding Items}"
                                            SelectedItem="{Binding SelectedItem}"
-                                           DisplayMemberPath="Name"/>
-        <Frame Grid.Row="1"
+                                           DisplayMemberPath="Name"
+                                           SelectedColor="{Binding SelectedColor}"
+                                           DeSelectedColor="{Binding DeSelectedColor}"
+                                           SeparatorColor="{Binding SeparatorColor}"
+                                           />
+        <Button Grid.Row="1"
+                Command="{Binding AddNewCommand}"
+                Text="Add new" />
+        <Frame Grid.Row="2"
                HasShadow="False"
                CornerRadius="10"
                BackgroundColor="LightGray"
@@ -48,6 +53,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <StackLayout Grid.Row="0"
                                  Orientation="Horizontal"
@@ -64,13 +70,18 @@
                                VerticalOptions="CenterAndExpand" />
                         <Entry Text="{Binding DeSelectedColor}"
                                VerticalOptions="CenterAndExpand" />
+                    </StackLayout> 
+                    <StackLayout Grid.Row="2"
+                                 Orientation="Horizontal"
+                                 VerticalOptions="CenterAndExpand">
+                        <Label Text="SeparatorColor"
+                               VerticalOptions="CenterAndExpand" />
+                        <Entry Text="{Binding SeparatorColor}"
+                               VerticalOptions="CenterAndExpand" />
                     </StackLayout>
                 </Grid>
             </Grid>
         </Frame>
-        <Button Grid.Row="2"
-                Command="{Binding AddNewCommand}"
-                Text="Add new" />
     </Grid>
 
 </ContentPage>

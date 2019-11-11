@@ -12,6 +12,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
         private ObservableCollection<ItemViewModel> m_items;
         private string m_selectedColor = "#047F89";
         private ItemViewModel? m_selectedItem;
+        private string m_separatorColor = "lightgrey";
 
         public RadioButtonGroupPageViewModel()
         {
@@ -79,6 +80,24 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
         {
             get => m_selectedItem;
             set => this.Set(ref m_selectedItem, value, PropertyChanged);
+        }
+
+        public string SeparatorColor
+        {
+            get => m_separatorColor;
+            set
+            {
+                try
+                {
+                    new ColorTypeConverter().ConvertFromInvariantString(value);
+                    m_separatorColor = value;
+                    this.OnPropertyChanged(PropertyChanged);
+                }
+                catch (Exception e)
+                {
+                    //Swallow it.
+                }
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

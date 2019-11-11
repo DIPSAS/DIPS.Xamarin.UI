@@ -117,15 +117,27 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         {
             if (!wasSelected)
             {
-                innerFrame.BackgroundColor = SelectedColor;
-                outerFrame.BorderColor = SelectedColor;
+                RefreshColor(true);
                 innerFrame.ScaleTo(0.5);
             }
             else
             {
+                RefreshColor(false);
+                innerFrame.ScaleTo(0);
+            }
+        }
+
+        internal void RefreshColor(bool isSelected)
+        {
+            if (!isSelected)
+            {
                 innerFrame.BackgroundColor = DeSelectedColor;
                 outerFrame.BorderColor = DeSelectedColor;
-                innerFrame.ScaleTo(0);
+            }
+            else
+            {
+                innerFrame.BackgroundColor = SelectedColor;
+                outerFrame.BorderColor = SelectedColor;
             }
         }
 
