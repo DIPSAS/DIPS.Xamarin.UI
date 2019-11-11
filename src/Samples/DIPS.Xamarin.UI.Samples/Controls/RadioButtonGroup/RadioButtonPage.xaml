@@ -22,7 +22,8 @@
                                            SelectedColor="{Binding SelectedColor}"
                                            DeSelectedColor="{Binding DeSelectedColor}"
                                            ItemsSource="{Binding Options}"
-                                           SelectedItem="{Binding SelectedOption}" />
+                                           SelectedItem="{Binding SelectedOption}"
+                                           DisplayMemberPath="Name"/>
         <Frame Grid.Row="1"
                HasShadow="False"
                CornerRadius="10"

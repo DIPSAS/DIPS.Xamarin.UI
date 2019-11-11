@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controls\RadioButton\RadioButtonPage.xaml.cs">
+    <Compile Update="Controls\RadioButtonGroup\RadioButtonPage.xaml.cs">
       <DependentUpon>RadioButtonPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -33,7 +33,7 @@
     <EmbeddedResource Update="Controls\DatePicker\DatePickerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Controls\RadioButton\RadioButtonPage.xaml">
+    <EmbeddedResource Update="Controls\RadioButtonGroup\RadioButtonPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Converters\ConvertersPage.xaml">
