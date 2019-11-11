@@ -101,6 +101,14 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup
 
             return Task.CompletedTask;
         }
+
+        public void OnDone()
+        {
+            if ((ServerOptions)SelectedOption.Identifier == ServerOptions.First)
+            {
+
+            }
+        }
     }
 
     public enum ServerOptions
