@@ -16,7 +16,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
         public RadioButtonGroupPageViewModel()
         {
             m_items = new ObservableCollection<ItemViewModel>();
-            AddNewCommand = new Command(() => Items.Add(new ItemViewModel($"{Items.Count}th option")));
+            AddNewCommand = new Command(() => Items.Add(new ItemViewModel($"{Items.Count+1}th option")));
         }
 
         public void Initialize()
