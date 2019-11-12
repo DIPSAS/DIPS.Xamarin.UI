@@ -19,7 +19,6 @@
         </Grid.RowDefinitions>
 
         <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
-                                           Margin="10"
                                            ItemsSource="{Binding Items}"
                                            SelectedItem="{Binding SelectedItem}"
                                            DisplayMemberPath="Name"

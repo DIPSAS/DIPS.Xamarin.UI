@@ -10,7 +10,13 @@
     <ContentView.GestureRecognizers>
         <TapGestureRecognizer Tapped="OnTapped" />
     </ContentView.GestureRecognizers>
-    <Grid BindingContext="{Binding Source={x:Reference codeBehind}}">
+    <ContentView.Resources>
+        <Thickness x:Key="spacing"
+                   Left="10" />
+    </ContentView.Resources>
+    <Grid BindingContext="{Binding Source={x:Reference codeBehind}}"
+          Padding="{StaticResource spacing}"
+          ColumnSpacing="0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -24,16 +30,12 @@
                     WidthRequest="20"
                     CornerRadius="10"
                     BorderWidth="1.7"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
                     InputTransparent="True" />
             <Button x:Name="innerButton"
                     HeightRequest="{Binding Source={x:Reference outerButton}, Path=HeightRequest}"
                     WidthRequest="{Binding Source={x:Reference outerButton}, Path=WidthRequest}"
                     CornerRadius="{Binding Source={x:Reference outerButton}, Path=CornerRadius}"
                     Scale="0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
                     InputTransparent="True" />
         </Grid>
 
@@ -42,6 +44,7 @@
                VerticalOptions="Center"
                Text="{Binding Text}"
                FontSize="Body"
-               InputTransparent="True" />
+               InputTransparent="True"
+               Margin="{StaticResource spacing}" />
     </Grid>
 </ContentView>
