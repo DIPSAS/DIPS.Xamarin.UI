@@ -283,6 +283,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 //Set colors for each radiobutton
                 radioButton.SelectedColor = SelectedColor;
                 radioButton.DeSelectedColor = DeSelectedColor;
+                radioButton.RefreshColor(radioButton.IsSelected);
 
                 //Set margin for each button
                 radioButton.Padding = new Thickness(0, 15, 0, 15);

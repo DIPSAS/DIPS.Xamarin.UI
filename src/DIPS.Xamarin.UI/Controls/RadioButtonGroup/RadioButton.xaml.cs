@@ -132,12 +132,12 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             if (!wasSelected)
             {
                 RefreshColor(true);
-                innerFrame.ScaleTo(0.65);
+                innerButton.ScaleTo(0.5);  
             }
             else
             {
                 RefreshColor(false);
-                innerFrame.ScaleTo(0);
+                innerButton.ScaleTo(0);
             }
         }
 
@@ -145,13 +145,13 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         {
             if (!isSelected)
             {
-                innerFrame.BackgroundColor = DeSelectedColor;
-                outerFrame.BackgroundColor = DeSelectedColor;
+                innerButton.BackgroundColor = DeSelectedColor;
+                outerButton.BorderColor = DeSelectedColor;
             }
             else
             {
-                innerFrame.BackgroundColor = SelectedColor;
-                outerFrame.BackgroundColor = SelectedColor;
+                innerButton.BackgroundColor = SelectedColor;
+                outerButton.BorderColor = SelectedColor;
             }
         }
 

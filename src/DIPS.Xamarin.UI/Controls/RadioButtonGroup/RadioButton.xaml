@@ -15,51 +15,28 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid x:Name="buttonGrid"
-              VerticalOptions="Center">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Frame x:Name="outerFrame"
-                   BackgroundColor="{Binding DeSelectedColor}"
-                   HeightRequest="16"
-                   WidthRequest="16"
-                   InputTransparent="True"
-                   HasShadow="False"
-                   Padding="2.1"
-                   HorizontalOptions="Center"
-                   IsClippedToBounds="True"
-                   >
-                <Frame.CornerRadius>
-                    <OnPlatform x:TypeArguments="x:Single">
-                        <On Platform="iOS"
-                            Value="9" />
-                        <On Platform="Android"
-                            Value="{Binding Source={x:Reference outerFrame}, Path=HeightRequest}" />
-                    </OnPlatform>
-                </Frame.CornerRadius>
-                <Frame Padding="0"
-                       HeightRequest="{Binding Source={x:Reference outerFrame}, Path=HeightRequest}"
-                       WidthRequest="{Binding Source={x:Reference outerFrame}, Path=WidthRequest}"
-                       CornerRadius="{Binding Source={x:Reference outerFrame}, Path=CornerRadius}"
-                       InputTransparent="True"
-                       Margin="0"
-                       HasShadow="False">
-                    <Frame x:Name="innerFrame"
-                           Padding="0"
-                           HeightRequest="{Binding Source={x:Reference outerFrame}, Path=HeightRequest}"
-                           WidthRequest="{Binding Source={x:Reference outerFrame}, Path=WidthRequest}"
-                           CornerRadius="{Binding Source={x:Reference outerFrame}, Path=CornerRadius}"
-                           BackgroundColor="{Binding DeSelectedColor}"
-                           Scale="0"
-                           InputTransparent="True"
-                           HasShadow="False"
-                           Margin="0" />
-                </Frame>
-            </Frame>
-
+        <Grid VerticalOptions="Center"
+              HorizontalOptions="Center">
+            <Button x:Name="outerButton"
+                    BackgroundColor="Transparent"
+                    HeightRequest="20"
+                    WidthRequest="20"
+                    CornerRadius="10"
+                    BorderWidth="1.7"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    InputTransparent="True" />
+            <Button x:Name="innerButton"
+                    HeightRequest="{Binding Source={x:Reference outerButton}, Path=HeightRequest}"
+                    WidthRequest="{Binding Source={x:Reference outerButton}, Path=WidthRequest}"
+                    CornerRadius="{Binding Source={x:Reference outerButton}, Path=CornerRadius}"
+                    Scale="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    InputTransparent="True" />
         </Grid>
+
         <Label x:Name="label"
                Grid.Column="1"
                VerticalOptions="Center"
