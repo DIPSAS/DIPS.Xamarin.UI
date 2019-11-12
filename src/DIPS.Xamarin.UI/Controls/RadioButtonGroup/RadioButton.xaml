@@ -6,8 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButton"
-             x:Name="codeBehind"
-             >
+             x:Name="codeBehind">
     <ContentView.GestureRecognizers>
         <TapGestureRecognizer Tapped="OnTapped" />
     </ContentView.GestureRecognizers>
@@ -22,33 +21,50 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-
             <Frame x:Name="outerFrame"
-                   Padding="0"
-                   HeightRequest="30"
-                   WidthRequest="30"
-                   CornerRadius="15"
-                   BorderColor="{Binding DeSelectedColor}"
-                   InputTransparent="True"
-                   IsClippedToBounds="True"
-                   Margin="0"
-                   HasShadow="False"/>
-            <Frame x:Name="innerFrame"
-                   Grid.Row="0"
-                   Padding="0"
-                   HeightRequest="{Binding Source={x:Reference outerFrame}, Path=HeightRequest}"
-                   WidthRequest="{Binding Source={x:Reference outerFrame}, Path=WidthRequest}"
-                   CornerRadius="{Binding Source={x:Reference outerFrame}, Path=CornerRadius}"
                    BackgroundColor="{Binding DeSelectedColor}"
-                   Scale="0"
+                   HeightRequest="16"
+                   WidthRequest="16"
                    InputTransparent="True"
                    HasShadow="False"
-                   Margin="0" />
+                   Padding="2.1"
+                   HorizontalOptions="Center"
+                   IsClippedToBounds="True"
+                   >
+                <Frame.CornerRadius>
+                    <OnPlatform x:TypeArguments="x:Single">
+                        <On Platform="iOS"
+                            Value="9" />
+                        <On Platform="Android"
+                            Value="{Binding Source={x:Reference outerFrame}, Path=HeightRequest}" />
+                    </OnPlatform>
+                </Frame.CornerRadius>
+                <Frame Padding="0"
+                       HeightRequest="{Binding Source={x:Reference outerFrame}, Path=HeightRequest}"
+                       WidthRequest="{Binding Source={x:Reference outerFrame}, Path=WidthRequest}"
+                       CornerRadius="{Binding Source={x:Reference outerFrame}, Path=CornerRadius}"
+                       InputTransparent="True"
+                       Margin="0"
+                       HasShadow="False">
+                    <Frame x:Name="innerFrame"
+                           Padding="0"
+                           HeightRequest="{Binding Source={x:Reference outerFrame}, Path=HeightRequest}"
+                           WidthRequest="{Binding Source={x:Reference outerFrame}, Path=WidthRequest}"
+                           CornerRadius="{Binding Source={x:Reference outerFrame}, Path=CornerRadius}"
+                           BackgroundColor="{Binding DeSelectedColor}"
+                           Scale="0"
+                           InputTransparent="True"
+                           HasShadow="False"
+                           Margin="0" />
+                </Frame>
+            </Frame>
+
         </Grid>
         <Label x:Name="label"
                Grid.Column="1"
                VerticalOptions="Center"
                Text="{Binding Text}"
+               FontSize="Body"
                InputTransparent="True" />
     </Grid>
 </ContentView>

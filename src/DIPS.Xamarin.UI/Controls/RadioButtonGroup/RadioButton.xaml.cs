@@ -10,8 +10,8 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
     ///     <see cref="RadioButtonGroup" />
     /// </summary>
     /// <remarks>
-    /// This component should not be used stand alone
-    /// Please use <see cref="RadioButtonGroup" /> instead of creating a group and handling multiples yourself.
+    ///     This component should not be used stand alone
+    ///     Please use <see cref="RadioButtonGroup" /> instead of creating a group and handling multiples yourself.
     /// </remarks>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RadioButton : ContentView
@@ -19,27 +19,12 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         private IHandleRadioButtons? m_radioButtonsHandler;
 
         /// <summary>
-        ///     Constructs an radio button
-        /// </summary>
-        public RadioButton()
-        {
-            InitializeComponent();
-        }
-
-
-        internal void Initialize(IHandleRadioButtons radioButtonsHandler)
-        {
-            m_radioButtonsHandler = radioButtonsHandler;
-        }
-
-
-        /// <summary>
-        /// <see cref="Text"/>
+        ///     <see cref="Text" />
         /// </summary>
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton));
 
         /// <summary>
-        /// <see cref="SelectedColor"/>
+        ///     <see cref="SelectedColor" />
         /// </summary>
         public static readonly BindableProperty SelectedColorProperty = BindableProperty.Create(
             nameof(SelectedColor),
@@ -49,7 +34,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             BindingMode.TwoWay);
 
         /// <summary>
-        /// <see cref="DeSelectedColor"/>
+        ///     <see cref="DeSelectedColor" />
         /// </summary>
         public static readonly BindableProperty DeSelectedColorProperty = BindableProperty.Create(
             nameof(DeSelectedColor),
@@ -59,13 +44,37 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             BindingMode.TwoWay);
 
         /// <summary>
-        /// <see cref="IsSelected"/>
+        ///     <see cref="IsSelected" />
         /// </summary>
         public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(
             nameof(IsSelected),
             typeof(bool),
             typeof(RadioButton),
             false);
+
+        public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(
+            nameof(BorderWidth),
+            typeof(int),
+            typeof(RadioButton),
+            2);
+
+        /// <summary>
+        ///     Constructs an radio button
+        /// </summary>
+        public RadioButton()
+        {
+            InitializeComponent();
+        }
+
+        /// <summary>
+        ///     The width of the outermost border of the radio button
+        ///     This is a bindable property
+        /// </summary>
+        public int BorderWidth
+        {
+            get => (int)GetValue(BorderWidthProperty);
+            set => SetValue(BorderWidthProperty, value);
+        }
 
         /// <summary>
         ///     The color to use on the radio button when the button is not selected
@@ -113,12 +122,17 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(TextProperty, value);
         }
 
+        internal void Initialize(IHandleRadioButtons radioButtonsHandler)
+        {
+            m_radioButtonsHandler = radioButtonsHandler;
+        }
+
         private void Animate(bool wasSelected)
         {
             if (!wasSelected)
             {
                 RefreshColor(true);
-                innerFrame.ScaleTo(0.5);
+                innerFrame.ScaleTo(0.65);
             }
             else
             {
@@ -132,12 +146,12 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             if (!isSelected)
             {
                 innerFrame.BackgroundColor = DeSelectedColor;
-                outerFrame.BorderColor = DeSelectedColor;
+                outerFrame.BackgroundColor = DeSelectedColor;
             }
             else
             {
                 innerFrame.BackgroundColor = SelectedColor;
-                outerFrame.BorderColor = SelectedColor;
+                outerFrame.BackgroundColor = SelectedColor;
             }
         }
 

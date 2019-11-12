@@ -28,7 +28,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             nameof(SelectedColor),
             typeof(Color),
             typeof(RadioButtonGroup),
-            null,
+            Color.Black,
             BindingMode.OneWay,
             propertyChanged: OnSelectedColorPropertyChanged);
 
@@ -39,7 +39,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             nameof(DeSelectedColor),
             typeof(Color),
             typeof(RadioButtonGroup),
-            null,
+            Color.Black,
             BindingMode.OneWay,
             propertyChanged: OnDeSelectedColorPropertyChanged);
 
@@ -50,7 +50,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             nameof(SeparatorColor),
             typeof(Color),
             typeof(RadioButtonGroup),
-            null,
+            Color.Black,
             BindingMode.OneWay,
             propertyChanged:OnSeparatorPropertyChanged);
 
