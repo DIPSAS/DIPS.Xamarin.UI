@@ -86,7 +86,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(DeSelectedColorProperty, value);
         }
 
-        internal object Identifier { get; set; }
+        internal object? Identifier { get; set; }
 
         /// <summary>
         ///     A value to indicate if the radio button should be checked or not
