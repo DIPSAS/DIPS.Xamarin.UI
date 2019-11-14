@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.RadioButtonGroup.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -63,6 +64,22 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             typeof(Picker),
             default(IList),
             propertyChanged: OnItemsSourcePropertyChanged);
+
+        /// <summary>
+        /// <see cref="SelectedItemChangedCommand"/>
+        /// </summary>
+        public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(RadioButtonGroup));
+
+        /// <summary>
+        ///     Command that triggers when the user clicks an radio button group or when the <see cref="SelectedItem"/> changes.
+        /// <remarks>The command will send the object from the <see cref="ItemsSource"/> as an parameter</remarks>
+        ///     This is a bindable property
+        /// </summary>
+        public ICommand SelectedItemChangedCommand
+        {
+            get => (ICommand)GetValue(SelectedItemChangedCommandProperty);
+            set => SetValue(SelectedItemChangedCommandProperty, value);
+        }
 
         /// <summary>
         ///     <see cref="DisplayMemberPath" />
@@ -136,9 +153,9 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         }
 
         /// <summary>
-        ///     The selected radio button from the group. This value will be set when the user clicks a radio button and can be
-        ///     used to set it initially.
+        ///     The selected item from the <see cref="ItemsSource"/> list that the user clicked. This can be set programatically to set an initial value.
         ///     This is a bindable property
+        /// <remarks>Setting this will trigger <see cref="SelectedItemChangedCommand"/></remarks>
         /// </summary>
         public object SelectedItem
         {
@@ -318,6 +335,8 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
             if (unSelectedRadioButton != null) unSelectedRadioButton.IsSelected = false;
             if (selectedRadioButton != null) selectedRadioButton.IsSelected = true;
+
+            radioButtonGroup.SelectedItemChangedCommand?.Execute(newvalue);
         }
     }
 }

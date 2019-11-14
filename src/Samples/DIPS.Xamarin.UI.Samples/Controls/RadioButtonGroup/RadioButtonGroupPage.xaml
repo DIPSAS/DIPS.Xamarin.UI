@@ -21,6 +21,7 @@
         <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
                                            ItemsSource="{Binding Items}"
                                            SelectedItem="{Binding SelectedItem}"
+                                           SelectedItemChangedCommand="{Binding SelectedItemChangedCommand}"
                                            DisplayMemberPath="Name"
                                            SelectedColor="{Binding SelectedColor}"
                                            DeSelectedColor="{Binding DeSelectedColor}"

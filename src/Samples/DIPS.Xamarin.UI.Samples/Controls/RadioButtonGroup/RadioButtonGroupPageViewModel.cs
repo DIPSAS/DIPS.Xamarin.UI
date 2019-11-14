@@ -18,6 +18,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
         {
             m_items = new ObservableCollection<ItemViewModel>();
             AddNewCommand = new Command(() => Items.Add(new ItemViewModel($"{Items.Count+1}th option")));
+            SelectedItemChangedCommand = new Command<ItemViewModel>(DoSomething);
+        }
+
+        private void DoSomething(ItemViewModel selectedItem)
+        {
+            
         }
 
         public void Initialize()
@@ -99,6 +105,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
                 }
             }
         }
+
+        public Command<ItemViewModel> SelectedItemChangedCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
     }
