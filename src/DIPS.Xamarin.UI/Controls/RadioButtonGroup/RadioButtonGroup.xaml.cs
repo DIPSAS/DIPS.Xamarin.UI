@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.RadioButtonGroup.Abstractions;
+using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
@@ -257,26 +258,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 });
         }
 
-        /// <summary>
-        ///     Get the value from the <see cref="DisplayMemberPath" />
-        /// </summary>
-        /// <param name="item">The object to look for the value of the property</param>
-        /// <returns></returns>
-        private string GetDisplayPath(object item)
-        {
-            if (string.IsNullOrEmpty(DisplayMemberPath))
-            {
-                return item == null ? string.Empty : item.ToString();
-            }
 
-            if (m_displayMember == null)
-            {
-                m_displayMember = item.GetType().GetProperty(DisplayMemberPath);
-            }
-
-            var value = m_displayMember?.GetValue(item, null);
-            return value == null ? string.Empty : value.ToString();
-        }
 
         private void Initialize(IEnumerable newItems)
         {
@@ -293,7 +275,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
             foreach (var item in newItems)
             {
-                var radioButton = new RadioButton() { Text = GetDisplayPath(item), Identifier = item };
+                var radioButton = new RadioButton() { Text = item.GetPropertyValue(DisplayMemberPath), Identifier = item };
                 //Initialize radio button
                 radioButton.Initialize(this);
 
