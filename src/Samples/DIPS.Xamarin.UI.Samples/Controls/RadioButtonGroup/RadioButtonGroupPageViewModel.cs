@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
@@ -13,11 +14,15 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
         private string m_selectedColor = "#047F89";
         private ItemViewModel? m_selectedItem;
         private string m_separatorColor = "lightgrey";
+        
 
         public RadioButtonGroupPageViewModel()
         {
             m_items = new ObservableCollection<ItemViewModel>();
             AddNewCommand = new Command(() => Items.Add(new ItemViewModel($"{Items.Count+1}th option")));
+            RemoveLastCommand = new Command(() => Items.Remove(Items.LastOrDefault()));
+            InsertSecondCommand = new Command(() => Items.Insert(Items.Count > 0 ? 1 : 0, new ItemViewModel("Inserted item")));
+            ResetListCommand = new Command(() => Items = new ObservableCollection<ItemViewModel>());
         }
 
         public void Initialize()
@@ -33,6 +38,9 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
         }
 
         public ICommand AddNewCommand { get; }
+        public ICommand RemoveLastCommand { get; }
+        public ICommand InsertSecondCommand { get; }
+        public ICommand ResetListCommand { get; }
 
         public string DeSelectedColor
         {

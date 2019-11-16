@@ -15,6 +15,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -29,7 +32,16 @@
         <Button Grid.Row="1"
                 Command="{Binding AddNewCommand}"
                 Text="Add new" />
-        <Frame Grid.Row="2"
+        <Button Grid.Row="2"
+                Command="{Binding RemoveLastCommand}"
+                Text="Remove last" />
+        <Button Grid.Row="3"
+                Command="{Binding InsertSecondCommand}"
+                Text="Insert" />
+        <Button Grid.Row="4"
+                Command="{Binding ResetListCommand}"
+                Text="Reset" />
+        <Frame Grid.Row="5"
                HasShadow="False"
                CornerRadius="10"
                BackgroundColor="LightGray"
