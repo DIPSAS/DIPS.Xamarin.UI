@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -213,91 +212,14 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    var indexToAdd = e.NewStartingIndex;
-                    foreach (var newItem in e.NewItems)
-                    {
-                        //Replace
-                        if (radioButtonContainer.Children.ElementAtOrDefault(indexToAdd) != null)
-                        {
-                            InsertAt(newItem, indexToAdd);
-                        }
-                        else
-                        {
-                            Add(newItem, indexToAdd);
-                        }
-                    }
-
+                    Initialize(ItemsSource);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    var indexToRemove = e.OldStartingIndex;
-                    RemoveAt(indexToRemove);
+                    Initialize(ItemsSource);
                     break;
             }
 
             if (radioButtonContainer.Children.Count == 0) firstSeparator.IsVisible = false;
-        }
-
-        private void RemoveAt(int index)
-        {
-            //Get item to remove and items move
-            var visualToRemove = radioButtonContainer.Children.FirstOrDefault(c => radioButtonContainer.Children.IndexOf(c) == index);
-            var itemsToMove = radioButtonContainer.Children.Where(c => radioButtonContainer.Children.IndexOf(c) > index);
-            var originalItemsToMove = itemsToMove.ToList();
-
-            //Remove item
-            if (!(visualToRemove is Grid radioButtonGridToRemove)) return;
-            RemoveRadioButtonGrid(radioButtonGridToRemove);
-
-            foreach (var itemToMove in originalItemsToMove)
-            {
-                if (!(itemToMove is Grid grid)) continue;
-                RemoveRadioButtonGrid(grid);
-            }
-
-            AddToEndOfList(originalItemsToMove);
-        }
-
-        private void RemoveRadioButtonGrid(Grid grid)
-        {
-            var itemToRemoveIndex = radioButtonContainer.Children.IndexOf(grid);
-            //Remove
-            var radioButton = grid.Children.FirstOrDefault(c => c is RadioButton);
-            if (radioButton != null)
-            {
-                radioButtonContainer.Children.RemoveAt(itemToRemoveIndex);
-                radioButtonContainer.RowDefinitions.RemoveAt(itemToRemoveIndex);
-                m_radioButtons.Remove((RadioButton)radioButton);
-            }
-        }
-
-        private void InsertAt(object newItem, int index)
-        {
-            var itemsToMove = radioButtonContainer.Children.Where(c => radioButtonContainer.Children.IndexOf(c) >= index);
-
-            var originalItemsToMove = itemsToMove.ToList();
-
-            foreach (var itemToMove in originalItemsToMove)
-            {
-                if (!(itemToMove is Grid grid)) continue;
-                RemoveRadioButtonGrid(grid);
-            }
-
-            Add(newItem, index);
-
-            AddToEndOfList(originalItemsToMove);
-        }
-
-        private void AddToEndOfList(IEnumerable<View> originalItemsToMove)
-        {
-            foreach (var itemToMove in originalItemsToMove)
-            {
-                if (!(itemToMove is Grid grid)) continue;
-                var radioButton = grid.Children.FirstOrDefault(c => c is RadioButton);
-                var identifier = ((RadioButton)radioButton)?.Identifier;
-                if (identifier == null) continue;
-
-                Add(identifier, radioButtonContainer.Children.Count);
-            }
         }
 
         private static void OnSelectedColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -330,11 +252,21 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void Initialize(IEnumerable newItems)
         {
+            m_radioButtons.Clear();
             radioButtonContainer.Children.Clear();
 
             foreach (var item in newItems)
             {
                 Add(item, radioButtonContainer.Children.Count);
+            }
+
+            if (SelectedItem != null)
+            {
+                var selectedRadioButton = m_radioButtons.FirstOrDefault(rb => rb.Identifier == SelectedItem);
+                if (selectedRadioButton != null)
+                {
+                    selectedRadioButton.IsSelected = true;
+                }
             }
         }
 

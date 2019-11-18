@@ -14,12 +14,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
-                                           Margin="5"
+                                           Margin="0,5,0,0"
                                            ItemsSource="{Binding Items}"
                                            SelectedItem="{Binding SelectedItem}"
                                            SelectedItemChangedCommand="{Binding SelectedItemChangedCommand}"
@@ -31,14 +31,7 @@
             <StackLayout>
                 <Button Command="{Binding AddNewCommand}"
                         Text="Add new" />
-                <Button Command="{Binding InsertSecondCommand}"
-                        Text="Insert position 2" />
-                <Button Command="{Binding RemoveLastCommand}"
-                        Text="Remove last" />
-                <Button Command="{Binding RemoveSecondCommand}"
-                        Text="Move second and first" />
-                <Button Command="{Binding ResetListCommand}"
-                        Text="Reset" />
+                <Button Command="{Binding RemoveLastCommand}" Text="Remove last"/>
             </StackLayout>
         </ScrollView>
 
