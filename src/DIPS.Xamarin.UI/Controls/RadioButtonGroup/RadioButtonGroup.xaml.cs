@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             typeof(RadioButtonGroup),
             Color.Black,
             BindingMode.OneWay,
-            propertyChanged:OnSeparatorPropertyChanged);
+            propertyChanged: OnSeparatorPropertyChanged);
 
         /// <summary>
         ///     <see cref="ItemsSource" />
@@ -67,20 +68,12 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             propertyChanged: OnItemsSourcePropertyChanged);
 
         /// <summary>
-        /// <see cref="SelectedItemChangedCommand"/>
+        ///     <see cref="SelectedItemChangedCommand" />
         /// </summary>
-        public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(RadioButtonGroup));
-
-        /// <summary>
-        ///     Command that triggers when the user clicks an radio button group or when the <see cref="SelectedItem"/> changes.
-        /// <remarks>The command will send the object from the <see cref="ItemsSource"/> as an parameter</remarks>
-        ///     This is a bindable property
-        /// </summary>
-        public ICommand SelectedItemChangedCommand
-        {
-            get => (ICommand)GetValue(SelectedItemChangedCommandProperty);
-            set => SetValue(SelectedItemChangedCommandProperty, value);
-        }
+        public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(
+            nameof(SelectedItemChangedCommand),
+            typeof(ICommand),
+            typeof(RadioButtonGroup));
 
         /// <summary>
         ///     <see cref="DisplayMemberPath" />
@@ -154,14 +147,26 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         }
 
         /// <summary>
-        ///     The selected item from the <see cref="ItemsSource"/> list that the user clicked. This can be set programatically to set an initial value.
+        ///     The selected item from the <see cref="ItemsSource" /> list that the user clicked. This can be set programatically
+        ///     to set an initial value.
         ///     This is a bindable property
-        /// <remarks>Setting this will trigger <see cref="SelectedItemChangedCommand"/></remarks>
+        ///     <remarks>Setting this will trigger <see cref="SelectedItemChangedCommand" /></remarks>
         /// </summary>
         public object SelectedItem
         {
             get => GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
+        }
+
+        /// <summary>
+        ///     Command that triggers when the user clicks an radio button group or when the <see cref="SelectedItem" /> changes.
+        ///     <remarks>The command will send the object from the <see cref="ItemsSource" /> as an parameter</remarks>
+        ///     This is a bindable property
+        /// </summary>
+        public ICommand SelectedItemChangedCommand
+        {
+            get => (ICommand)GetValue(SelectedItemChangedCommandProperty);
+            set => SetValue(SelectedItemChangedCommandProperty, value);
         }
 
         /// <summary>
@@ -194,7 +199,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             radioButtonGroup.radioButtonContainer.Children.ForEach(
                 c =>
                 {
-                    if(c.AutomationId != null)
+                    if (c.AutomationId != null)
                     {
                         if (c.AutomationId.Equals(SeparatorAutomationId))
                         {
@@ -227,7 +232,104 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Initialize(e.NewItems);
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    var indexToAdd = e.NewStartingIndex + 1; //+1 to skip the start separator
+                    foreach (var newItem in e.NewItems)
+                    {
+                        //Replace
+                        if (radioButtonContainer.Children.ElementAtOrDefault(indexToAdd) != null)
+                        {
+                            InsertAt(newItem, indexToAdd);
+                        }
+                        else
+                        {
+                            Add(newItem, indexToAdd);
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    var indexToRemove = e.OldStartingIndex + 1; //+1 to skip the start separator
+                    if (indexToRemove > m_radioButtons.Count) break;
+                    foreach (var newItem in e.OldItems)
+                    {
+                        //Replace
+                        RemoveAt(newItem, indexToRemove);
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void RemoveAt(object item, int index)
+        {
+            //Get item to remove and items move
+            var visualToRemove = radioButtonContainer.Children.FirstOrDefault(c => radioButtonContainer.Children.IndexOf(c) == index);
+            var itemsToMove = radioButtonContainer.Children.Where(c => radioButtonContainer.Children.IndexOf(c) > index);
+            var originalItemsToMove = itemsToMove.ToList();
+
+            //Remove item
+            if (!(visualToRemove is Grid radioButtonGridToRemove)) return;
+            RemoveRadioButtonGrid(radioButtonGridToRemove);
+
+            foreach (var itemToMove in originalItemsToMove)
+            {
+                if (!(itemToMove is Grid grid)) continue;
+                RemoveRadioButtonGrid(grid);
+            }
+
+            AddToEndOfList(originalItemsToMove);
+        }
+
+        private void RemoveRadioButtonGrid(Grid grid)
+        {
+            var itemToRemoveIndex = radioButtonContainer.Children.IndexOf(grid);
+            //Remove
+            var radioButton = grid.Children.FirstOrDefault(c => c is RadioButton);
+            if (radioButton != null)
+            {
+                radioButtonContainer.Children.RemoveAt(itemToRemoveIndex);
+                radioButtonContainer.RowDefinitions.RemoveAt(itemToRemoveIndex);
+                m_radioButtons.Remove((RadioButton)radioButton);
+            }
+        }
+
+        private void InsertAt(object newItem, int index)
+        {
+            var itemsToMove = radioButtonContainer.Children.Where(c => radioButtonContainer.Children.IndexOf(c) >= index);
+
+            var originalItemsToMove = itemsToMove.ToList();
+
+            foreach (var itemToMove in originalItemsToMove)
+            {
+                if(!(itemToMove is Grid grid)) continue;
+                RemoveRadioButtonGrid(grid);
+            }
+
+            Add(newItem, index);
+
+            AddToEndOfList(originalItemsToMove);
+        }
+
+        private void AddToEndOfList(IEnumerable<View> originalItemsToMove)
+        {
+            foreach (var itemToMove in originalItemsToMove)
+            {
+                if (!(itemToMove is Grid grid)) continue;
+                var radioButton = grid.Children.FirstOrDefault(c => c is RadioButton);
+                var identifier = ((RadioButton)radioButton)?.Identifier;
+                if (identifier == null) continue;
+
+                Add(identifier, radioButtonContainer.Children.Count);
+            }
         }
 
         private static void OnSelectedColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -258,54 +360,61 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 });
         }
 
-
-
         private void Initialize(IEnumerable newItems)
         {
             if (newItems == null) return;
-
-            var row = radioButtonContainer.Children.Count;
+            radioButtonContainer.Children.Clear();
 
             //Add separator before the first element
-            if (row == 0)
-            {
-                AddSeparator(row);
-                row++;
-            }
+            var separator = CreateSeparator();
+            Grid.SetRow(separator, 0);
+            radioButtonContainer.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            radioButtonContainer.Children.Add(separator);
 
             foreach (var item in newItems)
             {
-                var radioButton = new RadioButton() { Text = item.GetPropertyValue(DisplayMemberPath), Identifier = item };
-                //Initialize radio button
-                radioButton.Initialize(this);
-
-                //Set colors for each radiobutton
-                radioButton.SelectedColor = SelectedColor;
-                radioButton.DeSelectedColor = DeSelectedColor;
-                radioButton.RefreshColor(radioButton.IsSelected);
-
-                //Set margin for each button
-                radioButton.Padding = new Thickness(0, 15, 0, 15);
-
-                //Add each radiobutton to the FlexLayout
-                radioButtonContainer.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                Grid.SetRow(radioButton, row);
-                row++;
-                radioButtonContainer.Children.Add(radioButton);
-                m_radioButtons.Add(radioButton);
-
-                //Add a separator after each radio button
-                AddSeparator(row);
-                row++;
+                Add(item, radioButtonContainer.Children.Count);
             }
         }
 
-        private void AddSeparator(int row)
+        private void Add(object item, int row)
         {
-            var boxView = new BoxView() { HeightRequest = 1, BackgroundColor = SeparatorColor, AutomationId = SeparatorAutomationId };
+            //Create inner grid and button + separator
+            var grid = new Grid();
+            var radioButton = new RadioButton() { Text = item.GetPropertyValue(DisplayMemberPath), Identifier = item };
+            var separator = CreateSeparator();
+
+            grid.RowDefinitions.Add(new RowDefinition(){Height = GridLength.Auto});
+            grid.RowDefinitions.Add(new RowDefinition(){Height = GridLength.Auto});
+            Grid.SetRow(radioButton, 0);
+            Grid.SetRow(separator, 1);
+            grid.Children.Add(radioButton);
+            grid.Children.Add(separator);
+
+            //Initialize radio button
+            radioButton.Initialize(this);
+
+            //Set colors for each radiobutton
+            radioButton.SelectedColor = SelectedColor;
+            radioButton.DeSelectedColor = DeSelectedColor;
+            radioButton.RefreshColor(radioButton.IsSelected);
+
+            //Set padding for each button
+            radioButton.Padding = new Thickness(0, 15, 0, 15);
+
+            //Add each radiobutton to the FlexLayout
+            m_radioButtons.Add(radioButton);
+
+            //Add inner grid to outer grid
             radioButtonContainer.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-            Grid.SetRow(boxView, row);
-            radioButtonContainer.Children.Add(boxView);
+
+            Grid.SetRow(grid, row);
+            radioButtonContainer.Children.Add(grid);
+        }
+
+        private BoxView CreateSeparator()
+        {
+            return new BoxView() { HeightRequest = 1, BackgroundColor = SeparatorColor, AutomationId = SeparatorAutomationId };
         }
 
         private static void OnIsSelectedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
