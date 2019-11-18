@@ -147,8 +147,9 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         ///     to set an initial value.
         ///     This is a bindable property
         ///     <remarks>Setting this will trigger <see cref="SelectedItemChangedCommand" /></remarks>
+        ///     <remarks>Can be set to null if you delete the item that you have selected</remarks>
         /// </summary>
-        public object SelectedItem
+        public object? SelectedItem
         {
             get => GetValue(SelectedItemProperty);
             set => SetValue(SelectedItemProperty, value);
@@ -267,6 +268,10 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 {
                     selectedRadioButton.IsSelected = true;
                 }
+                else
+                {
+                    SelectedItem = null;
+                }
             }
         }
 
@@ -320,6 +325,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         private static void OnIsSelectedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is RadioButtonGroup radioButtonGroup)) return;
+            if (newvalue == null) return;
 
             var selectedRadioButton = radioButtonGroup.m_radioButtons.SingleOrDefault(radioButton => radioButton.Identifier == newvalue);
             var unSelectedRadioButton = radioButtonGroup.m_radioButtons.SingleOrDefault(radioButton => radioButton.Identifier == oldvalue);
