@@ -22,8 +22,6 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
         private PropertyInfo? m_displayMember;
 
-        private const string SeparatorAutomationId = "separator";
-
         /// <summary>
         ///     <see cref="SelectedColor" />
         /// </summary>
@@ -54,8 +52,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             typeof(Color),
             typeof(RadioButtonGroup),
             Color.Black,
-            BindingMode.OneWay,
-            propertyChanged: OnSeparatorPropertyChanged);
+            BindingMode.OneWay);
 
         /// <summary>
         ///     <see cref="ItemsSource" />
@@ -190,25 +187,6 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             SelectedItem = selectedObject;
         }
 
-        private static void OnSeparatorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (!(bindable is RadioButtonGroup radioButtonGroup)) return;
-            if (!(newvalue is Color newColor)) return;
-            if (!(oldvalue is Color oldColor)) return;
-
-            radioButtonGroup.radioButtonContainer.Children.ForEach(
-                c =>
-                {
-                    if (c.AutomationId != null)
-                    {
-                        if (c.AutomationId.Equals(SeparatorAutomationId))
-                        {
-                            c.BackgroundColor = newColor;
-                        }
-                    }
-                });
-        }
-
         private static void OnItemsSourcePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is RadioButtonGroup radioButtonGroup)) return;
@@ -235,7 +213,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    var indexToAdd = e.NewStartingIndex; //+1 to skip the start separator
+                    var indexToAdd = e.NewStartingIndex;
                     foreach (var newItem in e.NewItems)
                     {
                         //Replace
@@ -248,20 +226,15 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                             Add(newItem, indexToAdd);
                         }
                     }
-                    break;
-                case NotifyCollectionChangedAction.Move:
+
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    var indexToRemove = e.OldStartingIndex; //+1 to skip the start separator
+                    var indexToRemove = e.OldStartingIndex;
                     RemoveAt(indexToRemove);
                     break;
-                case NotifyCollectionChangedAction.Replace:
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
+
+            if (radioButtonContainer.Children.Count == 0) firstSeparator.IsVisible = false;
         }
 
         private void RemoveAt(int index)
@@ -305,7 +278,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
             foreach (var itemToMove in originalItemsToMove)
             {
-                if(!(itemToMove is Grid grid)) continue;
+                if (!(itemToMove is Grid grid)) continue;
                 RemoveRadioButtonGrid(grid);
             }
 
@@ -367,35 +340,22 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void Add(object item, int row)
         {
-
-
+            if (!firstSeparator.IsVisible)
+            {
+                firstSeparator.IsVisible = true;
+            }
 
             //Create inner grid and button + separator
-            var grid = new Grid();
+            var grid = new Grid() { RowSpacing = 0 };
             var radioButton = new RadioButton() { Text = item.GetPropertyValue(DisplayMemberPath), Identifier = item };
             var separator = CreateSeparator();
 
-            grid.RowDefinitions.Add(new RowDefinition(){Height = GridLength.Auto});
-            grid.RowDefinitions.Add(new RowDefinition(){Height = GridLength.Auto});
-            if (row == 0)
-            {
-                grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                var firstItemSeparator = CreateSeparator();
-                Grid.SetRow(firstItemSeparator, 0);
-                Grid.SetRow(radioButton, 1);
-                Grid.SetRow(separator, 2);
-
-                grid.Children.Add(firstItemSeparator);
-                grid.Children.Add(radioButton);
-                grid.Children.Add(separator);
-            }
-            else
-            {
-                Grid.SetRow(radioButton, 0);
-                Grid.SetRow(separator, 1);
-                grid.Children.Add(radioButton);
-                grid.Children.Add(separator);
-            }
+            grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            Grid.SetRow(radioButton, 0);
+            Grid.SetRow(separator, 1);
+            grid.Children.Add(radioButton);
+            grid.Children.Add(separator);
 
             //Initialize radio button
             radioButton.Initialize(this);
@@ -420,7 +380,9 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private BoxView CreateSeparator()
         {
-            return new BoxView() { HeightRequest = 1, BackgroundColor = SeparatorColor, AutomationId = SeparatorAutomationId };
+            var separator = new BoxView() { HeightRequest = 1 };
+            separator.SetBinding(BackgroundColorProperty, new Binding(nameof(SeparatorColor), source: this));
+            return separator;
         }
 
         private static void OnIsSelectedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)

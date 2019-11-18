@@ -14,40 +14,35 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
-                                           Margin="15"
+                                           Margin="5"
                                            ItemsSource="{Binding Items}"
                                            SelectedItem="{Binding SelectedItem}"
                                            SelectedItemChangedCommand="{Binding SelectedItemChangedCommand}"
                                            DisplayMemberPath="Name"
                                            SelectedColor="{Binding SelectedColor}"
                                            DeSelectedColor="{Binding DeSelectedColor}"
-                                           SeparatorColor="{Binding SeparatorColor}"
-                                           />
-        <Button Grid.Row="1"
-                Command="{Binding AddNewCommand}"
-                Text="Add new" />
-        <Button Grid.Row="2"
-                Command="{Binding InsertSecondCommand}"
-                Text="Insert position 2" />
-        <Button Grid.Row="3"
-                Command="{Binding RemoveLastCommand}"
-                Text="Remove last" />
-        <Button Grid.Row="4"
-                Command="{Binding RemoveSecondCommand}"
-                Text="Remove position 2" />
-        <Button Grid.Row="5"
-                Command="{Binding ResetListCommand}"
-                Text="Reset" />
-        <Frame Grid.Row="6"
+                                           SeparatorColor="{Binding SeparatorColor}" />
+        <ScrollView Grid.Row="1">
+            <StackLayout>
+                <Button Command="{Binding AddNewCommand}"
+                        Text="Add new" />
+                <Button Command="{Binding InsertSecondCommand}"
+                        Text="Insert position 2" />
+                <Button Command="{Binding RemoveLastCommand}"
+                        Text="Remove last" />
+                <Button Command="{Binding RemoveSecondCommand}"
+                        Text="Move second and first" />
+                <Button Command="{Binding ResetListCommand}"
+                        Text="Reset" />
+            </StackLayout>
+        </ScrollView>
+
+        <Frame Grid.Row="2"
                HasShadow="False"
                CornerRadius="10"
                BackgroundColor="LightGray"
@@ -88,7 +83,7 @@
                                VerticalOptions="CenterAndExpand" />
                         <Entry Text="{Binding DeSelectedColor}"
                                VerticalOptions="CenterAndExpand" />
-                    </StackLayout> 
+                    </StackLayout>
                     <StackLayout Grid.Row="2"
                                  Orientation="Horizontal"
                                  VerticalOptions="CenterAndExpand">
