@@ -23,7 +23,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
             RemoveLastCommand = new Command(() => Items.Remove(Items.LastOrDefault()));
             RemoveSecondCommand = new Command(() => Items.RemoveAt(Items.Count > 1 ? 1 : 0));
             InsertSecondCommand = new Command(() => Items.Insert(Items.Count > 0 ? 1 : 0, new ItemViewModel("Inserted item")));
-            ResetListCommand = new Command(() => Items = new ObservableCollection<ItemViewModel>());
+            ResetListCommand = new Command(() => Items = new ObservableCollection<ItemViewModel>(){new ItemViewModel("New with resetted item")});
         }
 
         public void Initialize()

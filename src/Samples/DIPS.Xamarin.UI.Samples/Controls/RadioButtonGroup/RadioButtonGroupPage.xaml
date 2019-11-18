@@ -23,6 +23,7 @@
         </Grid.RowDefinitions>
 
         <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
+                                           Margin="15"
                                            ItemsSource="{Binding Items}"
                                            SelectedItem="{Binding SelectedItem}"
                                            SelectedItemChangedCommand="{Binding SelectedItemChangedCommand}"

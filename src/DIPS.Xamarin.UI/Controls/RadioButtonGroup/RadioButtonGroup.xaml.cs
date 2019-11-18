@@ -235,7 +235,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    var indexToAdd = e.NewStartingIndex + 1; //+1 to skip the start separator
+                    var indexToAdd = e.NewStartingIndex; //+1 to skip the start separator
                     foreach (var newItem in e.NewItems)
                     {
                         //Replace
@@ -252,13 +252,8 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 case NotifyCollectionChangedAction.Move:
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    var indexToRemove = e.OldStartingIndex + 1; //+1 to skip the start separator
-                    if (indexToRemove > m_radioButtons.Count) break;
-                    foreach (var newItem in e.OldItems)
-                    {
-                        //Replace
-                        RemoveAt(newItem, indexToRemove);
-                    }
+                    var indexToRemove = e.OldStartingIndex; //+1 to skip the start separator
+                    RemoveAt(indexToRemove);
                     break;
                 case NotifyCollectionChangedAction.Replace:
                     break;
@@ -269,7 +264,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             }
         }
 
-        private void RemoveAt(object item, int index)
+        private void RemoveAt(int index)
         {
             //Get item to remove and items move
             var visualToRemove = radioButtonContainer.Children.FirstOrDefault(c => radioButtonContainer.Children.IndexOf(c) == index);
@@ -362,14 +357,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void Initialize(IEnumerable newItems)
         {
-            if (newItems == null) return;
             radioButtonContainer.Children.Clear();
-
-            //Add separator before the first element
-            var separator = CreateSeparator();
-            Grid.SetRow(separator, 0);
-            radioButtonContainer.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-            radioButtonContainer.Children.Add(separator);
 
             foreach (var item in newItems)
             {
@@ -379,6 +367,9 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void Add(object item, int row)
         {
+
+
+
             //Create inner grid and button + separator
             var grid = new Grid();
             var radioButton = new RadioButton() { Text = item.GetPropertyValue(DisplayMemberPath), Identifier = item };
@@ -386,10 +377,25 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
             grid.RowDefinitions.Add(new RowDefinition(){Height = GridLength.Auto});
             grid.RowDefinitions.Add(new RowDefinition(){Height = GridLength.Auto});
-            Grid.SetRow(radioButton, 0);
-            Grid.SetRow(separator, 1);
-            grid.Children.Add(radioButton);
-            grid.Children.Add(separator);
+            if (row == 0)
+            {
+                grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                var firstItemSeparator = CreateSeparator();
+                Grid.SetRow(firstItemSeparator, 0);
+                Grid.SetRow(radioButton, 1);
+                Grid.SetRow(separator, 2);
+
+                grid.Children.Add(firstItemSeparator);
+                grid.Children.Add(radioButton);
+                grid.Children.Add(separator);
+            }
+            else
+            {
+                Grid.SetRow(radioButton, 0);
+                Grid.SetRow(separator, 1);
+                grid.Children.Add(radioButton);
+                grid.Children.Add(separator);
+            }
 
             //Initialize radio button
             radioButton.Initialize(this);
