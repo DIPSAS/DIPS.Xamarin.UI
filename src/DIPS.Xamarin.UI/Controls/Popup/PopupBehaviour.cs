@@ -5,23 +5,31 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Popup
 {
-    public class PopupBehaviour : Behavior<Button>
+    public class PopupBehaviour : Behavior<View>
     {
         private readonly Command m_onTappedCommand;
-        private View m_attachedTo;
+        private View? m_attachedTo;
         public PopupBehaviour()
         {
             m_onTappedCommand = new Command(ShowPopup);
         }
 
-        protected override void OnAttachedTo(Button bindable)
+        protected override void OnAttachedTo(View bindable)
         {
             m_attachedTo = bindable;
-            bindable.Command = m_onTappedCommand;
+            if (bindable is Button button)
+            {
+                button.Command = m_onTappedCommand;
+            }
+            else
+            {
+                bindable.GestureRecognizers.Add(new TapGestureRecognizer { Command = m_onTappedCommand });
+            }
+
             base.OnAttachedTo(bindable);
         }
 
-        protected override void OnDetachingFrom(Button bindable)
+        protected override void OnDetachingFrom(View bindable)
         {
             base.OnDetachingFrom(bindable);
         }
@@ -34,9 +42,11 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             var view = (View)bindable;
             view.BindingContextChanged += (s, e) =>
             {
-                var popupLayout = ((View)bindable).GetParentOfType<PopupLayout>();
+                var popupLayout = view.GetParentOfType<PopupLayout>();
                 if (popupLayout != null)
+                {
                     popupLayout.AddOnCloseRecognizer(view);
+                }
             };
         }
 
@@ -77,13 +87,13 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             set { SetValue(SaveTextProperty, value); }
         }
 
-        public static readonly BindableProperty PopupDirectionProperty =
-            BindableProperty.Create(nameof(PopupDirection), typeof(PopupDirection), typeof(PopupBehaviour), PopupDirection.Auto);
+        public static readonly BindableProperty DirectionProperty =
+            BindableProperty.Create(nameof(Direction), typeof(PopupDirection), typeof(PopupBehaviour), PopupDirection.Auto);
 
-        public PopupDirection PopupDirection
+        public PopupDirection Direction
         {
-            get { return (PopupDirection)GetValue(PopupDirectionProperty); }
-            set { SetValue(PopupDirectionProperty, value); }
+            get { return (PopupDirection)GetValue(DirectionProperty); }
+            set { SetValue(DirectionProperty, value); }
         }
 
         public static readonly BindableProperty PopupContentProperty =
@@ -97,27 +107,21 @@ namespace DIPS.Xamarin.UI.Controls.Popup
 
         private void ShowPopup()
         {
+            if (m_attachedTo == null)
+            {
+                return;
+            }
+
             var layout = m_attachedTo.GetParentOfType<PopupLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a PopupLayout around the element");
             var content = PopupContent;
-            layout.ShowPopup(content, m_attachedTo, PopupDirection);
-            content.BindingContext = PopupBindingContextFactory();
+            layout.ShowPopup(content, m_attachedTo, Direction);
+            content.BindingContext = PopupBindingContextFactory?.Invoke() ?? BindingContext;
         }
     }
 
     public enum PopupDirection
     {
         Auto, Below, Above
-    }
-
-    public class PopupShowRequest
-    {
-        // Hvordan skal popup forhold seg til lukking.
-        // Hvordan skal andre knapper i popup fungere?
-        // 
-        public PopupShowRequest(View popupContent, PopupDirection popupDirection, ICommand command)
-        {
-
-        }
     }
 }

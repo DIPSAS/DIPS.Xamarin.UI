@@ -10,8 +10,11 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
             </Grid>
+
+
 
             <Grid Margin="20">
 
@@ -21,8 +24,8 @@
                         Padding="20"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
-                        BackgroundColor="Transparent"
-                        TextColor="DarkGreen">
+                        BackgroundColor="DarkGray"
+                        TextColor="WhiteSmoke">
                     <Button.Behaviors>
                         <popup:PopupBehaviour SaveCommand="{Binding Source={x:Reference btn1}, Path=BindingContext.SaveCommand1}"
                                               SaveText="Yolo1"
@@ -47,20 +50,20 @@
             <Button Text="Button 2"
                     x:Name="btn2"
                     Grid.Row="1"
-                    Padding="20"
+                    
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    BackgroundColor="Transparent"
-                    TextColor="DarkGreen">
+                    BackgroundColor="DarkGray"
+                    TextColor="WhiteSmoke">
                 <Button.Behaviors>
                     <popup:PopupBehaviour PopupBindingContextFactory="{Binding Source={x:Reference btn2}, Path=BindingContext.FilterViewModelFactory2}"
-                                          PopupDirection="Auto">
+                                          Direction="Auto">
                         <popup:PopupBehaviour.PopupContent>
                             <Frame CornerRadius="30"
-                                   Margin="5"
+                                   Margin="0,20,10,0"
                                    BackgroundColor="Orange">
                                 <StackLayout Orientation="Vertical">
-                                    <Label Text="Yolo Yolo Yolo Yolo Yolo Yolo Yolo Yolo Yolo Yolo" VerticalOptions="Center"/>
+                                    <Label Text="Yolo Yolo Yolo Yolo Yolo Yolo Yolo" VerticalOptions="Center"/>
                                     <CheckBox IsChecked="{Binding Ascending}"
                                               Margin="5"
                                               HorizontalOptions="Center"
@@ -79,6 +82,26 @@
                     </popup:PopupBehaviour>
                 </Button.Behaviors>
             </Button>
+
+
+            <Grid Grid.Row="2"
+                  BackgroundColor="DarkBlue"
+                  Margin="20">
+                <Grid.Behaviors>
+                    <popup:PopupBehaviour Direction="Auto">
+                        <popup:PopupBehaviour.PopupContent>
+                            <Frame CornerRadius="0"
+                                   Margin="5"
+                                   BackgroundColor="DarkGreen">
+                                <Label Text="This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
+                                       LineBreakMode="WordWrap"
+                                       popup:PopupBehaviour.CloseOnClick="True"
+                                       TextColor="WhiteSmoke"/>
+                            </Frame>
+                        </popup:PopupBehaviour.PopupContent>
+                    </popup:PopupBehaviour>
+                </Grid.Behaviors>
+            </Grid>
         </Grid>
     </popup:PopupLayout>
 </ContentPage>

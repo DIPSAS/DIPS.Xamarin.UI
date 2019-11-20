@@ -1,4 +1,5 @@
 ﻿using System;
+using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -42,7 +43,6 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 popupLayout.relativeLayout.Children.Clear();
                 popupLayout.relativeLayout.Children.Add(newView, Constraint.RelativeToParent(parent => parent.X), Constraint.RelativeToParent(parent => parent.Y), Constraint.RelativeToParent(parent => parent.Width), Constraint.RelativeToParent(parent => parent.Height));
             }
-
         }
 
         public void ShowPopup(View popupView, View relativeView, PopupDirection popupDirection)
@@ -58,17 +58,14 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             {
                 var height = Height;
                 var center = height / 2.0;
-                var itemPosition = GetY(relativeView);
+                var itemPosition = relativeView.GetY(this) + relativeView.Height / 2.0;
                 if (itemPosition > center) direction = PopupDirection.Above;
                 else direction = PopupDirection.Below;
             }
 
-            var x = GetX(relativeView);
-            var y = GetY(relativeView);
-
             relativeLayout.Children.Add(m_dummyView,
-                yConstraint: Constraint.RelativeToParent((r) => y),
-                xConstraint: Constraint.RelativeToParent((r) => x),
+                yConstraint: Constraint.RelativeToParent((r) => relativeView.GetY(this)),
+                xConstraint: Constraint.RelativeToParent((r) => relativeView.GetX(this)),
                 widthConstraint: Constraint.RelativeToParent((r) => relativeView.Width),
                 heightConstraint: Constraint.RelativeToParent((r) => relativeView.Height));
 
@@ -81,35 +78,8 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToView(m_dummyView, (r, v) => Math.Max(0, Math.Min(r.Width - popupView.Width - popupView.Margin.Left - popupView.Margin.Right, v.X))));
         }
 
-        private double GetX(View item)
-        {
-            var x = item.X;
-            var parent = (View)item.Parent;
-            while (parent != this && parent != null)
-            {
-                x += parent.X;
-                parent = (View)parent.Parent;
-            }
-
-            return x;
-        }
-
-        private double GetY(View item)
-        {
-            var y = item.Y;
-            var parent = (View)item.Parent;
-            while (parent != this && parent != null)
-            {
-                y += parent.Y;
-                parent = (View)parent.Parent;
-            }
-
-            return y;
-        }
-
         public void HidePopup()
         {
-
             relativeLayout.Children.Remove(m_blockingFrame.Value);
             if (m_content != null)
             {
