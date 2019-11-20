@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:DIPS.Xamarin.UI.Samples.Commands"
+             x:DataType="viewModels:AsyncCommandViewModel"
+             x:Class="DIPS.Xamarin.UI.Samples.Commands.AsyncCommandPage">
+    <StackLayout Orientation="Vertical">
+        <Button CornerRadius="20"
+                BackgroundColor="#343434"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Center"
+                Margin="10"
+                Padding="20"
+                TextColor="White"
+                Command="{Binding CounterCommand}"
+                Text="Set counter in 2 sec"/>
+
+        <Button CornerRadius="20"
+                BackgroundColor="#343434"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Center"
+                Margin="10"
+                Padding="20"
+                TextColor="White"
+                Command="{Binding OnCounterCommand}"
+                CommandParameter="{Binding Counter}"
+                Text="Take current counted value"/>
+
+        <Label HorizontalOptions="Center"
+               Text="{Binding Counter}"
+               Margin="10"
+               TextColor="#343434"
+               FontSize="20"/>
+
+        <Label HorizontalOptions="Center"
+               Text="{Binding OnClickCounter}"
+               Margin="10"
+               TextColor="#343434"
+               FontSize="20"/>
+    </StackLayout>
+</ContentPage>

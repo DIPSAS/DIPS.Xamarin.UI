@@ -13,6 +13,7 @@
     <StackLayout>
         <Button Text="Controls" Command="{Binding NavigateToCommand}" CommandParameter="Controls"/>
         <Button Text="Converters" Command="{Binding NavigateToCommand}" CommandParameter="Converters"/>
+        <Button Text="Async command" Command="{Binding NavigateToCommand}" CommandParameter="Async command"/>
     </StackLayout>
 
 </ContentPage>
