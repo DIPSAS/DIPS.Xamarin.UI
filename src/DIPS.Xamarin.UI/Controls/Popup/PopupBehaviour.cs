@@ -1,0 +1,123 @@
+﻿using System;
+using System.Windows.Input;
+using DIPS.Xamarin.UI.Extensions;
+using Xamarin.Forms;
+
+namespace DIPS.Xamarin.UI.Controls.Popup
+{
+    public class PopupBehaviour : Behavior<Button>
+    {
+        private readonly Command m_onTappedCommand;
+        private View m_attachedTo;
+        public PopupBehaviour()
+        {
+            m_onTappedCommand = new Command(ShowPopup);
+        }
+
+        protected override void OnAttachedTo(Button bindable)
+        {
+            m_attachedTo = bindable;
+            bindable.Command = m_onTappedCommand;
+            base.OnAttachedTo(bindable);
+        }
+
+        protected override void OnDetachingFrom(Button bindable)
+        {
+            base.OnDetachingFrom(bindable);
+        }
+
+        public static readonly BindableProperty CloseOnClickProperty =
+            BindableProperty.CreateAttached("CloseOnClick", typeof(bool), typeof(PopupBehaviour), false, propertyChanged: OnCloseOnClickChanged);
+
+        public static void OnCloseOnClickChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var view = (View)bindable;
+            view.BindingContextChanged += (s, e) =>
+            {
+                var popupLayout = ((View)bindable).GetParentOfType<PopupLayout>();
+                if (popupLayout != null)
+                    popupLayout.AddOnCloseRecognizer(view);
+            };
+        }
+
+        public static void SetCloseOnClick(BindableObject view, bool value)
+        {
+            view.SetValue(CloseOnClickProperty, value);
+        }
+
+        public static bool GetCloseOnClick(BindableObject view)
+        {
+            return (bool)view.GetValue(CloseOnClickProperty);
+        }
+
+        public static readonly BindableProperty PopupBindingContextFactoryProperty =
+            BindableProperty.Create(nameof(PopupBindingContextFactory), typeof(Func<object>), typeof(PopupBehaviour), null);
+
+        public Func<object> PopupBindingContextFactory
+        {
+            get { return (Func<object>)GetValue(PopupBindingContextFactoryProperty); }
+            set { SetValue(PopupBindingContextFactoryProperty, value); }
+        }
+
+        public static readonly BindableProperty SaveCommandProperty =
+            BindableProperty.Create(nameof(SaveCommand), typeof(ICommand), typeof(PopupBehaviour), null);
+
+        public ICommand SaveCommand
+        {
+            get { return (ICommand)GetValue(SaveCommandProperty); }
+            set { SetValue(SaveCommandProperty, value); }
+        }
+
+        public static readonly BindableProperty SaveTextProperty =
+            BindableProperty.Create(nameof(SaveText), typeof(string), typeof(PopupBehaviour), null);
+
+        public string SaveText
+        {
+            get { return (string)GetValue(SaveTextProperty); }
+            set { SetValue(SaveTextProperty, value); }
+        }
+
+        public static readonly BindableProperty PopupDirectionProperty =
+            BindableProperty.Create(nameof(PopupDirection), typeof(PopupDirection), typeof(PopupBehaviour), PopupDirection.Auto);
+
+        public PopupDirection PopupDirection
+        {
+            get { return (PopupDirection)GetValue(PopupDirectionProperty); }
+            set { SetValue(PopupDirectionProperty, value); }
+        }
+
+        public static readonly BindableProperty PopupContentProperty =
+            BindableProperty.Create(nameof(PopupContent), typeof(View), typeof(PopupBehaviour));
+
+        public View PopupContent
+        {
+            get { return (View)GetValue(PopupContentProperty); }
+            set { SetValue(PopupContentProperty, value); }
+        }
+
+        private void ShowPopup()
+        {
+            var layout = m_attachedTo.GetParentOfType<PopupLayout>();
+            if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a PopupLayout around the element");
+            var content = PopupContent;
+            layout.ShowPopup(content, m_attachedTo, PopupDirection);
+            content.BindingContext = PopupBindingContextFactory();
+        }
+    }
+
+    public enum PopupDirection
+    {
+        Auto, Below, Above
+    }
+
+    public class PopupShowRequest
+    {
+        // Hvordan skal popup forhold seg til lukking.
+        // Hvordan skal andre knapper i popup fungere?
+        // 
+        public PopupShowRequest(View popupContent, PopupDirection popupDirection, ICommand command)
+        {
+
+        }
+    }
+}

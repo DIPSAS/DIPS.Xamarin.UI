@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:popup="clr-namespace:DIPS.Xamarin.UI.Controls.Popup;assembly=DIPS.Xamarin.UI"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.Popup.PopupPage"
+             xmlns:viewModel="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Popup">
+
+    <popup:PopupLayout x:Name="popupLayout">
+        <Button Text="Button 1"
+                x:Name="btn1"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                BackgroundColor="DarkGray"
+                TextColor="WhiteSmoke"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.33}">
+            <Button.Behaviors>
+                <popup:PopupBehaviour SaveCommand="{Binding Source={x:Reference btn1}, Path=BindingContext.SaveCommand1}"
+                                      SaveText="Yolo1"
+                                      PopupBindingContextFactory="{Binding Source={x:Reference btn1}, Path=BindingContext.FilterViewModelFactory1}">
+                    <popup:PopupBehaviour.PopupContent>
+                        <Frame CornerRadius="5"
+                               BackgroundColor="White"
+                               HeightRequest="50"
+                               VerticalOptions="FillAndExpand">
+                            <CheckBox IsChecked="{Binding Ascending}"
+                                      Margin="20"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Center"/>
+                        </Frame>
+                    </popup:PopupBehaviour.PopupContent>
+                </popup:PopupBehaviour>
+            </Button.Behaviors>
+        </Button>
+
+        <Grid 
+              RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1.0}"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1.0}">
+            <Grid>
+                <Grid.RowDefinitions>
+
+                </Grid.RowDefinitions>
+            </Grid>
+            <Button Text="Button 2"
+                    x:Name="btn2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    BackgroundColor="DarkGray"
+                    TextColor="WhiteSmoke"
+                    >
+                <Button.Behaviors>
+                    <popup:PopupBehaviour PopupBindingContextFactory="{Binding Source={x:Reference btn2}, Path=BindingContext.FilterViewModelFactory2}"
+                                          PopupDirection="Auto">
+                        <popup:PopupBehaviour.PopupContent>
+                            <Frame CornerRadius="30"
+                                   Margin="5"
+                                   BackgroundColor="Orange">
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="Yolo Yolo Yolo Yolo" VerticalOptions="Center"/>
+                                    <CheckBox IsChecked="{Binding Ascending}"
+                                              Margin="5"
+                                              HorizontalOptions="Center"
+                                              VerticalOptions="Center"/>
+                                    <Button Text="Abort mission"
+                                            popup:PopupBehaviour.CloseOnClick="True"/>
+
+                                    <Button Text="save yo"
+                                            popup:PopupBehaviour.CloseOnClick="True"
+                                            Command="{Binding SaveCommand}"
+                                            CommandParameter="{Binding}">
+                                    </Button>
+                                </StackLayout>
+                            </Frame>
+                        </popup:PopupBehaviour.PopupContent>
+                    </popup:PopupBehaviour>
+                </Button.Behaviors>
+            </Button>
+        </Grid>
+
+    </popup:PopupLayout>
+</ContentPage>

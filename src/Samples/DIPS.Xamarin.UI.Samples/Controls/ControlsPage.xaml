@@ -11,6 +11,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Button Text="DatePicker" Command="{Binding NavigateToCommand}" CommandParameter="DatePicker"  />
+            <Button Text="Popup" Command="{Binding NavigateToCommand}" CommandParameter="Popup"  />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

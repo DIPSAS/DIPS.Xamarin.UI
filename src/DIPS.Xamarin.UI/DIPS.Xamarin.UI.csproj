@@ -22,4 +22,7 @@
     <PackageReference Include="Xamarin.Forms" Version="4.2.0.815419" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controls\Popup\" />
+  </ItemGroup>
 </Project>
