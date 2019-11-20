@@ -9,7 +9,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
       <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
       <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <WarningsAsErrors>CS8604</WarningsAsErrors>
+    <WarningsAsErrors>CS8604;CS8602;CS8618</WarningsAsErrors>
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
@@ -25,4 +25,18 @@
   <ItemGroup>
     <Folder Include="Controls\Popup\" />
   </ItemGroup>
+    <Compile Update="Controls\RadioButtonGroup\RadioButtonGroup.xaml.cs">
+      <DependentUpon>RadioButtonGroup.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Controls\RadioButtonGroup\RadioButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\RadioButtonGroup\RadioButtonGroup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

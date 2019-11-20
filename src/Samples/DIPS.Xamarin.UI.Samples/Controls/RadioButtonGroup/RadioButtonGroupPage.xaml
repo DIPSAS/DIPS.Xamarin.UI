@@ -1,0 +1,93 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:RadioButtonGroup="clr-namespace:DIPS.Xamarin.UI.Controls.RadioButtonGroup;assembly=DIPS.Xamarin.UI"
+             xmlns:local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;assembly=DIPS.Xamarin.UI.Samples"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup.RadioButtonGroupPage">
+    <ContentPage.BindingContext>
+        <local:RadioButtonGroupPageViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
+                                           Margin="0,5,0,0"
+                                           ItemsSource="{Binding Items}"
+                                           SelectedItem="{Binding SelectedItem}"
+                                           SelectedItemChangedCommand="{Binding SelectedItemChangedCommand}"
+                                           DisplayMemberPath="Name"
+                                           SelectedColor="{Binding SelectedColor}"
+                                           DeSelectedColor="{Binding DeSelectedColor}"
+                                           SeparatorColor="{Binding SeparatorColor}" />
+        <ScrollView Grid.Row="1">
+            <StackLayout>
+                <Button Command="{Binding AddNewCommand}"
+                        Text="Add new" />
+                <Button Command="{Binding RemoveLastCommand}" Text="Remove last"/>
+            </StackLayout>
+        </ScrollView>
+
+        <Frame Grid.Row="2"
+               HasShadow="False"
+               CornerRadius="10"
+               BackgroundColor="LightGray"
+               VerticalOptions="StartAndExpand">
+            <Grid RowSpacing="0"
+                  VerticalOptions="End">
+                <Grid.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="FontSize"
+                                Value="Large" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       FontAttributes="Bold"
+                       Text="Configuration" />
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackLayout Grid.Row="0"
+                                 Orientation="Horizontal"
+                                 VerticalOptions="CenterAndExpand">
+                        <Label Text="SelectedColor"
+                               VerticalOptions="CenterAndExpand" />
+                        <Entry Text="{Binding SelectedColor}"
+                               VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="1"
+                                 Orientation="Horizontal"
+                                 VerticalOptions="CenterAndExpand">
+                        <Label Text="DeSelectedColor"
+                               VerticalOptions="CenterAndExpand" />
+                        <Entry Text="{Binding DeSelectedColor}"
+                               VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="2"
+                                 Orientation="Horizontal"
+                                 VerticalOptions="CenterAndExpand">
+                        <Label Text="SeparatorColor"
+                               VerticalOptions="CenterAndExpand" />
+                        <Entry Text="{Binding SeparatorColor}"
+                               VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </Frame>
+    </Grid>
+
+</ContentPage>

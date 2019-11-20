@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -10,8 +11,15 @@
              Title="Controls">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="DatePicker" Command="{Binding NavigateToCommand}" CommandParameter="DatePicker"  />
-            <Button Text="Popup" Command="{Binding NavigateToCommand}" CommandParameter="Popup"  />
+            <Button Text="Popup" 
+                    Command="{Binding NavigateToCommand}" 
+                    CommandParameter="Popup"  />
+            <Button Text="DatePicker"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="DatePicker" />
+            <Button Text="RadioButtonGroup"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="RadioButtonGroup" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
