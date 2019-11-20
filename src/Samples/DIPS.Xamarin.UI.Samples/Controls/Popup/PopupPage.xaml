@@ -52,10 +52,10 @@
                     TextColor="WhiteSmoke">
                 <Button.Behaviors>
                     <popup:PopupBehaviour PopupBindingContextFactory="{Binding Source={x:Reference btn2}, Path=BindingContext.FilterViewModelFactory2}"
-                                          PopupDirection="Auto">
+                                          PopupDirection="Below">
                         <popup:PopupBehaviour.PopupContent>
                             <Frame CornerRadius="30"
-                                   Margin="5"
+                                   Margin="20"
                                    BackgroundColor="Orange">
                                 <StackLayout Orientation="Vertical">
                                     <Label Text="Yolo Yolo Yolo Yolo Yolo Yolo Yolo Yolo Yolo Yolo" VerticalOptions="Center"/>
