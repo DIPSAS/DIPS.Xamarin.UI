@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.Popup
 {
-    public partial class PopupLayout : RelativeLayout
+    [ContentProperty(nameof(MainContent))]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class PopupLayout : ContentView
     {
         private TapGestureRecognizer m_closePopupRecognizer;
         private View? m_content;
         private Lazy<Frame> m_blockingFrame;
+        private ContentView m_dummyView = new ContentView() { IsVisible = false, };
 
         public PopupLayout()
         {
@@ -18,9 +20,34 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             m_blockingFrame = new Lazy<Frame>(CreateBlockingFrame);
         }
 
+        public static readonly BindableProperty MainContentProperty =
+            BindableProperty.Create(nameof(MainContent), typeof(View), typeof(PopupLayout), propertyChanged: OnMainContentPropertyChanged);
+
+        public View MainContent
+        {
+            get { return (View)GetValue(MainContentProperty); }
+            set { SetValue(MainContentProperty, value); }
+        }
+
+        private static void OnMainContentPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is PopupLayout popupLayout)) return;
+            if (!(newvalue is View newView)) return;
+            if (newvalue == popupLayout.relativeLayout)
+            {
+                popupLayout.Content = popupLayout.relativeLayout;
+            }
+            else
+            {
+                popupLayout.relativeLayout.Children.Clear();
+                popupLayout.relativeLayout.Children.Add(newView, Constraint.RelativeToParent(parent => parent.X), Constraint.RelativeToParent(parent => parent.Y), Constraint.RelativeToParent(parent => parent.Width), Constraint.RelativeToParent(parent => parent.Height));
+            }
+
+        }
+
         public void ShowPopup(View popupView, View relativeView, PopupDirection popupDirection)
         {
-            Children.Add(m_blockingFrame.Value,
+            relativeLayout.Children.Add(m_blockingFrame.Value,
                 widthConstraint: Constraint.RelativeToParent(r => r.Width),
                 heightConstraint: Constraint.RelativeToParent(r => r.Height),
                 xConstraint: Constraint.RelativeToParent(r => 0.0),
@@ -36,13 +63,22 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 else direction = PopupDirection.Below;
             }
 
-            Children.Add(m_content = popupView,
-                yConstraint: Constraint.RelativeToView(relativeView, (r, v) => v.Y + v.Height));
+            var x = GetX(relativeView);
+            var y = GetY(relativeView);
+
+            relativeLayout.Children.Add(m_dummyView,
+                yConstraint: Constraint.RelativeToParent((r) => y),
+                xConstraint: Constraint.RelativeToParent((r) => x),
+                widthConstraint: Constraint.RelativeToParent((r) => relativeView.Width),
+                heightConstraint: Constraint.RelativeToParent((r) => relativeView.Height));
+
+            relativeLayout.Children.Add(m_content = popupView,
+                yConstraint: Constraint.RelativeToView(m_dummyView, (r, v) => v.Y + v.Height));
 
             var diffY = direction == PopupDirection.Below ? relativeView.Height : -popupView.Height;
 
-            SetYConstraint(popupView, Constraint.RelativeToView(relativeView, (r, v) => v.Y + diffY));
-            SetXConstraint(popupView, Constraint.RelativeToView(relativeView, (r, v) => Math.Max(0, Math.Min(r.Width - popupView.Width, v.X))));
+            RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToView(m_dummyView, (r, v) => v.Y + diffY));
+            RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToView(m_dummyView, (r, v) => Math.Max(0, Math.Min(r.Width - popupView.Width, v.X))));
         }
 
         private double GetX(View item)
@@ -73,10 +109,14 @@ namespace DIPS.Xamarin.UI.Controls.Popup
 
         public void HidePopup()
         {
-            Children.Remove(m_blockingFrame.Value);
+
+            relativeLayout.Children.Remove(m_blockingFrame.Value);
             if (m_content != null)
-                Children.Remove(m_content);
+            {
+                relativeLayout.Children.Remove(m_content);
+            }
             m_content = null;
+            relativeLayout.Children.Remove(m_dummyView);
         }
 
         public void AddOnCloseRecognizer(View view)
