@@ -5,7 +5,7 @@
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Popup.PopupPage"
              xmlns:viewModel="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Popup">
     <popup:PopupLayout x:Name="popupLayout">
-        <Grid>
+        <Grid BackgroundColor="WhiteSmoke">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -18,10 +18,11 @@
                 <Button Text="Button 1"
                         x:Name="btn1"
                         Grid.Row="0"
+                        Padding="20"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
-                        BackgroundColor="DarkGray"
-                        TextColor="WhiteSmoke">
+                        BackgroundColor="Transparent"
+                        TextColor="DarkGreen">
                     <Button.Behaviors>
                         <popup:PopupBehaviour SaveCommand="{Binding Source={x:Reference btn1}, Path=BindingContext.SaveCommand1}"
                                               SaveText="Yolo1"
@@ -46,16 +47,17 @@
             <Button Text="Button 2"
                     x:Name="btn2"
                     Grid.Row="1"
+                    Padding="20"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    BackgroundColor="DarkGray"
-                    TextColor="WhiteSmoke">
+                    BackgroundColor="Transparent"
+                    TextColor="DarkGreen">
                 <Button.Behaviors>
                     <popup:PopupBehaviour PopupBindingContextFactory="{Binding Source={x:Reference btn2}, Path=BindingContext.FilterViewModelFactory2}"
-                                          PopupDirection="Below">
+                                          PopupDirection="Auto">
                         <popup:PopupBehaviour.PopupContent>
                             <Frame CornerRadius="30"
-                                   Margin="20"
+                                   Margin="5"
                                    BackgroundColor="Orange">
                                 <StackLayout Orientation="Vertical">
                                     <Label Text="Yolo Yolo Yolo Yolo Yolo Yolo Yolo Yolo Yolo Yolo" VerticalOptions="Center"/>
