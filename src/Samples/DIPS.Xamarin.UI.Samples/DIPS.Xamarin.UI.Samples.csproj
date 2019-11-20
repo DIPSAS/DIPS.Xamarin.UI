@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Controls\RadioButtonGroup\RadioButtonGroupPage.xaml.cs">
       <DependentUpon>RadioButtonGroupPage.xaml</DependentUpon>
     </Compile>
@@ -60,5 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\Popup\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
   </ItemGroup>
 </Project>

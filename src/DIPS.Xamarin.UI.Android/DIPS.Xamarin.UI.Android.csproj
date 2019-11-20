@@ -70,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj">
-      <Project>{ff4fbab1-8723-4c8b-bcb7-d60ff9c0fe31}</Project>
+      <Project>{22985E47-8C01-4951-A641-315B0D59B107}</Project>
       <Name>DIPS.Xamarin.UI</Name>
     </ProjectReference>
   </ItemGroup>

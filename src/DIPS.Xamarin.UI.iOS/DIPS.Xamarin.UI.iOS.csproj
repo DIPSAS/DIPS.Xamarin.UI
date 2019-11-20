@@ -45,18 +45,18 @@
     <Compile Include="Renderers\DatePicker\DatePickerImplementation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj">
-      <Project>{ff4fbab1-8723-4c8b-bcb7-d60ff9c0fe31}</Project>
-      <Name>DIPS.Xamarin.UI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Xamarin.Essentials">
       <Version>1.3.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
       <Version>4.2.0.815419</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj">
+      <Project>{22985E47-8C01-4951-A641-315B0D59B107}</Project>
+      <Name>DIPS.Xamarin.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
