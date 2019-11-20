@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:RadioButtonGroup="clr-namespace:DIPS.Xamarin.UI.Controls.RadioButtonGroup;assembly=DIPS.Xamarin.UI"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters;assembly=DIPS.Xamarin.UI"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButtonGroup"
+             x:Name="codeBehind">
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <BoxView x:Name="firstSeparator"
+                 IsVisible="false"
+                 Grid.Row="0"
+                 HeightRequest="1"
+                 Color="{Binding Source={x:Reference codeBehind}, Path=SeparatorColor}" />
+        <Grid Grid.Row="1"
+              x:Name="radioButtonContainer"
+              RowSpacing="0" />
+    </Grid>
+</ContentView>

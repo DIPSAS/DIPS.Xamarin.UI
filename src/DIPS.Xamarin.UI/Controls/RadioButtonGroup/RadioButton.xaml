@@ -1,0 +1,50 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButton"
+             x:Name="codeBehind">
+    <ContentView.GestureRecognizers>
+        <TapGestureRecognizer Tapped="OnTapped" />
+    </ContentView.GestureRecognizers>
+    <ContentView.Resources>
+        <Thickness x:Key="spacing"
+                   Left="10" />
+    </ContentView.Resources>
+    <Grid BindingContext="{Binding Source={x:Reference codeBehind}}"
+          Padding="{StaticResource spacing}"
+          ColumnSpacing="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid VerticalOptions="Center"
+              HorizontalOptions="Center">
+            <Button x:Name="outerButton"
+                    BackgroundColor="Transparent"
+                    HeightRequest="20"
+                    WidthRequest="20"
+                    CornerRadius="10"
+                    BorderWidth="1.7"
+                    InputTransparent="True" />
+            <Button x:Name="innerButton"
+                    HeightRequest="{Binding Source={x:Reference outerButton}, Path=HeightRequest}"
+                    WidthRequest="{Binding Source={x:Reference outerButton}, Path=WidthRequest}"
+                    CornerRadius="{Binding Source={x:Reference outerButton}, Path=CornerRadius}"
+                    Scale="0"
+                    InputTransparent="True" />
+        </Grid>
+
+        <Label x:Name="label"
+               Grid.Column="1"
+               VerticalOptions="Center"
+               Text="{Binding Text}"
+               FontSize="Body"
+               InputTransparent="True"
+               Margin="{StaticResource spacing}" />
+    </Grid>
+</ContentView>
