@@ -1,5 +1,4 @@
-﻿using System;
-using DIPS.Xamarin.UI.Extensions;
+﻿using DIPS.Xamarin.UI.Extensions;
 using FluentAssertions;
 using Xamarin.Forms;
 using Xunit;
@@ -15,7 +14,7 @@ namespace DIPS.Xamarin.UI.Tests.Extensions
             var relativeLayout = new RelativeLayout();
             relativeLayout.Children.Add(child, Constraint.RelativeToParent(r => 42));
 
-            var x = child.GetX(relativeLayout);
+            var x = child.X;
 
             x.Should().Be(0);
         }

@@ -20,4 +20,7 @@
   <ItemGroup>
     <Folder Include="Controls\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
+  </ItemGroup>
 </Project>
