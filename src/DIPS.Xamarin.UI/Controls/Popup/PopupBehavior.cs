@@ -28,6 +28,8 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         protected override void OnAttachedTo(View bindable)
         {
             m_attachedTo = bindable;
+            BindingContext = bindable.BindingContext;
+            bindable.BindingContextChanged += (s, e) => BindingContext = bindable.BindingContext;
             if (bindable is Button button)
             {
                 button.Command = m_onTappedCommand;

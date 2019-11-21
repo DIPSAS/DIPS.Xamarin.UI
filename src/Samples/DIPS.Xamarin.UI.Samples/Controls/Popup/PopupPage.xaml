@@ -23,7 +23,7 @@
                         BackgroundColor="DarkGray"
                         TextColor="WhiteSmoke">
                     <Button.Behaviors>
-                        <popup:PopupBehavior BindingContextFactory="{Binding Source={x:Reference btn1}, Path=BindingContext.FilterViewModelFactory1}">
+                        <popup:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory1}">
                             <popup:PopupBehavior.Content>
                                 <Frame CornerRadius="5"
                                            BackgroundColor="White"
@@ -44,13 +44,12 @@
             <Button Text="Button 2"
                     x:Name="btn2"
                     Grid.Row="1"
-                    
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     BackgroundColor="DarkGray"
                     TextColor="WhiteSmoke">
                 <Button.Behaviors>
-                    <popup:PopupBehavior BindingContextFactory="{Binding Source={x:Reference btn2}, Path=BindingContext.FilterViewModelFactory2}"
+                    <popup:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory2}"
                                           Direction="Auto">
                         <popup:PopupBehavior.Content>
                             <Frame CornerRadius="30"
