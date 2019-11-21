@@ -8,9 +8,6 @@ namespace DIPS.Xamarin.UI.Android
     public static class Library
     {
 
-        /// <summary>
-        /// Method to call at startup of the app in order to keep assemblies and to run other initializing methods in the library
-        /// </summary>
         public static void Initialize()
         {
             DatePickerImplementation.Initialize();

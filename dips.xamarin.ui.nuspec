@@ -31,12 +31,15 @@
         <!-- Cross-platform reference assemblies -->
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.dll" target="lib\netstandard2.0\DIPS.Xamarin.UI.dll" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.pdb" target="lib\netstandard2.0\DIPS.Xamarin.UI.pdb" />
+        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.xml" />
 
         <!-- iOS reference assemblies -->
         <file src="src\DIPS.Xamarin.UI.iOS\bin\Release\DIPS.Xamarin.UI.iOS.dll" target="lib\xamarinios10\DIPS.Xamarin.UI.iOS.dll" />
         <file src="src\DIPS.Xamarin.UI.iOS\bin\Release\DIPS.Xamarin.UI.iOS.pdb" target="lib\xamarinios10\DIPS.Xamarin.UI.iOS.pdb" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.dll" target="lib\xamarinios10\DIPS.Xamarin.UI.dll" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.pdb" target="lib\xamarinios10\DIPS.Xamarin.UI.pdb" />
+        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.xml" />
+        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.iOS.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.iOS.xml" />
 
 
         <!-- Android reference assemblies -->
@@ -44,10 +47,7 @@
         <file src="src\DIPS.Xamarin.UI.Android\bin\Release\DIPS.Xamarin.UI.Android.pdb" target="lib\monoandroid81\DIPS.Xamarin.UI.Android.pdb" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.dll" target="lib\monoandroid81\DIPS.Xamarin.UI.dll" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.pdb" target="lib\monoandroid81\DIPS.Xamarin.UI.pdb" />
-
-        <file src="src\DIPS.Xamarin.UI.Android\bin\Release\DIPS.Xamarin.UI.Android.dll" target="lib\monoandroid90\DIPS.Xamarin.UI.Android.dll" />
-        <file src="src\DIPS.Xamarin.UI.Android\bin\Release\DIPS.Xamarin.UI.Android.pdb" target="lib\monoandroid90\DIPS.Xamarin.UI.Android.pdb" />
-        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.dll" target="lib\monoandroid90\DIPS.Xamarin.UI.dll" />
-        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.pdb" target="lib\monoandroid90\DIPS.Xamarin.UI.pdb" />
+        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.xml" />
+        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.Android.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.Android.xml" />   
     </files>
 </package>
