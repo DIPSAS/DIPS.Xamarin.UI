@@ -3,6 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:popup="http://dips.xamarin.ui.com"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Popup.PopupPage">
+    <ContentPage.Resources>
+        <Style TargetType="Button" x:Key="popupButtonStyle">
+            <Setter Property="BackgroundColor" Value="DarkGray"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="TextColor" Value="WhiteSmoke"/>
+            <Setter Property="Padding" Value="20"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="popupContentStyle">
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderColor" Value="Black"/>
+            <Setter Property="BackgroundColor" Value="WhiteSmoke"/>
+        </Style> 
+    </ContentPage.Resources>
     <popup:PopupLayout x:Name="popupLayout">
         <Grid BackgroundColor="WhiteSmoke">
             <Grid>
@@ -10,88 +26,85 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
             </Grid>
 
-            <Grid Margin="20">
-                <Button Text="Button 1"
-                        x:Name="btn1"
-                        Grid.Row="0"
-                        Padding="20"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        BackgroundColor="DarkGray"
-                        TextColor="WhiteSmoke">
-                    <Button.Behaviors>
-                        <popup:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory1}">
-                            <popup:PopupBehavior.Content>
-                                <Frame CornerRadius="5"
-                                           BackgroundColor="White"
-                                           HeightRequest="50"
-                                           VerticalOptions="FillAndExpand">
-                                    <CheckBox IsChecked="{Binding Ascending}"
-                                                  Margin="20"
-                                                  HorizontalOptions="Center"
-                                                  VerticalOptions="Center"/>
-                                </Frame>
-                            </popup:PopupBehavior.Content>
-                        </popup:PopupBehavior>
-                    </Button.Behaviors>
-                </Button>
-            </Grid>
-
-
-            <Button Text="Button 2"
-                    x:Name="btn2"
-                    Grid.Row="1"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    BackgroundColor="DarkGray"
-                    TextColor="WhiteSmoke">
+            <Button Text="Auto direction should go below"
+                    Grid.Row="0"
+                    Style="{StaticResource popupButtonStyle}">
                 <Button.Behaviors>
-                    <popup:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory2}"
-                                          Direction="Auto">
-                        <popup:PopupBehavior.Content>
-                            <Frame CornerRadius="30"
-                                        Margin="0,20,10,0"
-                                        BackgroundColor="Orange">
-                                <StackLayout Orientation="Vertical">
-                                    <Label Text="Yolo Yolo Yolo Yolo Yolo Yolo Yolo" VerticalOptions="Center"/>
-                                    <CheckBox IsChecked="{Binding Ascending}"
-                                                    Margin="5"
-                                                    HorizontalOptions="Center"
-                                                    VerticalOptions="Center"/>
-                                    <Button Text="Abort mission"
-                                                popup:Popup.CloseOnClick="True"/>
-
-                                    <Button Text="save yo"
-                                                popup:Popup.CloseOnClick="True"
-                                                Command="{Binding SaveCommand}"
-                                                CommandParameter="{Binding}">
-                                    </Button>
-                                </StackLayout>
-                            </Frame>
-                        </popup:PopupBehavior.Content>
+                    <popup:PopupBehavior BindingContextFactory="{Binding GetViewModel}">
+                        <Frame Style="{StaticResource popupContentStyle}">
+                            <Label Margin="20"
+                                   Text="{Binding MyString}"/>
+                        </Frame>
                     </popup:PopupBehavior>
                 </Button.Behaviors>
             </Button>
 
 
-            <Grid Grid.Row="2"
+            <Button Text="Direction above"
+                    Grid.Row="1"
+                    Style="{StaticResource popupButtonStyle}">
+                <Button.Behaviors>
+                    <popup:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory}"
+                                          Direction="Above">
+                        <Frame Style="{StaticResource popupContentStyle}">
+                            <StackLayout Orientation="Vertical">
+                                <Label Margin="10"
+                                       Text="This is a long header to prove the automatic X placement"/>
+                                <CheckBox IsChecked="{Binding Ascending}"
+                                                Margin="5"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"/>
+                                <Button Text="Close and forget"
+                                            popup:Popup.CloseOnClick="True"/>
+
+                                <Button Text="Save the checkmark"
+                                            popup:Popup.CloseOnClick="True"
+                                            Command="{Binding SaveCommand}"
+                                            CommandParameter="{Binding}">
+                                </Button>
+                            </StackLayout>
+                        </Frame>
+                    </popup:PopupBehavior>
+                </Button.Behaviors>
+            </Button>
+
+            <StackLayout Orientation="Horizontal"
+                         Grid.Row="2"
+                         HorizontalOptions="Center">
+                <Label Text="Is it checked?"
+                       VerticalOptions="Center"
+                       Margin="5"/>
+
+                <CheckBox Margin="5"
+                          VerticalOptions="Center"
+                          IsChecked="{Binding Ascending}"/>
+
+            </StackLayout>
+
+            <Grid Grid.Row="3"
                   BackgroundColor="DarkBlue"
                   Margin="20">
                 <Grid.Behaviors>
                     <popup:PopupBehavior Direction="Auto">
-                        <popup:PopupBehavior.Content>
-                            <Frame CornerRadius="0"
-                                       Margin="5"
-                                       BackgroundColor="DarkGreen">
-                                <Label Text="This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
-                                           LineBreakMode="WordWrap"
-                                           popup:Popup.CloseOnClick="True"
-                                           TextColor="WhiteSmoke"/>
-                            </Frame>
-                        </popup:PopupBehavior.Content>
+                        <Frame CornerRadius="0"
+                                    Margin="5"
+                                    BackgroundColor="DarkGreen">
+                            <StackLayout>
+
+                            <Label Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
+                                        LineBreakMode="WordWrap"
+                                        popup:Popup.CloseOnClick="True"
+                                        TextColor="WhiteSmoke"/>
+
+                                <Label Text="{Binding MyString}"
+                                       TextColor="WhiteSmoke"
+                                       Margin="20"/>
+                            </StackLayout>
+                        </Frame>
                     </popup:PopupBehavior>
                 </Grid.Behaviors>
             </Grid>

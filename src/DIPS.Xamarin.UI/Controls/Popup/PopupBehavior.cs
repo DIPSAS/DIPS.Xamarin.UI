@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Windows.Input;
+using System.Diagnostics.CodeAnalysis;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 
@@ -9,6 +9,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     /// Behavior to be added to an item you want to open a popup from. This item _has_ to be inside a PopupLayout somehow. Else, nothing would happend.
     /// </summary>
     [ContentProperty(nameof(Content))]
+    [ExcludeFromCodeCoverage]
     public class PopupBehavior : Behavior<View>
     {
         private readonly Command m_onTappedCommand;
@@ -32,7 +33,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             bindable.BindingContextChanged += (s, e) => BindingContext = bindable.BindingContext;
             if (bindable is Button button)
             {
-                button.Command = m_onTappedCommand;
+                button.Clicked += (s,e) => ShowPopup();
             }
             else
             {
@@ -43,24 +44,13 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         }
 
         /// <summary>
-        /// Handles detaching to item
-        /// </summary>
-        /// <param name="bindable"></param>
-        protected override void OnDetachingFrom(View bindable)
-        {
-            base.OnDetachingFrom(bindable);
-        }
-
-        /// <summary>
         /// <see cref="BindingContextFactory" />
         /// </summary>
         public static readonly BindableProperty BindingContextFactoryProperty =
             BindableProperty.Create(nameof(BindingContextFactory), typeof(Func<object>), typeof(PopupBehavior), null);
 
         /// <summary>
-        /// A func which should return the requested viewModel for the popup when it opens.
-        /// Can be used to create a new instance of a filter, and have the save command send it back with CommandParameter="{Binding}".
-        /// Removing unwanted state from your viewModel
+        /// Used to set the binding context of the popup content. If this is null, the binding context is innherited from the attached element.
         /// </summary>
         public Func<object> BindingContextFactory
         {

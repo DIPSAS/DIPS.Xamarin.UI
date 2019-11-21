@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -10,41 +9,35 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Popup
     {
         public PopupPage()
         {
+            Ascending = true;
             InitializeComponent();
             BindingContext = this;
-            SaveCommand1 = new Command(o => Update1(o as PopupFilterViewModel));
-            SaveCommand2 = new Command(o => Update2(o as PopupFilterViewModel));
-            Ascending2 = true;
+            SaveCommand = new Command(o => Update((PopupFilterViewModel)o));
         }
 
-        private void Update1(PopupFilterViewModel popupFilterViewModel)
+        private void Update(PopupFilterViewModel popupFilterViewModel)
         {
-            Ascending1 = popupFilterViewModel.Ascending;
-            OnPropertyChanged(nameof(Ascending1));
+            Ascending = popupFilterViewModel.Ascending;
+            OnPropertyChanged(nameof(Ascending));
         }
 
-        private void Update2(PopupFilterViewModel popupFilterViewModel)
-        {
-            Ascending2 = popupFilterViewModel.Ascending;
-            OnPropertyChanged(nameof(Ascending2));
-        }
+        public string MyString { get; } = "Hello popupContent";
 
-        public ICommand SaveCommand1 { get; }
-        public ICommand SaveCommand2 { get; }
+        public ICommand SaveCommand { get; }
 
-        public bool Ascending1 { get; set; }
-        public bool Ascending2 { get; set; }
+        public bool Ascending { get; set; }
 
-        public Func<PopupFilterViewModel> FilterViewModelFactory1 => new Func<PopupFilterViewModel>(() => new PopupFilterViewModel { Ascending = Ascending1, SaveCommand = SaveCommand1 });
-        public Func<PopupFilterViewModel> FilterViewModelFactory2 => new Func<PopupFilterViewModel>(() => new PopupFilterViewModel { Ascending = Ascending2, SaveCommand = SaveCommand2 });
+        public Func<PopupPage> GetViewModel => () => this;
+
+        public Func<PopupFilterViewModel> FilterViewModelFactory => new Func<PopupFilterViewModel>(() => new PopupFilterViewModel { Ascending = Ascending, SaveCommand = SaveCommand });
     }
 
     public class PopupFilterViewModel : INotifyPropertyChanged
     {
         public bool Ascending { get; set; }
 
-        public ICommand SaveCommand { get; set; }
+        public ICommand? SaveCommand { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

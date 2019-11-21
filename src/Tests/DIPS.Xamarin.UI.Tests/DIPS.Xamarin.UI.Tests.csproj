@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
+    <None Remove="Extensions\VisualElementExtensionsTests.config" />
   </ItemGroup>
 </Project>
