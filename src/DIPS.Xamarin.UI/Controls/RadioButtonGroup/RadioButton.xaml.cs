@@ -52,7 +52,9 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             typeof(RadioButton),
             false);
 
-       
+        /// <summary>
+        /// <see cref="BorderWidth"/>
+        /// </summary>
         public static readonly BindableProperty BorderWidthProperty = BindableProperty.Create(
             nameof(BorderWidth),
             typeof(int),
