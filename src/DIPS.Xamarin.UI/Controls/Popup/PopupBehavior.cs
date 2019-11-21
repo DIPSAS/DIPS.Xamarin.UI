@@ -21,6 +21,10 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             m_onTappedCommand = new Command(ShowPopup);
         }
 
+        /// <summary>
+        /// Handels attaching to item
+        /// </summary>
+        /// <param name="bindable"></param>
         protected override void OnAttachedTo(View bindable)
         {
             m_attachedTo = bindable;
@@ -36,6 +40,10 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             base.OnAttachedTo(bindable);
         }
 
+        /// <summary>
+        /// Handles detaching to item
+        /// </summary>
+        /// <param name="bindable"></param>
         protected override void OnDetachingFrom(View bindable)
         {
             base.OnDetachingFrom(bindable);
@@ -108,6 +116,17 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     /// </summary>
     public enum PopupDirection
     {
-        Auto, Below, Above
+        /// <summary>
+        /// Automatically based on the location at the screen
+        /// </summary>
+        Auto,
+        /// <summary>
+        /// Below the placement target
+        /// </summary>
+        Below,
+        /// <summary>
+        /// Above the placement target
+        /// </summary>
+        Above
     }
 }

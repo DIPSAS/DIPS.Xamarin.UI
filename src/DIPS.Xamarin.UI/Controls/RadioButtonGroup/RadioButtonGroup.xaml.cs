@@ -19,7 +19,6 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
     public partial class RadioButtonGroup : ContentView, IHandleRadioButtons
     {
         private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
-        private PropertyInfo? m_displayMember;
 
         /// <summary>
         ///     <see cref="SelectedColor" />

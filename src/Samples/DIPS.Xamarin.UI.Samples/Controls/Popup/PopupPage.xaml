@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:popup="clr-namespace:DIPS.Xamarin.UI.Controls.Popup;assembly=DIPS.Xamarin.UI"
+             xmlns:popup="http://dips.xamarin.ui.com"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Popup.PopupPage">
     <popup:PopupLayout x:Name="popupLayout">
         <Grid BackgroundColor="WhiteSmoke">
