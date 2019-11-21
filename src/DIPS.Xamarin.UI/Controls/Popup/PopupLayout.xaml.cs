@@ -5,6 +5,9 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.Popup
 {
+    /// <summary>
+    /// Layout used to add content showing popups
+    /// </summary>
     [ContentProperty(nameof(MainContent))]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PopupLayout : ContentView
@@ -12,8 +15,10 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         private TapGestureRecognizer m_closePopupRecognizer;
         private View? m_content;
         private Lazy<Frame> m_blockingFrame;
-        private ContentView m_dummyView = new ContentView() { IsVisible = false, };
 
+        /// <summary>
+        /// Create an instance
+        /// </summary>
         public PopupLayout()
         {
             InitializeComponent();
@@ -21,9 +26,15 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             m_blockingFrame = new Lazy<Frame>(CreateBlockingFrame);
         }
 
+        /// <summary>
+        /// <see cref="MainContent" />
+        /// </summary>
         public static readonly BindableProperty MainContentProperty =
             BindableProperty.Create(nameof(MainContent), typeof(View), typeof(PopupLayout), propertyChanged: OnMainContentPropertyChanged);
 
+        /// <summary>
+        /// Main Content of the layout. This is routed from the Content property, so you don't have to use it.
+        /// </summary>
         public View MainContent
         {
             get { return (View)GetValue(MainContentProperty); }
@@ -45,7 +56,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             }
         }
 
-        public void ShowPopup(View popupView, View relativeView, PopupDirection popupDirection)
+        internal void ShowPopup(View popupView, View relativeView, PopupDirection popupDirection)
         {
             relativeLayout.Children.Add(m_blockingFrame.Value,
                 widthConstraint: Constraint.RelativeToParent(r => r.Width),
@@ -63,22 +74,16 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 else direction = PopupDirection.Below;
             }
 
-            relativeLayout.Children.Add(m_dummyView,
-                yConstraint: Constraint.RelativeToParent((r) => relativeView.GetY(this)),
-                xConstraint: Constraint.RelativeToParent((r) => relativeView.GetX(this)),
-                widthConstraint: Constraint.RelativeToParent((r) => relativeView.Width),
-                heightConstraint: Constraint.RelativeToParent((r) => relativeView.Height));
-
             relativeLayout.Children.Add(m_content = popupView,
-                yConstraint: Constraint.RelativeToView(m_dummyView, (r, v) => v.Y + v.Height));
+                yConstraint: Constraint.RelativeToParent((r) => relativeView.GetY(this) + relativeView.Height));
             var sumMarginY = popupView.Margin.Top + popupView.Margin.Bottom;
-            var diffY = direction == PopupDirection.Below ? (relativeView.Height) : (-popupView.Height - sumMarginY);
+            var diffY = direction == PopupDirection.Below ? relativeView.Height : (-popupView.Height - sumMarginY);
 
-            RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToView(m_dummyView, (r, v) => v.Y + diffY));
-            RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToView(m_dummyView, (r, v) => Math.Max(0, Math.Min(r.Width - popupView.Width - popupView.Margin.Left - popupView.Margin.Right, v.X))));
+            RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => relativeView.GetY(this) + diffY));
+            RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - popupView.Margin.Left - popupView.Margin.Right, relativeView.GetX(this)))));
         }
 
-        public void HidePopup()
+        internal void HidePopup()
         {
             relativeLayout.Children.Remove(m_blockingFrame.Value);
             if (m_content != null)
@@ -86,10 +91,9 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 relativeLayout.Children.Remove(m_content);
             }
             m_content = null;
-            relativeLayout.Children.Remove(m_dummyView);
         }
 
-        public void AddOnCloseRecognizer(View view)
+        internal void AddOnCloseRecognizer(View view)
         {
             if (view is Button button)
             {

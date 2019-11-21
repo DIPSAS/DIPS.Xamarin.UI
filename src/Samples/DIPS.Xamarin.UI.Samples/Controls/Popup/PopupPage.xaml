@@ -23,21 +23,19 @@
                         BackgroundColor="DarkGray"
                         TextColor="WhiteSmoke">
                     <Button.Behaviors>
-                        <popup:PopupBehaviour SaveCommand="{Binding Source={x:Reference btn1}, Path=BindingContext.SaveCommand1}"
-                                              SaveText="Yolo1"
-                                              PopupBindingContextFactory="{Binding Source={x:Reference btn1}, Path=BindingContext.FilterViewModelFactory1}">
-                            <popup:PopupBehaviour.PopupContent>
+                        <popup:PopupBehavior BindingContextFactory="{Binding Source={x:Reference btn1}, Path=BindingContext.FilterViewModelFactory1}">
+                            <popup:PopupBehavior.Content>
                                 <Frame CornerRadius="5"
-                                       BackgroundColor="White"
-                                       HeightRequest="50"
-                                       VerticalOptions="FillAndExpand">
+                                           BackgroundColor="White"
+                                           HeightRequest="50"
+                                           VerticalOptions="FillAndExpand">
                                     <CheckBox IsChecked="{Binding Ascending}"
-                                              Margin="20"
-                                              HorizontalOptions="Center"
-                                              VerticalOptions="Center"/>
+                                                  Margin="20"
+                                                  HorizontalOptions="Center"
+                                                  VerticalOptions="Center"/>
                                 </Frame>
-                            </popup:PopupBehaviour.PopupContent>
-                        </popup:PopupBehaviour>
+                            </popup:PopupBehavior.Content>
+                        </popup:PopupBehavior>
                     </Button.Behaviors>
                 </Button>
             </Grid>
@@ -52,30 +50,30 @@
                     BackgroundColor="DarkGray"
                     TextColor="WhiteSmoke">
                 <Button.Behaviors>
-                    <popup:PopupBehaviour PopupBindingContextFactory="{Binding Source={x:Reference btn2}, Path=BindingContext.FilterViewModelFactory2}"
+                    <popup:PopupBehavior BindingContextFactory="{Binding Source={x:Reference btn2}, Path=BindingContext.FilterViewModelFactory2}"
                                           Direction="Auto">
-                        <popup:PopupBehaviour.PopupContent>
+                        <popup:PopupBehavior.Content>
                             <Frame CornerRadius="30"
-                                   Margin="0,20,10,0"
-                                   BackgroundColor="Orange">
+                                        Margin="0,20,10,0"
+                                        BackgroundColor="Orange">
                                 <StackLayout Orientation="Vertical">
                                     <Label Text="Yolo Yolo Yolo Yolo Yolo Yolo Yolo" VerticalOptions="Center"/>
                                     <CheckBox IsChecked="{Binding Ascending}"
-                                              Margin="5"
-                                              HorizontalOptions="Center"
-                                              VerticalOptions="Center"/>
+                                                    Margin="5"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center"/>
                                     <Button Text="Abort mission"
-                                            popup:PopupBehaviour.CloseOnClick="True"/>
+                                                popup:Popup.CloseOnClick="True"/>
 
                                     <Button Text="save yo"
-                                            popup:PopupBehaviour.CloseOnClick="True"
-                                            Command="{Binding SaveCommand}"
-                                            CommandParameter="{Binding}">
+                                                popup:Popup.CloseOnClick="True"
+                                                Command="{Binding SaveCommand}"
+                                                CommandParameter="{Binding}">
                                     </Button>
                                 </StackLayout>
                             </Frame>
-                        </popup:PopupBehaviour.PopupContent>
-                    </popup:PopupBehaviour>
+                        </popup:PopupBehavior.Content>
+                    </popup:PopupBehavior>
                 </Button.Behaviors>
             </Button>
 
@@ -84,18 +82,18 @@
                   BackgroundColor="DarkBlue"
                   Margin="20">
                 <Grid.Behaviors>
-                    <popup:PopupBehaviour Direction="Auto">
-                        <popup:PopupBehaviour.PopupContent>
+                    <popup:PopupBehavior Direction="Auto">
+                        <popup:PopupBehavior.Content>
                             <Frame CornerRadius="0"
-                                   Margin="5"
-                                   BackgroundColor="DarkGreen">
+                                       Margin="5"
+                                       BackgroundColor="DarkGreen">
                                 <Label Text="This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
-                                       LineBreakMode="WordWrap"
-                                       popup:PopupBehaviour.CloseOnClick="True"
-                                       TextColor="WhiteSmoke"/>
+                                           LineBreakMode="WordWrap"
+                                           popup:Popup.CloseOnClick="True"
+                                           TextColor="WhiteSmoke"/>
                             </Frame>
-                        </popup:PopupBehaviour.PopupContent>
-                    </popup:PopupBehaviour>
+                        </popup:PopupBehavior.Content>
+                    </popup:PopupBehavior>
                 </Grid.Behaviors>
             </Grid>
         </Grid>
