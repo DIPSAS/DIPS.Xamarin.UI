@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
+using DIPS.Xamarin.UI.Samples.Controls.Popup;
 using DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;
 using Xamarin.Forms;
 
@@ -20,6 +21,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls
         private void NavigateTo(string parameter)
         {
             if (parameter.Equals("DatePicker")) m_navigation.PushAsync(new DatePickerPage());
+            if (parameter.Equals("Popup")) m_navigation.PushAsync(new PopupPage());
             if (parameter.Equals("RadioButtonGroup")) m_navigation.PushAsync(new RadioButtonGroupPage());
         }
     }

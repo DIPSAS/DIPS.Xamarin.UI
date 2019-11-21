@@ -20,5 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Remove="Extensions\VisualElementExtensionsTests.config" />
+  </ItemGroup>
 </Project>

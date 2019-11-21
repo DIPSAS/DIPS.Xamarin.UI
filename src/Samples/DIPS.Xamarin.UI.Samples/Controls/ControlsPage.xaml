@@ -11,6 +11,9 @@
              Title="Controls">
     <ContentPage.Content>
         <StackLayout>
+            <Button Text="Popup" 
+                    Command="{Binding NavigateToCommand}" 
+                    CommandParameter="Popup"  />
             <Button Text="DatePicker"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="DatePicker" />
