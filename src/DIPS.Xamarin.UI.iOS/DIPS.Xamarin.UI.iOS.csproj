@@ -29,7 +29,8 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\DIPS.Xamarin.UI.iOS.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <WarningsAsErrors>NU1605;CS1591;CS8604</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>

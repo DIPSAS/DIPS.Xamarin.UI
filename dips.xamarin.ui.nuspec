@@ -39,7 +39,6 @@
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.dll" target="lib\xamarinios10\DIPS.Xamarin.UI.dll" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.pdb" target="lib\xamarinios10\DIPS.Xamarin.UI.pdb" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.xml" />
-        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.iOS.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.iOS.xml" />
 
 
         <!-- Android reference assemblies -->
@@ -48,6 +47,5 @@
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.dll" target="lib\monoandroid81\DIPS.Xamarin.UI.dll" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.pdb" target="lib\monoandroid81\DIPS.Xamarin.UI.pdb" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.xml" />
-        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.Android.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.Android.xml" />   
     </files>
 </package>
