@@ -338,4 +338,5 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
-src/Retrospective.Service.Tests/Services/SlackServiceTests.cs
+# Remove XML documentation 
+DIPS.Xamarin.UI*.xml

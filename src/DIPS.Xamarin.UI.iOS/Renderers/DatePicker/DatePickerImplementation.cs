@@ -9,14 +9,19 @@ using DatePicker = DIPS.Xamarin.UI.Controls.DatePicker.DatePicker;
 [assembly: ExportRenderer(typeof(DatePicker), typeof(DatePickerImplementation))]
 namespace DIPS.Xamarin.UI.iOS.Renderers.DatePicker
 {
+    /// <inheritdoc />
     public class DatePickerImplementation : DatePickerRenderer
     {
         private Controls.DatePicker.DatePicker m_datePicker;
         private nfloat m_defaultLayerBorderWith;
         private UITextBorderStyle m_defaultBorderStyle;
 
+        /// <summary>
+        /// Method to use when linking in order to keep the assembly
+        /// </summary>
         public static void Initialize() { }
 
+        /// <inheritdoc />
         protected override void OnElementChanged(ElementChangedEventArgs<global::Xamarin.Forms.DatePicker> e)
         {
             base.OnElementChanged(e);
