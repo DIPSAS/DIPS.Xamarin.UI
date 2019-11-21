@@ -10,6 +10,7 @@ using DatePicker = DIPS.Xamarin.UI.Controls.DatePicker.DatePicker;
 
 namespace DIPS.Xamarin.UI.Android.Renderers.DatePicker
 {
+    /// <inheritdoc />
     public class DatePickerImplementation : global::Xamarin.Forms.Platform.Android.DatePickerRenderer
     {
         private Controls.DatePicker.DatePicker m_datePicker;
@@ -19,10 +20,16 @@ namespace DIPS.Xamarin.UI.Android.Renderers.DatePicker
         private int m_defaultLeftPadding;
         private int m_defaultRightPadding;
         private int m_defaultTopPadding;
+
+        /// <inheritdoc />
         public DatePickerImplementation(Context context) : base(context) { }
 
+        /// <summary>
+        /// Method to use when linking in order to keep the assembly
+        /// </summary>
         public static void Initialize() { }
 
+        /// <inheritdoc />
         protected override void OnElementChanged(ElementChangedEventArgs<global::Xamarin.Forms.DatePicker> e)
         {
             base.OnElementChanged(e);
