@@ -8,6 +8,7 @@
 - [ ] I have tested on an Android device.
 - [ ] I have tested on an iOS device.
 - [ ] I have added unit tests
+- [ ] I have documented public APIs
 
 >*Please add pictures / Gifs if possible*
 >*Todo List can be checked by putting a `X` inside the brackets*
