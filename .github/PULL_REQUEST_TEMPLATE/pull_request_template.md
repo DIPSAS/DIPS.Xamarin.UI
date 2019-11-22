@@ -13,3 +13,6 @@
 >*Please add pictures / Gifs if possible*
 >*Todo List can be checked by putting a `X` inside the brackets*
 >*Remember to update our `wiki` after this PR is merged*
+
+## Remember
+- Add documentation to our [wiki](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki) when the PR is merged
