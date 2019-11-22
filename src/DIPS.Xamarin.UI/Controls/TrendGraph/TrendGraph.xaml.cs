@@ -17,11 +17,6 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             InitializeComponent();
         }
 
-        protected override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-        }
-
         protected override void OnParentSet()
         {
             var parentSize = ((VisualElement)Parent).Width;
@@ -67,7 +62,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
 
             var amount = ItemsSource.Count;
             var totalWidth = Width;
-            var height = ((VisualElement)Parent)?.Height ?? 0.0;
+            var height = Height;
             var margin = GraphMargin;
             var widthPerItem = totalWidth / (amount + (amount - 1) * margin);
             margin = widthPerItem * GraphMargin;
@@ -75,7 +70,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             foreach (var item in ItemsSource)
             {
                 var itemx = x;
-                var itemHeight = CalculateYPosition(ExtractValue(item));
+                var itemHeight = CalculateYPosition(item.ExtractDouble(ValueMemberPath, MinValue));
                 var backFrame = new BoxView
                 {
                     BackgroundColor = GraphBackgroundColor,
@@ -120,13 +115,6 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             var totalDiff = MaxValue - MinValue;
             var valDiff = value - MinValue;
             return valDiff / totalDiff;
-        }
-
-        private double ExtractValue(object item)
-        {
-            var value = item.GetPropertyValue(ValueMemberPath);
-            var isDouble = double.TryParse(value, out double dValue);
-            return isDouble ? dValue : MinValue;
         }
 
         private static void OnAnyPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)

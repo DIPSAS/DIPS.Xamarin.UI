@@ -28,5 +28,19 @@
             var value = displayMember?.GetValue(obj, null);
             return value == null ? string.Empty : value.ToString();
         }
+
+        /// <summary>
+        /// Extracts a double value if one, else returns the tostring as a double. If none of these return a valid value, the default value is used
+        /// </summary>
+        /// <param name="obj">The object to try to get the value from</param>
+        /// <param name="propertyName">The property to extract the value from</param>
+        /// <param name="defaultValue">The default value if no value is found</param>
+        /// <returns></returns>
+        public static double ExtractDouble(this object obj, string propertyName, double defaultValue)
+        {
+            var value = obj.GetPropertyValue(propertyName);
+            var isDouble = double.TryParse(value, out double dValue);
+            return isDouble ? dValue : defaultValue;
+        }
     }
 }
