@@ -30,7 +30,7 @@
         }
 
         /// <summary>
-        /// Extracts a double value if one, else returns the tostring as a double. If none of these return a valid value, the default value is used
+        /// Tries to extract a double value from a property on an object. If the property is not a double value, it will use the ToString(). If the ToString is not a double value it will use the defaultValue parameter.
         /// </summary>
         /// <param name="obj">The object to try to get the value from</param>
         /// <param name="propertyName">The property to extract the value from</param>

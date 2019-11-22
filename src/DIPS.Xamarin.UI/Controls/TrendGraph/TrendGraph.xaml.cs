@@ -3,23 +3,31 @@ using System.Collections;
 using Xamarin.Forms;
 using DIPS.Xamarin.UI.Extensions;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DIPS.Xamarin.UI.Controls.TrendGraph
 {
+    /// <summary>
+    /// Bar graph showing a trend
+    /// </summary>
+    [ExcludeFromCodeCoverage]
     public partial class TrendGraph : ContentView
     {
         private VisualElement? m_previousParent;
+
+        /// <summary>
+        /// Constructor to create the graph.
+        /// </summary>
         public TrendGraph()
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand;
-            VerticalOptions = LayoutOptions.FillAndExpand;
-            SizeChanged += (s, e) => StartRedraw(this, EventArgs.Empty);
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Starts listening to parent size changes
+        /// </summary>
         protected override void OnParentSet()
         {
-            var parentSize = ((VisualElement)Parent).Width;
             if (m_previousParent != null)
             {
                 m_previousParent.SizeChanged -= StartRedraw;
@@ -44,8 +52,11 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
         private void Redraw()
         {
             graphContainer.Children.Clear();
-            if (MinValue >= MaxValue ||
-                ItemsSource == null ||
+            if (MinValue >= MaxValue)
+            {
+                throw new ArgumentException("Can't have Minvalue higher or equal to MaxValue");
+            }
+            if (ItemsSource == null ||
                 ItemsSource.Count == 0 ||
                 !IsVisible ||
                 GraphBackgroundColor == GraphColor ||
@@ -60,61 +71,40 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
                 collectionChanged.CollectionChanged += CollectionChanged_CollectionChanged;
             }
 
-            var amount = ItemsSource.Count;
-            var totalWidth = Width;
-            var height = Height;
-            var margin = GraphMargin;
-            var widthPerItem = totalWidth / (amount + (amount - 1) * margin);
-            margin = widthPerItem * GraphMargin;
+            var widthPerItem = Width / (ItemsSource.Count + (ItemsSource.Count - 1) * GraphMargin);
+            var margin = widthPerItem * GraphMargin;
             var x = 0.0;
             foreach (var item in ItemsSource)
             {
-                var itemx = x;
-                var itemHeight = CalculateYPosition(item.ExtractDouble(ValueMemberPath, MinValue));
-                var backFrame = new BoxView
-                {
-                    BackgroundColor = GraphBackgroundColor,
-                    CornerRadius = 0,
-                    VerticalOptions = LayoutOptions.FillAndExpand,
-                    HorizontalOptions = LayoutOptions.FillAndExpand
-                };
-
-                var graph = new BoxView
-                {
-                    VerticalOptions = LayoutOptions.FillAndExpand,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    BackgroundColor = GraphColor,
-                    CornerRadius = 0,
-                    HeightRequest = itemHeight * height
-                };
-
-                graphContainer.Children.Add(backFrame,
-                    xConstraint: Constraint.RelativeToParent(r => itemx),
-                    yConstraint: Constraint.RelativeToParent(r => 0),
-                    widthConstraint: Constraint.RelativeToParent(r => widthPerItem),
-                    heightConstraint: Constraint.RelativeToParent(r => r.Height));
-
-                graphContainer.Children.Add(graph,
-                    xConstraint: Constraint.RelativeToParent(r => backFrame.X),
-                    yConstraint: Constraint.RelativeToParent(r => backFrame.Y + backFrame.Height - (itemHeight * backFrame.Height)),
-                    widthConstraint: Constraint.RelativeToParent(r => backFrame.Width),
-                    heightConstraint: Constraint.RelativeToParent(r => itemHeight * backFrame.Height));
+                DrawGraph(x, item, widthPerItem);
                 x += widthPerItem + margin;
             }
         }
 
+        private void DrawGraph(double x, object item, double widthPerItem)
+        {
+            var itemHeight = item.ExtractDouble(ValueMemberPath, MinValue).CalculateRelativePosition(MinValue, MaxValue);
+            var backFrame = CreateBoxView(GraphBackgroundColor);
+
+            graphContainer.Children.Add(backFrame,
+                xConstraint: Constraint.RelativeToParent(r => x),
+                yConstraint: Constraint.RelativeToParent(r => 0),
+                widthConstraint: Constraint.RelativeToParent(r => widthPerItem),
+                heightConstraint: Constraint.RelativeToParent(r => r.Height));
+
+            graphContainer.Children.Add(CreateBoxView(GraphColor),
+                xConstraint: Constraint.RelativeToParent(r => backFrame.X),
+                yConstraint: Constraint.RelativeToParent(r => backFrame.Y + backFrame.Height - (itemHeight * backFrame.Height)),
+                widthConstraint: Constraint.RelativeToParent(r => backFrame.Width),
+                heightConstraint: Constraint.RelativeToParent(r => itemHeight * backFrame.Height));
+
+        }
+
+        private BoxView CreateBoxView(Color background) => new BoxView { BackgroundColor = background, CornerRadius = 0 };
+
         private void CollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             StartRedraw(this, EventArgs.Empty);
-        }
-
-        private double CalculateYPosition(double value)
-        {
-            if (value >= MaxValue) return 1.0;
-            if (value <= MinValue) return 0.0;
-            var totalDiff = MaxValue - MinValue;
-            var valDiff = value - MinValue;
-            return valDiff / totalDiff;
         }
 
         private static void OnAnyPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -130,7 +120,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             BindableProperty.Create(nameof(GraphColor), typeof(Color), typeof(TrendGraph), Color.FromHex("#a26eba"), propertyChanged: OnAnyPropertyChanged);
 
         /// <summary>
-        /// Color of the filled graph
+        /// Color of each graph
         /// </summary>
         public Color GraphColor
         {
@@ -145,7 +135,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             BindableProperty.Create(nameof(GraphBackgroundColor), typeof(Color), typeof(TrendGraph), Color.FromHex("#edf3f4"), propertyChanged: OnAnyPropertyChanged);
 
         /// <summary>
-        /// Color behind the graph
+        /// Background color of each graph
         /// </summary>
         public Color GraphBackgroundColor
         {
@@ -220,14 +210,12 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             BindableProperty.Create(nameof(ValueMemberPath), typeof(string), typeof(TrendGraph), string.Empty, propertyChanged: OnAnyPropertyChanged);
 
         /// <summary>
-        /// To expose path to item values. Set this if the items are not of type int, double or float.
+        /// The property path to use as a value. The value is used to determine how the height of the graph.
         /// </summary>
         public string ValueMemberPath
         {
             get { return (string)GetValue(ValueMemberPathProperty); }
             set { SetValue(ValueMemberPathProperty, value); }
         }
-
-
     }
 }

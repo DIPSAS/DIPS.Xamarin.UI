@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:RadioButtonGroup="clr-namespace:DIPS.Xamarin.UI.Controls.RadioButtonGroup;assembly=DIPS.Xamarin.UI"
+             xmlns:dxui="http://dips.xamarin.ui.com"
              xmlns:local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;assembly=DIPS.Xamarin.UI.Samples"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup.RadioButtonGroupPage">
@@ -18,7 +18,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <RadioButtonGroup:RadioButtonGroup Grid.Row="0"
+        <dxui:RadioButtonGroup Grid.Row="0"
                                            Margin="0,5,0,0"
                                            ItemsSource="{Binding Items}"
                                            SelectedItem="{Binding SelectedItem}"

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:popup="http://dips.xamarin.ui.com"
+             xmlns:dxui="http://dips.xamarin.ui.com"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Popup.PopupPage">
     <ContentPage.Resources>
         <Style TargetType="Button" x:Key="popupButtonStyle">
@@ -17,9 +17,9 @@
             <Setter Property="Margin" Value="5"/>
             <Setter Property="BorderColor" Value="Black"/>
             <Setter Property="BackgroundColor" Value="WhiteSmoke"/>
-        </Style> 
+        </Style>
     </ContentPage.Resources>
-    <popup:PopupLayout x:Name="popupLayout">
+    <dxui:PopupLayout x:Name="popupLayout">
         <Grid BackgroundColor="WhiteSmoke">
             <Grid>
                 <Grid.RowDefinitions>
@@ -34,12 +34,12 @@
                     Grid.Row="0"
                     Style="{StaticResource popupButtonStyle}">
                 <Button.Behaviors>
-                    <popup:PopupBehavior BindingContextFactory="{Binding GetViewModel}">
+                    <dxui:PopupBehavior BindingContextFactory="{Binding GetViewModel}">
                         <Frame Style="{StaticResource popupContentStyle}">
                             <Label Margin="20"
                                    Text="{Binding MyString}"/>
                         </Frame>
-                    </popup:PopupBehavior>
+                    </dxui:PopupBehavior>
                 </Button.Behaviors>
             </Button>
 
@@ -48,7 +48,7 @@
                     Grid.Row="1"
                     Style="{StaticResource popupButtonStyle}">
                 <Button.Behaviors>
-                    <popup:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory}"
+                    <dxui:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory}"
                                           Direction="Above">
                         <Frame Style="{StaticResource popupContentStyle}">
                             <StackLayout Orientation="Vertical">
@@ -59,16 +59,16 @@
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center"/>
                                 <Button Text="Close and forget"
-                                            popup:Popup.CloseOnClick="True"/>
+                                            dxui:Popup.CloseOnClick="True"/>
 
                                 <Button Text="Save the checkmark"
-                                            popup:Popup.CloseOnClick="True"
+                                            dxui:Popup.CloseOnClick="True"
                                             Command="{Binding SaveCommand}"
                                             CommandParameter="{Binding}">
                                 </Button>
                             </StackLayout>
                         </Frame>
-                    </popup:PopupBehavior>
+                    </dxui:PopupBehavior>
                 </Button.Behaviors>
             </Button>
 
@@ -89,15 +89,15 @@
                   BackgroundColor="DarkBlue"
                   Margin="20">
                 <Grid.Behaviors>
-                    <popup:PopupBehavior Direction="Auto">
+                    <dxui:PopupBehavior Direction="Auto">
                         <Frame CornerRadius="0"
                                     Margin="5"
                                     BackgroundColor="DarkGreen">
                             <StackLayout>
 
-                            <Label Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
+                                <Label Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
                                         LineBreakMode="WordWrap"
-                                        popup:Popup.CloseOnClick="True"
+                                        dxui:Popup.CloseOnClick="True"
                                         TextColor="WhiteSmoke"/>
 
                                 <Label Text="{Binding MyString}"
@@ -105,9 +105,9 @@
                                        Margin="20"/>
                             </StackLayout>
                         </Frame>
-                    </popup:PopupBehavior>
+                    </dxui:PopupBehavior>
                 </Grid.Behaviors>
             </Grid>
         </Grid>
-    </popup:PopupLayout>
+    </dxui:PopupLayout>
 </ContentPage>
