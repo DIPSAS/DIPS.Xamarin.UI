@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\Popup\" />
+    <Folder Include="Controls\TrendGraph\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
