@@ -199,7 +199,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
         ///  <see cref="GraphMargin" />
         /// </summary>
         public static readonly BindableProperty GraphMarginProperty =
-            BindableProperty.Create(nameof(GraphMargin), typeof(double), typeof(TrendGraph), 0.25, propertyChanged: OnAnyPropertyChanged);
+            BindableProperty.Create(nameof(GraphMargin), typeof(double), typeof(TrendGraph), 0.5, propertyChanged: OnAnyPropertyChanged);
 
         /// <summary>
         /// Margin between each item

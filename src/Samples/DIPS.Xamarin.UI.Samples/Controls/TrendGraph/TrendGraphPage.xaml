@@ -10,10 +10,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <dipsui:TrendGraph MaxValue="{Binding MaxValue}"
-                                MinValue="0"
-                                Margin="5"
-                                ItemsSource="{Binding TrendItems}"
-                                ValueMemberPath="Value"/>
+                               MinValue="0"
+                               Margin="5"
+                               GraphMargin="1"
+                               ItemsSource="{Binding TrendItems}"
+                               ValueMemberPath="Value"/>
             <Label Margin="5"
                    Grid.Column="1"
                    VerticalOptions="Center"
