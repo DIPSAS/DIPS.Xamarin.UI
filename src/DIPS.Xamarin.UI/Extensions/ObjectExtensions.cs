@@ -13,9 +13,14 @@
         /// <returns></returns>
         public static string GetPropertyValue(this object obj, string propertyName)
         {
+            if (obj == null)
+            {
+                return string.Empty;
+            }
+
             if (string.IsNullOrEmpty(propertyName))
             {
-                return obj == null ? string.Empty : obj.ToString();
+                return obj.ToString();
             }
 
             var displayMember = obj.GetType().GetProperty(propertyName);

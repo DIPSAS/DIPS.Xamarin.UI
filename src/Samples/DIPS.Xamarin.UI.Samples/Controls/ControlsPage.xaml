@@ -20,6 +20,9 @@
             <Button Text="RadioButtonGroup"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="RadioButtonGroup" />
+            <Button Text="Trend graph"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TrendGraph" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
