@@ -46,5 +46,21 @@ namespace DIPS.Xamarin.UI.Extensions
 
             return y;
         }
+
+        /// <summary>
+        /// Calculates the relative position of the value regarding max and min
+        /// </summary>
+        /// <param name="value">The value to find relative to max and min</param>
+        /// <param name="minValue">Max value to cap towards if higher</param>
+        /// <param name="maxValue">Min value to cap towards if lower</param>
+        /// <returns></returns>
+        public static double CalculateRelativePosition(this double value, double minValue, double maxValue)
+        {
+            if (value >= maxValue) return 1.0;
+            if (value <= minValue) return 0.0;
+            var totalDiff = maxValue - minValue;
+            var valDiff = value - minValue;
+            return valDiff / totalDiff;
+        }
     }
 }
