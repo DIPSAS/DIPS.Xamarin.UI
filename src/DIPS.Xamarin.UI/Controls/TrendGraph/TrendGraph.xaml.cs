@@ -207,7 +207,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             BindableProperty.Create(nameof(ValueMemberPath), typeof(string), typeof(TrendGraph), string.Empty, propertyChanged: OnAnyPropertyChanged);
 
         /// <summary>
-        /// The property path to use as a value. The value is used to determine how the height of the graph.
+        /// The property path to use as a value. The value is used to determine the height of the graph.
         /// </summary>
         public string ValueMemberPath
         {
