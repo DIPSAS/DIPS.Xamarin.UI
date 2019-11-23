@@ -52,12 +52,9 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
         private void Redraw()
         {
             graphContainer.Children.Clear();
-            if (MinValue >= MaxValue)
-            {
-                throw new ArgumentException("Can't have Minvalue higher or equal to MaxValue");
-            }
             if (ItemsSource == null ||
                 ItemsSource.Count == 0 ||
+                MinValue >= MaxValue ||
                 !IsVisible ||
                 GraphBackgroundColor == GraphColor ||
                 Width < 1)

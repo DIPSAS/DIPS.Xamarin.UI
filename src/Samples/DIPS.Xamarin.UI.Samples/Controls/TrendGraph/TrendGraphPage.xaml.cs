@@ -33,7 +33,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.TrendGraph
 
         public List<double> TrendItems2 { get; } = new List<double> { 5, 3, 10 };
 
-        public List<int> TrendItems3 { get; } = new List<int> { 3, 3, 3 };
+        public int[] TrendItems3 { get; } = { 3, 3, 3 };
 
         public List<double> TrendItems4 { get; } = new List<double> { 6, 8 };
 
