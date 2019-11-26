@@ -30,12 +30,13 @@
                 </Grid.RowDefinitions>
             </Grid>
 
-            <Button Text="Auto direction should go below"
+            <Button Text="Upwards is scaled inside"
                     Grid.Row="0"
                     Style="{StaticResource popupButtonStyle}">
                 <Button.Behaviors>
-                    <dxui:PopupBehavior BindingContextFactory="{Binding GetViewModel}">
-                        <Frame Style="{StaticResource popupContentStyle}">
+                    <dxui:PopupBehavior BindingContextFactory="{Binding GetViewModel}"
+                                        Direction="Above">
+                        <Frame Style="{StaticResource popupContentStyle}" Margin="10">
                             <Label Margin="20"
                                    Text="{Binding MyString}"/>
                         </Frame>
@@ -44,15 +45,15 @@
             </Button>
 
 
-            <Button Text="Direction above"
+            <Button Text="Direction Auto"
                     Grid.Row="1"
                     Style="{StaticResource popupButtonStyle}">
                 <Button.Behaviors>
                     <dxui:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory}"
-                                          Direction="Above">
-                        <Frame Style="{StaticResource popupContentStyle}">
+                                          Direction="Auto">
+                        <Frame Style="{StaticResource popupContentStyle}" Margin="30">
                             <StackLayout Orientation="Vertical">
-                                <Label Margin="10"
+                                <Label Margin="5"
                                        Text="This is a long header to prove the automatic X placement"/>
                                 <CheckBox IsChecked="{Binding Ascending}"
                                                 Margin="5"
@@ -89,7 +90,7 @@
                   BackgroundColor="DarkBlue"
                   Margin="20">
                 <Grid.Behaviors>
-                    <dxui:PopupBehavior Direction="Auto">
+                    <dxui:PopupBehavior Direction="Below">
                         <Frame CornerRadius="0"
                                     Margin="5"
                                     BackgroundColor="DarkGreen">

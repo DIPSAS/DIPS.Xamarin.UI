@@ -79,7 +79,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             var sumMarginY = popupView.Margin.Top + popupView.Margin.Bottom;
             var diffY = direction == PopupDirection.Below ? relativeView.Height : (-popupView.Height - sumMarginY);
 
-            RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => relativeView.GetY(this) + diffY));
+            RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(this) + diffY))));
             RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - popupView.Margin.Left - popupView.Margin.Right, relativeView.GetX(this)))));
         }
 
