@@ -10,84 +10,64 @@ namespace DIPS.Xamarin.UI.Tests.Extensions
     {
         private const string InitialValue = "Initial Value";
         private const string NewValue = "New Value";
-        private string m_myFirstProperty;
-
-        public PropertyChangedExtensionsTests()
-        {
-            MyFirstProperty = InitialValue;
-        }
-
-        public string MyFirstProperty
-        {
-            get => m_myFirstProperty;
-            set => this.Set(ref m_myFirstProperty, value, PropertyChanged);
-        }
-
-        public string MySecondProperty { get; set; }
-        public string MyThirdProperty { get; set; }
+        private string m_testBackingStore = InitialValue;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         [Fact]
-        public void Set_NewValueIsNotEqualToOldValue_NotifyingPropertyChanged()
+        public void On_After_NewValueIsNotEqualToOldValue_NotifyingPropertyChanged()
         {
             var result = false;
             PropertyChanged += (sender, e) => result = true;
 
-            MyFirstProperty = NewValue;
+            this.On(PropertyChanged).After(ref m_testBackingStore, NewValue);
 
             result.Should().BeTrue(because:"Value is not the same as initial value of the property");
         }
 
         [Fact]
-        public void Set_NewValueIsEqualToOldValue_NotNotifyingPropertyChanged()
+        public void On_After_NewValueIsEqualToOldValue_NotNotifyingPropertyChanged()
         {
             var result = false;
             PropertyChanged += (sender, e) => result = true;
 
-            MyFirstProperty = InitialValue;
+            this.On(PropertyChanged).After(ref m_testBackingStore, InitialValue);
 
             result.Should().BeFalse(because:"Value was the same as initial value of the property");
         }
 
         [Fact]
-        public void Set_NewValue_BackingStoreHasSameValue()
+        public void On_After_NewValue_BackingStoreHasSameValue()
         {
-            MyFirstProperty = NewValue;
+            this.On(PropertyChanged).After(ref m_testBackingStore, NewValue);
 
-            m_myFirstProperty.Should().Be(NewValue, because: "The set method will always set the value to a new value, or keep te same value");
+            m_testBackingStore.Should().Be(NewValue, because: "The set method will always set the value to a new value, or keep te same value");
         }
 
         [Fact]
-        public void OnPropertyChanged_NotifiesPropertyChanged()
+        public void On_PropertyChanged_NotifiesPropertyChanged()
         {
+            var testPropertyName = "TestProperty";
             var result = false;
-            PropertyChanged += (sender, e) => result = e.PropertyName.Equals(nameof(MyFirstProperty));
+            PropertyChanged += (sender, e) => result = e.PropertyName.Equals(testPropertyName);
 
-            this.OnPropertyChanged(PropertyChanged, nameof(MyFirstProperty));
+            this.On(PropertyChanged, testPropertyName);
 
             result.Should().BeTrue(because: "PropertyChanged should always be raised with the correct property");
         }
-        [Fact]
-        public void OnPropertyChanged_MySecondProperty_DoesNotNotifyMyFirstProperty()
-        {
-            var result = false;
-            PropertyChanged += (sender, e) => result = e.PropertyName.Equals(nameof(MyFirstProperty));
-
-            this.OnPropertyChanged(PropertyChanged, nameof(MySecondProperty));
-
-            result.Should().BeFalse(because: "The correct property change should be notified");
-        }
 
         [Fact]
-        public void OnMultiplePropertyChanged_AllPropertiesShouldBeNotified()
+        public void On_WithMultipleProperties_AllPropertiesShouldBeNotified()
         {
+            var firstTestPropertyName = "FirstTestPropertyName";
+            var secondTestPropertyName = "SecondTestPropertyName";
+            var thirdTestPropertyName = "ThirdTestPropertyName";
             var results = new List<bool>();
-            PropertyChanged += (sender, e) => results.Add(e.PropertyName.Equals(nameof(MyFirstProperty)) 
-                                                          || e.PropertyName.Equals(nameof(MySecondProperty)) 
-                                                          || e.PropertyName.Equals(nameof(MyThirdProperty)));
+            PropertyChanged += (sender, e) => results.Add(e.PropertyName.Equals(firstTestPropertyName) 
+                                                          || e.PropertyName.Equals(secondTestPropertyName) 
+                                                          || e.PropertyName.Equals(thirdTestPropertyName));
 
-            this.OnMultiplePropertiesChanged(PropertyChanged, nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
+            this.On(PropertyChanged, firstTestPropertyName, secondTestPropertyName, thirdTestPropertyName);
 
             results.Should().Equal(new List<bool>() { true, true, true });
         }

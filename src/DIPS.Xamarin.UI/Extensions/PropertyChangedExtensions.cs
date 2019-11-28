@@ -53,5 +53,51 @@ namespace DIPS.Xamarin.UI.Extensions
                 propertyChangedImplementation.OnPropertyChanged(propertyChanged, property);
             }
         }
+
+        public static INotifyPropertyChangedBuilder On(
+            this INotifyPropertyChanged propertyChangedImplementation,
+            PropertyChangedEventHandler? propertyChanged,
+            [CallerMemberName] string propertyName = "")
+        {
+            return new NotifyPropertyChangedBuilder(propertyChangedImplementation, propertyChanged, propertyName);
+        }
+
+        public static void On(
+            this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, params string[] properties)
+        {
+            propertyChangedImplementation.OnMultiplePropertiesChanged(propertyChanged, properties);
+        }
+    }
+
+    internal class NotifyPropertyChangedBuilder : INotifyPropertyChangedBuilder
+    {
+        private readonly INotifyPropertyChanged m_PropertyChangedImplementation;
+        private readonly PropertyChangedEventHandler m_propertyChanged;
+        private readonly string m_propertyName;
+
+        internal NotifyPropertyChangedBuilder(INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, string propertyName = "")
+        {
+            m_PropertyChangedImplementation = propertyChangedImplementation;
+            m_propertyChanged = propertyChanged;
+            m_propertyName = propertyName;
+        }
+
+        bool INotifyPropertyChangedBuilder.After<S>(ref S backingStore,S newValue)
+        {
+            return m_PropertyChangedImplementation.Set(ref backingStore, newValue, m_propertyChanged, m_propertyName);
+        }
+    }
+
+    /// <summary>
+    /// Notify property changed builder that is used to obtain an fluent API for property changed
+    /// </summary>
+    public interface INotifyPropertyChangedBuilder {
+        /// <summary>
+        /// Sets a value to a backing field if it passes a equality check and notifies property changed.
+        /// </summary>
+        /// <typeparam name="S">The type of the property</typeparam>
+        /// <param name="backingStore">The backing store that will hold the value of the property</param>
+        /// <param name="newValue">The new value that should be set</param>
+        bool After<S>(ref S backingStore,S newValue);
     }
 }
