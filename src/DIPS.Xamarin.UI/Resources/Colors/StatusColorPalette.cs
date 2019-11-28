@@ -5,9 +5,13 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Resources.Colors
 {
-#pragma warning disable 1591
+
+    /// <summary>
+    /// Status colors palette colors should be used to indicate different statuses. 
+    /// </summary>
     public static class StatusColorPalette
     {
+#pragma warning disable 1591
         public static Color DangerDark = Color.FromHex("#C9524D");
         public static Color Danger = Color.FromHex("#F76D6D");
         public static Color DangerLight = Color.FromHex("#E19D9A");
@@ -32,6 +36,7 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color Idle = Color.FromHex("#92A1A3");
         public static Color IdleLight = Color.FromHex("#B1BEBF");
         public static Color IdleAir = Color.FromHex("#D3DDDE");
-    }
 #pragma warning restore 1591
+    }
+
 }

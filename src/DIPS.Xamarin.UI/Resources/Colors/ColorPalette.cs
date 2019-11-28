@@ -5,9 +5,10 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Resources.Colors
 {
-#pragma warning disable 1591
+
     public static class ColorPalette
     {
+#pragma warning disable 1591
         public static Color Dark = Color.FromHex("#000000");
         public static Color DarkLight = Color.FromHex("#111111");
         public static Color DarkAir = Color.FromHex("#3B3D3D");
@@ -31,6 +32,7 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color Accent = Color.FromHex("#AB69BF");
         public static Color AccentLight = Color.FromHex("#D297E3");
         public static Color AccentAir = Color.FromHex("#F4DDFA");
-    }
 #pragma warning restore 1591
+    }
+
 }
