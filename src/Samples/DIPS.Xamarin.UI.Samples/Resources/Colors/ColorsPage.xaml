@@ -11,6 +11,5 @@
 
     <ScrollView>
     <StackLayout x:Name="colorCategories"/>
-    <Label FontSize=""
     </ScrollView>
 </ContentPage>
