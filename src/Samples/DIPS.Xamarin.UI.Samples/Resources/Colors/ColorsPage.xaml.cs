@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using DIPS.Xamarin.UI.Resources;
 using DIPS.Xamarin.UI.Resources.Colors;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,19 +18,24 @@ namespace DIPS.Xamarin.UI.Samples.Resources.Colors
                 GetColorCategory(typeof(Theme)), GetColorCategory(typeof(ColorPalette)), GetColorCategory(typeof(StatusColorPalette)),
             };
 
-
             foreach (var colorCategory in allColorsCategories)
             {
-                colorCategories.Children.Add(new Label(){Text = colorCategory.Name, FontAttributes = FontAttributes.Bold, FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label))});
+                colorCategories.Children.Add(
+                    new Label()
+                    {
+                        Text = colorCategory.Name,
+                        FontAttributes = FontAttributes.Bold,
+                        FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                        Margin = new Thickness(5,0,0,0)
+                    });
                 foreach (var colorInfo in colorCategory.ColorInfos)
                 {
                     var colorStackLayout = new StackLayout();
-                    colorStackLayout.Children.Add(new Label(){Text =  colorInfo.Name});
-                    colorStackLayout.Children.Add(new BoxView(){Color = colorInfo.Color});
+                    colorStackLayout.Children.Add(new Label() { Text = $"{colorInfo.Name} ({colorInfo.Color.ToHex()})", Margin = new Thickness(5,0,0,0)});
+                    colorStackLayout.Children.Add(new BoxView() { Color = colorInfo.Color });
                     colorCategories.Children.Add(colorStackLayout);
                 }
             }
-            
         }
 
         private ColorCategory GetColorCategory(Type type)
@@ -45,6 +49,7 @@ namespace DIPS.Xamarin.UI.Samples.Resources.Colors
 
                 listOfColorInfos.Add(colorInfo);
             }
+
             return new ColorCategory(categoryName, listOfColorInfos);
         }
 
@@ -55,20 +60,21 @@ namespace DIPS.Xamarin.UI.Samples.Resources.Colors
                 Name = name;
                 Color = color;
             }
-            public string Name { get;  }
-            public Color Color { get;  }
+
+            public Color Color { get; }
+            public string Name { get; }
         }
 
         public class ColorCategory
         {
-            public string Name { get; }
-            public IEnumerable<ColorInfo> ColorInfos { get; }
-
             public ColorCategory(string name, IEnumerable<ColorInfo> colorInfos)
             {
                 Name = name;
                 ColorInfos = colorInfos;
             }
+
+            public IEnumerable<ColorInfo> ColorInfos { get; }
+            public string Name { get; }
         }
     }
 }
