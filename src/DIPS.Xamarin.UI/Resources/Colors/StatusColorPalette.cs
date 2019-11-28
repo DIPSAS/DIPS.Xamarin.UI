@@ -5,6 +5,7 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Resources.Colors
 {
+#pragma warning disable 1591
     public static class StatusColorPalette
     {
         public static Color DangerDark = Color.FromHex("#C9524D");
@@ -32,4 +33,5 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color IdleLight = Color.FromHex("#B1BEBF");
         public static Color IdleAir = Color.FromHex("#D3DDDE");
     }
+#pragma warning restore 1591
 }
