@@ -21,7 +21,13 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
         public string MyFirstProperty
         {
             get => m_myFirstProperty;
-            set => this.Set(ref m_myFirstProperty, value, PropertyChanged);
+            set
+            {
+                this.Set(ref m_myFirstProperty, value, PropertyChanged);
+
+                //Alternate fluent version
+                this.On(PropertyChanged).After(ref m_myFirstProperty, value);
+            }
         }
 
         /// <summary>
@@ -33,7 +39,11 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
             set
             {
                 m_mySecondProperty = value;
+
                 this.OnPropertyChanged(PropertyChanged);
+
+                //Alternate fluent version
+                this.On(PropertyChanged);
             }
         }
 
@@ -46,10 +56,14 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
             set
             {
                 m_myThirdProperty = value;
+
                 this.OnMultiplePropertiesChanged(PropertyChanged, 
                     nameof(MyFirstProperty), 
                     nameof(MySecondProperty), 
                     nameof(MyThirdProperty));
+
+                //Alternate fluent version
+                this.On(PropertyChanged, nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
             }
         }
     }
