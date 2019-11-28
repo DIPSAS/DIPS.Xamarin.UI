@@ -44,14 +44,14 @@
 
     <!-- Status color palette -->
     <!-- Danger -->
-    <Color x:Key="StatusColorPalette.DangerDark">#B54F4E</Color>
+    <Color x:Key="StatusColorPalette.DangerDark">#C9524D</Color>
     <Color x:Key="StatusColorPalette.Danger">#F76D6D</Color>
-    <Color x:Key="StatusColorPalette.DangerLight">#FFAAAA</Color>
+    <Color x:Key="StatusColorPalette.DangerLight">#E19D9A</Color>
     <Color x:Key="StatusColorPalette.DangerAir">#FFDEDE</Color>
     <!-- Warning -->
-    <Color x:Key="StatusColorPalette.WarningDark">#D8AD00</Color>
+    <Color x:Key="StatusColorPalette.WarningDark">#D29F0F</Color>
     <Color x:Key="StatusColorPalette.Warning">#FFDC52</Color>
-    <Color x:Key="StatusColorPalette.WarningLight">#FCE794</Color>
+    <Color x:Key="StatusColorPalette.WarningLight">#EDD5A6</Color>
     <Color x:Key="StatusColorPalette.WarningAir">#F3E9BC</Color>
     <!-- Success -->
     <Color x:Key="StatusColorPalette.SuccessDark">#006700</Color>
@@ -63,5 +63,10 @@
     <Color x:Key="StatusColorPalette.Info">#337AB7</Color>
     <Color x:Key="StatusColorPalette.InfoLight">#7FAFD8</Color>
     <Color x:Key="StatusColorPalette.InfoAir">#C4DBEF</Color>
+    <!--Idle-->
+    <Color x:Key="StatusColorPalette.IdleDark">#697577</Color>
+    <Color x:Key="StatusColorPalette.Idle">#92A1A3</Color>
+    <Color x:Key="StatusColorPalette.IdleLight">#B1BEBF</Color>
+    <Color x:Key="StatusColorPalette.IdleAir">#D3DDDE</Color>
 
 </ResourceDictionary>
