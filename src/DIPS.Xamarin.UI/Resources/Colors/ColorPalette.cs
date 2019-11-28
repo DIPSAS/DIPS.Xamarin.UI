@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Resources.Colors
 {
-
+    /// <summary>
+    ///     Color palette colors should be used for backgrounds, borders, buttons, checkbox or other controls that the app uses
+    /// </summary>
     public static class ColorPalette
     {
 #pragma warning disable 1591
@@ -34,5 +33,4 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color AccentAir = Color.FromHex("#F4DDFA");
 #pragma warning restore 1591
     }
-
 }

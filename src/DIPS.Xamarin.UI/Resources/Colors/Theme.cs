@@ -2,13 +2,11 @@
 
 namespace DIPS.Xamarin.UI.Resources.Colors
 {
-
-
     /// <summary>
-    /// Theme colors should be used as an overall color for an app. The colors are suitable for navigation bars, splash screen, action bars etc..
+    ///     Theme colors should be used as an overall color for an app. The colors are suitable for navigation bars, splash
+    ///     screen, action bars etc..
     /// </summary>
     public static class Theme
-
     {
 #pragma warning disable 1591
         public static Color TealPrimary = Color.FromHex("#047F89");
@@ -19,5 +17,4 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color TealSecondaryAir = Color.FromHex("#F0F5F7");
 #pragma warning restore 1591
     }
-
 }
