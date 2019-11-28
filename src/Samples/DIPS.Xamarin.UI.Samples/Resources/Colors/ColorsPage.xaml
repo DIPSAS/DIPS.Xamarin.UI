@@ -3,12 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Resources="http://dips.xamarin.ui.com"
+             xmlns:Colors="clr-namespace:DIPS.Xamarin.UI.Resources.Colors;assembly=DIPS.Xamarin.UI"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Resources.Colors.ColorsPage"
-             xmlns:dxui="http://dips.xamarin.ui.com">
-    <ContentPage.Resources>
-        <dxui:Colors />
-    </ContentPage.Resources>
+             >
 
-    <BoxView BackgroundColor="{StaticResource ColorPalette.Accent}"/>
+    <ScrollView>
+    <StackLayout x:Name="colorCategories"/>
+    <Label FontSize=""
+    </ScrollView>
 </ContentPage>
