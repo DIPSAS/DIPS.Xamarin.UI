@@ -3,6 +3,7 @@ using DIPS.Xamarin.UI.Samples.Commands;
 using DIPS.Xamarin.UI.Samples.Controls;
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Converters;
+using DIPS.Xamarin.UI.Samples.Resources;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples
@@ -25,6 +26,9 @@ namespace DIPS.Xamarin.UI.Samples
             {
                 case "Controls":
                     m_navigation.PushAsync(new ControlsPage());
+                    break;
+                case "Resources":
+                    m_navigation.PushAsync(new ResourcesPage());
                     break;
                 case "Converters":
                     m_navigation.PushAsync(new ConvertersPage());
