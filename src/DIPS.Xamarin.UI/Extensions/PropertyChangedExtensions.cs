@@ -54,6 +54,12 @@ namespace DIPS.Xamarin.UI.Extensions
             }
         }
 
+        /// <summary>
+        /// Initializes an fluent raise API
+        /// </summary>
+        /// <param name="propertyChangedImplementation">The property changed implementation, this is normally a view model</param>
+        /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
+        /// <returns></returns>
         public static INotifyPropertyChangedBuilder Raise(
             this INotifyPropertyChanged propertyChangedImplementation,
             PropertyChangedEventHandler? propertyChanged)
@@ -102,8 +108,16 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <param name="propertyName">A nullable property name, if left empty it will pick the caller member name</param>
         bool When<S>(ref S backingStore,S newValue, [CallerMemberName] string propertyName = "");
 
+        /// <summary>
+        /// Raises property changed with the property name
+        /// </summary>
+        /// <param name="propertyName">The property name to raise on property changed with</param>
         void Now([CallerMemberName] string propertyName = "");
 
+        /// <summary>
+        /// Raise property changed on multiple properties
+        /// </summary>
+        /// <param name="properties">Property names to raise property changed on</param>
         void On(params string[] properties);
     }
 }
