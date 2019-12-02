@@ -8,15 +8,6 @@
              x:Class="DIPS.Xamarin.UI.Samples.Controls.DatePicker.DatePickerPage"
              Title="DatePicker">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical">
-            <dxui:DatePicker HasBorder="{Binding Source={x:Reference hasBorderCheckBox}, Path=IsChecked}"/>
-            <StackLayout Orientation="Vertical">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="HasBorder"/>
-                    <CheckBox x:Name="hasBorderCheckBox" IsChecked="True"/>
-                </StackLayout>
-            </StackLayout>
-        </StackLayout>
-        
+        <dxui:DatePicker HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
     </ContentPage.Content>
 </ContentPage>
