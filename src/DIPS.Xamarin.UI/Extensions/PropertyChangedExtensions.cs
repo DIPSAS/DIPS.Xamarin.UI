@@ -54,37 +54,38 @@ namespace DIPS.Xamarin.UI.Extensions
             }
         }
 
-        public static INotifyPropertyChangedBuilder On(
+        public static INotifyPropertyChangedBuilder Raise(
             this INotifyPropertyChanged propertyChangedImplementation,
-            PropertyChangedEventHandler? propertyChanged,
-            [CallerMemberName] string propertyName = "")
+            PropertyChangedEventHandler? propertyChanged)
         {
-            return new NotifyPropertyChangedBuilder(propertyChangedImplementation, propertyChanged, propertyName);
-        }
-
-        public static void On(
-            this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, params string[] properties)
-        {
-            propertyChangedImplementation.OnMultiplePropertiesChanged(propertyChanged, properties);
+            return new NotifyPropertyChangedBuilder(propertyChangedImplementation, propertyChanged);
         }
     }
 
     internal class NotifyPropertyChangedBuilder : INotifyPropertyChangedBuilder
     {
-        private readonly INotifyPropertyChanged m_PropertyChangedImplementation;
+        private readonly INotifyPropertyChanged m_propertyChangedImplementation;
         private readonly PropertyChangedEventHandler m_propertyChanged;
-        private readonly string m_propertyName;
 
-        internal NotifyPropertyChangedBuilder(INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, string propertyName = "")
+        internal NotifyPropertyChangedBuilder(INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged)
         {
-            m_PropertyChangedImplementation = propertyChangedImplementation;
+            m_propertyChangedImplementation = propertyChangedImplementation;
             m_propertyChanged = propertyChanged;
-            m_propertyName = propertyName;
         }
 
-        bool INotifyPropertyChangedBuilder.After<S>(ref S backingStore,S newValue)
+        bool INotifyPropertyChangedBuilder.When<S>(ref S backingStore,S newValue, [CallerMemberName] string propertyName = "")
         {
-            return m_PropertyChangedImplementation.Set(ref backingStore, newValue, m_propertyChanged, m_propertyName);
+            return m_propertyChangedImplementation.Set(ref backingStore, newValue, m_propertyChanged, propertyName);
+        }
+
+        public void Now([CallerMemberName] string propertyName = "")
+        {
+            m_propertyChangedImplementation.OnPropertyChanged(m_propertyChanged, propertyName);
+        }
+
+        public void On(params string[] properties)
+        {
+            m_propertyChangedImplementation.OnMultiplePropertiesChanged(m_propertyChanged, properties);
         }
     }
 
@@ -98,6 +99,11 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <typeparam name="S">The type of the property</typeparam>
         /// <param name="backingStore">The backing store that will hold the value of the property</param>
         /// <param name="newValue">The new value that should be set</param>
-        bool After<S>(ref S backingStore,S newValue);
+        /// <param name="propertyName">A nullable property name, if left empty it will pick the caller member name</param>
+        bool When<S>(ref S backingStore,S newValue, [CallerMemberName] string propertyName = "");
+
+        void Now([CallerMemberName] string propertyName = "");
+
+        void On(params string[] properties);
     }
 }

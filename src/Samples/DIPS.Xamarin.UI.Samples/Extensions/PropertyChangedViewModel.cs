@@ -26,7 +26,7 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
                 this.Set(ref m_myFirstProperty, value, PropertyChanged);
 
                 //Alternate fluent version
-                this.On(PropertyChanged).After(ref m_myFirstProperty, value);
+                this.Raise(PropertyChanged).When(ref m_myFirstProperty, value);
             }
         }
 
@@ -43,7 +43,7 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
                 this.OnPropertyChanged(PropertyChanged);
 
                 //Alternate fluent version
-                this.On(PropertyChanged);
+                this.Raise(PropertyChanged);
             }
         }
 
@@ -63,7 +63,7 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
                     nameof(MyThirdProperty));
 
                 //Alternate fluent version
-                this.On(PropertyChanged, nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
+                this.Raise(PropertyChanged).On(nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
             }
         }
     }

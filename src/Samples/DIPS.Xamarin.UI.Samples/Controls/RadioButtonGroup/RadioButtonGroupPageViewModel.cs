@@ -88,7 +88,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
         public ItemViewModel SelectedItem
         {
             get => m_selectedItem;
-            set => this.Set(ref m_selectedItem, value, PropertyChanged);
+            set => this.On(PropertyChanged).After(ref m_selectedItem, value);
         }
 
         public string SeparatorColor
