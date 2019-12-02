@@ -12,10 +12,6 @@ namespace DIPS.Xamarin.UI.iOS.Renderers.DatePicker
     /// <inheritdoc />
     public class DatePickerImplementation : DatePickerRenderer
     {
-        private Controls.DatePicker.DatePicker m_datePicker;
-        private nfloat m_defaultLayerBorderWith;
-        private UITextBorderStyle m_defaultBorderStyle;
-
         /// <summary>
         /// Method to use when linking in order to keep the assembly
         /// </summary>
@@ -28,71 +24,15 @@ namespace DIPS.Xamarin.UI.iOS.Renderers.DatePicker
 
             if (e.OldElement != null)
             {
-                Unsubscribe();
+                // Clean up
             }
 
-            if (e.NewElement != null)
+            
+            if (e.NewElement is Controls.DatePicker.DatePicker)
             {
-                if (e.NewElement is Controls.DatePicker.DatePicker datePicker)
-                {
-                    m_datePicker = datePicker;
-
-                    SubscribeToEvents();
-                    SaveDefaultValues();
-                    InitialChecks();
-                }
-            }
-        }
-
-        private void InitialChecks()
-        {
-            if (!m_datePicker.HasBorder)
-            {
+                // Initialize
                 TurnOffBorder();
             }
-        }
-
-        private void SaveDefaultValues()
-        {
-            m_defaultLayerBorderWith = Control.Layer.BorderWidth;
-            m_defaultBorderStyle = Control.BorderStyle;
-
-        }
-
-        private void Unsubscribe()
-        {
-            m_datePicker.PropertyChanged -= OnPropertyChanged;
-        }
-
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName.Equals(nameof(m_datePicker.HasBorder)))
-            {
-                ToggleBorder();
-            }
-        }
-
-        private void SubscribeToEvents()
-        {
-            m_datePicker.PropertyChanged += OnPropertyChanged;
-        }
-
-        private void ToggleBorder()
-        {
-            if (m_datePicker.HasBorder)
-            {
-                TurnOnBorder();
-            }
-            else
-            {
-                TurnOffBorder();
-            }
-        }
-
-        private void TurnOnBorder()
-        {
-            Control.Layer.BorderWidth = m_defaultLayerBorderWith;
-            Control.BorderStyle = m_defaultBorderStyle;
         }
 
         private void TurnOffBorder()

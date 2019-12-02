@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using Android.Content;
-using Android.Graphics.Drawables;
+﻿using Android.Content;
 using DIPS.Xamarin.UI.Android.Renderers.DatePicker;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -11,21 +9,13 @@ using DatePicker = DIPS.Xamarin.UI.Controls.DatePicker.DatePicker;
 namespace DIPS.Xamarin.UI.Android.Renderers.DatePicker
 {
     /// <inheritdoc />
-    public class DatePickerImplementation : global::Xamarin.Forms.Platform.Android.DatePickerRenderer
+    public class DatePickerImplementation : DatePickerRenderer
     {
-        private Controls.DatePicker.DatePicker m_datePicker;
-        private Drawable m_defaultBackground;
-        private int m_defaultBottomPadding;
-        private LayoutParams m_defaultLayoutParmeters;
-        private int m_defaultLeftPadding;
-        private int m_defaultRightPadding;
-        private int m_defaultTopPadding;
-
         /// <inheritdoc />
         public DatePickerImplementation(Context context) : base(context) { }
 
         /// <summary>
-        /// Method to use when linking in order to keep the assembly
+        ///     Method to use when linking in order to keep the assembly
         /// </summary>
         public static void Initialize() { }
 
@@ -34,72 +24,16 @@ namespace DIPS.Xamarin.UI.Android.Renderers.DatePicker
         {
             base.OnElementChanged(e);
 
-            if (e.OldElement != null) Unsubscribe();
-
-            if (e.NewElement != null)
-                if (e.NewElement is Controls.DatePicker.DatePicker datePicker)
-                {
-                    m_datePicker = datePicker; ;
-
-                    SubscribeToEvents();
-                    SaveDefaultValues();
-                    InitialChecks();
-                }
-        }
-
-        private void InitialChecks()
-        {
-            if (!m_datePicker.HasBorder)
+            if (e.OldElement != null)
             {
+                //Clean up
+            }
+
+            if (e.NewElement is Controls.DatePicker.DatePicker)
+            {
+                //Initialize
                 TurnOffBorder();
             }
-        }
-
-        private void Unsubscribe()
-        {
-            m_datePicker.PropertyChanged -= OnPropertyChanged;
-        }
-
-        private void SaveDefaultValues()
-        {
-            m_defaultBackground = Control.Background;
-            m_defaultLayoutParmeters = Control.LayoutParameters;
-            m_defaultLeftPadding = Control.PaddingLeft;
-            m_defaultRightPadding = Control.PaddingRight;
-            m_defaultBottomPadding = Control.PaddingBottom;
-            m_defaultTopPadding = Control.PaddingTop;
-        }
-
-        private void SubscribeToEvents()
-        {
-            m_datePicker.PropertyChanged += OnPropertyChanged;
-        }
-
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName.Equals(nameof(m_datePicker.HasBorder)))
-            {
-                ToggleBorder();
-            }
-        }
-
-        private void ToggleBorder()
-        {
-            if (m_datePicker.HasBorder)
-            {
-                TurnOnBorder();
-            }
-            else
-            {
-                TurnOffBorder();
-            }
-        }
-
-        private void TurnOnBorder()
-        {
-            Control.Background = m_defaultBackground;
-            Control.LayoutParameters = m_defaultLayoutParmeters;
-            Control.SetPadding(m_defaultLeftPadding, m_defaultTopPadding, m_defaultRightPadding, m_defaultBottomPadding);
         }
 
         private void TurnOffBorder()
