@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using DIPS.Xamarin.UI.Extensions;
 using FluentAssertions;
-using Xamarin.Forms.Internals;
 using Xunit;
 
 namespace DIPS.Xamarin.UI.Tests.Extensions
@@ -12,116 +10,89 @@ namespace DIPS.Xamarin.UI.Tests.Extensions
     {
         private const string InitialValue = "Initial Value";
         private const string NewValue = "New Value";
-        private string m_testBackingStore;
+        private string m_myFirstProperty;
 
         public PropertyChangedExtensionsTests()
         {
-            m_testBackingStore = InitialValue;
+            MyFirstProperty = InitialValue;
         }
-        
+
+        public string MyFirstProperty
+        {
+            get => m_myFirstProperty;
+            set => this.Set(ref m_myFirstProperty, value, PropertyChanged);
+        }
+
+        public string MySecondProperty { get; set; }
+        public string MyThirdProperty { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         [Fact]
-        public void Raise_MultiplePropertyChanges_AllPropertiesShouldBeNotified()
+        public void Set_NewValueIsNotEqualToOldValue_NotifyingPropertyChanged()
         {
-            var firstTestPropertyName = "FirstTestPropertyName";
-            var secondTestPropertyName = "SecondTestPropertyName";
-            var thirdTestPropertyName = "ThirdTestPropertyName";
-            var acts = new Action[]
-            {
-                () => this.OnMultiplePropertiesChanged(PropertyChanged, firstTestPropertyName, secondTestPropertyName, thirdTestPropertyName),
-                () => PropertyChanged.RaiseForEach(firstTestPropertyName, secondTestPropertyName, thirdTestPropertyName)
-            };
+            var result = false;
+            PropertyChanged += (sender, e) => result = true;
 
-            foreach (var act in acts)
-            {
-                var results = new List<bool>();
-                PropertyChanged += (sender, e) => results.Add(
-                    e.PropertyName.Equals(firstTestPropertyName) || e.PropertyName.Equals(secondTestPropertyName) ||
-                    e.PropertyName.Equals(thirdTestPropertyName));
+            MyFirstProperty = NewValue;
 
-                act.Invoke();
-                results.Should().Equal(new List<bool>() { true, true, true }, because:$"All properties should always notify  when running act number {acts.IndexOf(act)}");
-            }
+            result.Should().BeTrue(because:"Value is not the same as initial value of the property");
         }
 
         [Fact]
-        public void Raise_PropertyChanged_NotifiesPropertyChanged()
+        public void Set_NewValueIsEqualToOldValue_NotNotifyingPropertyChanged()
         {
-            var testPropertyName = "TestProperty";
-            var acts = new Action[]
-            {
-                () => this.OnPropertyChanged(PropertyChanged, testPropertyName), () => PropertyChanged.Raise(testPropertyName)
-            };
-            foreach (var act in acts)
-            {
-                var result = false;
-                PropertyChanged += (sender, e) => result = e.PropertyName.Equals(testPropertyName);
+            var result = false;
+            PropertyChanged += (sender, e) => result = true;
 
-                act.Invoke();
-                result.Should()
-                    .BeTrue($"PropertyChanged should always be raised with the correct property when running act number {acts.IndexOf(act)}");
-            }
+            MyFirstProperty = InitialValue;
+
+            result.Should().BeFalse(because:"Value was the same as initial value of the property");
         }
 
         [Fact]
-        public void TrySetBackingStore_ToNewValue_AndTryRaisePropertyChanged_NotifyingPropertyChanged()
+        public void Set_NewValue_BackingStoreHasSameValue()
         {
-            var acts = new Action[]
-            {
-                () => this.Set(ref m_testBackingStore, NewValue, PropertyChanged),
-                () => PropertyChanged.RaiseAfter(ref m_testBackingStore, NewValue)
-            };
+            MyFirstProperty = NewValue;
 
-            foreach (var act in acts)
-            {
-                m_testBackingStore = InitialValue;
-                var result = false;
-                PropertyChanged += (sender, e) => result = true;
-
-                act.Invoke();
-                result.Should().BeTrue($"Value is not the same as initial value of the property when running act number {acts.IndexOf(act)}");
-                
-            }
+            m_myFirstProperty.Should().Be(NewValue, because: "The set method will always set the value to a new value, or keep te same value");
         }
 
         [Fact]
-        public void TrySetBackingStore_ToNewValue_BackingStoreShouldHaveSameValue()
+        public void OnPropertyChanged_NotifiesPropertyChanged()
         {
-            var acts = new Action[]
-            {
-                () => this.Set(ref m_testBackingStore, NewValue, PropertyChanged),
-                () => PropertyChanged.RaiseAfter(ref m_testBackingStore, NewValue)
-            };
+            var result = false;
+            PropertyChanged += (sender, e) => result = e.PropertyName.Equals(nameof(MyFirstProperty));
 
-            foreach (var act in acts)
-            {
-                m_testBackingStore = InitialValue;
-                
-                act.Invoke();
-                m_testBackingStore.Should().Be(
-                    NewValue,
-                    $"The backing store should always set the value to the new value, or keep te same value when running act number {acts.IndexOf(act)}");
-            }
+            this.OnPropertyChanged(PropertyChanged, nameof(MyFirstProperty));
+
+            result.Should().BeTrue(because: "PropertyChanged should always be raised with the correct property");
+        }
+        [Fact]
+        public void OnPropertyChanged_MySecondProperty_DoesNotNotifyMyFirstProperty()
+        {
+            var result = false;
+            PropertyChanged += (sender, e) => result = e.PropertyName.Equals(nameof(MyFirstProperty));
+
+            this.OnPropertyChanged(PropertyChanged, nameof(MySecondProperty));
+
+            result.Should().BeFalse(because: "The correct property change should be notified");
         }
 
         [Fact]
-        public void TrySetBackingStore_ToSameValue_AndTryRaisePropertyChanged_NotNotifyingPropertyChanged()
+        public void OnMultiplePropertyChanged_AllPropertiesShouldBeNotified()
         {
-            var acts = new Action[]
+            var results = new List<bool>();
+            PropertyChanged += (sender, e) =>
             {
-                () => this.Set(ref m_testBackingStore, InitialValue, PropertyChanged),
-                () => PropertyChanged.RaiseAfter(ref m_testBackingStore, InitialValue)
+                results.Add(
+                        e.PropertyName.Equals(nameof(MyFirstProperty)) || e.PropertyName.Equals(nameof(MySecondProperty)) ||
+                        e.PropertyName.Equals(nameof(MyThirdProperty)));
             };
-            foreach (var act in acts)
-            {
-                var result = false;
-                PropertyChanged += (sender, e) => result = true;
 
-                act.Invoke();
-                result.Should().BeFalse("Value was the same as initial value of the property when running act number {acts.IndexOf(act)}");
-            }
+            this.OnMultiplePropertiesChanged(PropertyChanged, nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
+
+            results.Should().Equal(new List<bool>() { true, true, true });
         }
     }
 }
