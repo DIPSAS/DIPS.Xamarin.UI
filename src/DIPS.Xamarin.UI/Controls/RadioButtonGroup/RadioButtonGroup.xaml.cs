@@ -16,7 +16,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
     ///     An vertical oriented radio button group
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RadioButtonGroup : ContentView, IHandleRadioButtons
+    public partial class RadioButtonGroup : RelativeLayout, IHandleRadioButtons
     {
         private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
 
@@ -209,17 +209,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    Initialize(ItemsSource);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    Initialize(ItemsSource);
-                    break;
-            }
-
-            if (radioButtonContainer.Children.Count == 0) firstSeparator.IsVisible = false;
+            Initialize(ItemsSource);
         }
 
         private static void OnSelectedColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -253,11 +243,20 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         private void Initialize(IEnumerable newItems)
         {
             m_radioButtons.Clear();
-            radioButtonContainer.Children.Clear();
+            while (Children.Count > 0)
+            {
+                Children.Remove(Children.Last());
+            }
+
+            var items = newItems.Cast<object>().ToArray();
+            if (items.Length == 0) return;
+
+            AddSeparator();
 
             foreach (var item in newItems)
             {
-                Add(item, radioButtonContainer.Children.Count);
+                AddItem(item);
+                AddSeparator();
             }
 
             if (SelectedItem != null)
@@ -274,51 +273,45 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             }
         }
 
-        private void Add(object item, int row)
+        private void AddItem(object item)
         {
-            if (!firstSeparator.IsVisible)
+            var radioButton = new RadioButton()
             {
-                firstSeparator.IsVisible = true;
-            }
+                Text = item.GetPropertyValue(DisplayMemberPath),
+                Identifier = item,
+                SelectedColor = SelectedColor,
+                DeSelectedColor = DeSelectedColor,
+                Padding = new Thickness(0, 15, 0, 15),
+            };
 
-            //Create inner grid and button + separator
-            var grid = new Grid() { RowSpacing = 0 };
-            var radioButton = new RadioButton() { Text = item.GetPropertyValue(DisplayMemberPath), Identifier = item };
-            var separator = CreateSeparator();
-
-            grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-            grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-            Grid.SetRow(radioButton, 0);
-            Grid.SetRow(separator, 1);
-            grid.Children.Add(radioButton);
-            grid.Children.Add(separator);
-
-            //Initialize radio button
-            radioButton.Initialize(this);
-
-            //Set colors for each radiobutton
-            radioButton.SelectedColor = SelectedColor;
-            radioButton.DeSelectedColor = DeSelectedColor;
             radioButton.RefreshColor(radioButton.IsSelected);
-
-            //Set padding for each button
-            radioButton.Padding = new Thickness(0, 15, 0, 15);
-
-            //Add each radiobutton to the FlexLayout
+            radioButton.Initialize(this);
             m_radioButtons.Add(radioButton);
-
-            //Add inner grid to outer grid
-            radioButtonContainer.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-
-            Grid.SetRow(grid, row);
-            radioButtonContainer.Children.Add(grid);
+            AddChild(radioButton);
         }
 
-        private BoxView CreateSeparator()
+        private void AddSeparator()
         {
-            var separator = new BoxView() { HeightRequest = 1 };
+            var separator = new BoxView { HeightRequest = 1 };
             separator.SetBinding(BackgroundColorProperty, new Binding(nameof(SeparatorColor), source: this));
-            return separator;
+            AddChild(separator);
+        }
+
+        private void AddChild(View view)
+        {
+            var last = Children.LastOrDefault();
+            if(last != null)
+            {
+                Children.Add(view,
+                    yConstraint: Constraint.RelativeToView(last, (r, v) => v.Y+v.Height+v.Margin.Top+v.Margin.Bottom),
+                    widthConstraint: Constraint.RelativeToParent(r => r.Width));
+            }
+            else
+            {
+                Children.Add(view,
+                    yConstraint: Constraint.RelativeToParent(r => 0),
+                    widthConstraint: Constraint.RelativeToParent(r => r.Width));
+            }
         }
 
         private static void OnIsSelectedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
