@@ -1,0 +1,24 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github64.Github64">
+    <StackLayout>
+
+        <dxui:RadioButtonGroup Grid.Row="0"
+                               Margin="0,5,0,0">
+            <dxui:RadioButtonGroup.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>First item</x:String>
+                    <x:String>Second item</x:String>
+                    <x:String>Third item</x:String>
+                </x:Array>
+            </dxui:RadioButtonGroup.ItemsSource>
+        </dxui:RadioButtonGroup>
+        <Button Text="Click me" />
+    </StackLayout>
+</ContentPage>

@@ -11,9 +11,18 @@
              Title="DIPS.Xamarin.UI">
 
     <StackLayout>
-        <Button Text="Controls" Command="{Binding NavigateToCommand}" CommandParameter="Controls"/>
-        <Button Text="Converters" Command="{Binding NavigateToCommand}" CommandParameter="Converters"/>
-        <Button Text="Async command" Command="{Binding NavigateToCommand}" CommandParameter="Async command"/>
+        <Button Text="Controls"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Controls" />
+        <Button Text="Resources"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Resources" />
+        <Button Text="Converters"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Converters" />
+        <Button Text="Async command"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Async command" />
     </StackLayout>
 
 </ContentPage>
