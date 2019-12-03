@@ -55,69 +55,48 @@ namespace DIPS.Xamarin.UI.Extensions
         }
 
         /// <summary>
-        /// Initializes an fluent raise API
+        /// Notifies property changed.
         /// </summary>
-        /// <param name="propertyChangedImplementation">The property changed implementation, this is normally a view model</param>
         /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
-        /// <returns></returns>
-        public static INotifyPropertyChangedBuilder Raise(
-            this INotifyPropertyChanged propertyChangedImplementation,
-            PropertyChangedEventHandler? propertyChanged)
+        /// <param name="propertyName">A nullable property name, if left empty it will pick the caller member name</param>
+        /// <remarks>This extension method does not set the event `sender` when notifying property changed. This has not proven to a problem when we created the extension, but be aware of it if you end up with something strange. To set the event `sender` please use <see cref="OnPropertyChanged"/> </remarks>
+        public static void Raise(this PropertyChangedEventHandler propertyChanged, [CallerMemberName] string propertyName = "")
         {
-            return new NotifyPropertyChangedBuilder(propertyChangedImplementation, propertyChanged);
-        }
-    }
-
-    internal class NotifyPropertyChangedBuilder : INotifyPropertyChangedBuilder
-    {
-        private readonly INotifyPropertyChanged m_propertyChangedImplementation;
-        private readonly PropertyChangedEventHandler m_propertyChanged;
-
-        internal NotifyPropertyChangedBuilder(INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged)
-        {
-            m_propertyChangedImplementation = propertyChangedImplementation;
-            m_propertyChanged = propertyChanged;
+            propertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
         }
 
-        bool INotifyPropertyChangedBuilder.When<S>(ref S backingStore,S newValue, [CallerMemberName] string propertyName = "")
+        /// <summary>
+        /// Notifies multiple property changed
+        /// </summary>
+        /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
+        /// <param name="properties"></param>
+        /// <remarks>This extension method does not set the event `sender` when notifying property changed. This has not proven to a problem when we created the extension, but be aware of it if you end up with something strange. To set the event `sender` please use <see cref="OnMultiplePropertiesChanged"/> </remarks>
+        public static void RaiseForEach(this PropertyChangedEventHandler propertyChanged, params string[] properties)
         {
-            return m_propertyChangedImplementation.Set(ref backingStore, newValue, m_propertyChanged, propertyName);
+            foreach (var property in properties)
+            {
+                propertyChanged.Raise(property);
+            }
         }
 
-        public void Now([CallerMemberName] string propertyName = "")
-        {
-            m_propertyChangedImplementation.OnPropertyChanged(m_propertyChanged, propertyName);
-        }
-
-        public void On(params string[] properties)
-        {
-            m_propertyChangedImplementation.OnMultiplePropertiesChanged(m_propertyChanged, properties);
-        }
-    }
-
-    /// <summary>
-    /// Notify property changed builder that is used to obtain an fluent API for property changed
-    /// </summary>
-    public interface INotifyPropertyChangedBuilder {
         /// <summary>
         /// Sets a value to a backing field if it passes a equality check and notifies property changed.
         /// </summary>
         /// <typeparam name="S">The type of the property</typeparam>
         /// <param name="backingStore">The backing store that will hold the value of the property</param>
-        /// <param name="newValue">The new value that should be set</param>
+        /// <param name="value">The new value that should be set</param>
+        /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
         /// <param name="propertyName">A nullable property name, if left empty it will pick the caller member name</param>
-        bool When<S>(ref S backingStore,S newValue, [CallerMemberName] string propertyName = "");
-
-        /// <summary>
-        /// Raises property changed with the property name
-        /// </summary>
-        /// <param name="propertyName">The property name to raise on property changed with</param>
-        void Now([CallerMemberName] string propertyName = "");
-
-        /// <summary>
-        /// Raise property changed on multiple properties
-        /// </summary>
-        /// <param name="properties">Property names to raise property changed on</param>
-        void On(params string[] properties);
+        /// <remarks>This method does a equality check to see if the value has changed, if you need to notify property changed when the value has not changed, please use <see cref="Raise"/></remarks>
+        /// <remarks>This extension method does not set the event `sender` when notifying property changed. This has not proven to a problem when we created the extension, but be aware of it if you end up with something strange. To set the event `sender` please use <see cref="Set{S}"/> </remarks>
+        /// <returns>A boolean value to indicate that the property changed has been invoked</returns>
+        public static bool RaiseAfter<S>(this PropertyChangedEventHandler propertyChanged, ref S backingStore, S value, [CallerMemberName] string propertyName = "")
+        {
+            if (EqualityComparer<S>.Default.Equals(backingStore, value))
+                return false;
+            backingStore = value;
+            propertyChanged.Raise(propertyName);
+            return true;
+        }
     }
 }

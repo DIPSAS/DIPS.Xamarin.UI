@@ -9,7 +9,7 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
     /// </summary>
     internal class PropertyChangedViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private string m_myFirstProperty;
         private string m_mySecondProperty;
@@ -26,7 +26,7 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
                 this.Set(ref m_myFirstProperty, value, PropertyChanged);
 
                 //Alternate fluent version
-                this.Raise(PropertyChanged).When(ref m_myFirstProperty, value);
+                PropertyChanged?.RaiseAfter(ref m_myFirstProperty, value);
             }
         }
 
@@ -43,7 +43,7 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
                 this.OnPropertyChanged(PropertyChanged);
 
                 //Alternate fluent version
-                this.Raise(PropertyChanged);
+                PropertyChanged?.Raise();
             }
         }
 
@@ -63,7 +63,7 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
                     nameof(MyThirdProperty));
 
                 //Alternate fluent version
-                this.Raise(PropertyChanged).On(nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
+                PropertyChanged?.RaiseForEach(nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
             }
         }
     }
