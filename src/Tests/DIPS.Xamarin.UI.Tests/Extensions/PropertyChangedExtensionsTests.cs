@@ -83,12 +83,9 @@ namespace DIPS.Xamarin.UI.Tests.Extensions
         public void OnMultiplePropertyChanged_AllPropertiesShouldBeNotified()
         {
             var results = new List<bool>();
-            PropertyChanged += (sender, e) =>
-            {
-                results.Add(
-                        e.PropertyName.Equals(nameof(MyFirstProperty)) || e.PropertyName.Equals(nameof(MySecondProperty)) ||
-                        e.PropertyName.Equals(nameof(MyThirdProperty)));
-            };
+            PropertyChanged += (sender, e) => results.Add(e.PropertyName.Equals(nameof(MyFirstProperty)) 
+                                                          || e.PropertyName.Equals(nameof(MySecondProperty)) 
+                                                          || e.PropertyName.Equals(nameof(MyThirdProperty)));
 
             this.OnMultiplePropertiesChanged(PropertyChanged, nameof(MyFirstProperty), nameof(MySecondProperty), nameof(MyThirdProperty));
 
