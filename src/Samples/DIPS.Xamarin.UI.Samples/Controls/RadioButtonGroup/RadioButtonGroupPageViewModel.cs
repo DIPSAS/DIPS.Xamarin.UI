@@ -52,7 +52,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
                 {
                     new ColorTypeConverter().ConvertFromInvariantString(value);
                     m_deSelectedColor = value;
-                    PropertyChanged?.Raise();
+                    this.OnPropertyChanged(PropertyChanged);
                 }
                 catch (Exception e)
                 {
@@ -64,7 +64,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
         public ObservableCollection<ItemViewModel> Items
         {
             get => m_items;
-            set => PropertyChanged?.RaiseAfter(ref m_items, value);
+            set => this.Set(ref m_items, value, PropertyChanged);
         }
 
         public string SelectedColor
@@ -76,7 +76,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
                 {
                     new ColorTypeConverter().ConvertFromInvariantString(value);
                     m_selectedColor = value;
-                    PropertyChanged?.Raise();
+                    this.OnPropertyChanged(PropertyChanged);
                 }
                 catch (Exception e)
                 {
@@ -88,7 +88,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup {
         public ItemViewModel SelectedItem
         {
             get => m_selectedItem;
-            set => PropertyChanged?.RaiseAfter(ref m_selectedItem, value);
+            set => this.Set(ref m_selectedItem, value, PropertyChanged);
         }
 
         public string SeparatorColor
