@@ -23,7 +23,7 @@ namespace DIPS.Xamarin.UI.Extensions
         public static bool Set<S>(this INotifyPropertyChanged propertyChangedImplementation, ref S backingStore, S value, PropertyChangedEventHandler? propertyChanged, [CallerMemberName] string propertyName = "")
         {
 #pragma warning disable CS8604 // Disabled to be able to test RaiseAfter by calling Set, PropertyChanged should never actually be null in a Xamarin.Forms app and we do a null propagation check in RaiseAfter, so its safe to ignore
-            return propertyChanged.RaiseAfter(ref backingStore, value, propertyChangedImplementation, propertyName);
+            return propertyChanged.RaiseWhenSet(ref backingStore, value, propertyChangedImplementation, propertyName);
 #pragma warning restore CS8604
         }
 
@@ -76,7 +76,7 @@ namespace DIPS.Xamarin.UI.Extensions
                 propertyChanged.Raise(property, sender);
             }
         }
-
+            
         /// <summary>
         /// Sets a value to a backing field if it passes a equality check and notifies property changed.
         /// </summary>
@@ -89,7 +89,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <remarks>This method does a equality check to see if the value has changed, if you need to notify property changed when the value has not changed, please use <see cref="Raise"/></remarks>
         /// <remarks>This extension method does not set the event `sender` when notifying property changed. This has not proven to a problem when we created the extension, but be aware of it if you end up with something strange. Set <see cref="sender"/> if you need to make sure that we send the event sender</remarks>
         /// <returns>A boolean value to indicate that the property changed has been invoked</returns>
-        public static bool RaiseAfter<S>(this PropertyChangedEventHandler propertyChanged, ref S backingStore, S value, object? sender = null, [CallerMemberName] string propertyName = "")
+        public static bool RaiseWhenSet<S>(this PropertyChangedEventHandler propertyChanged, ref S backingStore, S value, object? sender = null, [CallerMemberName] string propertyName = "")
         {
             if (EqualityComparer<S>.Default.Equals(backingStore, value))
                 return false;
