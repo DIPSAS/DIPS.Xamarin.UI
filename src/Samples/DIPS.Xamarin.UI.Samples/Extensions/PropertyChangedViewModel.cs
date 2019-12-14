@@ -26,7 +26,7 @@ namespace DIPS.Xamarin.UI.Samples.Extensions
                 this.Set(ref m_myFirstProperty, value, PropertyChanged);
 
                 //Alternate fluent version
-                PropertyChanged?.RaiseAfter(ref m_myFirstProperty, value);
+                PropertyChanged?.RaiseWhenSet(ref m_myFirstProperty, value);
             }
         }
 
