@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.RadioButtonGroup.Abstractions;
 using DIPS.Xamarin.UI.Extensions;
@@ -16,7 +15,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
     ///     An vertical oriented radio button group
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RadioButtonGroup : ScrollView, IHandleRadioButtons
+    public partial class RadioButtonGroup : ContentView, IHandleRadioButtons
     {
         private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
 
