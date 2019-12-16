@@ -21,6 +21,9 @@
             <Button Text="Trend graph"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="TrendGraph" />
+            <Button Text="Slidable layout"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="Sliding" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

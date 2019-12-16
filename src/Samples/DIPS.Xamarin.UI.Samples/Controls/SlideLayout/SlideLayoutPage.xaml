@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.SlideLayout.SlideLayoutPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <dxui:SlidableContentLayout SlideProperties="{Binding SlidableProperties}">
+        </dxui:SlidableContentLayout>
+
+        <dxui:SlidableLayout BackgroundColor="WhiteSmoke"
+                             Grid.Row="1"
+                             SlideProperties="{Binding SlidableProperties}">
+        </dxui:SlidableLayout>
+    </Grid>
+</ContentPage>
