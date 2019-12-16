@@ -11,6 +11,8 @@
         </Grid.RowDefinitions>
         <dxui:SlidableContentLayout SlideProperties="{Binding SlidableProperties}"
                                     Grid.Row="2"
+                                    BackgroundColor="LightGray"
+                                    Padding="0,10"
                                     Config="{Binding Config}"
                                     >
            

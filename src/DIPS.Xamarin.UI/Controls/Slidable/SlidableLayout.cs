@@ -65,7 +65,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             }
 
             m_lastId = currentId;
-            var index = Math.Max(Config.MinValue, Math.Min(Config.MaxValue, CalculateIndex(currentPos)));
+            var index = Math.Max(Config.MinValue-0.45, Math.Min(Config.MaxValue+0.45, CalculateIndex(currentPos)));
             SlideProperties = new SlidableProperties(index, m_lastId, e.StatusType != GestureStatus.Completed && e.StatusType != GestureStatus.Canceled);
             m_debug.Text = "me: " + currentPos + "\n" + index + "\n" + currentId + "\n" + e.StatusType;
             OnScrolledInternal();
@@ -98,10 +98,10 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 m_lastIndex = index;
             }
             if (Width < 0.1) return;
-            OnScrolled((SlideProperties.Position+0.5), Width / 2 - GetItemWidth()/2);
+            OnScrolled((SlideProperties.Position+0.5), Width / 2 - GetItemWidth()/2, index);
         }
 
-        protected virtual void OnScrolled(double index, double offset)
+        protected virtual void OnScrolled(double index, double offset, int selectedIndex)
         {
 
         }

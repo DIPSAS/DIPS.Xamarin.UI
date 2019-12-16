@@ -14,7 +14,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             m_container.IsClippedToBounds = true;
         }
 
-        protected override void OnScrolled(double index, double offset)
+        protected override void OnScrolled(double index, double offset, int selectedIndex)
         {
             if (Width < 0.1) return;
             if (m_viewMapping.Count > 1000)
@@ -22,32 +22,24 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 m_viewMapping.Clear(); // Simple cache clearing
             }
 
-            base.OnScrolled(index, offset);
+            base.OnScrolled(index, offset, selectedIndex);
             var itemWidth = GetItemWidth();
             var totalWidth = (Width/ itemWidth);
             m_container.Children.Clear();
-            var intDex = (int)index;
-            for (var i = intDex - totalWidth/2-1; i <= intDex + totalWidth/2+1; i++)
+
+            for (var i = selectedIndex - totalWidth/2-1; i <= selectedIndex + totalWidth/2+1; i++)
             {
                 var pos = (int)Math.Floor(i);
                 if (pos < Config.MinValue || pos > Config.MaxValue) continue;
+                var isSelected = selectedIndex == pos;
                 var view = CreateItem(pos);
+                if (view is ISliderSelectable selectable) selectable.OnSelectionChanged(isSelected);
                 AbsoluteLayout.SetLayoutBounds(view, new Rectangle(offset  + itemWidth * (i-index), 0, ElementWidth, 1));
                 m_container.Children.Add(view);
             }
         }
 
-        private View CreateDefault()
-        {
-            return new BoxView 
-            { 
-                Color = Color.Black, 
-                WidthRequest = 3,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                Margin= 0,
-                HorizontalOptions = LayoutOptions.Center 
-            };
-        }
+        private View CreateDefault() => new DefaultSliderView();
 
         private View CreateItem(int id)
         {
