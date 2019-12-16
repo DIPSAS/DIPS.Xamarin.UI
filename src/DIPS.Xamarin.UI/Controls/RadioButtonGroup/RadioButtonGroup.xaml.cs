@@ -16,7 +16,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
     ///     An vertical oriented radio button group
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RadioButtonGroup : RelativeLayout, IHandleRadioButtons
+    public partial class RadioButtonGroup : ScrollView, IHandleRadioButtons
     {
         private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
 
@@ -243,10 +243,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         private void Initialize(IEnumerable newItems)
         {
             m_radioButtons.Clear();
-            while (Children.Count > 0)
-            {
-                Children.Remove(Children.Last());
-            }
+            container.Children.Clear();
 
             var items = newItems.Cast<object>().ToArray();
             if (items.Length == 0) return;
@@ -275,7 +272,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void AddItem(object item)
         {
-            var radioButton = new RadioButton()
+            var radioButton = new RadioButton
             {
                 Text = item.GetPropertyValue(DisplayMemberPath),
                 Identifier = item,
@@ -299,19 +296,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void AddChild(View view)
         {
-            var last = Children.LastOrDefault();
-            if(last != null)
-            {
-                Children.Add(view,
-                    yConstraint: Constraint.RelativeToView(last, (r, v) => v.Y+v.Height+v.Margin.Top+v.Margin.Bottom),
-                    widthConstraint: Constraint.RelativeToParent(r => r.Width));
-            }
-            else
-            {
-                Children.Add(view,
-                    yConstraint: Constraint.RelativeToParent(r => 0),
-                    widthConstraint: Constraint.RelativeToParent(r => r.Width));
-            }
+            container.Children.Add(view);
         }
 
         private static void OnIsSelectedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)

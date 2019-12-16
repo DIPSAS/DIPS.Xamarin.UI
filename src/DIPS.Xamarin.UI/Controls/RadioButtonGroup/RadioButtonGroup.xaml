@@ -1,9 +1,15 @@
 ﻿<?xml version="1.0"
       encoding="UTF-8"?>
-<RelativeLayout xmlns="http://xamarin.com/schemas/2014/forms"
+
+
+<ScrollView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             VerticalOptions="Start"
+             Orientation="Vertical"
+             HorizontalOptions="FillAndExpand"
              x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButtonGroup">
-</RelativeLayout>
+    <StackLayout x:Name="container"/>
+</ScrollView>
