@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
+    [ContentProperty(nameof(ItemTemplate))]
     public class SlidableContentLayout : SlidableLayout
     {
-        private AbsoluteLayout m_container = new AbsoluteLayout();
-        public SlidableContentLayout() : base()
+        private readonly Dictionary<int, View> m_viewMapping = new Dictionary<int, View>();
+        private readonly AbsoluteLayout m_container = new AbsoluteLayout();
+        public SlidableContentLayout()
         {
             Content = m_container;
             m_container.IsClippedToBounds = true;
@@ -14,21 +17,71 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         protected override void OnScrolled(double index, double offset)
         {
             if (Width < 0.1) return;
+            if (m_viewMapping.Count > 1000)
+            {
+                m_viewMapping.Clear(); // Simple cache clearing
+            }
+
             base.OnScrolled(index, offset);
             var itemWidth = GetItemWidth();
             var totalWidth = (Width/ itemWidth);
             m_container.Children.Clear();
-            m_container.BackgroundColor = Color.Orange;
             var intDex = (int)index;
             for (var i = intDex - totalWidth/2-1; i <= intDex + totalWidth/2+1; i++)
             {
                 var pos = (int)Math.Floor(i);
-                var isIndex = pos == (int)Math.Floor(index);
-                var label = new Label { Text = "" + pos, VerticalOptions = LayoutOptions.Center, HorizontalOptions= LayoutOptions.Center, BackgroundColor = isIndex ? Color.Red:Color.Transparent };
-                AbsoluteLayout.SetLayoutFlags(label, Config.WidthIsProportional ? AbsoluteLayoutFlags.SizeProportional : AbsoluteLayoutFlags.HeightProportional);
-                AbsoluteLayout.SetLayoutBounds(label, new Rectangle(offset + itemWidth * (i-index), 0, Config.ElementWidth, 1));
-                m_container.Children.Add(label);
+                if (pos < Config.MinValue || pos > Config.MaxValue) continue;
+                var view = CreateItem(pos);
+                AbsoluteLayout.SetLayoutBounds(view, new Rectangle(offset  + itemWidth * (i-index), 0, ElementWidth, 1));
+                m_container.Children.Add(view);
             }
+        }
+
+        private View CreateDefault()
+        {
+            return new BoxView 
+            { 
+                Color = Color.Black, 
+                WidthRequest = 3,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Margin= 0,
+                HorizontalOptions = LayoutOptions.Center 
+            };
+        }
+
+        private View CreateItem(int id)
+        {
+            //TODO: Reuse elements? Try without first.
+            if (m_viewMapping.TryGetValue(id, out var element)) return element;
+            element = (View)(ItemTemplate?.CreateContent() ?? CreateDefault());
+            element.Parent = this;
+            element.BindingContext = BindingContextFactory?.Invoke(id) ?? id;
+            AbsoluteLayout.SetLayoutFlags(element, WidthIsProportional ? AbsoluteLayoutFlags.SizeProportional : AbsoluteLayoutFlags.HeightProportional);
+            m_viewMapping[id] = element;
+            return element;
+        }
+
+
+        public static readonly BindableProperty BindingContextFactoryProperty = BindableProperty.Create(
+            nameof(BindingContextFactory),
+            typeof(Func<int, object>),
+            typeof(SlidableLayout));
+
+        public Func<int, object> BindingContextFactory
+        {
+            get { return (Func<int, object>)GetValue(BindingContextFactoryProperty); }
+            set { SetValue(BindingContextFactoryProperty, value); }
+        }
+
+        public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(
+            nameof(ItemTemplate),
+            typeof(DataTemplate),
+            typeof(SlidableLayout));
+
+        public DataTemplate ItemTemplate
+        {
+            get => (DataTemplate)GetValue(ItemTemplateProperty);
+            set => SetValue(ItemTemplateProperty, value);
         }
     }
 }

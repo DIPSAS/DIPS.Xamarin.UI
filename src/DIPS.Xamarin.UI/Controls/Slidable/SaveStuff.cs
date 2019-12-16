@@ -37,16 +37,7 @@
 //}
 
 
-//public static readonly BindableProperty BindingContextFactoryProperty = BindableProperty.Create(
-//    nameof(BindingContextFactory),
-//    typeof(Func<int, object>),
-//    typeof(SlidableLayout));
 
-//public Func<int, object> BindingContextFactory
-//{
-//    get { return (Func<int, object>)GetValue(BindingContextFactoryProperty); }
-//    set { SetValue(BindingContextFactoryProperty, value); }
-//}
 
 
 //public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(

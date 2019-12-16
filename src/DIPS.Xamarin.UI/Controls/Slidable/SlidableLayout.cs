@@ -9,9 +9,12 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         private int m_lastId = -1;
         private Label m_debug;
         private double m_startSlideLocation;
+        private int m_lastIndex = int.MinValue;
         public SlidableLayout()
         {
-            Config = new SliderConfig(int.MinValue, int.MaxValue, 0.2, true, true);
+            ElementWidth = 0.2;
+            WidthIsProportional = true;
+            Config = new SliderConfig(int.MinValue, int.MaxValue);
             SlideProperties = new SlidableProperties(0, -1, false);
             var rec = new PanGestureRecognizer();
             GestureRecognizers.Add(rec);
@@ -58,11 +61,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             {
                 //Slide more.
                 // On click is only for when a tap gesture is done. 
-                currentPos = CalculateDist(Math.Floor(SlideProperties.Position));
+                currentPos = CalculateDist(Math.Round(SlideProperties.Position));
             }
 
             m_lastId = currentId;
-            var index = CalculateIndex(currentPos);
+            var index = Math.Max(Config.MinValue, Math.Min(Config.MaxValue, CalculateIndex(currentPos)));
             SlideProperties = new SlidableProperties(index, m_lastId, e.StatusType != GestureStatus.Completed && e.StatusType != GestureStatus.Canceled);
             m_debug.Text = "me: " + currentPos + "\n" + index + "\n" + currentId + "\n" + e.StatusType;
             OnScrolledInternal();
@@ -82,15 +85,22 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
         protected double GetItemWidth()
         {
-            if (!Config.WidthIsProportional) return Config.ElementWidth;
-            return Width * Config.ElementWidth;
+            if (!WidthIsProportional) return ElementWidth;
+            return Width * ElementWidth;
         }
 
         private void OnScrolledInternal()
         {
+            var index = (int)Math.Round(SlideProperties.Position);
+            if (index != m_lastIndex && SelectedItemChangedCommand != null)
+            {
+                SelectedItemChangedCommand?.Execute(index);
+                m_lastIndex = index;
+            }
             if (Width < 0.1) return;
-            OnScrolled((SlideProperties.Position), Width / 2 - GetItemWidth());
+            OnScrolled((SlideProperties.Position+0.5), Width / 2 - GetItemWidth()/2);
         }
+
         protected virtual void OnScrolled(double index, double offset)
         {
 
@@ -136,6 +146,28 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         {
             get => (ICommand)GetValue(SelectedItemChangedCommandProperty);
             set => SetValue(SelectedItemChangedCommandProperty, value);
+        }
+
+        public static readonly BindableProperty ElementWidthProperty = BindableProperty.Create(
+            nameof(ElementWidth),
+            typeof(double),
+            typeof(SlidableLayout));
+
+        public double ElementWidth
+        {
+            get => (double)GetValue(ElementWidthProperty);
+            set => SetValue(ElementWidthProperty, value);
+        }
+
+        public static readonly BindableProperty WidthIsProportionalProperty = BindableProperty.Create(
+            nameof(WidthIsProportional),
+            typeof(bool),
+            typeof(SlidableLayout));
+
+        public bool WidthIsProportional
+        {
+            get => (bool)GetValue(WidthIsProportionalProperty);
+            set => SetValue(WidthIsProportionalProperty, value);
         }
     }
 }
