@@ -1,0 +1,43 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.DateConverterPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <ValueConverters:DateConverterPageViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="0"
+                     Grid.Column="0">
+            <Label Text="DateTime to convert"
+                   HorizontalOptions="CenterAndExpand" />
+            <dxui:DatePicker Date="{Binding Date}"
+                             HorizontalOptions="CenterAndExpand"
+                             FontSize="20" />
+        </StackLayout>
+        <!-- Add checkbox for localization -->
+
+        <StackLayout Grid.Row="1"
+                     Grid.Column="0">
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Non-converted" />
+                <Label Text="{Binding Date}"
+                       FontAttributes="Bold" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Default" />
+                <Label Text="{Binding Date, Converter={dxui:DateConverter Format=Default}}"
+                       FontAttributes="Bold" />
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>

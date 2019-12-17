@@ -30,6 +30,12 @@ namespace DIPS.Xamarin.UI.Samples.Converters
                 case "IsEmptyConverter":
                     m_navigation.PushAsync(new IsEmptyConverterPage());
                     break;
+                case "DateTimeConverter":
+                    m_navigation.PushAsync(new DateTimeConverterPage());
+                    break;
+                case "DateConverter":
+                    m_navigation.PushAsync(new DateConverterPage());
+                    break;
             }
         }
     }
