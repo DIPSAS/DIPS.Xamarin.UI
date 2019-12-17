@@ -28,7 +28,18 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
         public DateConverterPageViewModel()
         {
 
-            OpenLocaleMobileSettingsCommand = new Command(() => MobileSettings.Instance.OpenLocale());
+            OpenLocaleMobileSettingsCommand = new Command(() =>
+            {
+                if (System.Threading.Thread.CurrentThread.CurrentCulture.IsNorwegian())
+                {
+                    System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
+                }
+                else
+                {
+                    System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("no");
+                }
+                PropertyChanged.Raise(nameof(Locale));
+            });
             Date = DateTime.Now;
         }
 
@@ -39,15 +50,11 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
         public DateTime Date
         {
             get => m_date;
-            set
-            {
-                PropertyChanged.RaiseAfter(ref m_date, value);
-                PropertyChanged.Raise(nameof(DateTime));
-            }
+            set => PropertyChanged.RaiseAfter(ref m_date, value);
         }
 
         public ICommand OpenLocaleMobileSettingsCommand { get; }
 
-        public string Locale => CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+        public string Locale => System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
     }
 }
