@@ -77,5 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
+    <ProjectReference Include="..\DIPS.Xamarin.UI.InternalShared\DIPS.Xamarin.UI.InternalShared.csproj" />
   </ItemGroup>
 </Project>

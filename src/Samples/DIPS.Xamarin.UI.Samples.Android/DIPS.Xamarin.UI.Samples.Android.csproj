@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="MobileSettings\AndroidSettings.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -101,6 +102,10 @@
     <ProjectReference Include="..\..\DIPS.Xamarin.UI.Android\DIPS.Xamarin.UI.Android.csproj">
       <Project>{c2db1eb7-34d6-4106-9bd2-d475ac3ebc19}</Project>
       <Name>DIPS.Xamarin.UI.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DIPS.Xamarin.UI.InternalShared\DIPS.Xamarin.UI.InternalShared.csproj">
+      <Project>{CF0A633C-7CC7-4479-9004-60DF7CADA5FF}</Project>
+      <Name>DIPS.Xamarin.UI.InternalShared</Name>
     </ProjectReference>
     <ProjectReference Include="..\DIPS.Xamarin.UI.Samples\DIPS.Xamarin.UI.Samples.csproj">
       <Project>{2F95D750-C17C-4E75-A6F9-84D410F24150}</Project>

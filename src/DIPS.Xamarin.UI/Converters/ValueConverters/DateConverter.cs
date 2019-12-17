@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using DIPS.Xamarin.UI.Extensions;
+using DIPS.Xamarin.UI.Resources.LocalizedStrings;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +12,8 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
     /// </summary>
     public class DateConverter : IValueConverter, IMarkupExtension
     {
+        private const string Space = " ";
+
         /// <summary>
         /// The format to choose between, see <see cref="DateConverterFormat"/>
         /// </summary>
@@ -20,19 +24,47 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         {
             if (!(value is DateTime dateTimeInput))
                 throw new ArgumentException("The input has to be of type DateTime");
-            var formattedDateTime = (Format) switch
-            {
-                DateConverterFormat.Default => dateTimeInput.ToString("dd. MMM yyyy", culture),
+            return (Format) switch { 
+                DateConverterFormat.Default => ConvertToDefaultDateTime(dateTimeInput, culture),
+                DateConverterFormat.Text => ConvertDateTimeAsText(dateTimeInput, culture),
                 _ => string.Empty
             };
+        }
 
-            return formattedDateTime.ToLower();
+        private static string ConvertToDefaultDateTime(DateTime dateTime, CultureInfo culture)
+        {
+            var day = dateTime.ToString("dd", culture);
+            var month = dateTime.ToString("MMM", culture);
+            var year = dateTime.ToString("yyyy", culture);
+            return $"{day}.{Space}{month}{Space}{year}".ToLower();
+
         }
 
         /// <inheritdoc />
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+
+        private static string ConvertDateTimeAsText(DateTime dateTime, CultureInfo culture)
+        {
+
+            if (dateTime.IsToday())
+            {
+                return InternalLocalizedStrings.Today;
+            }
+            if (dateTime.IsYesterday())
+            {
+                return InternalLocalizedStrings.Yesterday;
+            }
+            if (dateTime.IsTomorrow())
+            {
+                return InternalLocalizedStrings.Tomorrow;
+            }
+
+            var month = dateTime.ToString("MMM", culture);
+            var day = dateTime.ToString("dd");
+            return $"{day}.{Space}{month}".ToLower();
         }
 
         /// <inheritdoc />
@@ -48,6 +80,13 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             /// </summary>
             /// <example>12. dec 2019</example>
             Default = 0,
+            /// <summary>
+            /// Shows only the day + month
+            /// </summary>
+            /// <remarks>
+            /// If the date is today, tomorrow or yesterday it will show a localized string instead of day + month
+            /// </remarks>
+            Text,
         }
     }
 }

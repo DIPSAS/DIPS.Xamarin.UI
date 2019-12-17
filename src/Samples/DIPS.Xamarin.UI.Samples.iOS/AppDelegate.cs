@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DIPS.Xamarin.UI.Samples.iOS.MobileSettings;
 using Foundation;
 using UIKit;
 
@@ -24,6 +25,7 @@ namespace DIPS.Xamarin.UI.Samples.iOS
             global::Xamarin.Forms.Forms.Init();
             DIPS.Xamarin.UI.iOS.Library.Initialize();
             LoadApplication(new App());
+            DIPS.Xamarin.UI.InternalShared.MobileSettings.Instance = new iPhoneSettings();
             return base.FinishedLaunching(app, options);
         }
     }
