@@ -76,10 +76,15 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         public enum DateConverterFormat
         {
             /// <summary>
-            /// Default date format
+            /// Short date format
             /// </summary>
             /// <example>12. dec 2019</example>
-            Default = 0,
+            Short = 0,
+            /// <summary>
+            /// Default date format, <see cref="Short"/>
+            /// </summary>
+            /// <example>12. dec 2019</example>
+            Default = Short,
             /// <summary>
             /// Shows only the day + month
             /// </summary>

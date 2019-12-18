@@ -62,7 +62,7 @@
 
             <StackLayout Orientation="Horizontal"
                          Padding="12">
-                <Label Text="Default" />
+                <Label Text="Short (Default)" />
                 <Label Text="{Binding Date, Converter={dxui:DateConverter Format=Default}}"
                        FontAttributes="Bold"
                        HorizontalOptions="EndAndExpand" />

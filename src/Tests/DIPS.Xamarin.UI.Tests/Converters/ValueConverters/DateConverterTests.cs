@@ -7,6 +7,7 @@ using DIPS.Xamarin.UI.Resources.LocalizedStrings;
 using FluentAssertions;
 using Xunit;
 using DIPS.Xamarin.UI.Tests.TestHelpers;
+using DateConverterFormat = DIPS.Xamarin.UI.Converters.ValueConverters.DateConverter.DateConverterFormat;
 
 namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
 {
@@ -35,11 +36,21 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
 
         [Theory]
         [MemberData(nameof(TestDataForDefaultFormat))]
-        public void Convert_WithDefaultFormat_WithCulture_CorrectFormat(string cultureName, DateTime date, string expected)
+        public void Convert_WithShortFormat_WithCulture_CorrectFormat(string cultureName, DateTime date, string expected)
         {
+            m_dateConverter.Format = DateConverter.DateConverterFormat.Short;
+
             var actual = m_dateConverter.Convert<string>(date, new CultureInfo(cultureName));
 
             actual.Should().Be(expected);
+        }
+
+        [Fact]  
+        public void DateConverterFormat_SetToDefault_FormatShouldBeShort()
+        {
+            m_dateConverter.Format = DateConverterFormat.Default;
+
+            m_dateConverter.Format.Should().Be(DateConverterFormat.Short);
         }
 
         public static IEnumerable<object[]> TestDataForTextFormat =>
@@ -59,7 +70,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         [MemberData(nameof(TestDataForTextFormat))]
         public void Convert_WithTextFormat_WithDate_WithCulture_CorrectFormat(string cultureName, DateTime date, string expected)
         {
-            m_dateConverter.Format = DateConverter.DateConverterFormat.Text;
+            m_dateConverter.Format = DateConverterFormat.Text;
 
             InternalLocalizedStrings.Culture = new CultureInfo(cultureName);//To force localized strings
 
