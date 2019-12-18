@@ -27,16 +27,11 @@
     <Compile Update="Controls\RadioButtonGroup\RadioButtonGroup.xaml.cs">
       <DependentUpon>RadioButtonGroup.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Resources\LocalizedStrings\InternalLocalizedStrings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>InternalLocalizedStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\LocalizedStrings\LocalizedStrings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LocalizedStrings.resx</DependentUpon>
-    </Compile>
+      <Compile Update="Resources\LocalizedStrings\InternalLocalizedStrings.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>InternalLocalizedStrings.resx</DependentUpon>
+      </Compile>
   </ItemGroup>
 
   <ItemGroup>

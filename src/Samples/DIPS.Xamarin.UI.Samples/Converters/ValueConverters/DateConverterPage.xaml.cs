@@ -28,18 +28,7 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
         public DateConverterPageViewModel()
         {
 
-            OpenLocaleMobileSettingsCommand = new Command(() =>
-            {
-                if (System.Threading.Thread.CurrentThread.CurrentCulture.IsNorwegian())
-                {
-                    System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
-                }
-                else
-                {
-                    System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("no");
-                }
-                PropertyChanged.Raise(nameof(Locale));
-            });
+            OpenLocaleMobileSettingsCommand = new Command(() => MobileSettings.Instance.OpenLocale());
             Date = DateTime.Now;
         }
 
