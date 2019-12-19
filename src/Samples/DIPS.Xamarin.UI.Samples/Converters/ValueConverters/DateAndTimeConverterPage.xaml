@@ -24,7 +24,7 @@
                      Grid.Column="0"
                      Padding="12">
 
-            <Label Text="DateTime to convert"
+            <Label Text="Date to convert"
                    HorizontalOptions="CenterAndExpand" />
             <!-- Potentially new date picker implementation for dips.xamarin.ui 
                 This will give you a datepicker that you can change the displaying converted value of in the label that you click to display the picker
@@ -42,12 +42,30 @@
                                             WidthRequest="{Binding Source={x:Reference label}, Path=Width}" />
             </Grid>
 
+            <Label Text="Time to convert"
+                   HorizontalOptions="CenterAndExpand" />
+            <Grid IsClippedToBounds="True">
+                <TimePicker x:Name="timePicker"
+                            Time="{Binding Time}"
+                            HorizontalOptions="Center"
+                            TextColor="Transparent"
+                            Margin="-40"
+                            WidthRequest="{Binding Source={x:Reference label}, Path=Width}" />
+                <Label x:Name="timeLabel"
+                       Text="{Binding Time, Converter={dxui:TimeConverter Format=Default}}"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       TextColor="Black"
+                       InputTransparent="True"
+                       BackgroundColor="White" />
+            </Grid>
+
             <BoxView HeightRequest="2"
                      BackgroundColor="LightGray" />
             <StackLayout Orientation="Horizontal"
                          Padding="12">
                 <Label Text="Non-converted" />
-                <Label Text="{Binding Date}"
+                <Label Text="{Binding DateTime}"
                        FontAttributes="Bold"
                        HorizontalOptions="EndAndExpand" />
             </StackLayout>
@@ -57,7 +75,7 @@
             <StackLayout Orientation="Horizontal"
                          Padding="12">
                 <Label Text="Short (Default)" />
-                <Label Text="{Binding Date, Converter={dxui:DateAndTimeConverter Format=Short}}"
+                <Label Text="{Binding DateTime, Converter={dxui:DateAndTimeConverter Format=Short}}"
                        FontAttributes="Bold"
                        HorizontalOptions="EndAndExpand" />
             </StackLayout>
@@ -67,7 +85,7 @@
             <StackLayout Orientation="Horizontal"
                          Padding="12">
                 <Label Text="Text" />
-                <Label Text="{Binding Date, Converter={dxui:DateAndTimeConverter Format=Text}}"
+                <Label Text="{Binding DateTime, Converter={dxui:DateAndTimeConverter Format=Text}}"
                        FontAttributes="Bold"
                        HorizontalOptions="EndAndExpand" />
             </StackLayout>

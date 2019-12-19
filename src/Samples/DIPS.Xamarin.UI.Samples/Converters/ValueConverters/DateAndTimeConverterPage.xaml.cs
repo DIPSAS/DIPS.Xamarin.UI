@@ -25,12 +25,29 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
         }
 
         private DateTime m_date;
+        private TimeSpan m_time;
 
         public DateTime Date
         {
             get => m_date;
-            set => PropertyChanged.RaiseAfter(ref m_date, value);
+            set
+            {
+                PropertyChanged.RaiseAfter(ref m_date, value); 
+                PropertyChanged.Raise(nameof(DateTime));
+            }
         }
+
+        public TimeSpan Time
+        {
+            get => m_time;
+            set
+            {
+                PropertyChanged.RaiseWhenSet(ref m_time, value);
+                PropertyChanged.Raise(nameof(DateTime));
+            }
+        }
+
+        public DateTime DateTime => Date + Time;
 
         public ICommand OpenLocaleMobileSettingsCommand { get; }
         public string Locale => System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;

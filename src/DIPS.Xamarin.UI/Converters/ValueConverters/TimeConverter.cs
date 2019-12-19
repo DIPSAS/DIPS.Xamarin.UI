@@ -53,8 +53,8 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
 
             return Format switch
             {
-                TimeConverterFormat.Default => ConvertToDefaultFormat(dateTimeInput, culture), 
-                _=> string.Empty
+                TimeConverterFormat.Default => ConvertToDefaultFormat(dateTimeInput, culture),
+                _ => string.Empty
             };
         }
 
@@ -69,7 +69,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             var time = dateTimeInput.ToString("hh:mm tt", culture);
             if (culture.IsNorwegian())
             {
-                time = dateTimeInput.ToString("hh:mm", culture);
+                time = dateTimeInput.ToString("HH:mm", culture);
             }
 
             return time;
