@@ -24,17 +24,20 @@
                      Grid.Column="0"
                      Padding="12">
 
-            <Label Text="DateTime to convert"
+            <Label Text="Date to convert"
                    HorizontalOptions="CenterAndExpand" />
-            <dxui:DatePicker Date="{Binding 
-                Date}" />
+            <dxui:DatePicker Date="{Binding Date}" />
+
+            <Label Text="Time to convert"
+                   HorizontalOptions="CenterAndExpand" />
+            <dxui:TimePicker Time="{Binding Time}" />
 
             <BoxView HeightRequest="2"
                      BackgroundColor="LightGray" />
             <StackLayout Orientation="Horizontal"
                          Padding="12">
                 <Label Text="Non-converted" />
-                <Label Text="{Binding Date}"
+                <Label Text="{Binding DateTime}"
                        FontAttributes="Bold"
                        HorizontalOptions="EndAndExpand" />
             </StackLayout>
@@ -44,7 +47,7 @@
             <StackLayout Orientation="Horizontal"
                          Padding="12">
                 <Label Text="Short (Default)" />
-                <Label Text="{Binding Date, Converter={dxui:DateAndTimeConverter Format=Short}}"
+                <Label Text="{Binding DateTime, Converter={dxui:DateAndTimeConverter Format=Short}}"
                        FontAttributes="Bold"
                        HorizontalOptions="EndAndExpand" />
             </StackLayout>
@@ -54,7 +57,7 @@
             <StackLayout Orientation="Horizontal"
                          Padding="12">
                 <Label Text="Text" />
-                <Label Text="{Binding Date, Converter={dxui:DateAndTimeConverter Format=Text}}"
+                <Label Text="{Binding DateTime, Converter={dxui:DateAndTimeConverter Format=Text}}"
                        FontAttributes="Bold"
                        HorizontalOptions="EndAndExpand" />
             </StackLayout>
