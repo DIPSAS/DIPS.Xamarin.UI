@@ -8,8 +8,14 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
+    /// <summary>
+    /// Converter that takes either a DateTime or a Timespan and convert it to a readable time string
+    /// </summary>
     public class TimeConverter : IMarkupExtension, IValueConverter
     {
+        /// <summary>
+        /// The format to use during conversion
+        /// </summary>
         public TimeConverterFormat Format { get; set; }
         /// <inheritdoc />
         public object ProvideValue(IServiceProvider serviceProvider) => this;
@@ -52,8 +58,15 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// The converter format that is used to change the format of the time <see cref="TimeConverter"/>
+        /// </summary>
         public enum TimeConverterFormat
         {
+            /// <summary>
+            /// The default time converter format
+            /// </summary>
+            /// <example>12:00 PM</example>
             Default = 0,
         }
     }

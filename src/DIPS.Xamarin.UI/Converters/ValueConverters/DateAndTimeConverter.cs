@@ -8,6 +8,9 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
+    /// <summary>
+    /// Converters a DateTime to an readable date and time string
+    /// </summary>
     public class DateAndTimeConverter : IMarkupExtension, IValueConverter
     {
         private const string Space = " ";
@@ -49,10 +52,24 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// An date and time format to use during conversion
+        /// </summary>
         public enum DateAndTimeConverterFormat
         {
+            /// <summary>
+            /// The short format, which is the same as <see cref="Default"/> to use during conversion
+            /// </summary>
+            /// <example>12 Dec 1990 12:00 PM</example>
             Short = 0,
+            /// <summary>
+            /// The default format to use, <see cref="Short"/>
+            /// </summary>
             Default = Short,
+            /// <summary>
+            /// A text format to use during conversion
+            /// </summary>
+            /// <example>Today 12:00 PM</example>
             Text,
         }
     }
