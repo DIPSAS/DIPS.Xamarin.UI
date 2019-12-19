@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,5 +18,22 @@ namespace DIPS.Xamarin.UI.Samples.Controls.DatePicker
         {
             InitializeComponent();
         }
+    }
+
+    public class DatePickerPageViewModel : INotifyPropertyChanged
+    {
+        private DateTime m_date;
+
+        public DateTime Date
+        {
+            get => m_date;
+            set => PropertyChanged.RaiseWhenSet(ref m_date, value);
+        }
+
+        public DateTime MaximumDate => DateTime.Now.AddDays(5);
+
+        public DateTime MinimumDate => DateTime.Now.AddDays(-5);
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
