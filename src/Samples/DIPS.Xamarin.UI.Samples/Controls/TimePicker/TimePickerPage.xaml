@@ -6,11 +6,13 @@
              xmlns:dxui="http://dips.xamarin.ui.com"
              xmlns:TimePicker="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.TimePicker;assembly=DIPS.Xamarin.UI.Samples"
              mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.UI.Samples.Controls.TimePicker.TimePickerPage">
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.TimePicker.TimePickerPage"
+             >
    <ContentPage.BindingContext>
        <TimePicker:TimePickerPageViewModel/>
    </ContentPage.BindingContext>
     <dxui:TimePicker Time="{Binding Time}"
                      HorizontalOptions="CenterAndExpand"
-                     VerticalOptions="CenterAndExpand" />
+                     VerticalOptions="CenterAndExpand"
+                      />
 </ContentPage>  

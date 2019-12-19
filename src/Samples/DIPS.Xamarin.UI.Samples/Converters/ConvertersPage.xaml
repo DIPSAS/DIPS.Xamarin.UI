@@ -17,6 +17,15 @@
             <Button Text="IsEmptyConverter"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="IsEmptyConverter" />
+            <Button Text="DateConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="DateConverter" />
+            <Button Text="TimeConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TimeConverter" />
+            <Button Text="DateAndTimeConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="DateAndTimeConverter" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

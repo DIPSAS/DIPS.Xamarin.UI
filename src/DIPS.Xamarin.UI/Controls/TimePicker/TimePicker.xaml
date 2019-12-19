@@ -7,19 +7,21 @@
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Controls.TimePicker.TimePicker"
              x:Name="codeBehind"
-             BackgroundColor="Red">
-    <Grid BindingContext="{Binding Source={x:Reference codeBehind}}">
+             BackgroundColor="Red"
+>
+    <Grid IsClippedToBounds="True">
         <TimePicker x:Name="FormsDatePicker"
-                    Time="{Binding Time}"
+                    Time="{Binding Source={x:Reference codeBehind}, Path=Time}"
                     Margin="{Binding Source={x:Reference DateLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
                     TextColor="Transparent"
                     HeightRequest="{Binding Source={x:Reference DateLabel}, Path=Height}"
-                    WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}" />
+                    WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}"
+                    />
         <Label x:Name="DateLabel"
-               Text="{Binding Time}"
-               TextColor="{Binding LabelColor}"
-               FontSize="{Binding LabelSize}"
+               Text="{Binding Source={x:Reference codeBehind}, Path=Time}"
+               TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
+               FontSize="{Binding Source={x:Reference codeBehind}, Path=LabelSize}"
                InputTransparent="True"
-               />
+        />
     </Grid>
 </ContentView>

@@ -22,6 +22,9 @@ namespace DIPS.Xamarin.UI.Samples.Controls.TimePicker
 
     public class TimePickerPageViewModel : INotifyPropertyChanged
     {
+        public TimePickerPageViewModel()
+        {
+        }
         private TimeSpan m_time;
         public event PropertyChangedEventHandler PropertyChanged;
 
