@@ -22,22 +22,39 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is DateTime dateTimeInput))
+            if (value == null || !(value is DateTime dateTimeInput))
                 throw new ArgumentException("The input has to be of type DateTime");
             return (Format) switch { 
-                DateConverterFormat.Default => ConvertToDefaultDateTime(dateTimeInput, culture),
+                DateConverterFormat.Short => ConvertToDefaultDateTime(dateTimeInput, culture),
                 DateConverterFormat.Text => ConvertDateTimeAsText(dateTimeInput, culture),
                 _ => string.Empty
-            };
+                };
         }
 
         private static string ConvertToDefaultDateTime(DateTime dateTime, CultureInfo culture)
         {
-            var day = dateTime.ToString("dd", culture);
-            var month = dateTime.ToString("MMM", culture);
-            var year = dateTime.ToString("yyyy", culture);
-            return $"{day}.{Space}{month}{Space}{year}".ToLower();
+            var day = GetDayBasedOnCulture(dateTime, culture);
 
+            var month = GetMonthBasedOnCulture(dateTime, culture);
+            var year = dateTime.ToString("yyyy", culture);
+            return $"{day}{Space}{month}{Space}{year}";
+
+        }
+
+        private static string GetDayBasedOnCulture(DateTime dateTime, CultureInfo culture)
+        {
+            var day = dateTime.ToString("dd", culture);
+            if (culture.TwoLetterISOLanguageName.Contains("en"))
+            {
+                day += dateTime.GetDaySuffix();
+            }
+
+            if (culture.IsNorwegian())
+            {
+                day += ".";
+            }
+
+            return day;
         }
 
         /// <inheritdoc />
@@ -62,9 +79,20 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
                 return InternalLocalizedStrings.Tomorrow;
             }
 
+            var month = GetMonthBasedOnCulture(dateTime, culture);
+            var day = GetDayBasedOnCulture(dateTime, culture);
+            return $"{day}{Space}{month}";
+        }
+
+        private static string GetMonthBasedOnCulture(DateTime dateTime, CultureInfo culture)
+        {
             var month = dateTime.ToString("MMM", culture);
-            var day = dateTime.ToString("dd");
-            return $"{day}.{Space}{month}".ToLower();
+            if (culture.TwoLetterISOLanguageName.Contains("en"))
+            {
+                month = month[0].ToString().ToUpper() + month.Substring(1);
+            }
+
+            return month;
         }
 
         /// <inheritdoc />

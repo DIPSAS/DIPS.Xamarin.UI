@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0"
       encoding="utf-8"?>
-<ContentPage x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.DateConverterPage"
-             xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:dxui="http://dips.xamarin.ui.com"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d">
-    <ContentPage.BindingContext>
-        <ValueConverters:DateConverterPageViewModel />
-    </ContentPage.BindingContext>
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.DateAndTimeConverterPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="{Binding Locale, StringFormat='Locale: {0}'}"
                      Command="{Binding OpenLocaleMobileSettingsCommand}" />
     </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <ValueConverters:DateAndTimeConverterPageViewModel />
+    </ContentPage.BindingContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -30,23 +30,17 @@
                 This will give you a datepicker that you can change the displaying converted value of in the label that you click to display the picker
             -->
             <Grid>
-                <Label x:Name="label" Text="{Binding Date, Converter={dxui:DateConverter Format=Default}}"
+                <Label x:Name="label"
+                       Text="{Binding Date, Converter={dxui:DateAndTimeConverter Format=Default}}"
                        FontSize="20"
                        HorizontalOptions="Center"
-                       TextColor="Black"/>
+                       TextColor="Black" />
                 <dxui:DatePicker x:Name="datePicker"
-                                 Date="{Binding Date}"
-                                 HorizontalOptions="Center"
-                                 TextColor="Transparent"
-                                 WidthRequest="{Binding Source={x:Reference label}, Path=Width}"
-                                 
-                                 />
+                                            Date="{Binding Date}"
+                                            HorizontalOptions="Center"
+                                            TextColor="Transparent"
+                                            WidthRequest="{Binding Source={x:Reference label}, Path=Width}" />
             </Grid>
-        </StackLayout>
-
-        <StackLayout Grid.Row="1"
-                     Grid.Column="0"
-                     Spacing="0">
 
             <BoxView HeightRequest="2"
                      BackgroundColor="LightGray" />
@@ -63,7 +57,7 @@
             <StackLayout Orientation="Horizontal"
                          Padding="12">
                 <Label Text="Short (Default)" />
-                <Label Text="{Binding Date, Converter={dxui:DateConverter Format=Default}}"
+                <Label Text="{Binding Date, Converter={dxui:DateAndTimeConverter Format=Short}}"
                        FontAttributes="Bold"
                        HorizontalOptions="EndAndExpand" />
             </StackLayout>
@@ -73,7 +67,7 @@
             <StackLayout Orientation="Horizontal"
                          Padding="12">
                 <Label Text="Text" />
-                <Label Text="{Binding Date, Converter={dxui:DateConverter Format=Text}}"
+                <Label Text="{Binding Date, Converter={dxui:DateAndTimeConverter Format=Text}}"
                        FontAttributes="Bold"
                        HorizontalOptions="EndAndExpand" />
             </StackLayout>

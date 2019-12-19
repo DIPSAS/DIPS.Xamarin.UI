@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Converters.ValueConverters;
 using Xamarin.Forms;
 
@@ -30,11 +29,14 @@ namespace DIPS.Xamarin.UI.Samples.Converters
                 case "IsEmptyConverter":
                     m_navigation.PushAsync(new IsEmptyConverterPage());
                     break;
-                case "DateTimeConverter":
-                    m_navigation.PushAsync(new DateTimeConverterPage());
-                    break;
                 case "DateConverter":
                     m_navigation.PushAsync(new DateConverterPage());
+                    break;
+                case "TimeConverter":
+                    m_navigation.PushAsync(new TimeConverterPage());
+                    break;
+                case "DateAndTimeConverter":
+                    m_navigation.PushAsync(new DateAndTimeConverterPage());
                     break;
             }
         }

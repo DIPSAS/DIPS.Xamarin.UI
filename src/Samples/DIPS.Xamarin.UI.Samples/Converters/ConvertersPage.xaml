@@ -20,9 +20,12 @@
             <Button Text="DateConverter"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="DateConverter" />
-            <Button Text="DateTimeConverter"
+            <Button Text="TimeConverter"
                     Command="{Binding NavigateToCommand}"
-                    CommandParameter="DateTimeConverter" />
+                    CommandParameter="TimeConverter" />
+            <Button Text="DateAndTimeConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="DateAndTimeConverter" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

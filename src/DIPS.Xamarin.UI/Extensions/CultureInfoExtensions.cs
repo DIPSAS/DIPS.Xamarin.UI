@@ -15,5 +15,6 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <returns></returns>
         public static bool IsNorwegian(this CultureInfo cultureInfo) =>
             cultureInfo.TwoLetterISOLanguageName.Equals("nb") || cultureInfo.TwoLetterISOLanguageName.Equals("nn");
+
     }
 }

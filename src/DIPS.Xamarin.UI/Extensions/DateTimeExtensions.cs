@@ -37,5 +37,29 @@ namespace DIPS.Xamarin.UI.Extensions
         {
             return dateTime.Date == DateTime.Now.AddDays(1).Date;
         }
+
+        /// <summary>
+        /// Gets the correct day suffix for a date
+        /// </summary>
+        /// <param name="dateTime">The datetime to get the suffix from</param>
+        /// <returns>a string with the correct suffix</returns>
+        public static string GetDaySuffix(this DateTime dateTime)
+        {
+            switch (dateTime.Day)
+            {
+                case 1:
+                case 21:
+                case 31:
+                    return "st";
+                case 2:
+                case 22:
+                    return "nd";
+                case 3:
+                case 23:
+                    return "rd";
+                default:
+                    return "th";
+            }
+        }
     }
 }

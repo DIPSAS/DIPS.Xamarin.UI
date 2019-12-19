@@ -43,13 +43,16 @@
     <EmbeddedResource Update="Converters\ValueConverters\BoolToObjectConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Converters\ValueConverters\DateAndTimeConverterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Converters\ValueConverters\DateConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Converters\ValueConverters\DateTimeConverterPage.xaml">
+    <EmbeddedResource Update="Converters\ValueConverters\InvertedBoolConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Converters\ValueConverters\InvertedBoolConverterPage.xaml">
+    <EmbeddedResource Update="Converters\ValueConverters\TimeConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Colors\ColorsPage.xaml">
