@@ -1,26 +1,22 @@
-﻿<?xml version="1.0"
-      encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.UI.Controls.DatePicker.DatePicker"
+             x:Class="DIPS.Xamarin.UI.Controls.TimePicker.TimePicker"
              x:Name="codeBehind"
-             >
+             BackgroundColor="Red">
     <Grid BindingContext="{Binding Source={x:Reference codeBehind}}">
-        <DatePicker x:Name="FormsDatePicker" 
-                    Date="{Binding Date}"
-                    MaximumDate="{Binding MaximumDate}"
-                    MinimumDate="{Binding MinimumDate}"
+        <TimePicker x:Name="FormsDatePicker"
+                    Time="{Binding Time}"
                     Margin="{Binding Source={x:Reference DateLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
                     TextColor="Transparent"
                     HeightRequest="{Binding Source={x:Reference DateLabel}, Path=Height}"
-                    WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}"
-                    />
+                    WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}" />
         <Label x:Name="DateLabel"
-               Text="{Binding Date}"
+               Text="{Binding Time}"
                TextColor="{Binding LabelColor}"
                FontSize="{Binding LabelSize}"
                InputTransparent="True"

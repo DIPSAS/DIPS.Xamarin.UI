@@ -68,13 +68,5 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             get => (double)GetValue(LabelSizeProperty);
             set => SetValue(LabelSizeProperty, value);
         }
-
-        private void DateLabel_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName.Equals("Height"))
-            {
-                FormsDatePicker.Margin = new Thickness(-(Height));
-            }
-        }
     }
 }
