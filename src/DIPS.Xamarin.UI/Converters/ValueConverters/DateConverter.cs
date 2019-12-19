@@ -8,7 +8,7 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
     /// <summary>
-    ///     Converts an DateTime object to an format that will only include the date on with an <see cref="Format" />
+    ///     Converts an DateTime object to an format and convert it to a readable string
     /// </summary>
     public class DateConverter : IValueConverter, IMarkupExtension
     {
@@ -20,13 +20,13 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             /// <summary>
             ///     Short date format
             /// </summary>
-            /// <example>12. dec 2019</example>
+            /// <example>12 Dec 2019</example>
             Short = 0,
 
             /// <summary>
             ///     Default date format, <see cref="Short" />
             /// </summary>
-            /// <example>12. dec 2019</example>
+            /// <example>12 Dec 2019</example>
             Default = Short,
 
             /// <summary>

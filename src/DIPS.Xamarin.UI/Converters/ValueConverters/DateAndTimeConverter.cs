@@ -7,7 +7,7 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
     /// <summary>
-    ///     Converters a DateTime to an readable date and time string
+    ///     Converters a DateTime object with an format and convert it to a readable string
     /// </summary>
     public class DateAndTimeConverter : IMarkupExtension, IValueConverter
     {
@@ -35,6 +35,9 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         }
 
         private const string Space = " ";
+        /// <summary>
+        ///     The format to use during conversion
+        /// </summary>
         public DateAndTimeConverterFormat Format { get; set; }
 
         /// <inheritdoc />

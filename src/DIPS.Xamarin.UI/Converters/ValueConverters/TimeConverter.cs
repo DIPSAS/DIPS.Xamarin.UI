@@ -7,7 +7,7 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
     /// <summary>
-    ///     Converter that takes either a DateTime or a Timespan and convert it to a readable time string
+    ///     Converts an DateTime or TimeSpan object with a format and convert it to a readable time string
     /// </summary>
     public class TimeConverter : IMarkupExtension, IValueConverter
     {

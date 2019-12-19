@@ -12,14 +12,14 @@ namespace DIPS.Xamarin.UI.Extensions
     {
 
         /// <summary>
-        /// Checks if the date occured to day
+        /// Checks if the date occurred to day
         /// </summary>
         /// <param name="dateTime">The datetime to check</param>
         /// <returns>Boolean value</returns>
         public static bool IsToday(this DateTime dateTime) => dateTime.Date == DateTime.Today.Date;
 
         /// <summary>
-        /// Checks if the date occured yesterday
+        /// Checks if the date occurred yesterday
         /// </summary>
         /// <param name="dateTime">The datetime to check</param>
         /// <returns>Boolean value</returns>
