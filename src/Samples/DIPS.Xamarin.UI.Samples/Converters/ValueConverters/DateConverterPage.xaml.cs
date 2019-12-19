@@ -39,7 +39,7 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
         public DateTime Date
         {
             get => m_date;
-            set => PropertyChanged.RaiseAfter(ref m_date, value);
+            set => PropertyChanged.RaiseWhenSet(ref m_date, value);
         }
 
         public ICommand OpenLocaleMobileSettingsCommand { get; }

@@ -34,7 +34,7 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
         public TimeSpan Time
         {
             get => m_time;
-            set => PropertyChanged.RaiseAfter(ref m_time, value);
+            set => PropertyChanged.RaiseWhenSet(ref m_time, value);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

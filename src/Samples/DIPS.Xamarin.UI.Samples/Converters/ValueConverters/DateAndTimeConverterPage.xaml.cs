@@ -32,7 +32,7 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
             get => m_date;
             set
             {
-                PropertyChanged.RaiseAfter(ref m_date, value); 
+                PropertyChanged.RaiseWhenSet(ref m_date, value); 
                 PropertyChanged.Raise(nameof(DateTime));
             }
         }
