@@ -51,7 +51,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
                     break;
             }
 
-            return Format switch { TimeConverterFormat.Default => ConvertToDefaultFormat(dateTimeInput, culture), _=> string.Empty };
+            return Format switch
+            {
+                TimeConverterFormat.Default => ConvertToDefaultFormat(dateTimeInput, culture), 
+                _=> string.Empty
+            };
         }
 
         /// <inheritdoc />

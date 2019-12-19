@@ -51,8 +51,12 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         {
             if (value == null || !(value is DateTime dateTimeInput))
                 throw new ArgumentException("The input has to be of type DateTime");
-            return Format switch { DateAndTimeConverterFormat.Short => ConvertToShortFormat(dateTimeInput, culture), DateAndTimeConverterFormat.Text
-                => ConvertToTextFormat(dateTimeInput, culture), _ => string.Empty };
+            return Format switch 
+            {
+                DateAndTimeConverterFormat.Short => ConvertToShortFormat(dateTimeInput, culture), 
+                DateAndTimeConverterFormat.Text
+                => ConvertToTextFormat(dateTimeInput, culture), _ => string.Empty
+            };
         }
 
         /// <inheritdoc />
