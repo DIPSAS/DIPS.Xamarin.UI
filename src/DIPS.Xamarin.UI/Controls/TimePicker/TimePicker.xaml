@@ -7,7 +7,6 @@
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Controls.TimePicker.TimePicker"
              x:Name="codeBehind"
-             BackgroundColor="Red"
 >
     <Grid IsClippedToBounds="True">
         <TimePicker x:Name="FormsDatePicker"

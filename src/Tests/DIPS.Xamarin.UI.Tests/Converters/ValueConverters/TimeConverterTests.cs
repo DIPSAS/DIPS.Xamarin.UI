@@ -29,9 +29,10 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         public static IEnumerable<object[]> TestDataForDefaultFormat =>
             new List<object[]>()
             {
-                new object[] { "no", new TimeSpan(12,12,00), "12:12" },
-                new object[] { "en", new TimeSpan(12,12,00), "12:12 PM" },
-                new object[] { "en", new TimeSpan(10,12,00), "10:12 AM" },
+                new object[] { "no", new TimeSpan(09,12,00), "09:12" },
+                new object[] { "no", new TimeSpan(21,21,00), "21:21" },
+                new object[] { "en", new TimeSpan(09,12,00), "09:12 AM" },
+                new object[] { "en", new TimeSpan(21,12,00), "09:12 PM" },
             };
 
         [Theory]

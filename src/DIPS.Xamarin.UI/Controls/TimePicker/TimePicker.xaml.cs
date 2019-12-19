@@ -13,8 +13,9 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             nameof(Time),
             typeof(TimeSpan),
             typeof(TimePicker),
-            BindingMode.TwoWay,
-            propertyChanged: TimePropertyChanged);
+            defaultBindingMode:BindingMode.TwoWay,
+            propertyChanged: TimePropertyChanged,
+            defaultValueCreator:DefaultTimeCreator);
 
         public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(
             nameof(LabelColor),
@@ -53,7 +54,7 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             set => SetValue(TimeProperty, value);
         }
 
-        private static object DefaultValueForTimeProperty(BindableObject bindable)
+        private static object DefaultTimeCreator(BindableObject bindable)
         {
             var now = DateTime.Now;
             return new TimeSpan(now.Hour, now.Minute, now.Second);
