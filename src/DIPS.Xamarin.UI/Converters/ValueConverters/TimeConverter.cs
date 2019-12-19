@@ -69,7 +69,9 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             var time = dateTimeInput.ToString("hh:mm tt", culture);
             if (culture.IsNorwegian())
             {
-                time = dateTimeInput.ToString("HH:mm", culture);
+                var hour = dateTimeInput.ToString("HH", culture);
+                var minutes = dateTimeInput.ToString("mm", culture);
+                time = $"{hour}:{minutes}";
             }
 
             return time;
