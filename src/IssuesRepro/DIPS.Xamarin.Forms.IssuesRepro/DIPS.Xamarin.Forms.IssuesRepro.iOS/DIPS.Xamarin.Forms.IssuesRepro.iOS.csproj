@@ -131,7 +131,7 @@
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\DIPS.Xamarin.Forms.IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro.csproj">
-      <Project>{56766DC9-DEEF-4C95-882B-4DB0D9D00C8A}</Project>
+      <Project>{C875B3E5-F312-4FA2-988D-E3B2927744A0}</Project>
       <Name>DIPS.Xamarin.Forms.IssuesRepro</Name>
     </ProjectReference>
   </ItemGroup>

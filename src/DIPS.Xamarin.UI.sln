@@ -39,7 +39,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Xamarin.Forms.IssuesRe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIPS.Xamarin.Forms.IssuesRepro", "IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro.csproj", "{C875B3E5-F312-4FA2-988D-E3B2927744A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Xamarin.UI.InternalShared", "Samples\DIPS.Xamarin.UI.InternalShared\DIPS.Xamarin.UI.InternalShared.csproj", "{CF0A633C-7CC7-4479-9004-60DF7CADA5FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIPS.Xamarin.UI.InternalShared", "Samples\DIPS.Xamarin.UI.InternalShared\DIPS.Xamarin.UI.InternalShared.csproj", "{CF0A633C-7CC7-4479-9004-60DF7CADA5FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
