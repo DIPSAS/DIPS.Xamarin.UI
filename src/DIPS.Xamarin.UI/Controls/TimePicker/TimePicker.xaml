@@ -21,6 +21,8 @@
                TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
                FontSize="{Binding Source={x:Reference codeBehind}, Path=LabelSize}"
                InputTransparent="True"
+               HorizontalOptions="{Binding Source={x:Reference codeBehind}, Path=HorizontalOptions}"
+               VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}"
         />
     </Grid>
 </ContentView>

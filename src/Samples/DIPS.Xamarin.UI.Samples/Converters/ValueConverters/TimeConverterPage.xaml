@@ -25,7 +25,7 @@
 
             <Label Text="TimeSpan to convert"
                    HorizontalOptions="CenterAndExpand" />
-            <dxui:TimePicker Time="{Binding Time}"/>
+            <dxui:TimePicker Time="{Binding Time}" HorizontalOptions="Center"/>
         </StackLayout>
         <StackLayout Grid.Row="1"
                      Grid.Column="0"
