@@ -8,7 +8,9 @@ namespace DIPS.Xamarin.UI.InternalUtils
     /// </summary>
     internal static class Clock
     {
+#nullable disable
         private static IClock s_clock;
+#nullable enable
 
         static Clock()
         {
