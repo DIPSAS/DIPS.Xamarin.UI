@@ -70,7 +70,15 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             var date = new DateConverter { Format = DateConverter.DateConverterFormat.Text }.Convert(dateTimeInput, null, null, culture);
             var time = new TimeConverter { Format = TimeConverter.TimeConverterFormat.Default }.Convert(dateTimeInput, null, null, culture);
 
-            return culture.IsNorwegian() ? $"{date}{Space}kl{Space}{time}" : $"{date}{Space}{time}";
+            if (culture.IsNorwegian())
+            {
+                if (dateTimeInput.IsToday() || dateTimeInput.IsTomorrow() || dateTimeInput.IsYesterday())
+                {
+                    return $"{date},{Space}kl{Space}{time}";
+                }
+                return $"{date}{Space}kl{Space}{time}";
+            }
+            return $"{date}{Space}{time}";
         }
 
         private static string ConvertToShortFormat(DateTime dateTimeInput, CultureInfo culture)
