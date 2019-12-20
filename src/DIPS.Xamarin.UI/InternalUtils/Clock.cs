@@ -1,5 +1,4 @@
 ﻿using System;
-using DIPS.Xamarin.UI.InternalUtils.DIPS.Arena.UI.Common.Clock;
 
 namespace DIPS.Xamarin.UI.InternalUtils
 {
@@ -103,8 +102,7 @@ namespace DIPS.Xamarin.UI.InternalUtils
         }
     }
 
-    namespace DIPS.Arena.UI.Common.Clock
-    {
+    
         /// <summary>
         /// Interface to implement a Test Double to control the current time.
         /// </summary>
@@ -114,5 +112,4 @@ namespace DIPS.Xamarin.UI.InternalUtils
             DateTime Today { get; }
             DateTime UtcNow { get; }
         }
-    }
 }
