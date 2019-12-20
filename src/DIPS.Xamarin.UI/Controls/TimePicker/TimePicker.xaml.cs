@@ -50,7 +50,7 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
         }
 
         /// <summary>
-        /// The format to use for the label, <see cref="TimeConverter.TimeConverterFormat"/>
+        /// The format to use when displaying the time label, <see cref="TimeConverter.TimeConverterFormat"/>
         /// </summary>
         public TimeConverter.TimeConverterFormat Format { get; set; }
 
