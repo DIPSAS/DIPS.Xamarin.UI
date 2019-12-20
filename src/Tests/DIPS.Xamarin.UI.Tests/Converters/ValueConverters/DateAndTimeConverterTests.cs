@@ -56,9 +56,9 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
                 new object[] { "en", new DateTime(1991, 12, 10, 12, 12, 12), "10th Dec 12:12 PM" },
                 new object[] { "en", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(-1), "Yesterday 12:12 PM" },
                 new object[] { "en", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(1), "Tomorrow 12:12 PM" },
-                new object[] { "no", new DateTime(1990, 12, 12, 10, 12, 00), "I dag kl 10:12" },
-                new object[] { "no", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(-1), "I går kl 12:12" },
-                new object[] { "no", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(1), "I morgen kl 12:12" },
+                new object[] { "no", new DateTime(1990, 12, 12, 10, 12, 00), "I dag, kl 10:12" },
+                new object[] { "no", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(-1), "I går, kl 12:12" },
+                new object[] { "no", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(1), "I morgen, kl 12:12" },
                 new object[] { "no", new DateTime(1990, 12, 10, 09, 09, 00), "10. des kl 09:09" }
             };
 
