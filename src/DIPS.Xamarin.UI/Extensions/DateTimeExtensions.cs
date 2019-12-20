@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using DIPS.Xamarin.UI.InternalUtils;
 
 namespace DIPS.Xamarin.UI.Extensions
 {
@@ -16,7 +17,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// </summary>
         /// <param name="dateTime">The datetime to check</param>
         /// <returns>Boolean value</returns>
-        public static bool IsToday(this DateTime dateTime) => dateTime.Date == DateTime.Today.Date;
+        public static bool IsToday(this DateTime dateTime) => dateTime.Date == Clock.Today.Date;
 
         /// <summary>
         /// Checks if the date occurred yesterday
@@ -25,7 +26,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <returns>Boolean value</returns>
         public static bool IsYesterday(this DateTime dateTime)
         {
-            return dateTime.Date == DateTime.Now.AddDays(-1).Date;
+            return dateTime.Date == Clock.Now.AddDays(-1).Date;
         }
 
         /// <summary>
@@ -35,15 +36,15 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <returns>Boolean value</returns>
         public static bool IsTomorrow(this DateTime dateTime)
         {
-            return dateTime.Date == DateTime.Now.AddDays(1).Date;
+            return dateTime.Date == Clock.Now.AddDays(1).Date;
         }
 
         /// <summary>
-        /// Gets the correct day suffix for a date
+        /// Gets the correct english day suffix for a date
         /// </summary>
         /// <param name="dateTime">The datetime to get the suffix from</param>
         /// <returns>a string with the correct suffix</returns>
-        public static string GetDaySuffix(this DateTime dateTime)
+        public static string GetEnglishDaySuffix(this DateTime dateTime)
         {
             switch (dateTime.Day)
             {
