@@ -1,0 +1,84 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.DateConverterPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <ValueConverters:DateConverterPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding Locale, StringFormat='Locale: {0}'}"
+                     Command="{Binding OpenLocaleMobileSettingsCommand}" />
+    </ContentPage.ToolbarItems>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="0"
+                     Grid.Column="0"
+                     Padding="12">
+
+            <Label Text="DateTime to convert"
+                   HorizontalOptions="CenterAndExpand" />
+            <!-- Potentially new date picker implementation for dips.xamarin.ui 
+                This will give you a datepicker that you can change the displaying converted value of in the label that you click to display the picker
+            -->
+            <Grid>
+                <Label x:Name="label" Text="{Binding Date, Converter={dxui:DateConverter Format=Default}}"
+                       FontSize="20"
+                       HorizontalOptions="Center"
+                       TextColor="Black"/>
+                <dxui:DatePicker x:Name="datePicker"
+                                 Date="{Binding Date}"
+                                 HorizontalOptions="Center"
+                                 TextColor="Transparent"
+                                 WidthRequest="{Binding Source={x:Reference label}, Path=Width}"
+                                 
+                                 />
+            </Grid>
+        </StackLayout>
+
+        <StackLayout Grid.Row="1"
+                     Grid.Column="0"
+                     Spacing="0">
+
+            <BoxView HeightRequest="2"
+                     BackgroundColor="LightGray" />
+            <StackLayout Orientation="Horizontal"
+                         Padding="12">
+                <Label Text="Non-converted" />
+                <Label Text="{Binding Date}"
+                       FontAttributes="Bold"
+                       HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+            <BoxView HeightRequest="2"
+                     BackgroundColor="LightGray" />
+
+            <StackLayout Orientation="Horizontal"
+                         Padding="12">
+                <Label Text="Short (Default)" />
+                <Label Text="{Binding Date, Converter={dxui:DateConverter Format=Default}}"
+                       FontAttributes="Bold"
+                       HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+            <BoxView HeightRequest="2"
+                     BackgroundColor="LightGray" />
+
+            <StackLayout Orientation="Horizontal"
+                         Padding="12">
+                <Label Text="Text" />
+                <Label Text="{Binding Date, Converter={dxui:DateConverter Format=Text}}"
+                       FontAttributes="Bold"
+                       HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+            <BoxView HeightRequest="2"
+                     BackgroundColor="LightGray" />
+        </StackLayout>
+    </Grid>
+</ContentPage>
