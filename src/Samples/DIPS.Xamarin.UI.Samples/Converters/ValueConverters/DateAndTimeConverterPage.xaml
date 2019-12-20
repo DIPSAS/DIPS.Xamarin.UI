@@ -26,39 +26,11 @@
 
             <Label Text="Date to convert"
                    HorizontalOptions="CenterAndExpand" />
-            <!-- Potentially new date picker implementation for dips.xamarin.ui 
-                This will give you a datepicker that you can change the displaying converted value of in the label that you click to display the picker
-            -->
-            <Grid>
-                <Label x:Name="label"
-                       Text="{Binding Date, Converter={dxui:DateAndTimeConverter Format=Default}}"
-                       FontSize="20"
-                       HorizontalOptions="Center"
-                       TextColor="Black" />
-                <dxui:DatePicker x:Name="datePicker"
-                                            Date="{Binding Date}"
-                                            HorizontalOptions="Center"
-                                            TextColor="Transparent"
-                                            WidthRequest="{Binding Source={x:Reference label}, Path=Width}" />
-            </Grid>
+            <dxui:DatePicker Date="{Binding Date}" />
 
             <Label Text="Time to convert"
                    HorizontalOptions="CenterAndExpand" />
-            <Grid IsClippedToBounds="True">
-                <TimePicker x:Name="timePicker"
-                            Time="{Binding Time}"
-                            HorizontalOptions="Center"
-                            TextColor="Transparent"
-                            Margin="-40"
-                            WidthRequest="{Binding Source={x:Reference label}, Path=Width}" />
-                <Label x:Name="timeLabel"
-                       Text="{Binding Time, Converter={dxui:TimeConverter Format=Default}}"
-                       FontSize="20"
-                       HorizontalOptions="Center"
-                       TextColor="Black"
-                       InputTransparent="True"
-                       BackgroundColor="White" />
-            </Grid>
+            <dxui:TimePicker Time="{Binding Time}" />
 
             <BoxView HeightRequest="2"
                      BackgroundColor="LightGray" />

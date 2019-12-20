@@ -1,4 +1,4 @@
-﻿using DIPS.Xamarin.UI.Android.Renderers.DatePicker;
+﻿using Android.Graphics.Pdf;
 
 namespace DIPS.Xamarin.UI.Android
 {
@@ -13,7 +13,6 @@ namespace DIPS.Xamarin.UI.Android
         /// </summary>
         public static void Initialize()
         {
-            DatePickerImplementation.Initialize();
         }
     }
 }

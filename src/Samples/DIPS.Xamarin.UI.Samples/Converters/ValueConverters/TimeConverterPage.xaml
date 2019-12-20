@@ -25,29 +25,7 @@
 
             <Label Text="TimeSpan to convert"
                    HorizontalOptions="CenterAndExpand" />
-            <!-- Potentially new date picker implementation for dips.xamarin.ui 
-                This will give you a datepicker that you can change the displaying converted value of in the label that you click to display the picker
-            -->
-            <Grid>
-                <TimePicker x:Name="datePicker"
-                                 Time="{Binding Time}"
-                                 HorizontalOptions="Center"
-                                 TextColor="Transparent"
-                                 WidthRequest="{Binding Source={x:Reference label}, Path=Width}" />
-                <BoxView HeightRequest="{Binding Source={x:Reference datePicker}, Path=Height}"
-                         WidthRequest="{Binding Source={x:Reference datePicker}, Path=Width}"
-                         BackgroundColor="{Binding Source={x:Reference label}, Path=BackgroundColor}"
-                         InputTransparent="True">
-                </BoxView>
-                <Label x:Name="label"
-                       Text="{Binding Time, Converter={dxui:TimeConverter Format=Default}}"
-                       FontSize="20"
-                       HorizontalOptions="Center"
-                       TextColor="Black" 
-                       InputTransparent="True"
-                       BackgroundColor="White"
-                />
-            </Grid>
+            <dxui:TimePicker Time="{Binding Time}" HorizontalOptions="Center"/>
         </StackLayout>
         <StackLayout Grid.Row="1"
                      Grid.Column="0"

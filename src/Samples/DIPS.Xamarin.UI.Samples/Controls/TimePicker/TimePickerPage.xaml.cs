@@ -9,31 +9,29 @@ using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace DIPS.Xamarin.UI.Samples.Controls.DatePicker
+namespace DIPS.Xamarin.UI.Samples.Controls.TimePicker
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DatePickerPage : ContentPage
+    public partial class TimePickerPage : ContentPage
     {
-        public DatePickerPage()
+        public TimePickerPage()
         {
             InitializeComponent();
         }
     }
 
-    public class DatePickerPageViewModel : INotifyPropertyChanged
+    public class TimePickerPageViewModel : INotifyPropertyChanged
     {
-        private DateTime m_date;
-
-        public DateTime Date
+        public TimePickerPageViewModel()
         {
-            get => m_date;
-            set => PropertyChanged.RaiseWhenSet(ref m_date, value);
         }
-
-        public DateTime MaximumDate => DateTime.Now.AddDays(5);
-
-        public DateTime MinimumDate => DateTime.Now.AddDays(-5);
-
+        private TimeSpan m_time;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public TimeSpan Time
+        {
+            get => m_time;
+            set => PropertyChanged.RaiseWhenSet(ref m_time, value);
+        }
     }
 }
