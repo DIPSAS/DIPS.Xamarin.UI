@@ -15,6 +15,10 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
     public class IsEmptyConverter : IValueConverter, IMarkupExtension
     {
         /// <summary>
+        /// Static property to get a new instance of the converter
+        /// </summary>
+        public static IsEmptyConverter Instance => new IsEmptyConverter();
+        /// <summary>
         /// Property to set if we want to return a inverted output value from the converter.
         /// </summary>
         public bool Inverted { get; set; }

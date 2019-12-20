@@ -12,6 +12,10 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
     public class BoolToObjectConverter : IValueConverter, IMarkupExtension
     {
         /// <summary>
+        /// Static property to get a new instance of the converter
+        /// </summary>
+        public static BoolToObjectConverter Instance => new BoolToObjectConverter();
+        /// <summary>
         /// The value that will return if the boolean input is true
         /// <remarks>Will be the return value if <see cref="Inverted"/> is set to true</remarks>
         /// </summary>
