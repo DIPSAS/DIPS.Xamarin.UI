@@ -33,14 +33,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var isEmptyConverter = IsEmptyConverter.Instance;
-            if (isEmptyConverter == null) throw new Exception($"Something went wrong when initializing {nameof(IsEmptyConverter)}");
-            isEmptyConverter.Inverted = Inverted;
+            var isEmptyConverter = new IsEmptyConverter(){Inverted = Inverted};
+            if (isEmptyConverter == null) throw new Exception($"Something went wrong when constructing {nameof(IsEmptyConverter)}");
 
-            var boolToObjectConverter = BoolToObjectConverter.Instance;
-            if(boolToObjectConverter == null) throw new Exception($"Something went wrong when initializing {nameof(BoolToObjectConverter)}");
-            boolToObjectConverter.TrueObject = TrueObject;
-            boolToObjectConverter.FalseObject = FalseObject;
+            var boolToObjectConverter = new BoolToObjectConverter(){TrueObject = TrueObject, FalseObject = FalseObject};
+            if(boolToObjectConverter == null) throw new Exception($"Something went wrong when constructing {nameof(BoolToObjectConverter)}");
 
             var booleanOutput = (bool)isEmptyConverter.Convert(value, targetType, parameter, culture);
             return boolToObjectConverter.Convert(booleanOutput, targetType, parameter, culture);
