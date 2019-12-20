@@ -21,22 +21,25 @@ namespace DIPS.Xamarin.UI.Samples.Converters
             switch (parameter)
             {
                 case "BoolToObject":
-                    m_navigation.PushAsync(new BoolToObjectConverterPage());
+                    m_navigation.PushAsync(new BoolToObjectConverterPage(){Title = parameter});
                     break;
                 case "InvertedBool":
-                    m_navigation.PushAsync(new InvertedBoolConverterPage());
+                    m_navigation.PushAsync(new InvertedBoolConverterPage() { Title = parameter });
                     break;
                 case "IsEmptyConverter":
-                    m_navigation.PushAsync(new IsEmptyConverterPage());
+                    m_navigation.PushAsync(new IsEmptyConverterPage() { Title = parameter });
+                    break;
+                case "IsEmptyToObjectConverter":
+                    m_navigation.PushAsync(new IsEmptyToObjectConverterPage() { Title = parameter });
                     break;
                 case "DateConverter":
-                    m_navigation.PushAsync(new DateConverterPage());
+                    m_navigation.PushAsync(new DateConverterPage() { Title = parameter });
                     break;
                 case "TimeConverter":
-                    m_navigation.PushAsync(new TimeConverterPage());
+                    m_navigation.PushAsync(new TimeConverterPage() { Title = parameter });
                     break;
                 case "DateAndTimeConverter":
-                    m_navigation.PushAsync(new DateAndTimeConverterPage());
+                    m_navigation.PushAsync(new DateAndTimeConverterPage() { Title = parameter });
                     break;
             }
         }
