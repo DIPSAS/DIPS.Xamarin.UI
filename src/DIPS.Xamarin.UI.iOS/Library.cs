@@ -1,4 +1,5 @@
-﻿using DIPS.Xamarin.UI.iOS.Renderers.DatePicker;
+﻿using Foundation;
+using UIKit;
 
 namespace DIPS.Xamarin.UI.iOS
 {
@@ -12,7 +13,6 @@ namespace DIPS.Xamarin.UI.iOS
         /// </summary>
         public static void Initialize()
         {
-            DatePickerImplementation.Initialize();
         }
     }
 }

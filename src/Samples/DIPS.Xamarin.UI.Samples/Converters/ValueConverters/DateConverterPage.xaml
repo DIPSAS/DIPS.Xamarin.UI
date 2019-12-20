@@ -26,22 +26,7 @@
 
             <Label Text="DateTime to convert"
                    HorizontalOptions="CenterAndExpand" />
-            <!-- Potentially new date picker implementation for dips.xamarin.ui 
-                This will give you a datepicker that you can change the displaying converted value of in the label that you click to display the picker
-            -->
-            <Grid>
-                <Label x:Name="label" Text="{Binding Date, Converter={dxui:DateConverter Format=Default}}"
-                       FontSize="20"
-                       HorizontalOptions="Center"
-                       TextColor="Black"/>
-                <dxui:DatePicker x:Name="datePicker"
-                                 Date="{Binding Date}"
-                                 HorizontalOptions="Center"
-                                 TextColor="Transparent"
-                                 WidthRequest="{Binding Source={x:Reference label}, Path=Width}"
-                                 
-                                 />
-            </Grid>
+           <dxui:DatePicker Date="{Binding Date}" HorizontalOptions="Center"/>
         </StackLayout>
 
         <StackLayout Grid.Row="1"
