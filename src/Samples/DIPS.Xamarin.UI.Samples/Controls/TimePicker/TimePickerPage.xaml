@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -6,16 +7,14 @@
              xmlns:dxui="http://dips.xamarin.ui.com"
              xmlns:TimePicker="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.TimePicker;assembly=DIPS.Xamarin.UI.Samples"
              mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.UI.Samples.Controls.TimePicker.TimePickerPage"
-             >
-   <ContentPage.BindingContext>
-       <TimePicker:TimePickerPageViewModel/>
-   </ContentPage.BindingContext>
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.TimePicker.TimePickerPage">
+    <ContentPage.BindingContext>
+        <TimePicker:TimePickerPageViewModel />
+    </ContentPage.BindingContext>
     <dxui:TimePicker Time="{Binding Time}"
                      Format="Default"
                      HorizontalOptions="CenterAndExpand"
                      VerticalOptions="CenterAndExpand"
                      LabelColor="Black"
-                     LabelSize="20"
-                      />
-</ContentPage>  
+                     LabelSize="20" />
+</ContentPage>

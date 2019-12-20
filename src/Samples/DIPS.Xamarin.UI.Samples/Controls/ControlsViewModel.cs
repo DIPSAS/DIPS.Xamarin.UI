@@ -22,11 +22,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls
 
         private void NavigateTo(string parameter)
         {
-            if (parameter.Equals("DatePicker")) m_navigation.PushAsync(new DatePickerPage());
-            if (parameter.Equals("TimePicker")) m_navigation.PushAsync(new TimePickerPage());
-            if (parameter.Equals("Popup")) m_navigation.PushAsync(new PopupPage());
-            if (parameter.Equals("RadioButtonGroup")) m_navigation.PushAsync(new RadioButtonGroupPage());
-            if (parameter.Equals("TrendGraph")) m_navigation.PushAsync(new TrendGraphPage());
+            if (parameter.Equals("DatePicker")) m_navigation.PushAsync(new DatePickerPage(){Title = parameter});
+            if (parameter.Equals("TimePicker")) m_navigation.PushAsync(new TimePickerPage() { Title = parameter });
+            if (parameter.Equals("Popup")) m_navigation.PushAsync(new PopupPage() { Title = parameter });
+            if (parameter.Equals("RadioButtonGroup")) m_navigation.PushAsync(new RadioButtonGroupPage() { Title = parameter });
+            if (parameter.Equals("TrendGraph")) m_navigation.PushAsync(new TrendGraphPage() { Title = parameter });
         }
     }
 }

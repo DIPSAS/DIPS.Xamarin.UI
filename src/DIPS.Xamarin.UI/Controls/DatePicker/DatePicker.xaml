@@ -7,8 +7,7 @@
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Controls.DatePicker.DatePicker"
-             x:Name="codeBehind"
-             >
+             x:Name="codeBehind">
     <Grid IsClippedToBounds="True">
         <DatePicker x:Name="FormsDatePicker"
                     Date="{Binding Source={x:Reference codeBehind}, Path=Date}"
@@ -17,14 +16,12 @@
                     Margin="{Binding Source={x:Reference DateLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
                     TextColor="Transparent"
                     HeightRequest="{Binding Source={x:Reference DateLabel}, Path=Height}"
-                    WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}"
-        />
+                    WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}" />
         <Label x:Name="DateLabel"
                TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
                FontSize="{Binding Source={x:Reference codeBehind}, Path=LabelSize}"
                InputTransparent="True"
                HorizontalOptions="{Binding Source={x:Reference codeBehind}, Path=HorizontalOptions}"
-               VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}"
-               />
+               VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}" />
     </Grid>
 </ContentView>
