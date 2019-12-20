@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
+using DIPS.Xamarin.UI.InternalUtils;
 using DIPS.Xamarin.UI.Resources.LocalizedStrings;
 using FluentAssertions;
 using Xunit;
@@ -13,6 +14,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
     [Collection("Sequential")] //This test class is using an static shared property that is used in other tests
     public class DateConverterTests
     {
+        private readonly DateTime m_now = new DateTime(1990, 12, 12, 12, 00,00);
         private readonly DateConverter m_dateConverter = new DateConverter();
 
         [Theory]
@@ -47,6 +49,8 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         [MemberData(nameof(TestDataForShortFormat))]
         public void Convert_WithShortFormat_WithCulture_CorrectFormat(string cultureName, DateTime date, string expected)
         {
+            Clock.OverrideClock(date);
+
             m_dateConverter.Format = DateConverterFormat.Short;
 
             var actual = m_dateConverter.Convert<string>(date, new CultureInfo(cultureName));
@@ -57,20 +61,22 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         public static IEnumerable<object[]> TestDataForTextFormat =>
             new List<object[]>()
             {
-                new object[] { "en", DateTime.Now, "Today" },
-                new object[] { "en", DateTime.Now.AddDays(-1), "Yesterday" },
-                new object[] { "en", DateTime.Now.AddDays(1), "Tomorrow" },
-                new object[] { "en", new DateTime(1991, 12, 12, 09, 09, 00), "12th Dec" },
-                new object[] { "no", DateTime.Now, "I dag" },
-                new object[] { "no", DateTime.Now.AddDays(-1), "I går" },
-                new object[] { "no", DateTime.Now.AddDays(1), "I morgen" },
-                new object[] { "no", new DateTime(1991, 12, 12, 09, 09, 00), "12. des" }
+                new object[] { "en", new DateTime(1990,12,12), "Today" },
+                new object[] { "en", new DateTime(1990, 12, 12).AddDays(-1), "Yesterday" },
+                new object[] { "en", new DateTime(1990, 12, 12).AddDays(1), "Tomorrow" },
+                new object[] { "en", new DateTime(1990, 12, 10), "10th Dec" },
+                new object[] { "no", new DateTime(1990, 12, 12), "I dag" },
+                new object[] { "no", new DateTime(1990, 12, 12).AddDays(-1), "I går" },
+                new object[] { "no", new DateTime(1990, 12, 12).AddDays(1), "I morgen" },
+                new object[] { "no", new DateTime(1990, 12, 10), "10. des" }
             };
 
         [Theory]
         [MemberData(nameof(TestDataForTextFormat))]
         public void Convert_WithTextFormat_WithDate_WithCulture_CorrectFormat(string cultureName, DateTime date, string expected)
         {
+            Clock.OverrideClock(m_now);
+
             m_dateConverter.Format = DateConverterFormat.Text;
 
             InternalLocalizedStrings.Culture = new CultureInfo(cultureName);//To force localized strings

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
+using DIPS.Xamarin.UI.InternalUtils;
 using DIPS.Xamarin.UI.Tests.TestHelpers;
 using FluentAssertions;
 using Xunit;
@@ -51,6 +52,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         {
             var expected = "12:12 PM";
             var date = new DateTime(1991, 12, 12, 12, 12, 12);
+            Clock.OverrideClock(date);
             m_timeConverter.Format = TimeConverterFormat.Default;
 
             var actual = m_timeConverter.Convert<string>(date, new CultureInfo("en"));
