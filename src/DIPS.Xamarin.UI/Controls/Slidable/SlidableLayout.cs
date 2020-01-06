@@ -7,7 +7,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
     public class SlidableLayout : ContentView
     {
         private int m_lastId = -1;
-        private Label m_debug;
         private double m_startSlideLocation;
         private int m_lastIndex = int.MinValue;
         public SlidableLayout()
@@ -19,7 +18,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             var rec = new PanGestureRecognizer();
             GestureRecognizers.Add(rec);
             rec.PanUpdated += Rec_PanUpdated;
-            Content = m_debug = new Label { Text = "Not started", VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
         }
 
         private static void OnChanged(BindableObject bindable, object oldValue, object newValue)
@@ -32,7 +30,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
             var index = me.SlideProperties.Position;
             var dist = me.CalculateDist(index);
-            me.m_debug.Text = "other: " + dist + "\n" + index + "\n" + me.SlideProperties.HoldId + "\n" + me.SlideProperties.IsHeld;
             me.OnScrolledInternal();
         }
 
@@ -52,22 +49,20 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
             if (e.StatusType == GestureStatus.Started)
             {
-                //Start tracking time
+                // Start tracking time
                 m_startSlideLocation = CalculateDist(SlideProperties.Position);
             }
 
             var currentPos = m_startSlideLocation - e.TotalX;
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
-                //Slide more.
-                // On click is only for when a tap gesture is done. 
+                // Slide more.
                 currentPos = CalculateDist(Math.Round(SlideProperties.Position));
             }
 
             m_lastId = currentId;
             var index = Math.Max(Config.MinValue-0.45, Math.Min(Config.MaxValue+0.45, CalculateIndex(currentPos)));
             SlideProperties = new SlidableProperties(index, m_lastId, e.StatusType != GestureStatus.Completed && e.StatusType != GestureStatus.Canceled);
-            m_debug.Text = "me: " + currentPos + "\n" + index + "\n" + currentId + "\n" + e.StatusType;
             OnScrolledInternal();
         }
 
@@ -106,8 +101,9 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
         }
 
-        protected virtual void OnClick(int location) // Ha en enable click metode?
+        protected virtual void OnClick(int location)
         {
+            // On click is only for when a tap gesture is done and we enble tap. 
 
         }
 
@@ -128,8 +124,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(SlidableLayout),
             defaultBindingMode: BindingMode.TwoWay,
             propertyChanged: OnChanged);
-
-
 
         public SlidableProperties SlideProperties
         {

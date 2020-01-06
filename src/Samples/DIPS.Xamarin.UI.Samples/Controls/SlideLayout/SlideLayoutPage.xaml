@@ -7,16 +7,13 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="75"/>
         </Grid.RowDefinitions>
-        <dxui:SlidableContentLayout SlideProperties="{Binding SlidableProperties}"
-                                    Grid.Row="2"
-                                    BackgroundColor="LightGray"
-                                    Padding="0,10"
-                                    Config="{Binding Config}"
-                                    >
-           
-        </dxui:SlidableContentLayout>
+        
+        <Label Text="{Binding Selected}"
+               Grid.Row="0"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
 
         <dxui:SlidableLayout BackgroundColor="WhiteSmoke"
                              Grid.Row="1"
@@ -25,9 +22,14 @@
                              SlideProperties="{Binding SlidableProperties}">
         </dxui:SlidableLayout>
 
-        <Label Text="{Binding Selected}"
-               Grid.Row="0"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"/>
+
+        <dxui:SlidableContentLayout SlideProperties="{Binding SlidableProperties}"
+                                    Grid.Row="2"
+                                    BackgroundColor="LightGray"
+                                    Padding="0,10"
+                                    Config="{Binding Config}"
+                                    >
+           
+        </dxui:SlidableContentLayout>
     </Grid>
 </ContentPage>
