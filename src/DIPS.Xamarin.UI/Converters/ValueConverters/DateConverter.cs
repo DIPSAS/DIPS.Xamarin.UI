@@ -84,6 +84,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             var day = dateTime.ToString("dd", culture);
             if (culture.TwoLetterISOLanguageName.Contains("en"))
             {
+                day = day.TrimStart('0');
                 day += dateTime.GetEnglishDaySuffix();
             }
 

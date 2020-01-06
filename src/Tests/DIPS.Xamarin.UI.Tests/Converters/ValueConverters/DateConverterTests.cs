@@ -58,6 +58,18 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
             actual.Should().Be(expected);
         }
 
+        [Fact]
+        public void Converter_WithEnglishCulture_DayLessThanTen_ShouldNotIncludeFirstZero()
+        {
+            InternalLocalizedStrings.Culture = new CultureInfo("en");//To force localized strings
+            var date = new DateTime(1990, 12, 03);
+            var expected = "3rd Dec 1990";
+
+            var actual = m_dateConverter.Convert<string>(date, InternalLocalizedStrings.Culture);
+
+            actual.Should().Be(expected);
+        }
+
         public static IEnumerable<object[]> TestDataForTextFormat =>
             new List<object[]>()
             {
