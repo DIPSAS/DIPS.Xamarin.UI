@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.IsEmptyToObjectConverterPage">
+    <ContentPage.BindingContext>
+        <ValueConverters:IsEmptyToObjectConverterPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <Color x:Key="TrueBackgroundColor">Black</Color>
+        <Color x:Key="FalseBackgroundColor">Tomato</Color>
+        <Color x:Key="TrueTextColor">White</Color>
+        <Color x:Key="FalseTextColor">Black</Color>
+    </ContentPage.Resources>
+    <StackLayout>
+        <Entry Placeholder="MyText"
+               Text="{Binding MyText}" />
+        <Label Text="Non-inverted"
+               BackgroundColor="{Binding MyText, Converter={dxui:IsEmptyToObjectConverter TrueObject={StaticResource TrueBackgroundColor}, FalseObject={StaticResource FalseBackgroundColor} }}"
+               TextColor="{Binding MyText, Converter={dxui:IsEmptyToObjectConverter TrueObject={StaticResource TrueTextColor}, FalseObject={StaticResource FalseTextColor}}}"/>
+        <Label Text="Inverted"
+               BackgroundColor="{Binding MyText, Converter={dxui:IsEmptyToObjectConverter Inverted=True, TrueObject={StaticResource TrueBackgroundColor}, FalseObject={StaticResource FalseBackgroundColor} }}"
+               TextColor="{Binding MyText, Converter={dxui:IsEmptyToObjectConverter Inverted=True, TrueObject={StaticResource TrueTextColor}, FalseObject={StaticResource FalseTextColor}}}" />
+    </StackLayout>
+</ContentPage>

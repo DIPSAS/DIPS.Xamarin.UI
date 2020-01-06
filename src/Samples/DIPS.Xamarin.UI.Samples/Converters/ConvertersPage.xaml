@@ -17,6 +17,9 @@
             <Button Text="IsEmptyConverter"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="IsEmptyConverter" />
+            <Button Text="IsEmptyToObjectConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="IsEmptyToObjectConverter" />
             <Button Text="DateConverter"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="DateConverter" />
