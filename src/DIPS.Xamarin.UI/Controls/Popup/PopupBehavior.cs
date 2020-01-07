@@ -31,6 +31,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         {
             m_attachedTo = bindable;
             BindingContext = bindable.BindingContext;
+            var myBindingContext = BindingContext;
             bindable.BindingContextChanged += (s, e) => BindingContext = bindable.BindingContext;
             if (bindable is Button button)
             {
@@ -89,6 +90,17 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             set { SetValue(ContentProperty, value); }
         }
 
+        /// <summary>
+        ///  <see cref="IsOpen" />
+        /// </summary>
+        public static readonly BindableProperty IsOpenProperty =
+            BindableProperty.Create(nameof(IsOpen), typeof(bool), typeof(PopupBehavior), false, defaultBindingMode: BindingMode.TwoWay, propertyChanged: OnIsOpenChanged);
+        /// <summary>
+        /// Indicating if this popup is open. Set this from a binding to open a popup.
+        /// Please be carefull if you want to use the same property for multiple popups on the same page.
+        /// </summary>
+        public bool IsOpen
+        {
             get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
         }
