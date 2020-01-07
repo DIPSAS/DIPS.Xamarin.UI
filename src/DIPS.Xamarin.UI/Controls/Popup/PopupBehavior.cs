@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
@@ -88,6 +89,18 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             set { SetValue(ContentProperty, value); }
         }
 
+            get { return (bool)GetValue(IsOpenProperty); }
+            set { SetValue(IsOpenProperty, value); }
+        }
+
+        private static void OnIsOpenChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (!(bindable is PopupBehavior behavior)) return;
+            if (oldValue == newValue) return;
+            if (newValue as bool? == true) behavior.ShowPopup();
+            else behavior.HidePopup();
+        }
+
         private void ShowPopup()
         {
             if (m_attachedTo == null)
@@ -98,8 +111,20 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             var layout = m_attachedTo.GetParentOfType<PopupLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a PopupLayout around the element");
             var content = Content;
-            layout.ShowPopup(content, m_attachedTo, Direction);
+            layout.ShowPopup(content, m_attachedTo, Direction, this);
             content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
+        }
+
+        private void HidePopup()
+        {
+            if (m_attachedTo == null)
+            {
+                return;
+            }
+
+            var layout = m_attachedTo.GetParentOfType<PopupLayout>();
+            if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a PopupLayout around the element");
+            layout.HidePopup();
         }
     }
 

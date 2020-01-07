@@ -13,6 +13,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     public partial class PopupLayout : ContentView
     {
         private TapGestureRecognizer m_closePopupRecognizer;
+        private PopupBehavior? m_popupBehavior;
         private View? m_content;
         private Lazy<Frame> m_blockingFrame;
 
@@ -56,8 +57,10 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             }
         }
 
-        internal void ShowPopup(View popupView, View relativeView, PopupDirection popupDirection)
+        internal void ShowPopup(View popupView, View relativeView, PopupDirection popupDirection, PopupBehavior behavior)
         {
+            m_popupBehavior = behavior;
+            behavior.IsOpen = true;
             relativeLayout.Children.Add(m_blockingFrame.Value,
                 widthConstraint: Constraint.RelativeToParent(r => r.Width),
                 heightConstraint: Constraint.RelativeToParent(r => r.Height),
@@ -86,6 +89,11 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         internal void HidePopup()
         {
             relativeLayout.Children.Remove(m_blockingFrame.Value);
+            if(m_popupBehavior != null)
+            {
+                m_popupBehavior.IsOpen = false;
+            }
+
             if (m_content != null)
             {
                 relativeLayout.Children.Remove(m_content);
