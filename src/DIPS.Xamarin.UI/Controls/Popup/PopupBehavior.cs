@@ -31,7 +31,6 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         {
             m_attachedTo = bindable;
             BindingContext = bindable.BindingContext;
-            var myBindingContext = BindingContext;
             bindable.BindingContextChanged += (s, e) => BindingContext = bindable.BindingContext;
             if (bindable is Button button)
             {
