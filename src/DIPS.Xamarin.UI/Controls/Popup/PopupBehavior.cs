@@ -75,6 +75,21 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         }
 
         /// <summary>
+        /// <see cref="Animation" />
+        /// </summary>
+        public static readonly BindableProperty AnimationProperty =
+            BindableProperty.Create(nameof(Animation), typeof(PopupAnimation), typeof(PopupBehavior), PopupAnimation.None);
+
+        /// <summary>
+        /// Direction of where the popup will show, auto is default
+        /// </summary>
+        public PopupAnimation Animation
+        {
+            get { return (PopupAnimation)GetValue(AnimationProperty); }
+            set { SetValue(AnimationProperty, value); }
+        }
+
+        /// <summary>
         ///  <see cref="Content" />
         /// </summary>
         public static readonly BindableProperty ContentProperty =
@@ -122,7 +137,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             var layout = m_attachedTo.GetParentOfType<PopupLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a PopupLayout around the element");
             var content = Content;
-            layout.ShowPopup(content, m_attachedTo, Direction, this);
+            layout.ShowPopup(content, m_attachedTo, this);
             content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
         }
 
@@ -156,5 +171,24 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         /// Above the placement target
         /// </summary>
         Above
+    }
+
+    /// <summary>
+    /// Animations of the popup
+    /// </summary>
+    public enum PopupAnimation
+    {
+        /// <summary>
+        /// Instantly shows the popup
+        /// </summary>
+        None,
+        /// <summary>
+        /// Slides from the element towards the item
+        /// </summary>
+        Slide,
+        /// <summary>
+        /// Above the placement target
+        /// </summary>
+        Fade
     }
 }

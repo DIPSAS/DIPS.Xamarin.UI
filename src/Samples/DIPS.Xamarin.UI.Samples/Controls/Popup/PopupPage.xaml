@@ -35,6 +35,7 @@
                     Style="{StaticResource popupButtonStyle}">
                 <Button.Behaviors>
                     <dxui:PopupBehavior BindingContextFactory="{Binding GetViewModel}"
+                                        Animation="Slide"
                                         Direction="Above">
                         <Frame Style="{StaticResource popupContentStyle}" Margin="10">
                             <Label Margin="20"
@@ -50,6 +51,7 @@
                     Style="{StaticResource popupButtonStyle}">
                 <Button.Behaviors>
                     <dxui:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory}"
+                                        Animation="Slide"
                                         Direction="Auto">
                         <Frame Style="{StaticResource popupContentStyle}" Margin="30">
                             <StackLayout Orientation="Vertical">
@@ -94,7 +96,8 @@
                   BackgroundColor="DarkBlue"
                   Margin="20">
                 <Grid.Behaviors>
-                    <dxui:PopupBehavior Direction="Below"
+                    <dxui:PopupBehavior Direction="Above"
+                                        Animation="Slide"
                                         IsOpen="{Binding IsOpen}">
                         <Frame CornerRadius="0"
                                     Margin="5"
