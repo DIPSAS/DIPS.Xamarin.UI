@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
+using DIPS.Xamarin.UI.InternalUtils;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.DatePicker
@@ -58,7 +60,13 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             nameof(LabelSize),
             typeof(double),
             typeof(DatePicker),
-            defaultValueCreator: DefaultLabelSizeCreator);
+            propertyChanged: OnLabelSizePropertyChanged);
+
+        private static void OnLabelSizePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is DatePicker datepicker)) return;
+            datepicker.DateLabel.FontSize = (double)newvalue;
+        }
 
         /// <inheritdoc />
         public DatePicker()
@@ -66,7 +74,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             InitializeComponent();
         }
 
-        
+
         /// <summary>
         /// The date that the user picks from the date picker
         /// This is a bindable property
@@ -96,6 +104,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         /// The label size of the label that the user can click to open the date picker
         /// This is a bindable property
         /// </summary>
+        [TypeConverter(typeof(LabelFontSizeTypeConverter))]
         public double LabelSize
         {
             get => (double)GetValue(LabelSizeProperty);
@@ -128,11 +137,6 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             var formattedObject = new DateConverter() { Format = datePicker.Format }.Convert(datePicker.Date, null, null, CultureInfo.CurrentCulture);
             if (!(formattedObject is string formattedDate)) return;
             datePicker.DateLabel.Text = formattedDate;
-        }
-
-        private static object DefaultLabelSizeCreator(BindableObject bindable)
-        {
-            return Device.GetNamedSize(NamedSize.Body, typeof(Label));
         }
     }
 }

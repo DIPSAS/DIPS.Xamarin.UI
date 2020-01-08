@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
+using DIPS.Xamarin.UI.InternalUtils;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -40,7 +41,13 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             nameof(LabelSize),
             typeof(double),
             typeof(TimePicker),
-            defaultValueCreator: DefaultLabelSizeCreator);
+            propertyChanged:OnLabelSizePropertyChanged);
+
+        private static void OnLabelSizePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is TimePicker timePicker)) return;
+            timePicker.DateLabel.FontSize = (double)newvalue;
+        }
 
         /// <inheritdoc />
         public TimePicker()
@@ -67,6 +74,7 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
         /// The size of the label that the user clicks to chose a time
         /// This is a bindable property
         /// </summary>
+        [TypeConverter(typeof(LabelFontSizeTypeConverter))]
         public double LabelSize
         {
             get => (double)GetValue(LabelSizeProperty);
@@ -97,11 +105,6 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             if (!(formattedObject is string formattedDate))
                 return;
             timePicker.DateLabel.Text = formattedDate;
-        }
-
-        private static object DefaultLabelSizeCreator(BindableObject bindable)
-        {
-            return Device.GetNamedSize(NamedSize.Body, typeof(Label));
         }
     }
 }

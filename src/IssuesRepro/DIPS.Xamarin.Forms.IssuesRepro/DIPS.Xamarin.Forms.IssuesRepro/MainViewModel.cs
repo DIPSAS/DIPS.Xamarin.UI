@@ -16,6 +16,8 @@ namespace DIPS.Xamarin.Forms.IssuesRepro
         {
             if (obj.Equals("64"))
                 Application.Current.MainPage.Navigation.PushAsync(new Github64.Github64());
+            if (obj.Equals("86"))
+                Application.Current.MainPage.Navigation.PushAsync(new Github86.Github86());
         }
     }
 }
