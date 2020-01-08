@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
@@ -11,6 +12,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     /// </summary>
     [ContentProperty(nameof(MainContent))]
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    [ExcludeFromCodeCoverage]
     public partial class PopupLayout : ContentView
     {
         private TapGestureRecognizer m_closePopupRecognizer;
@@ -106,13 +108,13 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             {
                 if(diffY > 0)
                 {
-                    await popupView.LayoutTo(new Rectangle(popupView.X, popupView.Y, popupView.Width, 0), 0);
+                    popupView.Layout(new Rectangle(popupView.X, popupView.Y, popupView.Width, 0));
                     await popupView.LayoutTo(new Rectangle(popupView.X, popupView.Y, popupView.Width, height), m_animationTime);
                 }
                 else
                 {
                     var y = popupView.Y;
-                    await popupView.LayoutTo(new Rectangle(popupView.X, y+height, popupView.Width, 0), 0);
+                    popupView.Layout(new Rectangle(popupView.X, y + height, popupView.Width, 0));
                     await popupView.LayoutTo(new Rectangle(popupView.X, y, popupView.Width, height), m_animationTime);
                 }
             }

@@ -53,7 +53,8 @@
                     <dxui:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory}"
                                         Animation="Slide"
                                         Direction="Auto">
-                        <Frame Style="{StaticResource popupContentStyle}" Margin="30">
+                        <Frame Style="{StaticResource popupContentStyle}"
+                               Margin="30">
                             <StackLayout Orientation="Vertical">
                                 <Label Margin="5"
                                        Text="This is a long header to prove the automatic X placement"/>
