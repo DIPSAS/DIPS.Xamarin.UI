@@ -81,7 +81,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             BindableProperty.Create(nameof(Animation), typeof(PopupAnimation), typeof(PopupBehavior), PopupAnimation.None);
 
         /// <summary>
-        /// Direction of where the popup will show, auto is default
+        /// How the popup will animate into view. Either none, sliding or fading.
         /// </summary>
         public PopupAnimation Animation
         {
@@ -189,11 +189,11 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         /// </summary>
         None,
         /// <summary>
-        /// Slides from the element towards the item
+        /// Slides from the element and outwards
         /// </summary>
         Slide,
         /// <summary>
-        /// Above the placement target
+        /// Fading the popup in
         /// </summary>
         Fade
     }

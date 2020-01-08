@@ -63,9 +63,11 @@ namespace DIPS.Xamarin.UI.Controls.Popup
 
         internal async void ShowPopup(View popupView, View relativeView, PopupBehavior behavior)
         {
-            if (m_animation != null && !m_animation.IsCompleted && !m_animation.IsCanceled) return;
-            if (m_animation != null) await m_animation;
+            var prevAnimation = m_animation;
+            if (prevAnimation != null && !prevAnimation.IsCompleted && !prevAnimation.IsCanceled) return;
+            if (prevAnimation != null) await prevAnimation;
             m_animation = null;
+
             m_popupBehavior = behavior;
             behavior.IsOpen = true;
             relativeLayout.Children.Add(m_blockingFrame.Value,
@@ -96,7 +98,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 return;
             }
 
-            await (m_animation = Animate(popupView, popupView.Height, behavior, diffY));
+            m_animation = Animate(popupView, popupView.Height, behavior, diffY);
         }
 
         private const int m_animationTime = 100;
@@ -125,15 +127,19 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         internal void HidePopup()
         {
             relativeLayout.Children.Remove(m_blockingFrame.Value);
-            if(m_popupBehavior != null)
+            var behavior = m_popupBehavior;
+            if(behavior != null)
             {
-                m_popupBehavior.IsOpen = false;
+                behavior.IsOpen = false;
             }
 
-            if (m_content != null)
+            var content = m_content;
+            if (content != null)
             {
-                relativeLayout.Children.Remove(m_content);
+                relativeLayout.Children.Remove(content);
             }
+
+            m_popupBehavior = null;
             m_content = null;
         }
 
