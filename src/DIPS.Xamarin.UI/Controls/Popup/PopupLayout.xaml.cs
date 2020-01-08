@@ -64,8 +64,16 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         internal async void ShowPopup(View popupView, View relativeView, PopupBehavior behavior)
         {
             var prevAnimation = m_animation;
-            if (prevAnimation != null && !prevAnimation.IsCompleted && !prevAnimation.IsCanceled) return;
-            if (prevAnimation != null) await prevAnimation;
+            if (prevAnimation != null && !prevAnimation.IsCompleted && !prevAnimation.IsCanceled)
+            {
+                return;
+            }
+
+            if (prevAnimation != null)
+            {
+                await prevAnimation;
+            }
+
             m_animation = null;
 
             m_popupBehavior = behavior;
