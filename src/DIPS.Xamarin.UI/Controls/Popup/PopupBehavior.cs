@@ -62,16 +62,48 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         /// <summary>
         /// <see cref="Direction" />
         /// </summary>
+        [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
         public static readonly BindableProperty DirectionProperty =
-            BindableProperty.Create(nameof(Direction), typeof(PopupDirection), typeof(PopupBehavior), PopupDirection.Auto);
+            BindableProperty.Create(nameof(Direction), typeof(PopupDirection), typeof(PopupBehavior), PopupDirection.None);
 
         /// <summary>
-        /// Direction of where the popup will show, auto is default
+        /// Direction of where the popup will show, auto is default.
         /// </summary>
+        [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
         public PopupDirection Direction
         {
             get { return (PopupDirection)GetValue(DirectionProperty); }
             set { SetValue(DirectionProperty, value); }
+        }
+
+        /// <summary>
+        /// <see cref="HorizontalOptions" />
+        /// </summary>
+        public static readonly BindableProperty HorizontalOptionsProperty =
+            BindableProperty.Create(nameof(HorizontalOptions), typeof(HorizontalPopupOptions), typeof(PopupBehavior), HorizontalPopupOptions.LeftAlign);
+
+        /// <summary>
+        /// Horizontal direction of where the popup will show
+        /// </summary>
+        public HorizontalPopupOptions HorizontalOptions
+        {
+            get { return (HorizontalPopupOptions)GetValue(HorizontalOptionsProperty); }
+            set { SetValue(HorizontalOptionsProperty, value); }
+        }
+
+        /// <summary>
+        /// <see cref="VerticalOptions" />
+        /// </summary>
+        public static readonly BindableProperty VerticalOptionsProperty =
+            BindableProperty.Create(nameof(VerticalOptions), typeof(VerticalPopupOptions), typeof(PopupBehavior), VerticalPopupOptions.Auto);
+
+        /// <summary>
+        /// Vertical direction of where the popup will show
+        /// </summary>
+        public VerticalPopupOptions VerticalOptions
+        {
+            get { return (VerticalPopupOptions)GetValue(VerticalOptionsProperty); }
+            set { SetValue(VerticalOptionsProperty, value); }
         }
 
         /// <summary>
@@ -109,6 +141,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         /// </summary>
         public static readonly BindableProperty IsOpenProperty =
             BindableProperty.Create(nameof(IsOpen), typeof(bool), typeof(PopupBehavior), false, defaultBindingMode: BindingMode.TwoWay, propertyChanged: OnIsOpenChanged);
+
         /// <summary>
         /// Indicating if this popup is open. Set this from a binding to open a popup.
         /// Please be carefull if you want to use the same property for multiple popups on the same page.
@@ -154,39 +187,57 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 return;
             }
 
+
             var layout = m_attachedTo.GetParentOfType<PopupLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a PopupLayout around the element");
             layout.HidePopup();
         }
     }
 
+    public enum HorizontalPopupOptions
+    {
+        LeftAlign,
+        RightAlign,
+        Center,
+        Left,
+        Right
+    }
+
+    public enum VerticalPopupOptions
+    {
+        Auto,
+        Above,
+        Below,
+        Center,
+        Top,
+        Bottom
+    }
+
     /// <summary>
     /// Directions of the popup
     /// </summary>
-    [Flags]
-    public enum PopupDirection : uint
+    [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
+    public enum PopupDirection
     {
+        /// <summary>
+        /// None is the default and enables the usage of the Vertidal/Horizontal-Options.
+        /// </summary>
+        None,
+
         /// <summary>
         /// Automatically based on the location on screen
         /// </summary>
-        Auto = 0,
-        /// <summary>
-        /// Automatically placed in the vertical direction base don the location on screen
-        /// </summary>
-        AutoVertical = 1 << 0,
+        Auto,
+
         /// <summary>
         /// Below the placement target
         /// </summary>
-        Below = 1 << 1,
+        Below,
+        
         /// <summary>
         /// Above the placement target
         /// </summary>
-        Above = 1 << 2,
-        /// <summary>
-        /// Center in the horizontal direction.
-        /// If Center is the only one used, the item is placed on top of the target
-        /// </summary>
-        Center = 1 << 3,
+        Above,
     }
 
     /// <summary>
