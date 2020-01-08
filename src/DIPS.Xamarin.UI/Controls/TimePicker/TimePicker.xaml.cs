@@ -13,7 +13,6 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimePicker : ContentView
     {
-        
         /// <summary>
         /// BindableProperty for <see cref="Time"/>
         /// </summary>
