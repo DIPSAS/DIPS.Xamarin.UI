@@ -123,8 +123,14 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         {
             if (!(bindable is PopupBehavior behavior)) return;
             if (oldValue == newValue) return;
-            if (newValue as bool? == true) behavior.ShowPopup();
-            else behavior.HidePopup();
+            if (newValue as bool? == true)
+            {
+                behavior.ShowPopup();
+            }
+            else
+            {
+                behavior.HidePopup();
+            }
         }
 
         private void ShowPopup()

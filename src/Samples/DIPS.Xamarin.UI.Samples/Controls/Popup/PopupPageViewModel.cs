@@ -6,22 +6,23 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples.Controls.Popup
 {
-    public class ViewModel : INotifyPropertyChanged
+    public class PopupPageViewModel : INotifyPropertyChanged
     {
-        private bool isOpen;
+        private bool m_isOpen;
 
-        public ViewModel()
+        public PopupPageViewModel()
         {
             Ascending = true;
             SaveCommand = new Command(o => Update((PopupFilterViewModel)o));
         }
+
         private void Update(PopupFilterViewModel popupFilterViewModel)
         {
             Ascending = popupFilterViewModel.Ascending;
             PropertyChanged?.Raise(nameof(Ascending));
         }
 
-        public bool IsOpen { get => isOpen; set => this.Set(ref isOpen, value, PropertyChanged); }
+        public bool IsOpen { get => m_isOpen; set => PropertyChanged?.RaiseWhenSet(ref m_isOpen, value); }
 
         public string MyString { get; } = "Hello popupContent";
 
@@ -29,17 +30,22 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Popup
 
         public bool Ascending { get; set; }
 
-        public Func<ViewModel> GetViewModel => () => this;
+        public Func<PopupPageViewModel> GetViewModel => () => this;
 
-        public Func<PopupFilterViewModel> FilterViewModelFactory => new Func<PopupFilterViewModel>(() => new PopupFilterViewModel { Ascending = Ascending, SaveCommand = SaveCommand });
+        public Func<PopupFilterViewModel> FilterViewModelFactory => new Func<PopupFilterViewModel>(() => new PopupFilterViewModel(SaveCommand) { Ascending = Ascending });
         public event PropertyChangedEventHandler? PropertyChanged;
     }
 
     public class PopupFilterViewModel : INotifyPropertyChanged
     {
+        public PopupFilterViewModel(ICommand saveCommand)
+        {
+            SaveCommand = saveCommand;
+        }
+
         public bool Ascending { get; set; }
 
-        public ICommand? SaveCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
     }
