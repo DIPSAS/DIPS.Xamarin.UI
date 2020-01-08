@@ -15,6 +15,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     [ExcludeFromCodeCoverage]
     public partial class PopupLayout : ContentView
     {
+        private Task? m_animation;
         private TapGestureRecognizer m_closePopupRecognizer;
         private PopupBehavior? m_popupBehavior;
         private View? m_content;
@@ -60,7 +61,6 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             }
         }
 
-        private Task? m_animation;
         internal async void ShowPopup(View popupView, View relativeView, PopupBehavior behavior)
         {
             if (m_animation != null && !m_animation.IsCompleted && !m_animation.IsCanceled) return;
