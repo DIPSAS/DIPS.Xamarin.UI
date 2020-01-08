@@ -163,20 +163,30 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     /// <summary>
     /// Directions of the popup
     /// </summary>
-    public enum PopupDirection
+    [Flags]
+    public enum PopupDirection : uint
     {
         /// <summary>
-        /// Automatically based on the location at the screen
+        /// Automatically based on the location on screen
         /// </summary>
-        Auto,
+        Auto = 0,
+        /// <summary>
+        /// Automatically placed in the vertical direction base don the location on screen
+        /// </summary>
+        AutoVertical = 1 << 0,
         /// <summary>
         /// Below the placement target
         /// </summary>
-        Below,
+        Below = 1 << 1,
         /// <summary>
         /// Above the placement target
         /// </summary>
-        Above
+        Above = 1 << 2,
+        /// <summary>
+        /// Center in the horizontal direction.
+        /// If Center is the only one used, the item is placed on top of the target
+        /// </summary>
+        Center = 1 << 3,
     }
 
     /// <summary>

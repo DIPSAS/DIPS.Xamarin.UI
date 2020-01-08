@@ -60,7 +60,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 popupLayout.relativeLayout.Children.Add(newView, Constraint.RelativeToParent(parent => parent.X), Constraint.RelativeToParent(parent => parent.Y), Constraint.RelativeToParent(parent => parent.Width), Constraint.RelativeToParent(parent => parent.Height));
             }
         }
-
+        
         internal async void ShowPopup(View popupView, View relativeView, PopupBehavior behavior)
         {
             var prevAnimation = m_animation;
@@ -77,19 +77,33 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 yConstraint: Constraint.RelativeToParent(r => 0.0));
 
             var direction = behavior.Direction;
-            if (direction == PopupDirection.Auto)
+            if(direction == PopupDirection.Center)
+            {
+
+            }
+            else if (direction == PopupDirection.Auto || (direction & PopupDirection.AutoVertical) != 0)
             {
                 var height = Height;
                 var center = height / 2.0;
                 var itemPosition = relativeView.GetY(this) + relativeView.Height / 2.0;
-                if (itemPosition > center) direction = PopupDirection.Above;
-                else direction = PopupDirection.Below;
+                if (itemPosition > center)
+                {
+                    direction |= PopupDirection.Above;
+                }
+                else
+                {
+                    direction |= PopupDirection.Below;
+                }
             }
 
             relativeLayout.Children.Add(m_content = popupView,
                 yConstraint: Constraint.RelativeToParent((r) => relativeView.GetY(this) + relativeView.Height));
             var sumMarginY = popupView.Margin.Top + popupView.Margin.Bottom;
-            var diffY = direction == PopupDirection.Below ? relativeView.Height : (-popupView.Height - sumMarginY);
+            var diffY = (direction & PopupDirection.Below) != 0 ? relativeView.Height : (-popupView.Height - sumMarginY);
+            if(direction == PopupDirection.Center)
+            {
+                diffY = relativeView.Height / 2 - (popupView.Height - sumMarginY) / 2;
+            }
 
             RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(this) + diffY))));
             RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - popupView.Margin.Left - popupView.Margin.Right, relativeView.GetX(this)))));
@@ -105,7 +119,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         private async Task Animate(View popupView, double height, PopupBehavior behavior, double diffY)
         {
             popupView.Opacity = 0.0;
-            var fade = popupView.FadeTo(1.0, m_animationTime*2);
+            var fade = popupView.FadeTo(1.0, m_animationTime * 2);
             if(behavior.Animation == PopupAnimation.Slide)
             {
                 if(diffY > 0)

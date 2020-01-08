@@ -52,7 +52,7 @@
                 <Button.Behaviors>
                     <dxui:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory}"
                                         Animation="Slide"
-                                        Direction="Auto">
+                                        Direction="AutoVertical|Center">
                         <Frame Style="{StaticResource popupContentStyle}"
                                Margin="30">
                             <StackLayout Orientation="Vertical">
