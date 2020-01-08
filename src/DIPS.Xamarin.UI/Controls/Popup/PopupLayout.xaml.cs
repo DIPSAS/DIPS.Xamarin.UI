@@ -19,6 +19,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         private TapGestureRecognizer m_closePopupRecognizer;
         private PopupBehavior? m_popupBehavior;
         private View? m_content;
+        private double m_diffY;
         private Lazy<Frame> m_blockingFrame;
 
         /// <summary>
@@ -64,8 +65,16 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         internal async void ShowPopup(View popupView, View relativeView, PopupBehavior behavior)
         {
             var prevAnimation = m_animation;
-            if (prevAnimation != null && !prevAnimation.IsCompleted && !prevAnimation.IsCanceled) return;
-            if (prevAnimation != null) await prevAnimation;
+            if (prevAnimation != null && !prevAnimation.IsCompleted && !prevAnimation.IsCanceled)
+            {
+                return;
+            }
+
+            if (prevAnimation != null)
+            {
+                await prevAnimation;
+            }
+
             m_animation = null;
 
             m_popupBehavior = behavior;
@@ -99,11 +108,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             relativeLayout.Children.Add(m_content = popupView,
                 yConstraint: Constraint.RelativeToParent((r) => relativeView.GetY(this) + relativeView.Height));
             var sumMarginY = popupView.Margin.Top + popupView.Margin.Bottom;
-            var diffY = (direction & PopupDirection.Below) != 0 ? relativeView.Height : (-popupView.Height - sumMarginY);
-            if(direction == PopupDirection.Center)
-            {
-                diffY = relativeView.Height / 2 - (popupView.Height - sumMarginY) / 2;
-            }
+            var diffY = m_diffY = direction == PopupDirection.Below ? relativeView.Height : (-popupView.Height - sumMarginY);
 
             RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(this) + diffY))));
             RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - popupView.Margin.Left - popupView.Margin.Right, relativeView.GetX(this)))));
@@ -138,23 +143,47 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             await fade;
         }
 
-        internal void HidePopup()
+        private async Task AnimateBack(View popupView, double height, PopupBehavior behavior, double diffY)
         {
-            relativeLayout.Children.Remove(m_blockingFrame.Value);
+            var fade = popupView.FadeTo(0.0, m_animationTime);
+            if (behavior.Animation == PopupAnimation.Slide)
+            {
+                if (diffY > 0)
+                {
+                    await popupView.LayoutTo(new Rectangle(popupView.X, popupView.Y, popupView.Width, 0), m_animationTime);
+                }
+                else
+                {
+                    var y = popupView.Y;
+                    await popupView.LayoutTo(new Rectangle(popupView.X, y + height, popupView.Width, 0), m_animationTime);
+                }
+            }
+
+            await fade;
+        }
+
+        internal async void HidePopup()
+        {
             var behavior = m_popupBehavior;
-            if(behavior != null)
+            var content = m_content;
+            relativeLayout.Children.Remove(m_blockingFrame.Value);
+
+            if (behavior != null)
             {
                 behavior.IsOpen = false;
             }
 
-            var content = m_content;
+            if (behavior != null && content != null)
+            {
+                var t = m_animation = AnimateBack(content, content.Height, behavior, m_diffY);
+                await Task.Delay(m_animationTime);
+                await t;
+            }
+
             if (content != null)
             {
                 relativeLayout.Children.Remove(content);
             }
-
-            m_popupBehavior = null;
-            m_content = null;
         }
 
         internal void AddOnCloseRecognizer(View view)
