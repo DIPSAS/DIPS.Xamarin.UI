@@ -8,12 +8,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Popup
 {
     public partial class PopupPage : ContentPage
     {
-
         public PopupPage()
         {
             InitializeComponent();
 
-            BindingContext = new ViewModel();
+            BindingContext = new PopupPageViewModel();
         }
     }
 }
