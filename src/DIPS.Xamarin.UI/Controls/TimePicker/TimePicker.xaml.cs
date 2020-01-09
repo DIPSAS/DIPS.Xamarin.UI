@@ -114,5 +114,10 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
         {
             FormsTimePicker.Focus();
         }
+
+        /// <summary>
+        /// Boolean value to indicate if the time picker is open
+        /// </summary>
+        public bool IsOpen => FormsTimePicker.IsFocused;
     }
 }

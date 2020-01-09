@@ -146,5 +146,10 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         {
             FormsDatePicker.Focus();
         }
+
+        /// <summary>
+        /// Boolean value to indicate if the date picker is open
+        /// </summary>
+        public bool IsOpen => FormsDatePicker.IsFocused;
     }
 }
