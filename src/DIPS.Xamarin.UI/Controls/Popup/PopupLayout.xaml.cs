@@ -155,7 +155,6 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(this) + diffY))));
         }
 
-        [Obsolete]
         private void PlaceItemLegacy(View popupView, View relativeView, PopupBehavior behavior)
         {
             var sumMarginY = popupView.Margin.Top + popupView.Margin.Bottom;

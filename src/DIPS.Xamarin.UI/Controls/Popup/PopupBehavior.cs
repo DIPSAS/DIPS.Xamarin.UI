@@ -161,11 +161,11 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         /// </summary>
         Center,
         /// <summary>
-        /// Popup is placed all the way to the left of the parent.
+        /// Popup is placed to the left of the parent.
         /// </summary>
         Left,
         /// <summary>
-        /// Popup is placed all the way to the right of the parent.
+        /// Popup is placed to the right of the parent.
         /// </summary>
         Right
     }
