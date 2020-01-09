@@ -11,10 +11,10 @@
     <Grid IsClippedToBounds="True">
         <TimePicker x:Name="FormsTimePicker"
                     Time="{Binding Source={x:Reference codeBehind}, Path=Time}"
-                    Margin="{Binding Source={x:Reference DateLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
+                    Margin="{Binding Source={x:Reference TimeLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
                     TextColor="Transparent"
-                    HeightRequest="{Binding Source={x:Reference DateLabel}, Path=Height}"
-                    WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}" />
+                    HeightRequest="{Binding Source={x:Reference TimeLabel}, Path=Height}"
+                    WidthRequest="{Binding Source={x:Reference TimeLabel}, Path=Width}" />
         <Label x:Name="TimeLabel"
                Text="{Binding Source={x:Reference codeBehind}, Path=Time}"
                TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
