@@ -107,6 +107,9 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             timePicker.TimeLabel.Text = formattedDate;
         }
 
+        /// <summary>
+        /// Opens the time picker
+        /// </summary>
         public void Open()
         {
             FormsTimePicker.Focus();
