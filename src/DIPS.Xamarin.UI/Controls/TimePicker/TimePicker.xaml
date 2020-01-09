@@ -9,13 +9,13 @@
              x:Class="DIPS.Xamarin.UI.Controls.TimePicker.TimePicker"
              x:Name="codeBehind">
     <Grid IsClippedToBounds="True">
-        <TimePicker x:Name="FormsDatePicker"
+        <TimePicker x:Name="FormsTimePicker"
                     Time="{Binding Source={x:Reference codeBehind}, Path=Time}"
                     Margin="{Binding Source={x:Reference DateLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
                     TextColor="Transparent"
                     HeightRequest="{Binding Source={x:Reference DateLabel}, Path=Height}"
                     WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}" />
-        <Label x:Name="DateLabel"
+        <Label x:Name="TimeLabel"
                Text="{Binding Source={x:Reference codeBehind}, Path=Time}"
                TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
                InputTransparent="True"

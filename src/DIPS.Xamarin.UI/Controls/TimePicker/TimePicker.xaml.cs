@@ -46,7 +46,7 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
         private static void OnLabelSizePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is TimePicker timePicker)) return;
-            timePicker.DateLabel.FontSize = (double)newvalue;
+            timePicker.TimeLabel.FontSize = (double)newvalue;
         }
 
         /// <inheritdoc />
@@ -104,7 +104,12 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             var formattedObject = new TimeConverter() { Format = timePicker.Format }.Convert(timePicker.Time, null, null, CultureInfo.CurrentCulture);
             if (!(formattedObject is string formattedDate))
                 return;
-            timePicker.DateLabel.Text = formattedDate;
+            timePicker.TimeLabel.Text = formattedDate;
+        }
+
+        public void Open()
+        {
+            FormsTimePicker.Focus();
         }
     }
 }

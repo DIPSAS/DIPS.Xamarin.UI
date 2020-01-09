@@ -138,5 +138,13 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             if (!(formattedObject is string formattedDate)) return;
             datePicker.DateLabel.Text = formattedDate;
         }
+
+        /// <summary>
+        /// Opens the date picker
+        /// </summary>
+        public void Open()
+        {
+            FormsDatePicker.Focus();
+        }
     }
 }
