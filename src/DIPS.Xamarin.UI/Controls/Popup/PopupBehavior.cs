@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
@@ -15,6 +14,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     {
         private readonly Command m_onTappedCommand;
         private View? m_attachedTo;
+
         /// <summary>
         /// Creates the instance
         /// </summary>
@@ -24,7 +24,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         }
 
         /// <summary>
-        /// Handels attaching to item
+        /// Handels attaching to item.
         /// </summary>
         /// <param name="bindable"></param>
         protected override void OnAttachedTo(View bindable)
@@ -66,7 +66,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             BindableProperty.Create(nameof(Direction), typeof(PopupDirection), typeof(PopupBehavior), PopupDirection.Auto);
 
         /// <summary>
-        /// Direction of where the popup will show, auto is default
+        /// Direction of where the popup will show, auto is default.
         /// </summary>
         public PopupDirection Direction
         {
@@ -75,34 +75,14 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         }
 
         /// <summary>
-        /// <see cref="Animation" />
+        /// Determines how the popup will animate when it is showing and hiding for the user.
         /// </summary>
-        public static readonly BindableProperty AnimationProperty =
-            BindableProperty.Create(nameof(Animation), typeof(PopupAnimation), typeof(PopupBehavior), PopupAnimation.None);
-
-        /// <summary>
-        /// How the popup will animate into view. Either none, sliding or fading.
-        /// </summary>
-        public PopupAnimation Animation
-        {
-            get { return (PopupAnimation)GetValue(AnimationProperty); }
-            set { SetValue(AnimationProperty, value); }
-        }
-
-        /// <summary>
-        ///  <see cref="Content" />
-        /// </summary>
-        public static readonly BindableProperty ContentProperty =
-            BindableProperty.Create(nameof(Content), typeof(View), typeof(PopupBehavior));
+        public PopupAnimation Animation { get; set; }
 
         /// <summary>
         /// The content of the popup when it's showing.
         /// </summary>
-        public View Content
-        {
-            get { return (View)GetValue(ContentProperty); }
-            set { SetValue(ContentProperty, value); }
-        }
+        public View? Content { get; set; }
 
         /// <summary>
         ///  <see cref="IsOpen" />
@@ -135,7 +115,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
 
         private void ShowPopup()
         {
-            if (m_attachedTo == null)
+            if (m_attachedTo == null || Content == null)
             {
                 return;
             }

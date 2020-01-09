@@ -15,12 +15,14 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     [ExcludeFromCodeCoverage]
     public partial class PopupLayout : ContentView
     {
-        private Task? m_animation;
-        private TapGestureRecognizer m_closePopupRecognizer;
+        private readonly TapGestureRecognizer m_closePopupRecognizer;
+        private readonly Lazy<Frame> m_blockingFrame;
+        private const int m_animationTime = 100;
+
         private PopupBehavior? m_popupBehavior;
+        private Task? m_animation;
         private View? m_content;
         private double m_diffY;
-        private Lazy<Frame> m_blockingFrame;
 
         /// <summary>
         /// Create an instance
@@ -110,7 +112,6 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             m_animation = Animate(popupView, popupView.Height, behavior, diffY);
         }
 
-        private const int m_animationTime = 100;
         private async Task Animate(View popupView, double height, PopupBehavior behavior, double diffY)
         {
             popupView.Opacity = 0.0;
