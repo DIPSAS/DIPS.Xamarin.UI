@@ -34,7 +34,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             bindable.BindingContextChanged += (s, e) => BindingContext = bindable.BindingContext;
             if (bindable is Button button)
             {
-                button.Clicked += (s,e) => ShowPopup();
+                button.Clicked += (s, e) => ShowPopup();
             }
             else
             {
@@ -60,56 +60,25 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         }
 
         /// <summary>
-        /// <see cref="Direction" />
-        /// </summary>
-        [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
-        public static readonly BindableProperty DirectionProperty =
-            BindableProperty.Create(nameof(Direction), typeof(PopupDirection), typeof(PopupBehavior), PopupDirection.None);
-
-        /// <summary>
         /// Direction of where the popup will show, auto is default.
         /// </summary>
         [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
-        public PopupDirection Direction
-        {
-            get { return (PopupDirection)GetValue(DirectionProperty); }
-            set { SetValue(DirectionProperty, value); }
-        }
-
-        /// <summary>
-        /// <see cref="HorizontalOptions" />
-        /// </summary>
-        public static readonly BindableProperty HorizontalOptionsProperty =
-            BindableProperty.Create(nameof(HorizontalOptions), typeof(HorizontalPopupOptions), typeof(PopupBehavior), HorizontalPopupOptions.LeftAlign);
+        public PopupDirection Direction { get; set; }
 
         /// <summary>
         /// Horizontal direction of where the popup will show
         /// </summary>
-        public HorizontalPopupOptions HorizontalOptions
-        {
-            get { return (HorizontalPopupOptions)GetValue(HorizontalOptionsProperty); }
-            set { SetValue(HorizontalOptionsProperty, value); }
-        }
-
-        /// <summary>
-        /// <see cref="VerticalOptions" />
-        /// </summary>
-        public static readonly BindableProperty VerticalOptionsProperty =
-            BindableProperty.Create(nameof(VerticalOptions), typeof(VerticalPopupOptions), typeof(PopupBehavior), VerticalPopupOptions.Auto);
+        public HorizontalPopupOptions HorizontalOptions { get; set; } = HorizontalPopupOptions.LeftAlign;
 
         /// <summary>
         /// Vertical direction of where the popup will show
         /// </summary>
-        public VerticalPopupOptions VerticalOptions
-        {
-            get { return (VerticalPopupOptions)GetValue(VerticalOptionsProperty); }
-            set { SetValue(VerticalOptionsProperty, value); }
-        }
+        public VerticalPopupOptions VerticalOptions { get; set; } = VerticalPopupOptions.Auto;
 
         /// <summary>
         /// How the popup will animate into view. Either none, sliding or fading.
         /// </summary>
-        public PopupAnimation Animation { get; set; }
+        public PopupAnimation Animation { get; set; } = PopupAnimation.None;
 
         /// <summary>
         /// The content of the popup when it's showing.
@@ -120,7 +89,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         ///  <see cref="IsOpen" />
         /// </summary>
         public static readonly BindableProperty IsOpenProperty =
-            BindableProperty.Create(nameof(IsOpen), typeof(bool), typeof(PopupBehavior), false, defaultBindingMode: BindingMode.TwoWay, propertyChanged: OnIsOpenChanged);
+            BindableProperty.Create(nameof(IsOpen), typeof(bool), typeof(PopupBehavior), false, BindingMode.TwoWay, propertyChanged: OnIsOpenChanged);
 
         /// <summary>
         /// Indicating if this popup is open. Set this from a binding to open a popup.
@@ -174,23 +143,54 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         }
     }
 
+    /// <summary>
+    /// Horizontal location of the popup relative to the parent item
+    /// </summary>
     public enum HorizontalPopupOptions
     {
+        /// <summary>
+        /// Left side of the popup is aligned with the left side of the parent.
+        /// </summary>
         LeftAlign,
+        /// <summary>
+        /// Right side of the popup is aligned with the right side of the parent.
+        /// </summary>
         RightAlign,
+        /// <summary>
+        /// Popup is centered above the parent.
+        /// </summary>
         Center,
+        /// <summary>
+        /// Popup is placed all the way to the left of the parent.
+        /// </summary>
         Left,
+        /// <summary>
+        /// Popup is placed all the way to the right of the parent.
+        /// </summary>
         Right
     }
 
+    /// <summary>
+    /// Vertical orientation of the popup relative to the parent item
+    /// </summary>
     public enum VerticalPopupOptions
     {
+        /// <summary>
+        /// Automatically selects above or below based on parent placement.
+        /// </summary>
         Auto,
+        /// <summary>
+        /// Popup is placed above the parent.
+        /// </summary>
         Above,
+        /// <summary>
+        /// Popup is placed below the parent.
+        /// </summary>
         Below,
+        /// <summary>
+        /// Popup is placed on top of the parent.
+        /// </summary>
         Center,
-        Top,
-        Bottom
     }
 
     /// <summary>

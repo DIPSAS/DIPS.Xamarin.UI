@@ -36,7 +36,8 @@
                 <Button.Behaviors>
                     <dxui:PopupBehavior BindingContextFactory="{Binding GetViewModel}"
                                         Animation="Fade"
-                                        Direction="Above">
+                                        VerticalOptions="Below"
+                                        HorizontalOptions="RightAlign">
                         <Frame Style="{StaticResource popupContentStyle}" Margin="10">
                             <Label Margin="20"
                                    Text="{Binding MyString}"/>
@@ -52,9 +53,10 @@
                 <Button.Behaviors>
                     <dxui:PopupBehavior BindingContextFactory="{Binding FilterViewModelFactory}"
                                         Animation="Slide"
-                                        Direction="AutoVertical|Center">
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Left">
                         <Frame Style="{StaticResource popupContentStyle}"
-                               Margin="30">
+                               Margin="1">
                             <StackLayout Orientation="Vertical">
                                 <Label Margin="5"
                                        Text="This is a long header to prove the automatic X placement"/>
@@ -101,19 +103,19 @@
                   BackgroundColor="DarkBlue"
                   Margin="20">
                 <Grid.Behaviors>
-                    <dxui:PopupBehavior Direction="Above"
+                    <dxui:PopupBehavior HorizontalOptions="Center"
+                                        VerticalOptions="Auto"
                                         Animation="Slide"
                                         IsOpen="{Binding IsOpen}">
                         <Frame CornerRadius="0"
-                               Margin="5"
                                BackgroundColor="DarkGreen">
                             <StackLayout>
                                 <CheckBox IsChecked="{Binding IsOpen}"/>
 
-                                <Label Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
+                                <!--<Label Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
                                        LineBreakMode="WordWrap"
                                        dxui:Popup.CloseOnClick="True"
-                                       TextColor="WhiteSmoke"/>
+                                       TextColor="WhiteSmoke"/>-->
 
                                 <Label Text="{Binding MyString}"
                                        TextColor="WhiteSmoke"
