@@ -19,7 +19,6 @@
                     WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}" />
         <Label x:Name="DateLabel"
                TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
-               FontSize="{Binding Source={x:Reference codeBehind}, Path=LabelSize}"
                InputTransparent="True"
                HorizontalOptions="{Binding Source={x:Reference codeBehind}, Path=HorizontalOptions}"
                VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}" />

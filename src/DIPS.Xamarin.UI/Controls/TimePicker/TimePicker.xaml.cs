@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
+using DIPS.Xamarin.UI.InternalUtils;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -40,7 +41,13 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             nameof(LabelSize),
             typeof(double),
             typeof(TimePicker),
-            defaultValueCreator: DefaultLabelSizeCreator);
+            propertyChanged:OnLabelSizePropertyChanged);
+
+        private static void OnLabelSizePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is TimePicker timePicker)) return;
+            timePicker.TimeLabel.FontSize = (double)newvalue;
+        }
 
         /// <inheritdoc />
         public TimePicker()
@@ -67,6 +74,8 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
         /// The size of the label that the user clicks to chose a time
         /// This is a bindable property
         /// </summary>
+        /// <remarks>This support named font sizes <see href="https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/text/fonts#named-font-sizes"/></remarks>
+        [TypeConverter(typeof(LabelFontSizeTypeConverter))]
         public double LabelSize
         {
             get => (double)GetValue(LabelSizeProperty);
@@ -89,6 +98,11 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             return new TimeSpan(now.Hour, now.Minute, now.Second);
         }
 
+        /// <summary>
+        /// Opens the time picker
+        /// </summary>
+        public void Open() => FormsTimePicker.Focus();
+
         private static void TimePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is TimePicker timePicker))
@@ -96,12 +110,7 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             var formattedObject = new TimeConverter() { Format = timePicker.Format }.Convert(timePicker.Time, null, null, CultureInfo.CurrentCulture);
             if (!(formattedObject is string formattedDate))
                 return;
-            timePicker.DateLabel.Text = formattedDate;
-        }
-
-        private static object DefaultLabelSizeCreator(BindableObject bindable)
-        {
-            return Device.GetNamedSize(NamedSize.Body, typeof(Label));
+            timePicker.TimeLabel.Text = formattedDate;
         }
     }
 }
