@@ -238,23 +238,4 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         /// </summary>
         Fade
     }
-
-    /// <summary>
-    /// Animations of the popup
-    /// </summary>
-    public enum PopupAnimation
-    {
-        /// <summary>
-        /// Instantly shows the popup
-        /// </summary>
-        None,
-        /// <summary>
-        /// Slides from the element and outwards
-        /// </summary>
-        Slide,
-        /// <summary>
-        /// Fading the popup in
-        /// </summary>
-        Fade
-    }
 }
