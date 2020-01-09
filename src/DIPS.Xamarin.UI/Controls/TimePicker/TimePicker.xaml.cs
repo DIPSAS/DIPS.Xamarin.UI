@@ -74,6 +74,7 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
         /// The size of the label that the user clicks to chose a time
         /// This is a bindable property
         /// </summary>
+        /// <remarks>This support named font sizes <see href="https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/text/fonts#named-font-sizes"/></remarks>
         [TypeConverter(typeof(LabelFontSizeTypeConverter))]
         public double LabelSize
         {
@@ -97,16 +98,6 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
             return new TimeSpan(now.Hour, now.Minute, now.Second);
         }
 
-        private static void TimePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (!(bindable is TimePicker timePicker))
-                return;
-            var formattedObject = new TimeConverter() { Format = timePicker.Format }.Convert(timePicker.Time, null, null, CultureInfo.CurrentCulture);
-            if (!(formattedObject is string formattedDate))
-                return;
-            timePicker.TimeLabel.Text = formattedDate;
-        }
-
         /// <summary>
         /// Opens the time picker
         /// </summary>
@@ -119,5 +110,15 @@ namespace DIPS.Xamarin.UI.Controls.TimePicker
         /// Boolean value to indicate if the time picker is open
         /// </summary>
         public bool IsOpen => FormsTimePicker.IsFocused;
+
+        private static void TimePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is TimePicker timePicker))
+                return;
+            var formattedObject = new TimeConverter() { Format = timePicker.Format }.Convert(timePicker.Time, null, null, CultureInfo.CurrentCulture);
+            if (!(formattedObject is string formattedDate))
+                return;
+            timePicker.TimeLabel.Text = formattedDate;
+        }
     }
 }

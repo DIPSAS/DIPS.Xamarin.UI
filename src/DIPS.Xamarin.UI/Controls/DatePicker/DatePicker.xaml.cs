@@ -74,7 +74,6 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             InitializeComponent();
         }
 
-
         /// <summary>
         /// The date that the user picks from the date picker
         /// This is a bindable property
@@ -104,6 +103,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         /// The label size of the label that the user can click to open the date picker
         /// This is a bindable property
         /// </summary>
+        /// <remarks>This support named font sizes <see href="https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/text/fonts#named-font-sizes"/></remarks>
         [TypeConverter(typeof(LabelFontSizeTypeConverter))]
         public double LabelSize
         {
@@ -131,14 +131,6 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             set => SetValue(MinimumDateProperty, value);
         }
 
-        private static void OnDateChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (!(bindable is DatePicker datePicker)) return;
-            var formattedObject = new DateConverter() { Format = datePicker.Format }.Convert(datePicker.Date, null, null, CultureInfo.CurrentCulture);
-            if (!(formattedObject is string formattedDate)) return;
-            datePicker.DateLabel.Text = formattedDate;
-        }
-
         /// <summary>
         /// Opens the date picker
         /// </summary>
@@ -151,5 +143,13 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         /// Boolean value to indicate if the date picker is open
         /// </summary>
         public bool IsOpen => FormsDatePicker.IsFocused;
+
+        private static void OnDateChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is DatePicker datePicker)) return;
+            var formattedObject = new DateConverter() { Format = datePicker.Format }.Convert(datePicker.Date, null, null, CultureInfo.CurrentCulture);
+            if (!(formattedObject is string formattedDate)) return;
+            datePicker.DateLabel.Text = formattedDate;
+        }
     }
 }
