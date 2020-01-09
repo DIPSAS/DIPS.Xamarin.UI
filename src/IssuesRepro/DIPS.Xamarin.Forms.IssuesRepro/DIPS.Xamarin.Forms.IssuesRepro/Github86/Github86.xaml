@@ -1,0 +1,76 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github86.Github86"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:IssuesRepro="clr-namespace:DIPS.Xamarin.Forms.IssuesRepro;assembly=DIPS.Xamarin.Forms.IssuesRepro">
+
+    <StackLayout HorizontalOptions="Center"
+                 VerticalOptions="Center">
+        <StackLayout.Resources>
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+            </Style>
+            <Style TargetType="dxui:DatePicker">
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+            </Style>
+            <Style TargetType="dxui:TimePicker">
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+            </Style>
+        </StackLayout.Resources>
+        <Label Text="StandardLabel" FontSize="Title" />
+        <Label x:Name="standardLabel"
+               Text="1st Jan 1900"
+               FontSize="Default"
+        />
+        <Label FontSize="Default">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="StandardLabel.LabelSize: " />
+                    <Span Text="{Binding Source={x:Reference standardLabel}, Path=FontSize}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label Text="DatePicker"
+               FontSize="Title" />
+        <dxui:DatePicker x:Name="datePicker"
+                         LabelSize="Default"/>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="DatePicker.LabelSize: " />
+                    <Span Text="{Binding Source={x:Reference datePicker}, Path=LabelSize}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label Text="TimePicker"
+               FontSize="Title"
+               Margin="0,20,0,0" />
+        <dxui:TimePicker x:Name="timePicker"
+                         LabelSize="Default"
+                         Time="0" />
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="TimePicker.LabelSize: " />
+                    <Span Text="{Binding Source={x:Reference timePicker}, Path=LabelSize}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </StackLayout>
+</ContentPage>
