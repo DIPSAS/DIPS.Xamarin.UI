@@ -30,7 +30,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is bool inputValue)) throw new ArgumentException($"Input value has to be of type {nameof(Boolean)}");
-            if(TrueObject == null) throw new ArgumentException($"{nameof(TrueObject)} can not be null");
+            if (TrueObject == null) throw new ArgumentException($"{nameof(TrueObject)} can not be null");
             if(FalseObject == null) throw new ArgumentException($"{nameof(FalseObject)} can not be null");
             if (TrueObject.GetType() != FalseObject.GetType())
                 throw new ArgumentException($"{nameof(TrueObject)} has to be the same type as {FalseObject}");

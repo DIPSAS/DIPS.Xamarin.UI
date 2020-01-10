@@ -13,13 +13,13 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         [InlineData(1f, 2f, 2)]
         [InlineData(1, 2, 2)]
         [InlineData(1.0, 2.0, 2.0)]
-        [InlineData((ulong)1.0, (ulong)2, 2)]
-        [InlineData((uint)1, (uint)2, 2)]
-        [InlineData((long)1.0, (long)2.0, 2)]
-        [InlineData((ushort)1.0, (ushort)2.0, 2)]
-        [InlineData((short)1.0, (short)2.0, 2)]
-        [InlineData((byte)1.0, (byte)2.0, 2)]
-        public void Convert_WithValueAndFactor_CorrectMultiplication(object value, object factor, double expected)
+        [InlineData((ulong)1.0, 2, 2)]
+        [InlineData((uint)1, 2, 2)]
+        [InlineData((long)1.0, 2.0, 2)]
+        [InlineData((ushort)1.0, 2.0, 2)]
+        [InlineData((short)1.0, 2.0, 2)]
+        [InlineData((byte)1.0, 2.0, 2)]
+        public void Convert_WithValueAndFactor_CorrectMultiplication(object value, double factor, double expected)
         {
             m_multiplicationConverter.Factor = factor;
             var actual = m_multiplicationConverter.Convert(value, null, null, null);
@@ -31,7 +31,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         public void Convert_Decimal_CorrectMultiplication()
         {
             var expected = 2;
-            m_multiplicationConverter.Factor = 2.0M;
+            m_multiplicationConverter.Factor = 2.0;
             var actual = m_multiplicationConverter.Convert(1.0M, null, null, null);
             actual.Should().Be(expected);
         }
