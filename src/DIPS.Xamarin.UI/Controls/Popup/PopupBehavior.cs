@@ -34,7 +34,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             bindable.BindingContextChanged += (s, e) => BindingContext = bindable.BindingContext;
             if (bindable is Button button)
             {
-                button.Clicked += (s,e) => ShowPopup();
+                button.Clicked += (s, e) => ShowPopup();
             }
             else
             {
@@ -60,24 +60,25 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         }
 
         /// <summary>
-        /// <see cref="Direction" />
-        /// </summary>
-        public static readonly BindableProperty DirectionProperty =
-            BindableProperty.Create(nameof(Direction), typeof(PopupDirection), typeof(PopupBehavior), PopupDirection.Auto);
-
-        /// <summary>
         /// Direction of where the popup will show, auto is default.
         /// </summary>
-        public PopupDirection Direction
-        {
-            get { return (PopupDirection)GetValue(DirectionProperty); }
-            set { SetValue(DirectionProperty, value); }
-        }
+        [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
+        public PopupDirection Direction { get; set; }
 
         /// <summary>
-        /// Determines how the popup will animate when it is showing and hiding for the user.
+        /// Horizontal direction of where the popup will show
         /// </summary>
-        public PopupAnimation Animation { get; set; }
+        public HorizontalPopupOptions HorizontalOptions { get; set; } = HorizontalPopupOptions.LeftAlign;
+
+        /// <summary>
+        /// Vertical direction of where the popup will show
+        /// </summary>
+        public VerticalPopupOptions VerticalOptions { get; set; } = VerticalPopupOptions.Auto;
+
+        /// <summary>
+        /// How the popup will animate into view. Either none, sliding or fading.
+        /// </summary>
+        public PopupAnimation Animation { get; set; } = PopupAnimation.None;
 
         /// <summary>
         /// The content of the popup when it's showing.
@@ -88,7 +89,8 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         ///  <see cref="IsOpen" />
         /// </summary>
         public static readonly BindableProperty IsOpenProperty =
-            BindableProperty.Create(nameof(IsOpen), typeof(bool), typeof(PopupBehavior), false, defaultBindingMode: BindingMode.TwoWay, propertyChanged: OnIsOpenChanged);
+            BindableProperty.Create(nameof(IsOpen), typeof(bool), typeof(PopupBehavior), false, BindingMode.TwoWay, propertyChanged: OnIsOpenChanged);
+
         /// <summary>
         /// Indicating if this popup is open. Set this from a binding to open a popup.
         /// Please be carefull if you want to use the same property for multiple popups on the same page.
@@ -134,6 +136,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 return;
             }
 
+
             var layout = m_attachedTo.GetParentOfType<PopupLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a PopupLayout around the element");
             layout.HidePopup();
@@ -141,22 +144,81 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     }
 
     /// <summary>
+    /// Horizontal location of the popup relative to the attached element.
+    /// </summary>
+    public enum HorizontalPopupOptions
+    {
+        /// <summary>
+        /// Left side of the popup is aligned with the left side of the attached element.
+        /// </summary>
+        LeftAlign,
+        /// <summary>
+        /// Right side of the popup is aligned with the right side of the attached element.
+        /// </summary>
+        RightAlign,
+        /// <summary>
+        /// Popup is centered above the attached element.
+        /// </summary>
+        Center,
+        /// <summary>
+        /// Popup is placed to the left of the attached element.
+        /// </summary>
+        Left,
+        /// <summary>
+        /// Popup is placed to the right of the attached element.
+        /// </summary>
+        Right
+    }
+
+    /// <summary>
+    /// Vertical orientation of the popup relative to the attached element.
+    /// </summary>
+    public enum VerticalPopupOptions
+    {
+        /// <summary>
+        /// Automatically selects above or below based on the attached element.
+        /// </summary>
+        Auto,
+        /// <summary>
+        /// Popup is placed above the attached element.
+        /// </summary>
+        Above,
+        /// <summary>
+        /// Popup is placed below the attached element.
+        /// </summary>
+        Below,
+        /// <summary>
+        /// Popup is placed on top of the attached element.
+        /// </summary>
+        Center,
+    }
+
+    /// <summary>
     /// Directions of the popup
     /// </summary>
+    [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
     public enum PopupDirection
     {
         /// <summary>
-        /// Automatically based on the location at the screen
+        /// As PopupDirection is obsolete, setting Direction to None makes the layout placement
+        /// use HorizontalOptions/VerticalOptions.
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// Automatically based on the location on screen
         /// </summary>
         Auto,
+
         /// <summary>
         /// Below the placement target
         /// </summary>
         Below,
+        
         /// <summary>
         /// Above the placement target
         /// </summary>
-        Above
+        Above,
     }
 
     /// <summary>
