@@ -6,8 +6,5 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButtonGroup">
-    <ScrollView VerticalOptions="Start"
-                HorizontalOptions="FillAndExpand">
-        <StackLayout x:Name="container" Orientation="Vertical"/>
-    </ScrollView>
+    <StackLayout x:Name="container" Orientation="Vertical"/>
 </ContentView>
