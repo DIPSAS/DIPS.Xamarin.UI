@@ -144,51 +144,51 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     }
 
     /// <summary>
-    /// Horizontal location of the popup relative to the parent item
+    /// Horizontal location of the popup relative to the attached element.
     /// </summary>
     public enum HorizontalPopupOptions
     {
         /// <summary>
-        /// Left side of the popup is aligned with the left side of the parent.
+        /// Left side of the popup is aligned with the left side of the attached element.
         /// </summary>
         LeftAlign,
         /// <summary>
-        /// Right side of the popup is aligned with the right side of the parent.
+        /// Right side of the popup is aligned with the right side of the attached element.
         /// </summary>
         RightAlign,
         /// <summary>
-        /// Popup is centered above the parent.
+        /// Popup is centered above the attached element.
         /// </summary>
         Center,
         /// <summary>
-        /// Popup is placed to the left of the parent.
+        /// Popup is placed to the left of the attached element.
         /// </summary>
         Left,
         /// <summary>
-        /// Popup is placed to the right of the parent.
+        /// Popup is placed to the right of the attached element.
         /// </summary>
         Right
     }
 
     /// <summary>
-    /// Vertical orientation of the popup relative to the parent item
+    /// Vertical orientation of the popup relative to the attached element.
     /// </summary>
     public enum VerticalPopupOptions
     {
         /// <summary>
-        /// Automatically selects above or below based on parent placement.
+        /// Automatically selects above or below based on the attached element.
         /// </summary>
         Auto,
         /// <summary>
-        /// Popup is placed above the parent.
+        /// Popup is placed above the attached element.
         /// </summary>
         Above,
         /// <summary>
-        /// Popup is placed below the parent.
+        /// Popup is placed below the attached element.
         /// </summary>
         Below,
         /// <summary>
-        /// Popup is placed on top of the parent.
+        /// Popup is placed on top of the attached element.
         /// </summary>
         Center,
     }
@@ -200,7 +200,8 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     public enum PopupDirection
     {
         /// <summary>
-        /// None is the default and enables the usage of the Vertidal/Horizontal-Options.
+        /// As PopupDirection is obsolete, setting Direction to None makes the layout placement
+        /// use HorizontalOptions/VerticalOptions.
         /// </summary>
         None,
 
