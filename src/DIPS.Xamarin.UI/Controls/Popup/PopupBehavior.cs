@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Popup
 {
     /// <summary>
-    ///     Behavior to be added to an item you want to open a popup from. This item _has_ to be inside of a ModalityLayout
+    ///     Behavior to use on a view element that needs to show a popup close to it. The view element has to be inside of a <see cref="ModalityLayout"/>
     /// </summary>
     [ContentProperty(nameof(Content))]
     [ExcludeFromCodeCoverage]
@@ -19,7 +19,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         private Task? m_animation;
         private View? m_attachedTo;
         private bool m_slideUp;
-        private const int m_animationTime = 100;
+        private const int AnimationTime = 100;
 
         /// <summary>
         ///     <see cref="BindingContextFactory" />
@@ -266,7 +266,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         private async Task Animate(View popupView)
         {
             popupView.Opacity = 0.0;
-            var fade = popupView.FadeTo(1.0, m_animationTime * 2);
+            var fade = popupView.FadeTo(1.0, AnimationTime * 2);
             if (Animation == PopupAnimation.Slide)
             {
                 if (Content == null) return;
@@ -275,12 +275,12 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 {
                     var y = popupView.Y;
                     popupView.Layout(new Rectangle(popupView.X, y + height, popupView.Width, 0));
-                    await popupView.LayoutTo(new Rectangle(popupView.X, y, popupView.Width, height), m_animationTime);
+                    await popupView.LayoutTo(new Rectangle(popupView.X, y, popupView.Width, height), AnimationTime);
                 }
                 else
                 {
                     popupView.Layout(new Rectangle(popupView.X, popupView.Y, popupView.Width, 0));
-                    await popupView.LayoutTo(new Rectangle(popupView.X, popupView.Y, popupView.Width, height), m_animationTime);
+                    await popupView.LayoutTo(new Rectangle(popupView.X, popupView.Y, popupView.Width, height), AnimationTime);
                 }
             }
 
@@ -291,17 +291,17 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         {
             if (Content == null) return;
 
-            var fade = popupView.FadeTo(0.0, m_animationTime);
+            var fade = popupView.FadeTo(0.0, AnimationTime);
             if (Animation == PopupAnimation.Slide)
             {
                 if (m_slideUp)
                 {
                     var y = popupView.Y;
-                    await popupView.LayoutTo(new Rectangle(popupView.X, y + Content.Height, popupView.Width, 0), m_animationTime);
+                    await popupView.LayoutTo(new Rectangle(popupView.X, y + Content.Height, popupView.Width, 0), AnimationTime);
                 }
                 else
                 {
-                    await popupView.LayoutTo(new Rectangle(popupView.X, popupView.Y, popupView.Width, 0), m_animationTime);
+                    await popupView.LayoutTo(new Rectangle(popupView.X, popupView.Y, popupView.Width, 0), AnimationTime);
                 }
             }
 
@@ -320,7 +320,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             if (Content == null) return;
 
             var t = m_animation = AnimateBack(Content);
-            await Task.Delay(m_animationTime);
+            await Task.Delay(AnimationTime);
             await t;
             layout.Hide(Content);
         }
