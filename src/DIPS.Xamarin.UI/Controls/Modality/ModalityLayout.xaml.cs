@@ -115,6 +115,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         public void Hide(View content)
         {
             relativeLayout.Children.Remove(content);
+            HideOverlay();
         }
 
         public void HideOverlay()

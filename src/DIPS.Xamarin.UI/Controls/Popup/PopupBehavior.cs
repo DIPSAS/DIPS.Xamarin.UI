@@ -298,8 +298,6 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             var layout = m_attachedTo.GetParentOfType<ModalityLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a ModalityLayout around the element");
 
-            layout.HideOverlay();
-
             IsOpen = false;
 
             if (Content != null)
