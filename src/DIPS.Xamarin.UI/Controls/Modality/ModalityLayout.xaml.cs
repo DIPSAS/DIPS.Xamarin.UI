@@ -9,14 +9,14 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Controls.Modality
 {
     /// <summary>
-    /// Layout used to add content showing popups
+    /// Layout used to add content showing modality components
     /// </summary>
     [ContentProperty(nameof(MainContent))]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [ExcludeFromCodeCoverage]
     public partial class ModalityLayout : ContentView
     {
-        private readonly TapGestureRecognizer m_closePopupRecognizer;
+        private readonly TapGestureRecognizer m_closeModalityRecognizer;
         private readonly Lazy<Frame> m_overLay;
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         public ModalityLayout()
         {
             InitializeComponent();
-            m_closePopupRecognizer = new TapGestureRecognizer { Command = new Command(HideCurrentShowingModality) };
+            m_closeModalityRecognizer = new TapGestureRecognizer { Command = new Command(HideCurrentShowingModality) };
             m_overLay = new Lazy<Frame>(CreateOverlay);
         }
 
@@ -35,7 +35,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         public static readonly BindableProperty MainContentProperty =
             BindableProperty.Create(nameof(MainContent), typeof(View), typeof(ModalityLayout), propertyChanged: OnMainContentPropertyChanged);
 
-        private IModality? m_currentShowingModality;
+        private IModalityHandler? m_currentShowingModalityHandler;
 
         /// <summary>
         /// Main Content of the layout. This is routed from the Content property, so you don't have to use it.
@@ -48,16 +48,16 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         private static void OnMainContentPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (!(bindable is ModalityLayout popupLayout)) return;
+            if (!(bindable is ModalityLayout modalityLayout)) return;
             if (!(newvalue is View newView)) return;
-            if (newvalue == popupLayout.relativeLayout)
+            if (newvalue == modalityLayout.relativeLayout)
             {
-                popupLayout.Content = popupLayout.relativeLayout;
+                modalityLayout.Content = modalityLayout.relativeLayout;
             }
             else
             {
-                popupLayout.relativeLayout.Children.Clear();
-                popupLayout.relativeLayout.Children.Add(newView, Constraint.RelativeToParent(parent => parent.X), Constraint.RelativeToParent(parent => parent.Y), Constraint.RelativeToParent(parent => parent.Width), Constraint.RelativeToParent(parent => parent.Height));
+                modalityLayout.relativeLayout.Children.Clear();
+                modalityLayout.relativeLayout.Children.Add(newView, Constraint.RelativeToParent(parent => parent.X), Constraint.RelativeToParent(parent => parent.Y), Constraint.RelativeToParent(parent => parent.Width), Constraint.RelativeToParent(parent => parent.Height));
             }
         }
 
@@ -70,8 +70,8 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             }
             else
             {
-                view.GestureRecognizers.Remove(m_closePopupRecognizer);
-                view.GestureRecognizers.Add(m_closePopupRecognizer);
+                view.GestureRecognizers.Remove(m_closeModalityRecognizer);
+                view.GestureRecognizers.Add(m_closeModalityRecognizer);
             }
         }
 
@@ -82,7 +82,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         private void HideCurrentShowingModality()
         {
-            m_currentShowingModality?.Hide();
+            m_currentShowingModalityHandler?.Hide();
         }
 
         private Frame CreateOverlay()
@@ -94,31 +94,48 @@ namespace DIPS.Xamarin.UI.Controls.Modality
                 Opacity = 0.5
             };
 
-            background.GestureRecognizers.Add(m_closePopupRecognizer);
+            background.GestureRecognizers.Add(m_closeModalityRecognizer);
             return background;
         }
 
-        public void Show(IModality modality, View content, View relativeView)
+        /// <summary>
+        /// Shows a view relative to a another view inside of a modality layout
+        /// </summary>
+        /// <param name="modalityHandler">The handler of a modality</param>
+        /// <param name="view">The view to show</param>
+        /// <param name="relativeView">The view to place the modality view relative to</param>
+        public void Show(IModalityHandler modalityHandler, View view, View relativeView)
         {
-            relativeLayout.Children.Add(m_overLay.Value,
+            m_currentShowingModalityHandler = modalityHandler;
+
+            ShowOverlay();
+
+            relativeLayout.Children.Add(view,
+                yConstraint: Constraint.RelativeToParent((r) => relativeView.GetY(this) + relativeView.Height));
+        }
+
+        private void ShowOverlay()
+        {
+            relativeLayout.Children.Add(
+                m_overLay.Value,
                 widthConstraint: Constraint.RelativeToParent(r => r.Width),
                 heightConstraint: Constraint.RelativeToParent(r => r.Height),
                 xConstraint: Constraint.RelativeToParent(r => 0.0),
                 yConstraint: Constraint.RelativeToParent(r => 0.0));
-
-            m_currentShowingModality = modality;
-
-            relativeLayout.Children.Add(content,
-                yConstraint: Constraint.RelativeToParent((r) => relativeView.GetY(this) + relativeView.Height));
         }
 
-        public void Hide(View content)
+        /// <summary>
+        /// Hides a view from the modality layout
+        /// </summary>
+        /// <remarks>Also hides the overlay</remarks>
+        /// <param name="view"></param>
+        public void Hide(View view)
         {
-            relativeLayout.Children.Remove(content);
+            relativeLayout.Children.Remove(view);
             HideOverlay();
         }
 
-        public void HideOverlay()
+        private void HideOverlay()
         {
             relativeLayout.Children.Remove(m_overLay.Value);
         }

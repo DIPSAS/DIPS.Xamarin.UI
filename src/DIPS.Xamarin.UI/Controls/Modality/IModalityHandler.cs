@@ -7,7 +7,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
     /// <summary>
     /// An interface to communicate between the modality layout and a modality component
     /// </summary>
-    public interface IModality
+    public interface IModalityHandler
     {
         /// <summary>
         /// Hides the modality component

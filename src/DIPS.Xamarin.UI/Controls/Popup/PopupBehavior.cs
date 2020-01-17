@@ -8,17 +8,40 @@ using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Popup
 {
     /// <summary>
-    /// Behavior to be added to an item you want to open a popup from. This item _has_ to be inside a PopupLayout somehow. Else, nothing would happend.
+    ///     Behavior to be added to an item you want to open a popup from. This item _has_ to be inside of a ModalityLayout
     /// </summary>
     [ContentProperty(nameof(Content))]
     [ExcludeFromCodeCoverage]
-    public class PopupBehavior : Behavior<View>, IModality
+    public class PopupBehavior : Behavior<View>, IModalityHandler
     {
         private readonly Command m_onTappedCommand;
+
+        private Task? m_animation;
         private View? m_attachedTo;
+        private bool m_slideUp;
+        private const int m_animationTime = 100;
 
         /// <summary>
-        /// Creates the instance
+        ///     <see cref="BindingContextFactory" />
+        /// </summary>
+        public static readonly BindableProperty BindingContextFactoryProperty = BindableProperty.Create(
+            nameof(BindingContextFactory),
+            typeof(Func<object>),
+            typeof(PopupBehavior));
+
+        /// <summary>
+        ///     <see cref="IsOpen" />
+        /// </summary>
+        public static readonly BindableProperty IsOpenProperty = BindableProperty.Create(
+            nameof(IsOpen),
+            typeof(bool),
+            typeof(PopupBehavior),
+            false,
+            BindingMode.TwoWay,
+            propertyChanged: OnIsOpenChanged);
+
+        /// <summary>
+        ///     Creates the instance
         /// </summary>
         public PopupBehavior()
         {
@@ -26,7 +49,61 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         }
 
         /// <summary>
-        /// Handels attaching to item.
+        ///     How the popup will animate into view. Either none, sliding or fading.
+        /// </summary>
+        public PopupAnimation Animation { get; set; } = PopupAnimation.None;
+
+        /// <summary>
+        ///     Used to set the binding context of the popup content. If this is null, the binding context is innherited from the
+        ///     attached element.
+        /// </summary>
+        public Func<object> BindingContextFactory
+        {
+            get => (Func<object>)GetValue(BindingContextFactoryProperty);
+            set => SetValue(BindingContextFactoryProperty, value);
+        }
+
+        /// <summary>
+        ///     The content of the popup when it's showing.
+        /// </summary>
+        public View? Content { get; set; }
+
+        /// <summary>
+        ///     Direction of where the popup will show, auto is default.
+        /// </summary>
+        [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
+        public PopupDirection Direction { get; set; }
+
+        /// <summary>
+        ///     Horizontal direction of where the popup will show
+        /// </summary>
+        public HorizontalPopupOptions HorizontalOptions { get; set; } = HorizontalPopupOptions.LeftAlign;
+
+        /// <summary>
+        ///     Indicating if this popup is open. Set this from a binding to open a popup.
+        ///     Please be carefull if you want to use the same property for multiple popups on the same page.
+        /// </summary>
+        public bool IsOpen
+        {
+            get => (bool)GetValue(IsOpenProperty);
+            set => SetValue(IsOpenProperty, value);
+        }
+
+        /// <summary>
+        ///     Vertical direction of where the popup will show
+        /// </summary>
+        public VerticalPopupOptions VerticalOptions { get; set; } = VerticalPopupOptions.Auto;
+
+        /// <summary>
+        ///     Hides the popup
+        /// </summary>
+        public void Hide()
+        {
+            HidePopup();
+        }
+
+        /// <summary>
+        ///     Handels attaching to item.
         /// </summary>
         /// <param name="bindable"></param>
         protected override void OnAttachedTo(View bindable)
@@ -35,76 +112,11 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             BindingContext = bindable.BindingContext;
             bindable.BindingContextChanged += (s, e) => BindingContext = bindable.BindingContext;
             if (bindable is Button button)
-            {
                 button.Clicked += (s, e) => ShowPopup();
-            }
             else
-            {
                 bindable.GestureRecognizers.Add(new TapGestureRecognizer { Command = m_onTappedCommand });
-            }
 
             base.OnAttachedTo(bindable);
-        }
-
-        /// <summary>
-        /// <see cref="BindingContextFactory" />
-        /// </summary>
-        public static readonly BindableProperty BindingContextFactoryProperty =
-            BindableProperty.Create(nameof(BindingContextFactory), typeof(Func<object>), typeof(PopupBehavior), null);
-
-        /// <summary>
-        /// Used to set the binding context of the popup content. If this is null, the binding context is innherited from the attached element.
-        /// </summary>
-        public Func<object> BindingContextFactory
-        {
-            get { return (Func<object>)GetValue(BindingContextFactoryProperty); }
-            set { SetValue(BindingContextFactoryProperty, value); }
-        }
-
-        /// <summary>
-        /// Direction of where the popup will show, auto is default.
-        /// </summary>
-        [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
-        public PopupDirection Direction { get; set; }
-
-        /// <summary>
-        /// Horizontal direction of where the popup will show
-        /// </summary>
-        public HorizontalPopupOptions HorizontalOptions { get; set; } = HorizontalPopupOptions.LeftAlign;
-
-        /// <summary>
-        /// Vertical direction of where the popup will show
-        /// </summary>
-        public VerticalPopupOptions VerticalOptions { get; set; } = VerticalPopupOptions.Auto;
-
-        /// <summary>
-        /// How the popup will animate into view. Either none, sliding or fading.
-        /// </summary>
-        public PopupAnimation Animation { get; set; } = PopupAnimation.None;
-
-        /// <summary>
-        /// The content of the popup when it's showing.
-        /// </summary>
-        public View? Content { get; set; }
-
-        /// <summary>
-        ///  <see cref="IsOpen" />
-        /// </summary>
-        public static readonly BindableProperty IsOpenProperty =
-            BindableProperty.Create(nameof(IsOpen), typeof(bool), typeof(PopupBehavior), false, BindingMode.TwoWay, propertyChanged: OnIsOpenChanged);
-
-        private Task? m_animation;
-        private bool m_slideUp;
-        private const int m_animationTime = 100;
-
-        /// <summary>
-        /// Indicating if this popup is open. Set this from a binding to open a popup.
-        /// Please be carefull if you want to use the same property for multiple popups on the same page.
-        /// </summary>
-        public bool IsOpen
-        {
-            get { return (bool)GetValue(IsOpenProperty); }
-            set { SetValue(IsOpenProperty, value); }
         }
 
         private static void OnIsOpenChanged(BindableObject bindable, object oldValue, object newValue)
@@ -112,34 +124,23 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             if (!(bindable is PopupBehavior behavior)) return;
             if (oldValue == newValue) return;
             if (newValue as bool? == true)
-            {
                 behavior.ShowPopup();
-            }
             else
-            {
                 behavior.HidePopup();
-            }
         }
 
         private void ShowPopup()
         {
-            if (m_attachedTo == null || Content == null)
-            {
-                return;
-            }
+            if (m_attachedTo == null || Content == null) return;
 
             var layout = m_attachedTo.GetParentOfType<ModalityLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a ModalityLayout around the element");
 
             var prevAnimation = m_animation;
-            if (prevAnimation != null && !prevAnimation.IsCompleted && !prevAnimation.IsCanceled)
-            {
-                return;
-            }
+            if (prevAnimation != null && !prevAnimation.IsCompleted && !prevAnimation.IsCanceled) return;
 
             m_animation = null;
             IsOpen = true;
-
 
             layout.Show(this, Content, m_attachedTo);
 
@@ -169,20 +170,20 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 var center = height / 2.0;
                 var itemPosition = relativeView.GetY(layout) + relativeView.Height / 2.0;
                 if (itemPosition > center)
-                {
                     direction = PopupDirection.Above;
-                }
                 else
-                {
                     direction = PopupDirection.Below;
-                }
             }
 
-            var diffY = direction == PopupDirection.Below ? relativeView.Height : (-popupView.Height - sumMarginY);
+            var diffY = direction == PopupDirection.Below ? relativeView.Height : -popupView.Height - sumMarginY;
             m_slideUp = diffY < 0;
 
-            RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(layout) + diffY))));
-            RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout)))));
+            RelativeLayout.SetYConstraint(
+                popupView,
+                Constraint.RelativeToParent(r => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(layout) + diffY))));
+            RelativeLayout.SetXConstraint(
+                popupView,
+                Constraint.RelativeToParent(r => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout)))));
         }
 
         private void PlaceItem(View popupView, View relativeView, ModalityLayout layout)
@@ -191,19 +192,43 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             switch (HorizontalOptions)
             {
                 case HorizontalPopupOptions.LeftAlign:
-                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout)))));
+                    RelativeLayout.SetXConstraint(
+                        popupView,
+                        Constraint.RelativeToParent(r => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout)))));
                     break;
                 case HorizontalPopupOptions.RightAlign:
-                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) + relativeView.Width - popupView.Width - sumMarginX))));
+                    RelativeLayout.SetXConstraint(
+                        popupView,
+                        Constraint.RelativeToParent(
+                            r => Math.Max(
+                                0,
+                                Math.Min(
+                                    r.Width - popupView.Width - sumMarginX,
+                                    relativeView.GetX(layout) + relativeView.Width - popupView.Width - sumMarginX))));
                     break;
                 case HorizontalPopupOptions.Center:
-                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) + relativeView.Width / 2 - popupView.Width / 2 - popupView.Margin.Left))));
+                    RelativeLayout.SetXConstraint(
+                        popupView,
+                        Constraint.RelativeToParent(
+                            r => Math.Max(
+                                0,
+                                Math.Min(
+                                    r.Width - popupView.Width - sumMarginX,
+                                    relativeView.GetX(layout) + relativeView.Width / 2 - popupView.Width / 2 - popupView.Margin.Left))));
                     break;
                 case HorizontalPopupOptions.Left:
-                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) - popupView.Width - sumMarginX))));
+                    RelativeLayout.SetXConstraint(
+                        popupView,
+                        Constraint.RelativeToParent(
+                            r => Math.Max(
+                                0,
+                                Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) - popupView.Width - sumMarginX))));
                     break;
                 case HorizontalPopupOptions.Right:
-                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) + relativeView.Width))));
+                    RelativeLayout.SetXConstraint(
+                        popupView,
+                        Constraint.RelativeToParent(
+                            r => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) + relativeView.Width))));
                     break;
             }
 
@@ -214,14 +239,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 var height = layout.Height;
                 var center = height / 2.0;
                 var itemPosition = relativeView.GetY(layout) + relativeView.Height / 2.0;
-                if (itemPosition > center)
-                {
-                    verticalDirection = VerticalPopupOptions.Above;
-                }
-                else
-                {
-                    verticalDirection = VerticalPopupOptions.Below;
-                }
+                verticalDirection = itemPosition > center ? VerticalPopupOptions.Above : VerticalPopupOptions.Below;
             }
 
             var diffY = 0.0;
@@ -240,7 +258,9 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             }
 
             m_slideUp = diffY < 0;
-            RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(layout) + diffY))));
+            RelativeLayout.SetYConstraint(
+                popupView,
+                Constraint.RelativeToParent(r => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(layout) + diffY))));
         }
 
         private async Task Animate(View popupView)
@@ -266,6 +286,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
 
             await fade;
         }
+
         private async Task AnimateBack(View popupView)
         {
             if (Content == null) return;
@@ -289,128 +310,124 @@ namespace DIPS.Xamarin.UI.Controls.Popup
 
         private async void HidePopup()
         {
-            if (m_attachedTo == null)
-            {
-                return;
-            }
-
+            if (m_attachedTo == null) return;
 
             var layout = m_attachedTo.GetParentOfType<ModalityLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a ModalityLayout around the element");
 
             IsOpen = false;
 
-            if (Content != null)
-            {
-                var t = m_animation = AnimateBack(Content);
-                await Task.Delay(m_animationTime);
-                await t;
-                layout.Hide(Content);
-            }
-        } 
+            if (Content == null) return;
 
-        /// <summary>
-        /// Hides the popup
-        /// </summary>
-        public void Hide()
-        {
-            HidePopup();
+            var t = m_animation = AnimateBack(Content);
+            await Task.Delay(m_animationTime);
+            await t;
+            layout.Hide(Content);
         }
     }
 
     /// <summary>
-    /// Horizontal location of the popup relative to the attached element.
+    ///     Horizontal location of the popup relative to the attached element.
     /// </summary>
     public enum HorizontalPopupOptions
     {
         /// <summary>
-        /// Left side of the popup is aligned with the left side of the attached element.
+        ///     Left side of the popup is aligned with the left side of the attached element.
         /// </summary>
         LeftAlign,
+
         /// <summary>
-        /// Right side of the popup is aligned with the right side of the attached element.
+        ///     Right side of the popup is aligned with the right side of the attached element.
         /// </summary>
         RightAlign,
+
         /// <summary>
-        /// Popup is centered above the attached element.
+        ///     Popup is centered above the attached element.
         /// </summary>
         Center,
+
         /// <summary>
-        /// Popup is placed to the left of the attached element.
+        ///     Popup is placed to the left of the attached element.
         /// </summary>
         Left,
+
         /// <summary>
-        /// Popup is placed to the right of the attached element.
+        ///     Popup is placed to the right of the attached element.
         /// </summary>
         Right
     }
 
     /// <summary>
-    /// Vertical orientation of the popup relative to the attached element.
+    ///     Vertical orientation of the popup relative to the attached element.
     /// </summary>
     public enum VerticalPopupOptions
     {
         /// <summary>
-        /// Automatically selects above or below based on the attached element.
+        ///     Automatically selects above or below based on the attached element.
         /// </summary>
         Auto,
+
         /// <summary>
-        /// Popup is placed above the attached element.
+        ///     Popup is placed above the attached element.
         /// </summary>
         Above,
+
         /// <summary>
-        /// Popup is placed below the attached element.
+        ///     Popup is placed below the attached element.
         /// </summary>
         Below,
+
         /// <summary>
-        /// Popup is placed on top of the attached element.
+        ///     Popup is placed on top of the attached element.
         /// </summary>
-        Center,
+        Center
     }
 
     /// <summary>
-    /// Directions of the popup
+    ///     Directions of the popup
     /// </summary>
     [Obsolete("Use VerticalPopupOptions and HorizontalPopupOptions instead.")]
     public enum PopupDirection
     {
         /// <summary>
-        /// As PopupDirection is obsolete, setting Direction to None makes the layout placement
-        /// use HorizontalOptions/VerticalOptions.
+        ///     As PopupDirection is obsolete, setting Direction to None makes the layout placement
+        ///     use HorizontalOptions/VerticalOptions.
         /// </summary>
         None,
 
         /// <summary>
-        /// Automatically based on the location on screen
+        ///     Automatically based on the location on screen
         /// </summary>
         Auto,
 
         /// <summary>
-        /// Below the placement target
+        ///     Below the placement target
         /// </summary>
         Below,
-        
+
         /// <summary>
-        /// Above the placement target
+        ///     Above the placement target
         /// </summary>
-        Above,
+        Above
     }
 
     /// <summary>
-    /// Animations of the popup
+    ///     Animations of the popup
     /// </summary>
     public enum PopupAnimation
     {
         /// <summary>
-        /// Instantly shows the popup
+        ///     Instantly shows the popup
         /// </summary>
         None,
+
         /// <summary>
-        /// Slides from the element and outwards
+        ///     Slides from the element and outwards
         /// </summary>
         Slide,
+
         /// <summary>
-        /// Fading the popup in
+        ///     Fading the popup in
         /// </summary>
         Fade
     }
