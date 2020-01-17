@@ -1,4 +1,5 @@
-﻿using DIPS.Xamarin.UI.Extensions;
+﻿using DIPS.Xamarin.UI.Controls.Modality;
+using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Popup
@@ -30,10 +31,10 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             var view = (View)bindable;
             view.BindingContextChanged += (s, e) =>
             {
-                var popupLayout = view.GetParentOfType<PopupLayout>();
-                if (popupLayout != null)
+                var modalityLayout = view.GetParentOfType<ModalityLayout>();
+                if (modalityLayout != null)
                 {
-                    popupLayout.AddOnCloseRecognizer(view);
+                    modalityLayout.AddOnCloseRecognizer(view);
                 }
             };
         }
