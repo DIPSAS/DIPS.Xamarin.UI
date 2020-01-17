@@ -17,7 +17,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
     public partial class ModalityLayout : ContentView
     {
         private readonly TapGestureRecognizer m_closePopupRecognizer;
-        private readonly Lazy<Frame> m_blockingFrame;
+        private readonly Lazy<Frame> m_overLay;
 
         /// <summary>
         /// Create an instance
@@ -26,7 +26,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         {
             InitializeComponent();
             m_closePopupRecognizer = new TapGestureRecognizer { Command = new Command(HideCurrentShowingModality) };
-            m_blockingFrame = new Lazy<Frame>(CreateBlockingFrame);
+            m_overLay = new Lazy<Frame>(CreateOverlay);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             m_currentShowingModality?.Hide();
         }
 
-        private Frame CreateBlockingFrame()
+        private Frame CreateOverlay()
         {
             var background = new Frame
             {
@@ -100,7 +100,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         public void Show(IModality modality, View content, View relativeView)
         {
-            relativeLayout.Children.Add(m_blockingFrame.Value,
+            relativeLayout.Children.Add(m_overLay.Value,
                 widthConstraint: Constraint.RelativeToParent(r => r.Width),
                 heightConstraint: Constraint.RelativeToParent(r => r.Height),
                 xConstraint: Constraint.RelativeToParent(r => 0.0),
@@ -120,7 +120,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         public void HideOverlay()
         {
-            relativeLayout.Children.Remove(m_blockingFrame.Value);
+            relativeLayout.Children.Remove(m_overLay.Value);
         }
     }
 }

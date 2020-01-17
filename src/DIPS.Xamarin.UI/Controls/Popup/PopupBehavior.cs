@@ -309,6 +309,9 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             }
         } 
 
+        /// <summary>
+        /// Hides the popup
+        /// </summary>
         public void Hide()
         {
             HidePopup();
