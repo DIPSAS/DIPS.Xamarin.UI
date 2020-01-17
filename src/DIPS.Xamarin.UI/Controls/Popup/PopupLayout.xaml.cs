@@ -13,6 +13,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [ExcludeFromCodeCoverage]
+    [Obsolete("PopupLayout is obsolete because of it's name and responsibility. Please use ModalityLayout instead. This will be removed in future packages")]
     public partial class PopupLayout : ModalityLayout
     {
 
