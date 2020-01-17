@@ -47,6 +47,9 @@
     <EmbeddedResource Update="Controls\RadioButtonGroup\RadioButtonGroup.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Controls\Sheet\SheetView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\LocalizedStrings\InternalLocalizedStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>InternalLocalizedStrings.Designer.cs</LastGenOutput>

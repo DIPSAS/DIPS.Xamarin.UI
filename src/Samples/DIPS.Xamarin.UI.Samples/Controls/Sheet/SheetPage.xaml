@@ -1,0 +1,31 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Sheet;assembly=DIPS.Xamarin.UI.Samples"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.Sheet.SheetPage">
+    <ContentPage.BindingContext>
+        <Sheet:SheetPageViewModel />
+    </ContentPage.BindingContext>
+    <dxui:ModalityLayout>
+        <dxui:ModalityLayout.Behaviors>
+            <dxui:SheetBehavior IsOpen="{Binding Source={x:Reference checkBox}, Path=IsChecked}}" Position="0.5" >
+                <StackLayout>
+                    <Label Text="Patient list" />
+                    <Label Text="Patient list" />
+                    <Label Text="Patient list" />
+                    <Label Text="Patient list" />
+                    <Label Text="Patient list" />
+                    <Label Text="Patient list" />
+                </StackLayout>
+            </dxui:SheetBehavior>
+        </dxui:ModalityLayout.Behaviors>
+        <Grid>
+            <CheckBox x:Name="checkBox" />
+        </Grid>
+    </dxui:ModalityLayout>
+</ContentPage>

@@ -125,15 +125,32 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <param name="relativeView">The view to place the modality view relative to</param>
         public void Show(IModalityHandler modalityHandler, View view, View relativeView)
         {
-            m_currentShowingModalityHandler = modalityHandler;
+            ShowOverlay(modalityHandler);
 
-            ShowOverlay();
-
-            relativeLayout.Children.Add(view, yConstraint: Constraint.RelativeToParent(r => relativeView.GetY(this) + relativeView.Height));
+            relativeLayout.Children.Add(view, yConstraint: Constraint.RelativeToParent(r => Y + relativeView.Height));
         }
 
-        private void ShowOverlay()
+        /// <summary>
+        /// Shows a view with relative to the modality layout by constraints
+        /// </summary>
+        /// <param name="modalityHandler">The handler of a modality</param>
+        /// <param name="view">The view to show</param>
+        /// <param name="widthConstraint">RelativeLayout width constraint</param>
+        /// <param name="heightConstraint">RelativeLayout height constraint</param>
+        /// <param name="xConstraint">RelativeLayout x constraint</param>
+        /// <param name="yConstraint">RelativeLayout y constraint</param>
+        /// <remarks>Using relative to parent with the constraints will give you the <see cref="ModalityLayout"/></remarks>
+        public void Show(IModalityHandler modalityHandler, View view, Constraint? xConstraint = null, Constraint? yConstraint = null, Constraint? widthConstraint = null, Constraint? heightConstraint = null)
         {
+            ShowOverlay(modalityHandler);
+
+            relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
+        }
+
+        public void ShowOverlay(IModalityHandler modalityHandler)
+        {
+            m_currentShowingModalityHandler = modalityHandler;
+
             relativeLayout.Children.Add(
                 m_overLay.Value,
                 widthConstraint: Constraint.RelativeToParent(r => r.Width),
@@ -153,7 +170,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             HideOverlay();
         }
 
-        private void HideOverlay()
+        public void HideOverlay()
         {
             relativeLayout.Children.Remove(m_overLay.Value);
         }
