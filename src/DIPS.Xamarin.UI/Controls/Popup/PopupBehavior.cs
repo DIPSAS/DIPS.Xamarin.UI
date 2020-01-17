@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using DIPS.Xamarin.UI.Controls.Modality;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 
@@ -122,8 +123,8 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 return;
             }
 
-            var layout = m_attachedTo.GetParentOfType<PopupLayout>();
-            if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a PopupLayout around the element");
+            var layout = m_attachedTo.GetParentOfType<ModalityLayout>();
+            if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a ModalityLayout around the element");
             var content = Content;
             layout.ShowPopup(content, m_attachedTo, this);
             content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
@@ -137,8 +138,8 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             }
 
 
-            var layout = m_attachedTo.GetParentOfType<PopupLayout>();
-            if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a PopupLayout around the element");
+            var layout = m_attachedTo.GetParentOfType<ModalityLayout>();
+            if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a ModalityLayout around the element");
             layout.HidePopup();
         }
     }

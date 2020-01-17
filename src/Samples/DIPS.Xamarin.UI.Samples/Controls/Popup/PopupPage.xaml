@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxui="http://dips.xamarin.ui.com"
+             
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Popup.PopupPage">
     <ContentPage.Resources>
         <Style TargetType="Button" x:Key="popupButtonStyle">
@@ -19,7 +20,7 @@
             <Setter Property="BackgroundColor" Value="WhiteSmoke"/>
         </Style>
     </ContentPage.Resources>
-    <dxui:PopupLayout x:Name="popupLayout">
+    <dxui:ModalityLayout>
         <Grid BackgroundColor="WhiteSmoke">
             <Grid>
                 <Grid.RowDefinitions>
@@ -126,5 +127,5 @@
                 </Grid.Behaviors>
             </Grid>
         </Grid>
-    </dxui:PopupLayout>
+    </dxui:ModalityLayout>
 </ContentPage>
