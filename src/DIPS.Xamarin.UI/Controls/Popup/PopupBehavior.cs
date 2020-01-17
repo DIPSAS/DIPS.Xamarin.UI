@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.Modality;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
@@ -11,7 +12,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
     /// </summary>
     [ContentProperty(nameof(Content))]
     [ExcludeFromCodeCoverage]
-    public class PopupBehavior : Behavior<View>
+    public class PopupBehavior : Behavior<View>, IModality
     {
         private readonly Command m_onTappedCommand;
         private View? m_attachedTo;
@@ -92,6 +93,10 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         public static readonly BindableProperty IsOpenProperty =
             BindableProperty.Create(nameof(IsOpen), typeof(bool), typeof(PopupBehavior), false, BindingMode.TwoWay, propertyChanged: OnIsOpenChanged);
 
+        private Task? m_animation;
+        private bool m_slideUp;
+        private const int m_animationTime = 100;
+
         /// <summary>
         /// Indicating if this popup is open. Set this from a binding to open a popup.
         /// Please be carefull if you want to use the same property for multiple popups on the same page.
@@ -125,12 +130,164 @@ namespace DIPS.Xamarin.UI.Controls.Popup
 
             var layout = m_attachedTo.GetParentOfType<ModalityLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a ModalityLayout around the element");
-            var content = Content;
-            layout.ShowPopup(content, m_attachedTo, this);
-            content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
+
+            var prevAnimation = m_animation;
+            if (prevAnimation != null && !prevAnimation.IsCompleted && !prevAnimation.IsCanceled)
+            {
+                return;
+            }
+
+            m_animation = null;
+            IsOpen = true;
+
+
+            layout.Show(this, Content, m_attachedTo);
+
+            if (Direction != PopupDirection.None)
+            {
+                PlaceItemLegacy(Content, m_attachedTo, layout);
+            }
+            else
+            {
+                PlaceItem(Content, m_attachedTo, layout);
+            }
+
+            m_animation = Animate(Content);
+
+            Content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
         }
 
-        private void HidePopup()
+        private void PlaceItemLegacy(View popupView, View relativeView, ModalityLayout layout)
+        {
+            var sumMarginY = popupView.Margin.Top + popupView.Margin.Bottom;
+            var sumMarginX = popupView.Margin.Left + popupView.Margin.Right;
+
+            var direction = Direction;
+            if (direction == PopupDirection.Auto)
+            {
+                var height = layout.Height;
+                var center = height / 2.0;
+                var itemPosition = relativeView.GetY(layout) + relativeView.Height / 2.0;
+                if (itemPosition > center)
+                {
+                    direction = PopupDirection.Above;
+                }
+                else
+                {
+                    direction = PopupDirection.Below;
+                }
+            }
+
+            var diffY = direction == PopupDirection.Below ? relativeView.Height : (-popupView.Height - sumMarginY);
+            m_slideUp = diffY < 0;
+
+            RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(layout) + diffY))));
+            RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout)))));
+        }
+
+        private void PlaceItem(View popupView, View relativeView, ModalityLayout layout)
+        {
+            var sumMarginX = popupView.Margin.Left + popupView.Margin.Right;
+            switch (HorizontalOptions)
+            {
+                case HorizontalPopupOptions.LeftAlign:
+                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout)))));
+                    break;
+                case HorizontalPopupOptions.RightAlign:
+                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) + relativeView.Width - popupView.Width - sumMarginX))));
+                    break;
+                case HorizontalPopupOptions.Center:
+                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) + relativeView.Width / 2 - popupView.Width / 2 - popupView.Margin.Left))));
+                    break;
+                case HorizontalPopupOptions.Left:
+                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) - popupView.Width - sumMarginX))));
+                    break;
+                case HorizontalPopupOptions.Right:
+                    RelativeLayout.SetXConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Width - popupView.Width - sumMarginX, relativeView.GetX(layout) + relativeView.Width))));
+                    break;
+            }
+
+            var sumMarginY = popupView.Margin.Top + popupView.Margin.Bottom;
+            var verticalDirection = VerticalOptions;
+            if (VerticalOptions == VerticalPopupOptions.Auto)
+            {
+                var height = layout.Height;
+                var center = height / 2.0;
+                var itemPosition = relativeView.GetY(layout) + relativeView.Height / 2.0;
+                if (itemPosition > center)
+                {
+                    verticalDirection = VerticalPopupOptions.Above;
+                }
+                else
+                {
+                    verticalDirection = VerticalPopupOptions.Below;
+                }
+            }
+
+            var diffY = 0.0;
+
+            if (verticalDirection == VerticalPopupOptions.Above)
+            {
+                diffY = -popupView.Height - sumMarginY;
+            }
+            else if (verticalDirection == VerticalPopupOptions.Below)
+            {
+                diffY = relativeView.Height;
+            }
+            else if (verticalDirection == VerticalPopupOptions.Center)
+            {
+                diffY = relativeView.Height / 2 - popupView.Height / 2 - popupView.Margin.Top;
+            }
+
+            m_slideUp = diffY < 0;
+            RelativeLayout.SetYConstraint(popupView, Constraint.RelativeToParent((r) => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(layout) + diffY))));
+        }
+
+        private async Task Animate(View popupView)
+        {
+            popupView.Opacity = 0.0;
+            var fade = popupView.FadeTo(1.0, m_animationTime * 2);
+            if (Animation == PopupAnimation.Slide)
+            {
+                if (Content == null) return;
+                var height = Content.Height;
+                if (m_slideUp)
+                {
+                    var y = popupView.Y;
+                    popupView.Layout(new Rectangle(popupView.X, y + height, popupView.Width, 0));
+                    await popupView.LayoutTo(new Rectangle(popupView.X, y, popupView.Width, height), m_animationTime);
+                }
+                else
+                {
+                    popupView.Layout(new Rectangle(popupView.X, popupView.Y, popupView.Width, 0));
+                    await popupView.LayoutTo(new Rectangle(popupView.X, popupView.Y, popupView.Width, height), m_animationTime);
+                }
+            }
+
+            await fade;
+        }
+        private async Task AnimateBack(View popupView)
+        {
+            if (Content == null) return;
+
+            var fade = popupView.FadeTo(0.0, m_animationTime);
+            if (Animation == PopupAnimation.Slide)
+            {
+                if (m_slideUp)
+                {
+                    var y = popupView.Y;
+                    await popupView.LayoutTo(new Rectangle(popupView.X, y + Content.Height, popupView.Width, 0), m_animationTime);
+                }
+                else
+                {
+                    await popupView.LayoutTo(new Rectangle(popupView.X, popupView.Y, popupView.Width, 0), m_animationTime);
+                }
+            }
+
+            await fade;
+        }
+
+        private async void HidePopup()
         {
             if (m_attachedTo == null)
             {
@@ -140,7 +297,23 @@ namespace DIPS.Xamarin.UI.Controls.Popup
 
             var layout = m_attachedTo.GetParentOfType<ModalityLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a ModalityLayout around the element");
-            layout.HidePopup();
+
+            layout.HideOverlay();
+
+            IsOpen = false;
+
+            if (Content != null)
+            {
+                var t = m_animation = AnimateBack(Content);
+                await Task.Delay(m_animationTime);
+                await t;
+                layout.Hide(Content);
+            }
+        } 
+
+        public void Hide()
+        {
+            HidePopup();
         }
     }
 
