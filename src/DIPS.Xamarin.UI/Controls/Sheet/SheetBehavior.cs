@@ -38,14 +38,33 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(Position),
             typeof(double),
             typeof(SheetBehavior),
-            0.0,
+            0.1,
             propertyChanged:OnPositionPropertyChanged);
+
+        public static readonly BindableProperty MaxHeightRequestProperty = BindableProperty.Create(nameof(MaxHeightRequest), typeof(double), typeof(SheetBehavior), 1.0);
+
+        //Double between 0.1 - 1.0
+        public double MaxHeightRequest
+        {
+            get => (double)GetValue(MaxHeightRequestProperty);
+            set => SetValue(MaxHeightRequestProperty, value);
+        }
+
+        public static readonly BindableProperty MinHeightRequestProperty = BindableProperty.Create(nameof(MinHeightRequest), typeof(double), typeof(SheetBehavior), 0.1);
+
+        //Double between 0.1 - 1.0
+        public double MinHeightRequest
+        {
+            get => (double)GetValue(MinHeightRequestProperty);
+            set => SetValue(MinHeightRequestProperty, value);
+        }
 
         private SheetView? m_sheetView;
 
         private static async void OnPositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is SheetBehavior sheetBehavior)) return;
+            sheetBehavior.ValidatePositionProperties();
             await sheetBehavior.TranslateBasedOnPosition();
         }
 
@@ -108,7 +127,32 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (!(bindable is SheetBehavior sheetBehavior))
                 return;
 
+            sheetBehavior.ValidatePositionProperties();
+
             sheetBehavior.ToggleSheetVisibility();
+        }
+
+        private void ValidatePositionProperties()
+        {
+            if (MinHeightRequest < 0.1)
+            {
+                throw new ArgumentException($"{nameof(MinHeightRequest)} can not be less than 0.1. Below 0.1 is considered bad user experience");
+            }
+
+            if (MinHeightRequest > 1)
+            {
+                throw new ArgumentException($"{nameof(MinHeightRequest)} can not be more than 1.0");
+            }
+
+            if (Position < MinHeightRequest)
+            {
+                Position = MinHeightRequest;
+            }
+
+            if (Position > MaxHeightRequest)
+            {
+                Position = MaxHeightRequest;
+            }
         }
 
         private async void ToggleSheetVisibility()
@@ -147,7 +191,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
 
-            if (Position > 1 || Position < 0) return;
+            if (Position > MaxHeightRequest || Position < MinHeightRequest) return;
 
             if (Position > 0)
             {
