@@ -12,6 +12,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     {
         private ModalityLayout? m_modalityLayout;
 
+        private SheetView? m_sheetView;
+
         public static readonly BindableProperty AlignmentProperty = BindableProperty.Create(
             nameof(Alignment),
             typeof(AlignmentOptions),
@@ -39,34 +41,26 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(double),
             typeof(SheetBehavior),
             0.1,
-            propertyChanged:OnPositionPropertyChanged);
+            propertyChanged: OnPositionPropertyChanged);
 
-        public static readonly BindableProperty MaxHeightRequestProperty = BindableProperty.Create(nameof(MaxHeightRequest), typeof(double), typeof(SheetBehavior), 1.0);
+        public static readonly BindableProperty MaxHeightRequestProperty = BindableProperty.Create(
+            nameof(MaxHeightRequest),
+            typeof(double),
+            typeof(SheetBehavior),
+            1.0);
 
-        //Double between 0.1 - 1.0
-        public double MaxHeightRequest
-        {
-            get => (double)GetValue(MaxHeightRequestProperty);
-            set => SetValue(MaxHeightRequestProperty, value);
-        }
+        public static readonly BindableProperty MinHeightRequestProperty = BindableProperty.Create(
+            nameof(MinHeightRequest),
+            typeof(double),
+            typeof(SheetBehavior),
+            0.1);
 
-        public static readonly BindableProperty MinHeightRequestProperty = BindableProperty.Create(nameof(MinHeightRequest), typeof(double), typeof(SheetBehavior), 0.1);
+        public static readonly BindableProperty BindingContextFactoryProperty = BindableProperty.Create(
+            nameof(BindingContextFactory),
+            typeof(Func<object>),
+            typeof(SheetBehavior));
 
-        //Double between 0.1 - 1.0
-        public double MinHeightRequest
-        {
-            get => (double)GetValue(MinHeightRequestProperty);
-            set => SetValue(MinHeightRequestProperty, value);
-        }
-
-        private SheetView? m_sheetView;
-
-        private static async void OnPositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (!(bindable is SheetBehavior sheetBehavior)) return;
-            sheetBehavior.ValidatePositionProperties();
-            await sheetBehavior.TranslateBasedOnPosition();
-        }
+        private bool m_firstTimeOpened;
 
         public AlignmentOptions Alignment
         {
@@ -80,10 +74,30 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(BackgroundColorProperty, value);
         }
 
+        public Func<object> BindingContextFactory
+        {
+            get => (Func<object>)GetValue(BindingContextFactoryProperty);
+            set => SetValue(BindingContextFactoryProperty, value);
+        }
+
         public bool IsOpen
         {
             get => (bool)GetValue(IsOpenProperty);
             set => SetValue(IsOpenProperty, value);
+        }
+
+        //Double between 0.1 - 1.0
+        public double MaxHeightRequest
+        {
+            get => (double)GetValue(MaxHeightRequestProperty);
+            set => SetValue(MaxHeightRequestProperty, value);
+        }
+
+        //Double between 0.1 - 1.0
+        public double MinHeightRequest
+        {
+            get => (double)GetValue(MinHeightRequestProperty);
+            set => SetValue(MinHeightRequestProperty, value);
         }
 
         public double Position
@@ -101,6 +115,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         public void Hide()
         {
             IsOpen = false;
+        }
+
+        private static async void OnPositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is SheetBehavior sheetBehavior)) return;
+            sheetBehavior.ValidatePositionProperties();
+            await sheetBehavior.TranslateBasedOnPosition();
         }
 
         protected override void OnAttachedTo(ModalityLayout bindable)
@@ -157,35 +178,42 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private async void ToggleSheetVisibility()
         {
+            if (m_modalityLayout == null)
+            {
+                return;
+            }
+
             if (m_sheetView == null)
             {
                 m_sheetView = new SheetView(this);
             }
 
-            if (m_modalityLayout == null) return;
-
             if (IsOpen)
             {
-                var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
-                var heightConstraint =
-                    Constraint.RelativeToParent(
-                        r => m_modalityLayout.Height+m_sheetView.SheetFrame.CornerRadius); //10 is to make sure it always remove the border radius on the start of the frame
-                m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
+                SheetContent.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
 
-                m_sheetView.SheetFrame.TranslationY = m_modalityLayout.Height;
+                if (Alignment == AlignmentOptions.Bottom)
+                {
+                    var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
+                    var heightConstraint =
+                        Constraint.RelativeToParent(
+                            r => m_modalityLayout.Height +
+                                 m_sheetView.SheetFrame
+                                     .CornerRadius); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
+                    m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
 
-                await TranslateBasedOnPosition();
-                //var percentage = (SheetContent.Height+10) / m_modalityLayout.Height;
-                //Set binding context to either factory or ModalityLayout binding context
+                    m_sheetView.SheetFrame.TranslationY = m_modalityLayout.Height;
+
+                    await TranslateBasedOnPosition(true);
+                }
             }
             else
             {
-                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, m_modalityLayout.Height);
-                m_modalityLayout?.Hide(m_sheetView.SheetFrame);
+                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, m_modalityLayout.Height));
             }
         }
 
-        private async Task TranslateBasedOnPosition()
+        private async Task TranslateBasedOnPosition(bool firstTimeOpened = false)
         {
             if (!IsOpen) return;
             if (m_modalityLayout == null) return;
@@ -196,17 +224,32 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (Position > 0)
             {
                 var yTranslation = 0.0;
-                if(Alignment == AlignmentOptions.Bottom)
+                if (Alignment == AlignmentOptions.Bottom)
                 {
                     yTranslation = m_modalityLayout.Height * (1 - Position);
                 }
-                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
+
+                if (firstTimeOpened)
+                {
+                    await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
+                }
+                else
+                {
+                    await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 20U);
+                }
+                
             }
             else
             {
                 //Calculate what size the content needs if the position is set to 0
                 Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
             }
+        }
+
+        public void UpdatePosition(double newYPosition)
+        {
+            if (m_modalityLayout == null) return;
+            Position = (m_modalityLayout.Height-newYPosition) / m_modalityLayout.Height;
         }
     }
 

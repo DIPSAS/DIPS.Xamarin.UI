@@ -99,7 +99,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         /// </summary>
         public void Hide()
         {
-            HidePopup();
+            IsOpen = false;
         }
 
         /// <summary>
@@ -315,14 +315,9 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             var layout = m_attachedTo.GetParentOfType<ModalityLayout>();
             if (layout == null) throw new InvalidProgramException("Can't have a popup behavior without a ModalityLayout around the element");
 
-            IsOpen = false;
-
             if (Content == null) return;
 
-            var t = m_animation = AnimateBack(Content);
-            await Task.Delay(AnimationTime);
-            await t;
-            layout.Hide(Content);
+            layout.Hide(Content, AnimateBack(Content));
         }
     }
 

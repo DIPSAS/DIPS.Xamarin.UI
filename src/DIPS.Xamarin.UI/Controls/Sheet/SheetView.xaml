@@ -9,15 +9,18 @@
              x:Class="DIPS.Xamarin.UI.Controls.Sheet.SheetView"
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
-             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}"
-             >
+             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
     <Frame x:Name="OuterSheetFrame"
-           BindingContext=""
            HasShadow="true"
            CornerRadius="8"
            Padding="5,5,5,10"
            BackgroundColor="{Binding BackgroundColor}">
+        <Frame.GestureRecognizers>
+            <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
+        </Frame.GestureRecognizers>
+        <!-- Alignement = Bottom -->
         <Grid>
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="5" />
                 <RowDefinition Height="*" />
@@ -29,18 +32,16 @@
                      WidthRequest="50"
                      BackgroundColor="Gray"
                      HorizontalOptions="Center"
-                     IsVisible="True">
-                <BoxView.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
+                     IsVisible="True" />
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <ContentView x:Name="SheetContent"
+                             IsVisible="True"
                              Content="{Binding SheetContent}" />
+
             </Grid>
         </Grid>
     </Frame>
