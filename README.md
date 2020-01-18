@@ -18,3 +18,5 @@ A shared UI library that DIPS use and maintain for their mobile applications. Th
 ## Documentation
 
 We do all of our documentation in the [wiki section](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki).
+
+![dips.com](https://img.shields.io/badge/http%3A%2F%2Fdips.com-ENABLING%20EFFICIENT%20HEALTHCARE-red)
