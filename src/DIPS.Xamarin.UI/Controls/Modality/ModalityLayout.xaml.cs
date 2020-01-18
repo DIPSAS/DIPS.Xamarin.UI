@@ -147,12 +147,18 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
         }
 
-        public void ShowOverlay(IModalityHandler modalityHandler)
+        private void ShowOverlay(IModalityHandler modalityHandler, double opacityLevel = 1.0)
         {
             m_currentShowingModalityHandler = modalityHandler;
+            var overlay = m_overLay.Value;
+            if (opacityLevel > 1)
+                throw new ArgumentException("ModalityLayout can not set it's opacity level to more than 1");
+            if (opacityLevel < 0)
+                throw new ArgumentException("ModalityLayout can not set it's opacity level to less than 0");
+            overlay.Opacity *= opacityLevel;
 
             relativeLayout.Children.Add(
-                m_overLay.Value,
+                overlay,
                 widthConstraint: Constraint.RelativeToParent(r => r.Width),
                 heightConstraint: Constraint.RelativeToParent(r => r.Height),
                 xConstraint: Constraint.RelativeToParent(r => 0.0),

@@ -13,14 +13,19 @@
     </ContentPage.BindingContext>
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
-            <dxui:SheetBehavior IsOpen="{Binding Source={x:Reference checkBox}, Path=IsChecked}}" Position="0.5" >
-                <StackLayout>
+            <dxui:SheetBehavior x:Name="sheetBehavior" IsOpen="{Binding Source={x:Reference checkBox}, Path=IsChecked}" Position="0" >
+                <StackLayout BackgroundColor="Gray">
+                    <Label Text="{Binding Source={x:Reference sheetBehavior}, Path=Position}" />
+                    <Slider x:Name="slider"
+                            Minimum="0"
+                            Maximum="1"
+                            Value="{Binding Source={x:Reference sheetBehavior}, Path=Position}"/>
                     <Label Text="Patient list" />
                     <Label Text="Patient list" />
                     <Label Text="Patient list" />
                     <Label Text="Patient list" />
                     <Label Text="Patient list" />
-                    <Label Text="Patient list" />
+                    
                 </StackLayout>
             </dxui:SheetBehavior>
         </dxui:ModalityLayout.Behaviors>

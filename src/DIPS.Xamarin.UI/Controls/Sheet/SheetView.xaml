@@ -9,7 +9,8 @@
              x:Class="DIPS.Xamarin.UI.Controls.Sheet.SheetView"
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
-             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
+             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}"
+             >
     <Frame x:Name="OuterSheetFrame"
            BindingContext=""
            HasShadow="true"
@@ -21,13 +22,14 @@
                 <RowDefinition Height="5" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <BoxView Grid.Row="0"
+            <BoxView x:Name="HandleBoxView"
+                     Grid.Row="0"
                      HeightRequest="5"
                      CornerRadius="2"
                      WidthRequest="50"
                      BackgroundColor="Gray"
                      HorizontalOptions="Center"
-                     IsVisible="False">
+                     IsVisible="True">
                 <BoxView.GestureRecognizers>
                     <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
                 </BoxView.GestureRecognizers>
@@ -35,9 +37,9 @@
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ContentView 
+                <ContentView x:Name="SheetContent"
                              Content="{Binding SheetContent}" />
             </Grid>
         </Grid>

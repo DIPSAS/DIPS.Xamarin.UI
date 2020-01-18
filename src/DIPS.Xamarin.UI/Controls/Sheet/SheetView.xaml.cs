@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net.Http.Headers;
-using DIPS.Xamarin.UI.Controls.Modality;
-using DIPS.Xamarin.UI.Extensions;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.Sheet
@@ -19,14 +14,19 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             OuterSheetFrame.BindingContext = m_sheetBehaviour = sheetBehavior;
         }
 
-        private void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
-        {
-            // Handle the pan
-            
-        }
+        /// <summary>
+        /// The height that the sheet content needs if it should display all of its content
+        /// </summary>
+        public double SheetContentHeighRequest =>
+            SheetContent.Height + HandleBoxView.Height + OuterSheetFrame.Padding.Top + OuterSheetFrame.Padding.Bottom + OuterSheetFrame.CornerRadius;
 
         public Frame SheetFrame => OuterSheetFrame;
+
+        private void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            //Should never 
+            // Handle the pan
+            //Calculate position of the sheetview based on the 
+        }
     }
-
-
 }

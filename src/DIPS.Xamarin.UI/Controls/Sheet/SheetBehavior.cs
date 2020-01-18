@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.Modality;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,8 +11,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     public class SheetBehavior : Behavior<ModalityLayout>, IModalityHandler
     {
         private ModalityLayout? m_modalityLayout;
-
-        private Frame? m_sheetFrame;
 
         public static readonly BindableProperty AlignmentProperty = BindableProperty.Create(
             nameof(Alignment),
@@ -39,7 +38,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(Position),
             typeof(double),
             typeof(SheetBehavior),
-            0.0);
+            0.0,
+            propertyChanged:OnPositionPropertyChanged);
+
+        private SheetView? m_sheetView;
+
+        private static async void OnPositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is SheetBehavior sheetBehavior)) return;
+            await sheetBehavior.TranslateBasedOnPosition();
+        }
 
         public AlignmentOptions Alignment
         {
@@ -105,10 +113,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private async void ToggleSheetVisibility()
         {
-            if (m_sheetFrame == null)
+            if (m_sheetView == null)
             {
-                var sheetView = new SheetView(this);
-                m_sheetFrame = sheetView.SheetFrame;
+                m_sheetView = new SheetView(this);
             }
 
             if (m_modalityLayout == null) return;
@@ -118,28 +125,44 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
                 var heightConstraint =
                     Constraint.RelativeToParent(
-                        r => m_modalityLayout.Height + 10); //10 is to make sure it always remove the border radius on the start of the frame
-                m_modalityLayout.Show(this, m_sheetFrame,widthConstraint: widthConstraint, heightConstraint: heightConstraint);
+                        r => m_modalityLayout.Height+m_sheetView.SheetFrame.CornerRadius); //10 is to make sure it always remove the border radius on the start of the frame
+                m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
 
-                m_sheetFrame.TranslationY = m_modalityLayout.Height;
+                m_sheetView.SheetFrame.TranslationY = m_modalityLayout.Height;
 
-                var yTranslation = 0.0;
-                if (Position > 0)
-                {
-                    yTranslation = m_modalityLayout.Height * (1 - Position);
-                }
-                else
-                {
-                    yTranslation = m_modalityLayout.Height - SheetContent.Height;
-                }
-                await m_sheetFrame.TranslateTo(m_sheetFrame.X, yTranslation);
+                await TranslateBasedOnPosition();
                 //var percentage = (SheetContent.Height+10) / m_modalityLayout.Height;
                 //Set binding context to either factory or ModalityLayout binding context
             }
             else
             {
-                await m_sheetFrame.TranslateTo(m_sheetFrame.X, m_modalityLayout.Height);
-                m_modalityLayout?.Hide(m_sheetFrame);
+                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, m_modalityLayout.Height);
+                m_modalityLayout?.Hide(m_sheetView.SheetFrame);
+            }
+        }
+
+        private async Task TranslateBasedOnPosition()
+        {
+            if (!IsOpen) return;
+            if (m_modalityLayout == null) return;
+            if (m_sheetView == null) return;
+
+            if (Position > 1 || Position < 0) return;
+
+            if (Position > 0)
+            {
+                var yTranslation = 0.0;
+                if(Alignment == AlignmentOptions.Bottom)
+                {
+                    yTranslation = m_modalityLayout.Height * (1 - Position);
+                }
+
+                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
+            }
+            else
+            {
+                //Calculate what size the content needs if the position is set to 0
+                Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
             }
         }
     }
