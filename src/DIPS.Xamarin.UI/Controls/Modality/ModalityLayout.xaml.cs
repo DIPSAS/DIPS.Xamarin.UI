@@ -124,6 +124,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <param name="modalityHandler">The handler of a modality</param>
         /// <param name="view">The view to show</param>
         /// <param name="relativeView">The view to place the modality view relative to</param>
+<<<<<<< HEAD
         public void Show(IModalityHandler modalityHandler, View view, View relativeView) => Show(modalityHandler, view, yConstraint: Constraint.RelativeToParent(r => Y + relativeView.Height));
 
         /// <summary>
@@ -147,6 +148,19 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         {
             m_currentShowingModalityHandler = modalityHandler;
 
+=======
+        public void Show(IModalityHandler modalityHandler, View view, View relativeView)
+        {
+            m_currentShowingModalityHandler = modalityHandler;
+
+            ShowOverlay();
+
+            relativeLayout.Children.Add(view, yConstraint: Constraint.RelativeToParent(r => relativeView.GetY(this) + relativeView.Height));
+        }
+
+        private void ShowOverlay()
+        {
+>>>>>>> 819a0c7afae5335ecb12d1942f194a50aa4d949a
             relativeLayout.Children.Add(
                 m_overLay.Value,
                 widthConstraint: Constraint.RelativeToParent(r => r.Width),
@@ -154,6 +168,10 @@ namespace DIPS.Xamarin.UI.Controls.Modality
                 xConstraint: Constraint.RelativeToParent(r => 0.0),
                 yConstraint: Constraint.RelativeToParent(r => 0.0));
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 819a0c7afae5335ecb12d1942f194a50aa4d949a
         /// <summary>
         ///     Hides a view from the modality layout
         /// </summary>
@@ -165,7 +183,11 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             HideOverlay();
         }
 
+<<<<<<< HEAD
         public void HideOverlay()
+=======
+        private void HideOverlay()
+>>>>>>> 819a0c7afae5335ecb12d1942f194a50aa4d949a
         {
             relativeLayout.Children.Remove(m_overLay.Value);
         }
