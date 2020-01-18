@@ -156,7 +156,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 {
                     yTranslation = m_modalityLayout.Height * (1 - Position);
                 }
-
                 await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
             }
             else

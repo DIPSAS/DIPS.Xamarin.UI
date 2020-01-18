@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -123,12 +124,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <param name="modalityHandler">The handler of a modality</param>
         /// <param name="view">The view to show</param>
         /// <param name="relativeView">The view to place the modality view relative to</param>
-        public void Show(IModalityHandler modalityHandler, View view, View relativeView)
-        {
-            ShowOverlay(modalityHandler);
-
-            relativeLayout.Children.Add(view, yConstraint: Constraint.RelativeToParent(r => Y + relativeView.Height));
-        }
+        public void Show(IModalityHandler modalityHandler, View view, View relativeView) => Show(modalityHandler, view, yConstraint: Constraint.RelativeToParent(r => Y + relativeView.Height));
 
         /// <summary>
         /// Shows a view with relative to the modality layout by constraints
@@ -147,24 +143,17 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
         }
 
-        private void ShowOverlay(IModalityHandler modalityHandler, double opacityLevel = 1.0)
+        private void ShowOverlay(IModalityHandler modalityHandler)
         {
             m_currentShowingModalityHandler = modalityHandler;
-            var overlay = m_overLay.Value;
-            if (opacityLevel > 1)
-                throw new ArgumentException("ModalityLayout can not set it's opacity level to more than 1");
-            if (opacityLevel < 0)
-                throw new ArgumentException("ModalityLayout can not set it's opacity level to less than 0");
-            overlay.Opacity *= opacityLevel;
 
             relativeLayout.Children.Add(
-                overlay,
+                m_overLay.Value,
                 widthConstraint: Constraint.RelativeToParent(r => r.Width),
                 heightConstraint: Constraint.RelativeToParent(r => r.Height),
                 xConstraint: Constraint.RelativeToParent(r => 0.0),
                 yConstraint: Constraint.RelativeToParent(r => 0.0));
         }
-
         /// <summary>
         ///     Hides a view from the modality layout
         /// </summary>
