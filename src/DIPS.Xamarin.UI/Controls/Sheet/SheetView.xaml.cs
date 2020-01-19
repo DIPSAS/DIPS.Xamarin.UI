@@ -54,9 +54,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            //Should never 
-            // Handle the pan
-            //Calculate position of the sheetview based on the 
         }
     }
 }
