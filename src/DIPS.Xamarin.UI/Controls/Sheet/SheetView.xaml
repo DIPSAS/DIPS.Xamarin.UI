@@ -13,26 +13,26 @@
     <Frame x:Name="OuterSheetFrame"
            HasShadow="true"
            CornerRadius="8"
-           Padding="5,5,5,10"
+           Padding="5,5,5,5"
            BackgroundColor="{Binding BackgroundColor}">
         <Frame.GestureRecognizers>
             <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
         </Frame.GestureRecognizers>
         <!-- Alignement = Bottom -->
         <Grid>
-
             <Grid.RowDefinitions>
-                <RowDefinition Height="5" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <BoxView x:Name="HandleBoxView"
-                     Grid.Row="0"
-                     HeightRequest="5"
-                     CornerRadius="2"
-                     WidthRequest="50"
-                     BackgroundColor="Gray"
-                     HorizontalOptions="Center"
-                     IsVisible="True" />
+                         Grid.Row="0"
+                         HeightRequest="5"
+                         CornerRadius="2"
+                         WidthRequest="50"
+                         BackgroundColor="Gray"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         />
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>

@@ -40,17 +40,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(Position),
             typeof(double),
             typeof(SheetBehavior),
-            0.1,
+            0.0,
             propertyChanged: OnPositionPropertyChanged);
 
-        public static readonly BindableProperty MaxHeightRequestProperty = BindableProperty.Create(
-            nameof(MaxHeightRequest),
+        public static readonly BindableProperty MaxPositionProperty = BindableProperty.Create(
+            nameof(MaxPosition),
             typeof(double),
             typeof(SheetBehavior),
             1.0);
 
-        public static readonly BindableProperty MinHeightRequestProperty = BindableProperty.Create(
-            nameof(MinHeightRequest),
+        public static readonly BindableProperty MinPositionProperty = BindableProperty.Create(
+            nameof(MinPosition),
             typeof(double),
             typeof(SheetBehavior),
             0.1);
@@ -60,7 +60,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(Func<object>),
             typeof(SheetBehavior));
 
-        private bool m_firstTimeOpened;
+        public static readonly BindableProperty IsDraggableProperty = BindableProperty.Create(
+            nameof(IsDraggable),
+            typeof(bool),
+            typeof(SheetBehavior));
 
         public AlignmentOptions Alignment
         {
@@ -80,6 +83,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(BindingContextFactoryProperty, value);
         }
 
+        public bool IsDraggable
+        {
+            get => (bool)GetValue(IsDraggableProperty);
+            set => SetValue(IsDraggableProperty, value);
+        }
+
         public bool IsOpen
         {
             get => (bool)GetValue(IsOpenProperty);
@@ -87,17 +96,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         //Double between 0.1 - 1.0
-        public double MaxHeightRequest
+        public double MaxPosition
         {
-            get => (double)GetValue(MaxHeightRequestProperty);
-            set => SetValue(MaxHeightRequestProperty, value);
+            get => (double)GetValue(MaxPositionProperty);
+            set => SetValue(MaxPositionProperty, value);
         }
 
         //Double between 0.1 - 1.0
-        public double MinHeightRequest
+        public double MinPosition
         {
-            get => (double)GetValue(MinHeightRequestProperty);
-            set => SetValue(MinHeightRequestProperty, value);
+            get => (double)GetValue(MinPositionProperty);
+            set => SetValue(MinPositionProperty, value);
         }
 
         public double Position
@@ -120,7 +129,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private static async void OnPositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is SheetBehavior sheetBehavior)) return;
-            sheetBehavior.ValidatePositionProperties();
             await sheetBehavior.TranslateBasedOnPosition();
         }
 
@@ -147,33 +155,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             if (!(bindable is SheetBehavior sheetBehavior))
                 return;
-
-            sheetBehavior.ValidatePositionProperties();
-
             sheetBehavior.ToggleSheetVisibility();
-        }
-
-        private void ValidatePositionProperties()
-        {
-            if (MinHeightRequest < 0.1)
-            {
-                throw new ArgumentException($"{nameof(MinHeightRequest)} can not be less than 0.1. Below 0.1 is considered bad user experience");
-            }
-
-            if (MinHeightRequest > 1)
-            {
-                throw new ArgumentException($"{nameof(MinHeightRequest)} can not be more than 1.0");
-            }
-
-            if (Position < MinHeightRequest)
-            {
-                Position = MinHeightRequest;
-            }
-
-            if (Position > MaxHeightRequest)
-            {
-                Position = MaxHeightRequest;
-            }
         }
 
         private async void ToggleSheetVisibility()
@@ -203,7 +185,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
 
                     m_sheetView.SheetFrame.TranslationY = m_modalityLayout.Height;
-
+                    //Calculate what size the content needs if the position is set to 0
+                    Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
                     await TranslateBasedOnPosition(true);
                 }
             }
@@ -219,37 +202,45 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
 
-            if (Position > MaxHeightRequest || Position < MinHeightRequest) return;
-
-            if (Position > 0)
+            if (!firstTimeOpened)
             {
-                var yTranslation = 0.0;
-                if (Alignment == AlignmentOptions.Bottom)
+                if (MinPosition > MaxPosition)
                 {
-                    yTranslation = m_modalityLayout.Height * (1 - Position);
+                    MinPosition = (double)MinPositionProperty.DefaultValue;
                 }
 
-                if (firstTimeOpened)
+                if (Position < MinPosition)
                 {
-                    await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
+                    Position = MinPosition;
                 }
-                else
+
+                if (Position > MaxPosition)
                 {
-                    await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 20U);
+                    Position = MaxPosition;
                 }
-                
+            }
+
+            var yTranslation = 0.0;
+            if (Alignment == AlignmentOptions.Bottom)
+            {
+                yTranslation = m_modalityLayout.Height * (1 - Position);
+            }
+
+            if (firstTimeOpened)
+            {
+                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
             }
             else
             {
-                //Calculate what size the content needs if the position is set to 0
-                Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
+                //By dragging or by the consumer changing Position property
+                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 20U);
             }
         }
 
-        public void UpdatePosition(double newYPosition)
+        internal void UpdatePosition(double newYPosition)
         {
             if (m_modalityLayout == null) return;
-            Position = (m_modalityLayout.Height-newYPosition) / m_modalityLayout.Height;
+            Position = (m_modalityLayout.Height - newYPosition) / m_modalityLayout.Height;
         }
     }
 

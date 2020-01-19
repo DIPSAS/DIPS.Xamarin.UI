@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,13 +26,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
-
-            var TranslationY = OuterSheetFrame.TranslationY;
-
-            var TotalY_Modified = e.TotalY + TranslationY;
             //Hack to remove jitter from android 
             if (Device.RuntimePlatform == Device.Android)
             {
+                var TranslationY = OuterSheetFrame.TranslationY;
+                var TotalY_Modified = e.TotalY + TranslationY;
+
                 e = new PanUpdatedEventArgs(e.StatusType, e.GestureId, 0, TotalY_Modified);
             }
 
@@ -42,23 +42,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 case GestureStatus.Running:
                     if (m_sheetBehaviour.Alignment == AlignmentOptions.Bottom)
                     {
-                        /*var translationY = SheetContent.TranslationY + e.TotalY*/;
                         m_sheetBehaviour.UpdatePosition(e.TotalY);
-
-                        //if (e.TotalY > 0) //Pan up
-                        //{
-                        //    var newHeightOfSheet = SheetContentHeighRequest + (e.TotalY * -1);
-                        //    m_sheetBehaviour.UpdatePosition(newHeightOfSheet);
-                        //}
-                        //else //Pan down
-                        //{
-                        //    var newHeightOfSheet = SheetContentHeighRequest + (e.TotalY);
-                        //    m_sheetBehaviour.UpdatePosition(newHeightOfSheet);
-                        //}
                     }
 
                     break;
                 case GestureStatus.Completed:
+                    //Snap?
                     break;
                 case GestureStatus.Canceled:
                     break;

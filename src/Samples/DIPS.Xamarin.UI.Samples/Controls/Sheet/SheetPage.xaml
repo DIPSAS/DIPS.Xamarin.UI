@@ -14,30 +14,26 @@
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
             <dxui:SheetBehavior x:Name="sheetBehavior"
-                                Position="0.2"
                                 IsOpen="{Binding IsFirstSheetOpen}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
-                                >
-                <StackLayout BackgroundColor="Wheat">
+                                IsDraggable="True">
+
+                <StackLayout HeightRequest="300" BackgroundColor="Tomato">
                     <Label Text="{Binding Source={x:Reference sheetBehavior}, Path=Position}" />
-                    <Label Text="{Binding Title}"/>
+                    <Label Text="{Binding Title}" />
                     <Slider x:Name="slider"
                             Minimum="0"
                             Maximum="1"
                             Value="{Binding Source={x:Reference sheetBehavior}, Path=Position}" />
-
                 </StackLayout>
+
             </dxui:SheetBehavior>
         </dxui:ModalityLayout.Behaviors>
-        <StackLayout HorizontalOptions="Center" VerticalOptions="Start" Padding="20">
-            <CheckBox x:Name="checkBox" IsChecked="{Binding IsFirstSheetOpen}"/>
-            <Frame HeightRequest="20"
-                   WidthRequest="20"
-                   x:Name="OuterSheetFrame">
-                <Frame.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated"></PanGestureRecognizer>
-                </Frame.GestureRecognizers>
-            </Frame>
+        <StackLayout HorizontalOptions="Center"
+                     VerticalOptions="Start"
+                     Padding="20">
+            <CheckBox x:Name="checkBox"
+                      IsChecked="{Binding IsFirstSheetOpen}" />
         </StackLayout>
     </dxui:ModalityLayout>
 </ContentPage>
