@@ -11,16 +11,16 @@
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
     <Frame x:Name="OuterSheetFrame"
-           HasShadow="true"
+           HasShadow="{Binding HasShadow}"
            CornerRadius="8"
-           Padding="5,5,5,5"
+           Padding="0,5,0,5"
            BackgroundColor="{Binding BackgroundColor}">
         <Frame.GestureRecognizers>
             <PanGestureRecognizer PanUpdated="OnDrag" />
         </Frame.GestureRecognizers>
 
         <!-- Alignement = Bottom -->
-        <!-- Alignement = Top is set from Initialize in code behind -->
+        <!-- Alignement = Top is set from Initialize() in code behind -->
         <Grid x:Name="SheetGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -31,26 +31,20 @@
                      HeightRequest="5"
                      CornerRadius="2"
                      WidthRequest="50"
-                     BackgroundColor="Gray"
+                     BackgroundColor="{Binding HandleColor}"
                      HorizontalOptions="Center"
-                     VerticalOptions="Center" />
+                     VerticalOptions="Center"
+                     IsVisible="{Binding IsDraggable}" />
 
-            <Grid Grid.Row="1"
-                  x:Name="SheetContentGrid">
-                <Grid.Triggers>
-                    <DataTrigger TargetType="Grid"
-                                 Binding="{Binding Alignment}"
-                                 Value="Top">
-                        <Setter Property="Grid.VerticalOptions"
-                                Value="EndAndExpand" />
-                    </DataTrigger>
-                </Grid.Triggers>
+            <!-- VerticalOptions are set in Initialize() -->
+            <Grid x:Name="SheetContentGrid"
+                  Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+
                 <ContentView x:Name="SheetContent"
                              Content="{Binding SheetContent}" />
-
             </Grid>
         </Grid>
     </Frame>

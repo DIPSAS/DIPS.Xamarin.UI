@@ -9,7 +9,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SheetView : ContentView
     {
-        private SheetBehavior m_sheetBehaviour;
+        private readonly SheetBehavior m_sheetBehaviour;
 
         public SheetView(SheetBehavior sheetBehavior)
         {
@@ -21,30 +21,35 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// The height that the sheet content needs if it should display all of its content
         /// </summary>
         public double SheetContentHeighRequest =>
-            SheetContent.Height + HandleBoxView.Height + OuterSheetFrame.Padding.Top + OuterSheetFrame.Padding.Bottom + OuterSheetFrame.CornerRadius;
+            SheetContent.Content.Height + HandleBoxView.Height + OuterSheetFrame.Padding.Top + OuterSheetFrame.Padding.Bottom + OuterSheetFrame.CornerRadius;
 
         public Frame SheetFrame => OuterSheetFrame;
 
+        private double m_newY;
         private void OnDrag(object sender, PanUpdatedEventArgs e)
         {
             if (!m_sheetBehaviour.IsDraggable) return;
-            //Hack to remove jitter from android 
-            if (Device.RuntimePlatform == Device.Android)
-            {
-                var TranslationY = OuterSheetFrame.TranslationY;
-                var TotalY_Modified = e.TotalY + TranslationY;
-
-                e = new PanUpdatedEventArgs(e.StatusType, e.GestureId, 0, TotalY_Modified);
-            }
+            if (m_newY == 0) m_newY = SheetFrame.TranslationY;
 
             switch (e.StatusType)
             {
                 case GestureStatus.Started:
                     break;
                 case GestureStatus.Running:
-                    m_sheetBehaviour.UpdatePosition(e.TotalY);
+
+                    var translationY = (Device.RuntimePlatform == Device.Android) ? OuterSheetFrame.TranslationY : m_newY;
+                    var newYTranslation = e.TotalY + translationY;
+                    //Hack to remove jitter from android 
+                    if (Device.RuntimePlatform == Device.Android)
+                    {
+                        e = new PanUpdatedEventArgs(e.StatusType, e.GestureId, 0, newYTranslation);
+                        newYTranslation = e.TotalY;
+                    }
+
+                    m_sheetBehaviour.UpdatePosition(newYTranslation);
                     break;
                 case GestureStatus.Completed:
+                    m_newY = SheetFrame.TranslationY;
                     //Snap?
                     break;
                 case GestureStatus.Canceled:
@@ -62,6 +67,18 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 SheetGrid.RowDefinitions[1].Height = GridLength.Auto;
                 Grid.SetRow(SheetContentGrid, 0);
                 Grid.SetRow(HandleBoxView, 1);
+            }
+
+            switch (m_sheetBehaviour.VerticalContentAlignment)
+            {
+                case ContentAlignment.Fit:
+                    SheetContentGrid.VerticalOptions = m_sheetBehaviour.Alignment == AlignmentOptions.Top ? LayoutOptions.EndAndExpand : LayoutOptions.StartAndExpand;
+                    break;
+                case ContentAlignment.Fill:
+                    SheetContentGrid.VerticalOptions = LayoutOptions.Fill;
+                    break;
+                default:
+                    break;
             }
         }
     }

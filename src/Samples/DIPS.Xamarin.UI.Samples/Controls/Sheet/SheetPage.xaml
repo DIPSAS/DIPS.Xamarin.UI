@@ -6,6 +6,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dxui="http://dips.xamarin.ui.com"
              xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Sheet;assembly=DIPS.Xamarin.UI.Samples"
+             xmlns:System="clr-namespace:System;assembly=netstandard"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Sheet.SheetPage">
     <ContentPage.BindingContext>
@@ -14,26 +17,13 @@
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
             <dxui:SheetBehavior x:Name="sheetBehavior"
-                                IsOpen="{Binding IsFirstSheetOpen}"
-                                BindingContextFactory="{Binding SheetViewModelFactory}"
+                                Alignment="Top"
+                                HasShadow="False"
+                                IsOpen="True"
                                 IsDraggable="True"
-                                Alignment="Bottom"
-                                Position="1"
-            >
-
-                <StackLayout BackgroundColor="Tomato" VerticalOptions="CenterAndExpand" HeightRequest="200">
-                    <Label Text="{Binding Source={x:Reference sheetBehavior}, Path=Position}" />
-                    <Label Text="{Binding Title}" />
-                    <Entry />
-                </StackLayout>
-
+                                VerticalContentAlignment="Fit">
+                <Label Text="asd" />
             </dxui:SheetBehavior>
         </dxui:ModalityLayout.Behaviors>
-        <StackLayout HorizontalOptions="Center"
-                     VerticalOptions="Start"
-                     Padding="20">
-            <CheckBox x:Name="checkBox"
-                      IsChecked="{Binding IsFirstSheetOpen}" />
-        </StackLayout>
     </dxui:ModalityLayout>
 </ContentPage>

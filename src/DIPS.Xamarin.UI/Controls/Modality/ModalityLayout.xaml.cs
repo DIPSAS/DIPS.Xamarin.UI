@@ -96,6 +96,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             }
             else
             {
+                if (view.GestureRecognizers.Any(g => g == m_closeModalityRecognizer)) return;
                 view.GestureRecognizers.Remove(m_closeModalityRecognizer);
                 view.GestureRecognizers.Add(m_closeModalityRecognizer);
             }

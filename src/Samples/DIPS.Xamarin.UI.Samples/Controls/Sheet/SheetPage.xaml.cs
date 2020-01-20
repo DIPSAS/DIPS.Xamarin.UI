@@ -15,6 +15,24 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             InitializeComponent();
         }
+
+        private double x, y;
+        private void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            switch (e.StatusType)
+            {
+                case GestureStatus.Running:
+                    // Translate and ensure we don't pan beyond the wrapped user interface element bounds.
+                    Content.TranslationY = y + e.TotalY;
+                    break;
+
+                case GestureStatus.Completed:
+                    // Store the translation applied during the pan
+                    y = Content.TranslationY;
+                    break;
+            }
+
+        }
     }
 
     public class SheetPageViewModel : INotifyPropertyChanged

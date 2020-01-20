@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.Modality;
+using DIPS.Xamarin.UI.Resources.Colors;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +16,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private SheetView? m_sheetView;
 
+
+        public static readonly BindableProperty VerticalContentAlignmentProperty = BindableProperty.Create(nameof(VerticalContentAlignment), typeof(ContentAlignment), typeof(SheetBehavior), ContentAlignment.Fit);
+
+        /// <summary>
+        /// Settings this property changes how much of the space the content should take of the entire sheet. 
+        /// </summary>
+        public ContentAlignment VerticalContentAlignment
+        {
+            get => (ContentAlignment)GetValue(VerticalContentAlignmentProperty);
+            set => SetValue(VerticalContentAlignmentProperty, value);
+        }
         public static readonly BindableProperty AlignmentProperty = BindableProperty.Create(
             nameof(Alignment),
             typeof(AlignmentOptions),
@@ -29,7 +41,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             BindingMode.TwoWay,
             propertyChanged: IsOpenPropertyChanged);
 
-        public static readonly BindableProperty SheetContentProperty = BindableProperty.Create(nameof(SheetContent), typeof(View), typeof(SheetView));
+        public static readonly BindableProperty SheetContentProperty = BindableProperty.Create(nameof(SheetContent), typeof(View), typeof(SheetView), new ContentView(){HeightRequest = 100, VerticalOptions = LayoutOptions.Start});
 
         public static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(
             nameof(BackgroundColor),
@@ -65,6 +77,22 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(IsDraggable),
             typeof(bool),
             typeof(SheetBehavior));
+
+        public static readonly BindableProperty HasShadowProperty = BindableProperty.Create(nameof(HasShadow), typeof(bool), typeof(SheetBehavior), true);
+
+        public bool HasShadow
+        {
+            get => (bool)GetValue(HasShadowProperty);
+            set => SetValue(HasShadowProperty, value);
+        }
+
+        public static readonly BindableProperty HandleColorProperty = BindableProperty.Create(nameof(HandleColor), typeof(Color), typeof(SheetBehavior), ColorPalette.QuinaryAir);
+
+        public Color HandleColor
+        {
+            get => (Color)GetValue(HandleColorProperty);
+            set => SetValue(HandleColorProperty, value);
+        }
 
         public AlignmentOptions Alignment
         {
@@ -138,6 +166,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             base.OnAttachedTo(bindable);
             m_modalityLayout = bindable;
             m_modalityLayout.BindingContextChanged += OnBindingContextChanged;
+            m_modalityLayout.SizeChanged += OnModalityLayoutSizeChanged;
+        }
+
+        private void OnModalityLayoutSizeChanged(object sender, EventArgs e)
+        {
+            ToggleSheetVisibility();
         }
 
         protected override void OnDetachingFrom(ModalityLayout bindable)
@@ -253,11 +287,18 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             var yTranslation =
                 Alignment switch { 
                     AlignmentOptions.Bottom => m_sheetView.SheetFrame.Height * (1 - Position), 
-                    AlignmentOptions.Top => -m_sheetView.SheetFrame.Height * (1 - Position)- m_sheetView.SheetFrame
+                    AlignmentOptions.Top => -m_sheetView.SheetFrame.Height * (1 - Position) - m_sheetView.SheetFrame
                                                 .CornerRadius
                 };
-
-            await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, m_fromIsOpenContext ? 250U : 20U);
+            if (m_fromIsOpenContext)
+            {
+                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 250U);
+            }
+            else
+            {
+                m_sheetView.SheetFrame.TranslationY = yTranslation;
+            }
+            
         }
 
         internal void UpdatePosition(double newYPosition)
@@ -271,7 +312,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     Position = (m_sheetView.SheetFrame.Height - newYPosition) / m_modalityLayout.Height;
                     break;
                 case AlignmentOptions.Top:
+
                     Position = ((m_sheetView.SheetFrame.Height + newYPosition) / m_modalityLayout.Height);
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -283,5 +326,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     {
         Bottom,
         Top
+    }
+
+    public enum ContentAlignment
+    {
+        Fit,
+        Fill
     }
 }
