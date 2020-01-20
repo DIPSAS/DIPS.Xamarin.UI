@@ -174,34 +174,56 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (IsOpen)
             {
+                m_sheetView.Initialize();
                 SheetContent.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
 
-                if (Alignment == AlignmentOptions.Bottom)
+                //Set height / width
+                var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
+                var heightConstraint =
+                    Constraint.RelativeToParent(
+                        r => m_modalityLayout.Height +
+                             m_sheetView.SheetFrame
+                                 .CornerRadius); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
+                m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
+
+                //Set start position
+                switch (Alignment)
                 {
-                    var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
-                    var heightConstraint =
-                        Constraint.RelativeToParent(
-                            r => m_modalityLayout.Height +
-                                 m_sheetView.SheetFrame
-                                     .CornerRadius); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
-                    m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
+                    case AlignmentOptions.Bottom:
+                        m_sheetView.SheetFrame.TranslationY = m_sheetView.SheetFrame.Height;
+                        break;
+                    case AlignmentOptions.Top:
+                        m_sheetView.SheetFrame.TranslationY = -m_sheetView.SheetFrame.Height;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
 
-                    m_sheetView.SheetFrame.TranslationY = m_modalityLayout.Height;
-
-                    if (Position <= 0)
-                    {
-                        //Calculate what size the content needs if the position is set to 0
-                        Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
-                    }
-                    else
-                    {
-                        await TranslateBasedOnPosition();
-                    }
+                //Set position from input
+                if (Position <= 0)
+                {
+                    //Calculate what size the content needs if the position is set to 0
+                    Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
+                }
+                else
+                {
+                    await TranslateBasedOnPosition();
                 }
             }
             else
             {
-                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, m_modalityLayout.Height));
+                switch (Alignment)
+                {
+                    case AlignmentOptions.Bottom:
+                        m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, m_modalityLayout.Height));
+                        break;
+                    case AlignmentOptions.Top:
+                        m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, -m_modalityLayout.Height));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                
             }
 
             m_fromIsOpenContext = false;
@@ -228,25 +250,38 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 Position = MaxPosition;
             }
 
-            var yTranslation = 0.0;
-            if (Alignment == AlignmentOptions.Bottom)
-            {
-                yTranslation = m_modalityLayout.Height * (1 - Position);
-            }
+            var yTranslation =
+                Alignment switch { 
+                    AlignmentOptions.Bottom => m_sheetView.SheetFrame.Height * (1 - Position), 
+                    AlignmentOptions.Top => -m_sheetView.SheetFrame.Height * (1 - Position)- m_sheetView.SheetFrame
+                                                .CornerRadius
+                };
 
             await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, m_fromIsOpenContext ? 250U : 20U);
-            await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 20U);
         }
 
         internal void UpdatePosition(double newYPosition)
         {
             if (m_modalityLayout == null) return;
-            Position = (m_modalityLayout.Height - newYPosition) / m_modalityLayout.Height;
+            if (m_sheetView == null) return;
+
+            switch (Alignment)
+            {
+                case AlignmentOptions.Bottom:
+                    Position = (m_sheetView.SheetFrame.Height - newYPosition) / m_modalityLayout.Height;
+                    break;
+                case AlignmentOptions.Top:
+                    Position = ((m_sheetView.SheetFrame.Height + newYPosition) / m_modalityLayout.Height);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 
     public enum AlignmentOptions
     {
-        Bottom
+        Bottom,
+        Top
     }
 }

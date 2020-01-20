@@ -18,29 +18,37 @@
         <Frame.GestureRecognizers>
             <PanGestureRecognizer PanUpdated="OnDrag" />
         </Frame.GestureRecognizers>
+
         <!-- Alignement = Bottom -->
-        <Grid>
+        <!-- Alignement = Top is set from Initialize in code behind -->
+        <Grid x:Name="SheetGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <BoxView x:Name="HandleBoxView"
-                         Grid.Row="0"
-                         HeightRequest="5"
-                         CornerRadius="2"
-                         WidthRequest="50"
-                         BackgroundColor="Gray"
-                         HorizontalOptions="Center"
-                         VerticalOptions="Center"
-                         IsVisible="{Binding IsDraggable}"
-                         />
+                     Grid.Row="0"
+                     HeightRequest="5"
+                     CornerRadius="2"
+                     WidthRequest="50"
+                     BackgroundColor="Gray"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center" />
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1"
+                  x:Name="SheetContentGrid">
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid"
+                                 Binding="{Binding Alignment}"
+                                 Value="Top">
+                        <Setter Property="Grid.VerticalOptions"
+                                Value="EndAndExpand" />
+                    </DataTrigger>
+                </Grid.Triggers>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <ContentView x:Name="SheetContent"
-                             IsVisible="True"
                              Content="{Binding SheetContent}" />
 
             </Grid>

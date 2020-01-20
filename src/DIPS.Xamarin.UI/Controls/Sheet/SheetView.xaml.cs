@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -41,11 +42,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 case GestureStatus.Started:
                     break;
                 case GestureStatus.Running:
-                    if (m_sheetBehaviour.Alignment == AlignmentOptions.Bottom)
-                    {
-                        m_sheetBehaviour.UpdatePosition(e.TotalY);
-                    }
-
+                    m_sheetBehaviour.UpdatePosition(e.TotalY);
                     break;
                 case GestureStatus.Completed:
                     //Snap?
@@ -54,6 +51,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void Initialize()
+        {
+            if (m_sheetBehaviour.Alignment == AlignmentOptions.Top)
+            {
+                SheetGrid.RowDefinitions[0].Height = GridLength.Star;
+                SheetGrid.RowDefinitions[1].Height = GridLength.Auto;
+                Grid.SetRow(SheetContentGrid, 0);
+                Grid.SetRow(HandleBoxView, 1);
             }
         }
     }

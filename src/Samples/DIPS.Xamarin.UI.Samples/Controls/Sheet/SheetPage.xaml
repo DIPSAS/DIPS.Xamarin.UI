@@ -17,10 +17,11 @@
                                 IsOpen="{Binding IsFirstSheetOpen}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                                 IsDraggable="True"
-                                >
+                                Alignment="Bottom"
+                                Position="1"
+            >
 
-                <StackLayout HeightRequest="300"
-                             BackgroundColor="Tomato">
+                <StackLayout BackgroundColor="Tomato" VerticalOptions="CenterAndExpand" HeightRequest="200">
                     <Label Text="{Binding Source={x:Reference sheetBehavior}, Path=Position}" />
                     <Label Text="{Binding Title}" />
                     <Entry />
