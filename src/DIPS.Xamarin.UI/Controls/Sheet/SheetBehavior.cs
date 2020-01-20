@@ -10,6 +10,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public class SheetBehavior : Behavior<ModalityLayout>, IModalityHandler
     {
+        private bool m_fromIsOpenContext;
         private ModalityLayout? m_modalityLayout;
 
         private SheetView? m_sheetView;
@@ -160,6 +161,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private async void ToggleSheetVisibility()
         {
+            m_fromIsOpenContext = true;
             if (m_modalityLayout == null)
             {
                 return;
@@ -185,39 +187,45 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
 
                     m_sheetView.SheetFrame.TranslationY = m_modalityLayout.Height;
-                    //Calculate what size the content needs if the position is set to 0
-                    Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
-                    await TranslateBasedOnPosition(true);
+
+                    if (Position <= 0)
+                    {
+                        //Calculate what size the content needs if the position is set to 0
+                        Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
+                    }
+                    else
+                    {
+                        await TranslateBasedOnPosition();
+                    }
                 }
             }
             else
             {
                 m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, m_modalityLayout.Height));
             }
+
+            m_fromIsOpenContext = false;
         }
 
-        private async Task TranslateBasedOnPosition(bool firstTimeOpened = false)
+        private async Task TranslateBasedOnPosition()
         {
             if (!IsOpen) return;
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
 
-            if (!firstTimeOpened)
+            if (MinPosition > MaxPosition)
             {
-                if (MinPosition > MaxPosition)
-                {
-                    MinPosition = (double)MinPositionProperty.DefaultValue;
-                }
+                MinPosition = (double)MinPositionProperty.DefaultValue;
+            }
 
-                if (Position < MinPosition)
-                {
-                    Position = MinPosition;
-                }
+            if (Position < MinPosition)
+            {
+                Position = MinPosition;
+            }
 
-                if (Position > MaxPosition)
-                {
-                    Position = MaxPosition;
-                }
+            if (Position > MaxPosition)
+            {
+                Position = MaxPosition;
             }
 
             var yTranslation = 0.0;
@@ -226,15 +234,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 yTranslation = m_modalityLayout.Height * (1 - Position);
             }
 
-            if (firstTimeOpened)
-            {
-                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
-            }
-            else
-            {
-                //By dragging or by the consumer changing Position property
-                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 20U);
-            }
+            await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, m_fromIsOpenContext ? 250U : 20U);
+            await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 20U);
         }
 
         internal void UpdatePosition(double newYPosition)

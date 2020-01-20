@@ -24,8 +24,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         public Frame SheetFrame => OuterSheetFrame;
 
-        private void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        private void OnDrag(object sender, PanUpdatedEventArgs e)
         {
+            if (!m_sheetBehaviour.IsDraggable) return;
             //Hack to remove jitter from android 
             if (Device.RuntimePlatform == Device.Android)
             {
