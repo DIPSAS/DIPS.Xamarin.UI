@@ -361,7 +361,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                         _ => throw new ArgumentOutOfRangeException()
                     };
 
-                    m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y));
+                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y));
             }
 
             m_fromIsOpenContext = false;

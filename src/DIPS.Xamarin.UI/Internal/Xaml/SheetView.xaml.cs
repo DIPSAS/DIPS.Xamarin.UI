@@ -78,6 +78,13 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 Grid.SetRow(SheetContentGrid, 0);
                 Grid.SetRow(HandleBoxView, 1);
             }
+            else
+            {
+                SheetGrid.RowDefinitions[0].Height = GridLength.Auto;
+                SheetGrid.RowDefinitions[1].Height = GridLength.Star;
+                Grid.SetRow(HandleBoxView, 0);
+                Grid.SetRow(SheetContentGrid, 1);
+            }
 
             switch (m_sheetBehaviour.VerticalContentAlignment)
             {
