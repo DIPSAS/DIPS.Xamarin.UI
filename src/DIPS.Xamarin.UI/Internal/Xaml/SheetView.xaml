@@ -6,7 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Controls.Sheet;assembly=DIPS.Xamarin.UI"
              mc:Ignorable="d dblend"
-             x:Class="DIPS.Xamarin.UI.Controls.Sheet.SheetView"
+             x:Class="DIPS.Xamarin.UI.Internal.xaml.SheetView"
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}"

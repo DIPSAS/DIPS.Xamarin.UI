@@ -28,11 +28,12 @@
                                 MaxPosition="{Binding MaxPosition}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}">
                 <StackLayout>
-                    <Label Text="Test" />
-                    <Label Text="Test" />
-                    <Label Text="Test" />
-                    <Label Text="Test" />
-                    <Label Text="Test" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Entry x:Name="entry" Placeholder="TextEntry" />
                     <Button Text="Close sheet"
                             dxui:Modality.CloseOnClick="True" />
                 </StackLayout>

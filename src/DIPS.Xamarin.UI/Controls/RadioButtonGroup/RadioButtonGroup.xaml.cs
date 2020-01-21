@@ -17,7 +17,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RadioButtonGroup : ContentView, IHandleRadioButtons
     {
-        private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
+        private readonly IList<Internal.xaml.RadioButton> m_radioButtons = new List<Internal.xaml.RadioButton>();
 
         /// <summary>
         ///     <see cref="SelectedColor" />
@@ -174,7 +174,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(SeparatorColorProperty, value);
         }
 
-        void IHandleRadioButtons.OnRadioButtonTapped(RadioButton tappedRadioButton)
+        void IHandleRadioButtons.OnRadioButtonTapped(Internal.xaml.RadioButton tappedRadioButton)
         {
             if (SelectedItem == tappedRadioButton.Identifier) return;
 
@@ -271,7 +271,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 
         private void AddItem(object item)
         {
-            var radioButton = new RadioButton
+            var radioButton = new Internal.xaml.RadioButton
             {
                 Text = item.GetPropertyValue(DisplayMemberPath),
                 Identifier = item,

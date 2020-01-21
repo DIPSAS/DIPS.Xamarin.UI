@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.Modality;
+using DIPS.Xamarin.UI.Internal.xaml;
 using DIPS.Xamarin.UI.Resources.Colors;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -93,13 +94,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(double),
             typeof(SheetBehavior),
             0.1,
-            BindingMode.TwoWay,
-            propertyChanged:PropertyChanged);
-
-        private static void PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            
-        }
+            BindingMode.TwoWay);
 
         /// <summary>
         /// <see cref="BindingContextFactory"/>
@@ -349,6 +344,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 }
             }
             else
+            {
+                
+            }
             {
                 switch (Alignment)
                 {

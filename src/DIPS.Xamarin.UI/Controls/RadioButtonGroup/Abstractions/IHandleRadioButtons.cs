@@ -5,6 +5,6 @@
         /// Method to be invoked when a radio button is tapped
         /// </summary>
         /// <param name="tappedRadioButton"></param>
-        void OnRadioButtonTapped(RadioButton tappedRadioButton);
+        void OnRadioButtonTapped(Internal.xaml.RadioButton tappedRadioButton);
     }
 }

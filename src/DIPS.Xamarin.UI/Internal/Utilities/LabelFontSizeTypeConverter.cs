@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TypeConverter = Xamarin.Forms.TypeConverter;
 
-namespace DIPS.Xamarin.UI.InternalUtils
+namespace DIPS.Xamarin.UI.Internal.Utilities
 {
     /// <summary>
     /// A font size converter facade that makes sure that the font size type converter always runs as a label and returns the correct named size value every time

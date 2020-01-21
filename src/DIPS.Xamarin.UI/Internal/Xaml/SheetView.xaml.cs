@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
-using Xamarin.Essentials;
+using DIPS.Xamarin.UI.Controls.Sheet;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace DIPS.Xamarin.UI.Controls.Sheet
+namespace DIPS.Xamarin.UI.Internal.xaml
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SheetView : ContentView

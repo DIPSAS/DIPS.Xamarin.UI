@@ -169,6 +169,8 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <param name="beforeRemovalTask">Optional task that</param>
         public async void Hide(View view, Task? beforeRemovalTask = null)
         {
+            if (!relativeLayout.Children.Contains(view)) return;
+
             HideOverlay();
 
             if (beforeRemovalTask != null)
