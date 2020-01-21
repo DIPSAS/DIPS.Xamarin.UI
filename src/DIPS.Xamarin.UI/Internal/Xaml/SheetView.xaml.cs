@@ -5,11 +5,18 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Internal.xaml
 {
+    /// <summary>
+    /// A sheetview that is used inside of a <see cref="SheetBehavior"/>
+    /// </summary>
+    /// <remarks>This is a internal Xaml control that should only be used in a <see cref="SheetBehavior"/></remarks>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SheetView : ContentView
     {
         private readonly SheetBehavior m_sheetBehaviour;
-
+        /// <summary>
+        /// Constructs a <see cref="SheetView"/>
+        /// </summary>
+        /// <param name="sheetBehavior"></param>
         public SheetView(SheetBehavior sheetBehavior)
         {
             InitializeComponent();
@@ -22,6 +29,9 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         public double SheetContentHeighRequest =>
             SheetContent.Content.Height + HandleBoxView.Height + OuterSheetFrame.Padding.Top + OuterSheetFrame.Padding.Bottom + OuterSheetFrame.CornerRadius;
 
+        /// <summary>
+        /// The internal outer sheet frame of the view
+        /// </summary>
         public Frame SheetFrame => OuterSheetFrame;
 
         private double m_newY;
@@ -58,8 +68,9 @@ namespace DIPS.Xamarin.UI.Internal.xaml
             }
         }
 
-        public void Initialize()
+        internal void Initialize()
         {
+            //Flp the grid if alignment is set to top
             if (m_sheetBehaviour.Alignment == AlignmentOptions.Top)
             {
                 SheetGrid.RowDefinitions[0].Height = GridLength.Star;

@@ -308,7 +308,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             await fade;
         }
 
-        private async void HidePopup()
+        private void HidePopup()
         {
             if (m_attachedTo == null) return;
 
