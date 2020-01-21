@@ -1,4 +1,6 @@
 ![PublishStage](https://vsrm.dev.azure.com/dipscloud-public/_apis/public/Release/badge/7072efb1-8a03-410f-a675-60dbf5c9303a/1/1) ![Nuget](https://img.shields.io/nuget/v/dips.xamarin.ui?color=success&logoColor=white&logo=NuGet) ![GitHub last commit](https://img.shields.io/github/last-commit/Dipsas/DIPS.Xamarin.UI)
+![dips.com](https://img.shields.io/badge/http%3A%2F%2Fdips.com-ENABLING%20EFFICIENT%20HEALTHCARE-red)
+
 
 # DIPS.Xamarin.UI
 ![DIPS.Xamarin.UI_icon](https://raw.githubusercontent.com/DIPSAS/DIPS.Xamarin.UI/master/assets/DIPS_Xamarin_UI_128x128@slimmed.png)
@@ -18,5 +20,3 @@ A shared UI library that DIPS use and maintain for their mobile applications. Th
 ## Documentation
 
 We do all of our documentation in the [wiki section](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki).
-
-![dips.com](https://img.shields.io/badge/http%3A%2F%2Fdips.com-ENABLING%20EFFICIENT%20HEALTHCARE-red)
