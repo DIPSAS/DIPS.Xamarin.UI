@@ -8,6 +8,9 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.Sheet
 {
+    /// <summary>
+    /// A behavior to that can be added to a <see cref="ModalityLayout"/> to display a sheet that animates into the view, either from top or bottom, when <see cref="IsOpen"/> is set.
+    /// </summary>
     [ContentProperty(nameof(SheetContent))]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public class SheetBehavior : Behavior<ModalityLayout>, IModalityHandler
@@ -274,6 +277,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             await sheetBehavior.TranslateBasedOnPosition();
         }
 
+        /// <inheritdoc />
         protected override void OnAttachedTo(ModalityLayout bindable)
         {
             base.OnAttachedTo(bindable);
@@ -287,6 +291,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             ToggleSheetVisibility();
         }
 
+        /// <inheritdoc />
         protected override void OnDetachingFrom(ModalityLayout bindable)
         {
             base.OnDetachingFrom(bindable);
