@@ -72,6 +72,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(double),
             typeof(SheetBehavior),
             0.0,
+            BindingMode.TwoWay,
             propertyChanged: OnPositionPropertyChanged);
 
         /// <summary>
@@ -81,7 +82,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(MaxPosition),
             typeof(double),
             typeof(SheetBehavior),
-            1.0);
+            1.0,
+            BindingMode.TwoWay);
 
         /// <summary>
         /// <see cref="MinPosition"/>
@@ -90,7 +92,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(MinPosition),
             typeof(double),
             typeof(SheetBehavior),
-            0.1);
+            0.1,
+            BindingMode.TwoWay,
+            propertyChanged:PropertyChanged);
+
+        private static void PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            
+        }
 
         /// <summary>
         /// <see cref="BindingContextFactory"/>
@@ -247,6 +256,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private static async void OnPositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is SheetBehavior sheetBehavior)) return;
+            if (!(oldvalue is double doubleOldValue)) return;
+            if (!(newvalue is double doubleNewvalue)) return;
+            if (doubleOldValue == doubleNewvalue) return;
             await sheetBehavior.TranslateBasedOnPosition();
         }
 
@@ -279,6 +291,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             if (!(bindable is SheetBehavior sheetBehavior))
                 return;
+            if (!(oldvalue is bool boolOldValue)) return;
+            if (!(newvalue is bool boolNewvalue)) return;
+            if (boolOldValue == boolNewvalue) return;
             sheetBehavior.ToggleSheetVisibility();
         }
 
@@ -358,6 +373,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
 
+            if (MinPosition <= 0 || MinPosition > 1)
+            {
+                MinPosition = (double)MinPositionProperty.DefaultValue;
+            }
+
+            if(MaxPosition <= 0 || MaxPosition > 1)
+            {
+                MaxPosition = (double)MaxPositionProperty.DefaultValue;
+            }
+
             if (MinPosition > MaxPosition)
             {
                 MinPosition = (double)MinPositionProperty.DefaultValue;
@@ -419,7 +444,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <summary>
         /// Positions the sheet at the bottom of the screen and will be draggable from bottom to top.
         /// </summary>
-        Bottom,
+        Bottom = 0,
         /// <summary>
         /// Positions the sheet at the top of the screen and will be draggable from top to bottom.
         /// </summary>
@@ -434,7 +459,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <summary>
         /// The content will only use as much space as it needs.
         /// </summary>
-        Fit,
+        Fit = 0,
         /// <summary>
         /// The content will use the entire sheet as space.
         /// </summary>

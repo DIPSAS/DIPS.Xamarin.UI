@@ -9,7 +9,8 @@
              x:Class="DIPS.Xamarin.UI.Controls.Sheet.SheetView"
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
-             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
+             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}"
+             >
     <Frame x:Name="OuterSheetFrame"
            HasShadow="{Binding HasShadow}"
            CornerRadius="8"
