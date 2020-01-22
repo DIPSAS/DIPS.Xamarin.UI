@@ -433,7 +433,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             };
         }
 
-        internal void ToggleIsDragging () => m_fromIsDraggingContext = !m_fromIsDraggingContext;
+        internal bool IsDragging
+        {
+            get => m_fromIsDraggingContext;
+            set => m_fromIsDraggingContext = value;
+        }
     }
 
     /// <summary>

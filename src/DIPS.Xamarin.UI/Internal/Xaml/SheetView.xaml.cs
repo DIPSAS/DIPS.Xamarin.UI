@@ -43,7 +43,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
             switch (e.StatusType)
             {
                 case GestureStatus.Started:
-                    m_sheetBehaviour.ToggleIsDragging();
+                    m_sheetBehaviour.IsDragging = true;
                     break;
                 case GestureStatus.Running:
 
@@ -60,11 +60,11 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                     break;
                 case GestureStatus.Completed:
                     m_newY = SheetFrame.TranslationY;
-                    m_sheetBehaviour.ToggleIsDragging();
+                    m_sheetBehaviour.IsDragging = false;
                     //Snap?
                     break;
                 case GestureStatus.Canceled:
-                    m_sheetBehaviour.ToggleIsDragging();
+                    m_sheetBehaviour.IsDragging = false;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
