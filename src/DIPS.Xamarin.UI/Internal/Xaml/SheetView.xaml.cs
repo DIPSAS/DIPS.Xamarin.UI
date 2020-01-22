@@ -26,13 +26,13 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         /// <summary>
         /// The height that the sheet content needs if it should display all of its content
         /// </summary>
-        public double SheetContentHeighRequest =>
+        internal double SheetContentHeighRequest =>
             SheetContent.Content.Height + HandleBoxView.Height + OuterSheetFrame.Padding.Top + OuterSheetFrame.Padding.Bottom + OuterSheetFrame.CornerRadius;
 
         /// <summary>
         /// The internal outer sheet frame of the view
         /// </summary>
-        public Frame SheetFrame => OuterSheetFrame;
+        internal Frame SheetFrame => OuterSheetFrame;
 
         private double m_newY;
         private void OnDrag(object sender, PanUpdatedEventArgs e)
