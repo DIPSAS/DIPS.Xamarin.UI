@@ -132,6 +132,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(SheetBehavior),
             ColorPalette.QuinaryAir);
 
+        private bool m_fromIsDraggingContext;
+
         /// <summary>
         ///     Determines the position of the sheet when it appears.
         ///     This is a bindable property.
@@ -409,9 +411,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     _ => throw new ArgumentOutOfRangeException()
             };
 
-            if (m_fromIsOpenContext)
+            if (m_fromIsOpenContext || !m_fromIsDraggingContext)
             {
-                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 250U);
+                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
             }
             else
             {
@@ -430,6 +432,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
+
+        internal void ToggleIsDragging () => m_fromIsDraggingContext = !m_fromIsDraggingContext;
     }
 
     /// <summary>
