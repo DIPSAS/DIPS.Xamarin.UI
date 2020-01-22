@@ -2,6 +2,7 @@
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Controls.Popup;
 using DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;
+using DIPS.Xamarin.UI.Samples.Controls.Sheet;
 using DIPS.Xamarin.UI.Samples.Controls.TimePicker;
 using DIPS.Xamarin.UI.Samples.Controls.TrendGraph;
 using Xamarin.Forms;
@@ -25,8 +26,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls
             if (parameter.Equals("DatePicker")) m_navigation.PushAsync(new DatePickerPage(){Title = parameter});
             if (parameter.Equals("TimePicker")) m_navigation.PushAsync(new TimePickerPage() { Title = parameter });
             if (parameter.Equals("Popup")) m_navigation.PushAsync(new PopupPage() { Title = parameter });
+            if (parameter.Equals("Sheet")) m_navigation.PushAsync(new SheetPage() { Title = parameter });
             if (parameter.Equals("RadioButtonGroup")) m_navigation.PushAsync(new RadioButtonGroupPage() { Title = parameter });
             if (parameter.Equals("TrendGraph")) m_navigation.PushAsync(new TrendGraphPage() { Title = parameter });
+            
         }
     }
 }

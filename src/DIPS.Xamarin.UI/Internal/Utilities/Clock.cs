@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DIPS.Xamarin.UI.InternalUtils
+namespace DIPS.Xamarin.UI.Internal.Utilities
 {
     /// <summary>
     /// This class is used to control the current time.

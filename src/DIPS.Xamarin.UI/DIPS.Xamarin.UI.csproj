@@ -20,7 +20,7 @@
 
     <ItemGroup>
       <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991477" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,10 +41,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Controls\RadioButtonGroup\RadioButton.xaml">
+    <EmbeddedResource Update="Internal\Xaml\RadioButton.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\RadioButtonGroup\RadioButtonGroup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Internal\Xaml\SheetView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\LocalizedStrings\InternalLocalizedStrings.resx">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
-using DIPS.Xamarin.UI.InternalUtils;
+using DIPS.Xamarin.UI.Internal.Utilities;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;

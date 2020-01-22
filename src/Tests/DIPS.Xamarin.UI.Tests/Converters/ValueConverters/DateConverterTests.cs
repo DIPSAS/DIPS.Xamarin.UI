@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
-using DIPS.Xamarin.UI.InternalUtils;
+using DIPS.Xamarin.UI.Internal.Utilities;
 using DIPS.Xamarin.UI.Resources.LocalizedStrings;
 using FluentAssertions;
 using Xunit;

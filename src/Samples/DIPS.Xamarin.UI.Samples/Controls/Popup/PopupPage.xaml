@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxui="http://dips.xamarin.ui.com"
-             
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Popup.PopupPage">
     <ContentPage.Resources>
         <Style TargetType="Button" x:Key="popupButtonStyle">
@@ -66,10 +65,10 @@
                                           HorizontalOptions="Center"
                                           VerticalOptions="Center"/>
                                 <Button Text="Close and forget"
-                                        dxui:Popup.CloseOnClick="True"/>
+                                        dxui:Modality.CloseOnClick="True"/>
 
                                 <Button Text="Save the checkmark"
-                                        dxui:Popup.CloseOnClick="True"
+                                        dxui:Modality.CloseOnClick="True"
                                         Command="{Binding SaveCommand}"
                                         CommandParameter="{Binding}">
                                 </Button>
@@ -115,7 +114,7 @@
 
                                 <Label Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
                                        LineBreakMode="WordWrap"
-                                       dxui:Popup.CloseOnClick="True"
+                                       dxui:Modality.CloseOnClick="True"
                                        TextColor="WhiteSmoke"/>
 
                                 <Label Text="{Binding MyString}"
