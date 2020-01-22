@@ -121,7 +121,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(HasShadow),
             typeof(bool),
             typeof(SheetBehavior),
-            true);
+            false);
 
         /// <summary>
         ///     <see cref="HandleColor" />
