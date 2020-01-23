@@ -16,6 +16,20 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             InitializeComponent();
         }
+
+        private void SheetBehavior_OnOnOpen(object sender, EventArgs e)
+        {
+            if (!(sender is SheetBehavior sheetBehavior)) return;
+            var label = new Label() { };
+            label.SetBinding(Label.TextProperty, "Title");
+            sheetBehavior.SheetContent = label;
+        }
+
+        private void SheetBehavior_OnOnClose(object sender, EventArgs e)
+        {
+            if (!(sender is SheetBehavior sheetBehavior)) return;
+            sheetBehavior.SheetContent = null;
+        }
     }
 
     public class SheetPageViewModel : INotifyPropertyChanged

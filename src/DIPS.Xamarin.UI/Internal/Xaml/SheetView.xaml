@@ -44,7 +44,8 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <ContentView x:Name="sheetContentView" />
+                <ContentView x:Name="sheetContentView" 
+                             Content="{Binding SheetContent}"/>
             </Grid>
         </Grid>
     </Frame>

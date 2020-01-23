@@ -22,6 +22,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private SheetView? m_sheetView;
 
         /// <summary>
+        /// <see cref="OnBeforeOpenCommand"/>
+        /// </summary>
+        public static readonly BindableProperty OnBeforeOpenCommandProperty = BindableProperty.Create(nameof(OnBeforeOpenCommand), typeof(ICommand), typeof(SheetBehavior));
+
+        /// <summary>
+        /// <see cref="OnBeforeOpenCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty OnBeforeOpenCommandParameterProperty = BindableProperty.Create(nameof(OnBeforeOpenCommandParameter), typeof(object), typeof(SheetBehavior));
+
+        /// <summary>
         /// <see cref="OnOpenCommand"/>
         /// </summary>
         public static readonly BindableProperty OnOpenCommandProperty = BindableProperty.Create(
@@ -36,6 +46,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             BindableProperty.Create(nameof(OnOpenCommandParameter),
                 typeof(object),
                 typeof(SheetBehavior));
+
+        /// <summary>
+        /// <see cref="OnBeforeCloseCommand"/>
+        /// </summary>
+        public static readonly BindableProperty OnBeforeCloseCommandProperty = BindableProperty.Create(nameof(OnBeforeCloseCommand), typeof(ICommand), typeof(SheetBehavior));
+
+        /// <summary>
+        /// <see cref="OnBeforeCloseCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty OnBeforeCloseCommandParameterProperty = BindableProperty.Create(nameof(OnBeforeCloseCommandParameter), typeof(object), typeof(SheetBehavior));
 
         /// <summary>
         /// <see cref="OnCloseCommand"/>
@@ -89,7 +109,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(SheetContent),
             typeof(View),
             typeof(SheetView),
-            new ContentView() { HeightRequest = 100, VerticalOptions = LayoutOptions.Start });
+            new ContentView() { HeightRequest = 100, VerticalOptions = LayoutOptions.Start }, propertyChanged:OnSheetContentPropertyChanged);
+
+        private static void OnSheetContentPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is SheetBehavior sheetBehavior)) return;
+            sheetBehavior.UpdateBindingContextForSheetContent();
+        }
 
         /// <summary>
         ///     <see cref="BackgroundColor" />
@@ -165,22 +191,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(SheetBehavior),
             ColorPalette.QuinaryAir);
 
-        /// <summary>
-        /// <see cref="DrawOptions"/>
-        /// </summary>
-        public static readonly BindableProperty DrawOptionsProperty = BindableProperty.Create(nameof(DrawOptions), typeof(SheetContentDrawOptions), typeof(SheetBehavior));
-
-        /// <summary>
-        /// Determines when the sheet content should be drawn on the screen.
-        /// </summary>
-        public SheetContentDrawOptions DrawOptions
-        {
-            get => (SheetContentDrawOptions)GetValue(DrawOptionsProperty);
-            set => SetValue(DrawOptionsProperty, value);
-        }
-
         private bool m_fromIsDraggingContext;
-        private bool m_isLazyLoadingView;
 
         /// <summary>
         ///     Determines the position of the sheet when it appears.
@@ -254,12 +265,38 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// Event that gets raised when the sheet has completed it's animation and is open
+        /// Event that gets raised when the sheet is about to start it's animation to open.
+        /// </summary>
+        public event EventHandler? OnBeforeOpen;
+
+        /// <summary>
+        /// Command that execute when the sheet is about to start it's animation to open.
+        /// This is a bindable property.
+        /// </summary>
+        public ICommand OnBeforeOpenCommand
+        {
+            get => (ICommand)GetValue(OnBeforeOpenCommandProperty);
+            set => SetValue(OnBeforeOpenCommandProperty, value);
+        }
+
+        /// <summary>
+        /// Parameter to pass to <see cref="OnBeforeOpenCommand"/>.
+        /// This is a bindable property.
+        /// </summary>
+        public object OnBeforeOpenCommandParameter
+        {
+            get => (object)GetValue(OnBeforeOpenCommandParameterProperty);
+            set => SetValue(OnBeforeOpenCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// Event that gets raised when the sheet has completed it's animation and is open.
         /// </summary>
         public event EventHandler? OnOpen;
 
         /// <summary>
         /// Command that executes when the sheet has completed it's animation and is open.
+        /// This is a bindable property.
         /// </summary>
         public ICommand OnOpenCommand
         {
@@ -269,6 +306,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         /// <summary>
         /// The parameter to pass to the <see cref="OnOpenCommand"/>.
+        /// This is a bindable property.
         /// </summary>
         public object OnOpenCommandParameter
         {
@@ -277,12 +315,38 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// Event that gets raised when the sheet has completed it's animation and is closed
+        /// Event that gets raised before the sheet start it's animation when closing
+        /// </summary>
+        public event EventHandler? OnBeforeClose;
+
+        /// <summary>
+        /// Command that execute before the sheet start it's animation when closing.
+        /// This is a bindable property.
+        /// </summary>
+        public ICommand OnBeforeCloseCommand
+        {
+            get => (ICommand)GetValue(OnBeforeCloseCommandProperty);
+            set => SetValue(OnBeforeCloseCommandProperty, value);
+        }
+
+        /// <summary>
+        /// The parameter to pass to <see cref="OnBeforeCloseCommand"/>.
+        /// This is a bindable property.
+        /// </summary>
+        public object OnBeforeCloseCommandParameter
+        {
+            get => (object)GetValue(OnBeforeCloseCommandParameterProperty);
+            set => SetValue(OnBeforeCloseCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// Event that gets raised when the sheet has completed it's animation and is closed.
         /// </summary>
         public event EventHandler? OnClose;
 
         /// <summary>
         /// Command that executes when the sheet has completed it's animation and is closed.
+        /// This is a bindable property.
         /// </summary>
         public ICommand OnCloseCommand
         {
@@ -342,7 +406,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     This is a bindable property.
         ///     <remarks><see cref="BindingContextFactory" /> to set the binding context when the sheet opens</remarks>
         /// </summary>
-        public View SheetContent
+        public View? SheetContent
         {
             get => (View)GetValue(SheetContentProperty);
             set => SetValue(SheetContentProperty, value);
@@ -418,19 +482,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 return;
             }
 
-            m_isLazyLoadingView = true;
-
             if (IsOpen)
             {
+                OnBeforeOpenCommand?.Execute(OnBeforeOpenCommandParameter);
+                OnBeforeOpen?.Invoke(this, new EventArgs());
+
                 m_sheetView = new SheetView(this);
-
-                if (DrawOptions == SheetContentDrawOptions.BeforeOpen)
-                {
-                    m_sheetView.SheetContentView.Content = SheetContent;
-                }
-
                 m_sheetView.Initialize();
-                SheetContent.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
+                UpdateBindingContextForSheetContent();
 
                 //Set height / width
                 var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
@@ -451,15 +510,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 //Set position based on size of content
                 if (Position <= 0)
                 {
-                    if (DrawOptions == SheetContentDrawOptions.OnOpen)
-                    {
-                        Position = MinPosition;
-                    }
-                    else
-                    {
-                        //Calculate what size the content needs if the position is set to 0
+                    //Calculate what size the content needs if the position is set to 0
                         Position = m_sheetView.SheetContentHeightRequest / m_modalityLayout.Height;
-                    }
                 }
                 else //Set position from input
                 {
@@ -467,15 +519,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     OnOpenCommand?.Execute(OnOpenCommandParameter);
                     OnOpen?.Invoke(this, new EventArgs());
                 }
-
-                if (DrawOptions == SheetContentDrawOptions.OnOpen)
-                {
-                    m_sheetView.SheetContentView.Content = SheetContent;
-                }
             }
             else
             {
                 if (m_sheetView == null) return;
+
+                OnBeforeCloseCommand?.Execute(OnBeforeCloseCommandParameter);
+                OnBeforeClose?.Invoke(this, new EventArgs());
 
                 var y = Alignment switch { 
                         AlignmentOptions.Bottom => m_modalityLayout.Height,
@@ -490,6 +540,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             }
 
             m_fromIsOpenContext = false;
+        }
+
+        private void UpdateBindingContextForSheetContent()
+        {
+            if(SheetContent == null) return;
+            SheetContent.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
         }
 
         private async Task TranslateBasedOnPosition(bool shouldExecuteOpenedCommand = true)
@@ -594,20 +650,5 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     The content will use the entire sheet as space.
         /// </summary>
         Fill
-    }
-
-    /// <summary>
-    /// The sheet content draw options
-    /// </summary>
-    public enum SheetContentDrawOptions
-    {
-        /// <summary>
-        /// Draw the sheet content before the sheet is open, this happens the moment the sheet starts to open
-        /// </summary>
-        BeforeOpen = 0,
-        /// <summary>
-        /// Draw the sheet content when the sheet is open, this happens after the sheet has animated to it's position
-        /// </summary>
-        OnOpen
     }
 }
