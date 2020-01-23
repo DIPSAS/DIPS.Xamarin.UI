@@ -22,60 +22,36 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private SheetView? m_sheetView;
 
         /// <summary>
-        /// <see cref="OpenedCommand"/>
+        /// <see cref="OnOpenCommand"/>
         /// </summary>
-        public static readonly BindableProperty OpenedCommandProperty = BindableProperty.Create(nameof(OpenedCommand), typeof(ICommand), typeof(SheetBehavior));
+        public static readonly BindableProperty OnOpenCommandProperty = BindableProperty.Create(
+            nameof(OnOpenCommand),
+            typeof(ICommand),
+            typeof(SheetBehavior));
 
         /// <summary>
-        /// Command that executes when the sheet has completed it's animation and is open
+        /// <see cref="OnOpenCommandProperty"/>
         /// </summary>
-        public ICommand OpenedCommand
-        {
-            get => (ICommand)GetValue(OpenedCommandProperty);
-            set => SetValue(OpenedCommandProperty, value);
-        }
+        public static readonly BindableProperty OnOpenCommandParameterProperty =
+            BindableProperty.Create(nameof(OnOpenCommandParameter),
+                typeof(object),
+                typeof(SheetBehavior));
 
         /// <summary>
-        /// <see cref="OpenedCommandProperty"/>
+        /// <see cref="OnCloseCommand"/>
         /// </summary>
-        public static readonly BindableProperty OpenedCommandParameterProperty = BindableProperty.Create(nameof(OpenedCommandParameter), typeof(object), typeof(SheetBehavior));
+        public static readonly BindableProperty OnCloseCommandProperty = BindableProperty.Create(
+            nameof(OnCloseCommand),
+            typeof(ICommand),
+            typeof(SheetBehavior));
 
         /// <summary>
-        /// The parameter to pass to the <see cref="OpenedCommand"/>
+        /// <see cref="OnCloseCommandParameter"/>
         /// </summary>
-        public object OpenedCommandParameter
-        {
-            get => (object)GetValue(OpenedCommandParameterProperty);
-            set => SetValue(OpenedCommandParameterProperty, value);
-        }
-
-        /// <summary>
-        /// <see cref="ClosedCommand"/>
-        /// </summary>
-        public static readonly BindableProperty ClosedCommandProperty = BindableProperty.Create(nameof(ClosedCommand), typeof(ICommand), typeof(SheetBehavior));
-
-        /// <summary>
-        /// Command that executes when the sheet has completed it's animation and is closed
-        /// </summary>
-        public ICommand ClosedCommand
-        {
-            get => (ICommand)GetValue(ClosedCommandProperty);
-            set => SetValue(ClosedCommandProperty, value);
-        }
-
-        /// <summary>
-        /// <see cref="ClosedCommandParameter"/>
-        /// </summary>
-        public static readonly BindableProperty ClosedCommandParameterProperty = BindableProperty.Create(nameof(ClosedCommandParameter), typeof(object), typeof(SheetBehavior));
-
-        /// <summary>
-        /// The parameter to pass to the <see cref="ClosedCommand"/>
-        /// </summary>
-        public object ClosedCommandParameter
-        {
-            get => (object)GetValue(ClosedCommandParameterProperty);
-            set => SetValue(ClosedCommandParameterProperty, value);
-        }
+        public static readonly BindableProperty OnCloseCommandParameterProperty = BindableProperty.Create(
+            nameof(OnCloseCommandParameter),
+            typeof(object),
+            typeof(SheetBehavior));
 
         /// <summary>
         ///     <see cref="VerticalContentAlignment" />
@@ -263,6 +239,42 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
+        /// Command that executes when the sheet has completed it's animation and is open
+        /// </summary>
+        public ICommand OnOpenCommand
+        {
+            get => (ICommand)GetValue(OnOpenCommandProperty);
+            set => SetValue(OnOpenCommandProperty, value);
+        }
+
+        /// <summary>
+        /// The parameter to pass to the <see cref="OnOpenCommand"/>
+        /// </summary>
+        public object OnOpenCommandParameter
+        {
+            get => GetValue(OnOpenCommandParameterProperty);
+            set => SetValue(OnOpenCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// Command that executes when the sheet has completed it's animation and is closed
+        /// </summary>
+        public ICommand OnCloseCommand
+        {
+            get => (ICommand)GetValue(OnCloseCommandProperty);
+            set => SetValue(OnCloseCommandProperty, value);
+        }
+
+        /// <summary>
+        /// The parameter to pass to the <see cref="OnCloseCommand"/>
+        /// </summary>
+        public object OnCloseCommandParameter
+        {
+            get => GetValue(OnCloseCommandParameterProperty);
+            set => SetValue(OnCloseCommandParameterProperty, value);
+        }
+
+        /// <summary>
         ///     Determines the maximum position of the sheet when it is visible.
         ///     This is a bindable property.
         /// </summary>
@@ -417,7 +429,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 else //Set position from input
                 {
                     await TranslateBasedOnPosition(false);
-                    OpenedCommand?.Execute(OpenedCommandParameter);
+                    OnOpenCommand?.Execute(OnOpenCommandParameter);
                 }
             }
             else { 
@@ -426,7 +438,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                         AlignmentOptions.Top => -m_modalityLayout.Height,
                         _ => throw new ArgumentOutOfRangeException()
                     };
-                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y), () => ClosedCommand?.Execute(ClosedCommandParameter));
+                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y), () => OnCloseCommand?.Execute(OnCloseCommandParameter));
             }
 
             m_fromIsOpenContext = false;
@@ -475,9 +487,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
                 if (shouldExecuteOpenedCommand)
                 {
-                    OpenedCommand?.Execute(OpenedCommandParameter);
+                    OnOpenCommand?.Execute(OnOpenCommandParameter);
                 }
-                
             }
             else
             {

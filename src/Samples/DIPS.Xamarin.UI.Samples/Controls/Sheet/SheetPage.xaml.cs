@@ -35,8 +35,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         public SheetPageViewModel()
         {
             OpenSheetCommand = new Command(() => IsSheetOpen = true);
-            OpenedCommand = new Command<string>(SheetOpened);
-            ClosedCommand = new Command<string>(SheetClosed);
+            OnOpenCommand = new Command<string>(SheetOpened);
+            OnCloseCommand = new Command<string>(SheetClosed);
         }
 
         private void SheetClosed(string commandParameter)
@@ -141,9 +141,9 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
 
         public ICommand OpenSheetCommand { get; }
 
-        public ICommand OpenedCommand { get; }
+        public ICommand OnOpenCommand { get; }
 
-        public ICommand ClosedCommand { get; }
+        public ICommand OnCloseCommand { get; }
 
         public string StateText
         {
