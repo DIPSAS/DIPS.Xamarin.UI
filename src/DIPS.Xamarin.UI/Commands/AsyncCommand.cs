@@ -36,28 +36,32 @@ namespace DIPS.Xamarin.UI.Commands
         }
 
         /// <inheritdoc />
-        public bool CanExecute(object parameter) => m_canExecute();
+        public bool CanExecute(object? parameter) => m_canExecute();
 
         /// <inheritdoc />
-        public Task ExecuteAsync() => m_execute();
+        public Task ExecuteAsync()
+        {
+            try
+            {
+                if (!CanExecute(null))
+                {
+                    return Task.CompletedTask;
+                }
+
+                return m_execute();
+            }
+            catch (Exception exception)
+            {
+                m_onException(exception);
+                return Task.CompletedTask;
+            }
+        }
 
 #pragma warning disable RECS0165
         /// <inheritdoc />
         public async void Execute(object parameter)
         {
-            try
-            {
-                if (!CanExecute(parameter))
-                {
-                    return;
-                }
-
-                await ExecuteAsync();
-            }
-            catch (Exception exception)
-            {
-                m_onException(exception);
-            }
+            await ExecuteAsync();
         }
 #pragma warning restore RECS0165
 
@@ -114,25 +118,31 @@ namespace DIPS.Xamarin.UI.Commands
         }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(T value) => m_execute(value);
+        public Task ExecuteAsync(T value)
+        {
+            if (value == null) return Task.CompletedTask;
+            try
+            {
+                if (!(value is T actualValue) || !m_canExecute(actualValue))
+                {
+                    return Task.CompletedTask;
+                }
+
+                return m_execute(actualValue);
+            }
+            catch (Exception exception)
+            {
+                m_onException(exception);
+                return Task.CompletedTask;
+            }
+        }
 
 #pragma warning disable RECS0165
         /// <inheritdoc />
         public async void Execute(object parameter)
         {
-            try
-            {
-                if(!(parameter is T value) || !m_canExecute(value))
-                {
-                    return;
-                }
-
-                await ExecuteAsync(value);
-            }
-            catch (Exception exception)
-            {
-                m_onException(exception);
-            }
+            if (!(parameter is T value)) return;
+            await ExecuteAsync(value);
         }
 #pragma warning restore RECS0165
 
