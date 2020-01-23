@@ -393,13 +393,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 return;
             }
 
-            if (m_sheetView == null)
-            {
-                m_sheetView = new SheetView(this);
-            }
-
             if (IsOpen)
             {
+                m_sheetView = new SheetView(this);
                 m_sheetView.Initialize();
                 SheetContent.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
 
@@ -432,7 +428,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     OnOpenCommand?.Execute(OnOpenCommandParameter);
                 }
             }
-            else { 
+            else
+            {
+                if (m_sheetView == null) return;
+
                 var y = Alignment switch { 
                         AlignmentOptions.Bottom => m_modalityLayout.Height,
                         AlignmentOptions.Top => -m_modalityLayout.Height,
