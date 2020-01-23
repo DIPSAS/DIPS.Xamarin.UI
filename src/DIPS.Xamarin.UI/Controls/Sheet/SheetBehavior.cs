@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Modality;
 using DIPS.Xamarin.UI.Internal.xaml;
 using DIPS.Xamarin.UI.Resources.Colors;
@@ -19,6 +20,62 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private ModalityLayout? m_modalityLayout;
 
         private SheetView? m_sheetView;
+
+        /// <summary>
+        /// <see cref="OpenedCommand"/>
+        /// </summary>
+        public static readonly BindableProperty OpenedCommandProperty = BindableProperty.Create(nameof(OpenedCommand), typeof(ICommand), typeof(SheetBehavior));
+
+        /// <summary>
+        /// Command that executes when the sheet has completed it's animation and is open
+        /// </summary>
+        public ICommand OpenedCommand
+        {
+            get => (ICommand)GetValue(OpenedCommandProperty);
+            set => SetValue(OpenedCommandProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="OpenedCommandProperty"/>
+        /// </summary>
+        public static readonly BindableProperty OpenedCommandParameterProperty = BindableProperty.Create(nameof(OpenedCommandParameter), typeof(object), typeof(SheetBehavior));
+
+        /// <summary>
+        /// The parameter to pass to the <see cref="OpenedCommand"/>
+        /// </summary>
+        public object OpenedCommandParameter
+        {
+            get => (object)GetValue(OpenedCommandParameterProperty);
+            set => SetValue(OpenedCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="ClosedCommand"/>
+        /// </summary>
+        public static readonly BindableProperty ClosedCommandProperty = BindableProperty.Create(nameof(ClosedCommand), typeof(ICommand), typeof(SheetBehavior));
+
+        /// <summary>
+        /// Command that executes when the sheet has completed it's animation and is closed
+        /// </summary>
+        public ICommand ClosedCommand
+        {
+            get => (ICommand)GetValue(ClosedCommandProperty);
+            set => SetValue(ClosedCommandProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="ClosedCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty ClosedCommandParameterProperty = BindableProperty.Create(nameof(ClosedCommandParameter), typeof(object), typeof(SheetBehavior));
+
+        /// <summary>
+        /// The parameter to pass to the <see cref="ClosedCommand"/>
+        /// </summary>
+        public object ClosedCommandParameter
+        {
+            get => (object)GetValue(ClosedCommandParameterProperty);
+            set => SetValue(ClosedCommandParameterProperty, value);
+        }
 
         /// <summary>
         ///     <see cref="VerticalContentAlignment" />
@@ -350,15 +407,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
-                //Set position from input
+                
+                //Set position based on size of content
                 if (Position <= 0)
                 {
                     //Calculate what size the content needs if the position is set to 0
                     Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
                 }
-                else
+                else //Set position from input
                 {
-                    await TranslateBasedOnPosition();
+                    await TranslateBasedOnPosition(false);
+                    OpenedCommand?.Execute(OpenedCommandParameter);
                 }
             }
             else { 
@@ -367,14 +426,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                         AlignmentOptions.Top => -m_modalityLayout.Height,
                         _ => throw new ArgumentOutOfRangeException()
                     };
-
-                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y));
+                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y), () => ClosedCommand?.Execute(ClosedCommandParameter));
             }
 
             m_fromIsOpenContext = false;
         }
 
-        private async Task TranslateBasedOnPosition()
+        private async Task TranslateBasedOnPosition(bool shouldExecuteOpenedCommand = true)
         {
             if (!IsOpen) return;
             if (m_modalityLayout == null) return;
@@ -414,6 +472,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_fromIsOpenContext || !m_fromIsDraggingContext)
             {
                 await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
+
+                if (shouldExecuteOpenedCommand)
+                {
+                    OpenedCommand?.Execute(OpenedCommandParameter);
+                }
+                
             }
             else
             {
