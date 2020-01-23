@@ -17,6 +17,10 @@
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
             <dxui:SheetBehavior IsOpen="{Binding IsSheetOpen}"
+                                OnOpenCommand="{Binding OnOpenCommand}"
+                                OnOpenCommandParameter="Opened"
+                                OnCloseCommand="{Binding OnCloseCommand}"
+                                OnCloseCommandParameter="Closed"
                                 IsDraggable="{Binding IsDraggable}"
                                 Alignment="{Binding Alignment}"
                                 VerticalContentAlignment="{Binding VerticalContentAlignment}"
@@ -204,6 +208,8 @@
                        Text="{Binding MaxPosition}" />
             </Grid>
 
+            <Label Text="{Binding StateText, StringFormat='State: {0}'}"
+                   IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}"/>
             <Button Text="Open sheet"
                     Command="{Binding OpenSheetCommand}" />
 

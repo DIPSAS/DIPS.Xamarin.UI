@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Modality;
 using DIPS.Xamarin.UI.Internal.xaml;
 using DIPS.Xamarin.UI.Resources.Colors;
@@ -19,6 +20,38 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private ModalityLayout? m_modalityLayout;
 
         private SheetView? m_sheetView;
+
+        /// <summary>
+        /// <see cref="OnOpenCommand"/>
+        /// </summary>
+        public static readonly BindableProperty OnOpenCommandProperty = BindableProperty.Create(
+            nameof(OnOpenCommand),
+            typeof(ICommand),
+            typeof(SheetBehavior));
+
+        /// <summary>
+        /// <see cref="OnOpenCommandProperty"/>
+        /// </summary>
+        public static readonly BindableProperty OnOpenCommandParameterProperty =
+            BindableProperty.Create(nameof(OnOpenCommandParameter),
+                typeof(object),
+                typeof(SheetBehavior));
+
+        /// <summary>
+        /// <see cref="OnCloseCommand"/>
+        /// </summary>
+        public static readonly BindableProperty OnCloseCommandProperty = BindableProperty.Create(
+            nameof(OnCloseCommand),
+            typeof(ICommand),
+            typeof(SheetBehavior));
+
+        /// <summary>
+        /// <see cref="OnCloseCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty OnCloseCommandParameterProperty = BindableProperty.Create(
+            nameof(OnCloseCommandParameter),
+            typeof(object),
+            typeof(SheetBehavior));
 
         /// <summary>
         ///     <see cref="VerticalContentAlignment" />
@@ -206,6 +239,42 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
+        /// Command that executes when the sheet has completed it's animation and is open
+        /// </summary>
+        public ICommand OnOpenCommand
+        {
+            get => (ICommand)GetValue(OnOpenCommandProperty);
+            set => SetValue(OnOpenCommandProperty, value);
+        }
+
+        /// <summary>
+        /// The parameter to pass to the <see cref="OnOpenCommand"/>
+        /// </summary>
+        public object OnOpenCommandParameter
+        {
+            get => GetValue(OnOpenCommandParameterProperty);
+            set => SetValue(OnOpenCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// Command that executes when the sheet has completed it's animation and is closed
+        /// </summary>
+        public ICommand OnCloseCommand
+        {
+            get => (ICommand)GetValue(OnCloseCommandProperty);
+            set => SetValue(OnCloseCommandProperty, value);
+        }
+
+        /// <summary>
+        /// The parameter to pass to the <see cref="OnCloseCommand"/>
+        /// </summary>
+        public object OnCloseCommandParameter
+        {
+            get => GetValue(OnCloseCommandParameterProperty);
+            set => SetValue(OnCloseCommandParameterProperty, value);
+        }
+
+        /// <summary>
         ///     Determines the maximum position of the sheet when it is visible.
         ///     This is a bindable property.
         /// </summary>
@@ -350,15 +419,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
-                //Set position from input
+                
+                //Set position based on size of content
                 if (Position <= 0)
                 {
                     //Calculate what size the content needs if the position is set to 0
                     Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
                 }
-                else
+                else //Set position from input
                 {
-                    await TranslateBasedOnPosition();
+                    await TranslateBasedOnPosition(false);
+                    OnOpenCommand?.Execute(OnOpenCommandParameter);
                 }
             }
             else { 
@@ -367,14 +438,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                         AlignmentOptions.Top => -m_modalityLayout.Height,
                         _ => throw new ArgumentOutOfRangeException()
                     };
-
-                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y));
+                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y), () => OnCloseCommand?.Execute(OnCloseCommandParameter));
             }
 
             m_fromIsOpenContext = false;
         }
 
-        private async Task TranslateBasedOnPosition()
+        private async Task TranslateBasedOnPosition(bool shouldExecuteOpenedCommand = true)
         {
             if (!IsOpen) return;
             if (m_modalityLayout == null) return;
@@ -414,6 +484,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_fromIsOpenContext || !m_fromIsDraggingContext)
             {
                 await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
+
+                if (shouldExecuteOpenedCommand)
+                {
+                    OnOpenCommand?.Execute(OnOpenCommandParameter);
+                }
             }
             else
             {

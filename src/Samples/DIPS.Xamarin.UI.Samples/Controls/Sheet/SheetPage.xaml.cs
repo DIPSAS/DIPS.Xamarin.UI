@@ -30,10 +30,25 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private double m_position;
         private double m_maxPosition = 1;
         private double m_minPosition = 0.1;
+        private string m_stateText;
 
         public SheetPageViewModel()
         {
             OpenSheetCommand = new Command(() => IsSheetOpen = true);
+            OnOpenCommand = new Command<string>(SheetOpened);
+            OnCloseCommand = new Command<string>(SheetClosed);
+        }
+
+        private void SheetClosed(string commandParameter)
+        {
+            //This is when the sheet has finished it's animation and is closed
+            StateText = commandParameter;
+        }
+
+        private void SheetOpened(string commandParameter)
+        {
+            //This is when the sheet has finished it's animation and is open
+            StateText = commandParameter;
         }
 
         public AlignmentOptions Alignment
@@ -125,6 +140,16 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         }
 
         public ICommand OpenSheetCommand { get; }
+
+        public ICommand OnOpenCommand { get; }
+
+        public ICommand OnCloseCommand { get; }
+
+        public string StateText
+        {
+            get => m_stateText;
+            set => PropertyChanged.RaiseWhenSet(ref m_stateText, value);
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
