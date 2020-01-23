@@ -20,7 +20,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private ModalityLayout? m_modalityLayout;
 
         private SheetView? m_sheetView;
-
+        public event EventHandler? OnOpen;
+        public event EventHandler? OnClose;
         /// <summary>
         /// <see cref="OnOpenCommand"/>
         /// </summary>
@@ -426,6 +427,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 {
                     await TranslateBasedOnPosition(false);
                     OnOpenCommand?.Execute(OnOpenCommandParameter);
+                    OnOpen?.Invoke(this, new EventArgs());
                 }
             }
             else
@@ -437,7 +439,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                         AlignmentOptions.Top => -m_modalityLayout.Height,
                         _ => throw new ArgumentOutOfRangeException()
                     };
-                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y), () => OnCloseCommand?.Execute(OnCloseCommandParameter));
+                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y), () =>
+                {
+                    OnCloseCommand?.Execute(OnCloseCommandParameter);
+                    OnClose?.Invoke(this, new EventArgs());
+                });
             }
 
             m_fromIsOpenContext = false;
@@ -487,6 +493,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 if (shouldExecuteOpenedCommand)
                 {
                     OnOpenCommand?.Execute(OnOpenCommandParameter);
+                    OnOpen?.Invoke(this, new EventArgs());
                 }
             }
             else
