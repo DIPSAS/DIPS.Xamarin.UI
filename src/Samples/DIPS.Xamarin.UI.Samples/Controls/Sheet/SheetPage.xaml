@@ -30,7 +30,8 @@
                                 Position="{Binding Position}"
                                 MinPosition="{Binding MinPosition}"
                                 MaxPosition="{Binding MaxPosition}"
-                                BindingContextFactory="{Binding SheetViewModelFactory}">
+                                BindingContextFactory="{Binding SheetViewModelFactory}"
+                                DrawOptions="OnOpen">
                 <StackLayout>
                     <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
                     <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />

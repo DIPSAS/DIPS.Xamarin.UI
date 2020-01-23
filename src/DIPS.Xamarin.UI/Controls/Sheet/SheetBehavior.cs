@@ -20,8 +20,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private ModalityLayout? m_modalityLayout;
 
         private SheetView? m_sheetView;
-        public event EventHandler? OnOpen;
-        public event EventHandler? OnClose;
+
         /// <summary>
         /// <see cref="OnOpenCommand"/>
         /// </summary>
@@ -166,7 +165,22 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(SheetBehavior),
             ColorPalette.QuinaryAir);
 
+        /// <summary>
+        /// <see cref="DrawOptions"/>
+        /// </summary>
+        public static readonly BindableProperty DrawOptionsProperty = BindableProperty.Create(nameof(DrawOptions), typeof(SheetContentDrawOptions), typeof(SheetBehavior));
+
+        /// <summary>
+        /// Determines when the sheet content should be drawn on the screen.
+        /// </summary>
+        public SheetContentDrawOptions DrawOptions
+        {
+            get => (SheetContentDrawOptions)GetValue(DrawOptionsProperty);
+            set => SetValue(DrawOptionsProperty, value);
+        }
+
         private bool m_fromIsDraggingContext;
+        private bool m_isLazyLoadingView;
 
         /// <summary>
         ///     Determines the position of the sheet when it appears.
@@ -240,7 +254,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// Command that executes when the sheet has completed it's animation and is open
+        /// Event that gets raised when the sheet has completed it's animation and is open
+        /// </summary>
+        public event EventHandler? OnOpen;
+
+        /// <summary>
+        /// Command that executes when the sheet has completed it's animation and is open.
         /// </summary>
         public ICommand OnOpenCommand
         {
@@ -249,7 +268,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// The parameter to pass to the <see cref="OnOpenCommand"/>
+        /// The parameter to pass to the <see cref="OnOpenCommand"/>.
         /// </summary>
         public object OnOpenCommandParameter
         {
@@ -258,7 +277,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// Command that executes when the sheet has completed it's animation and is closed
+        /// Event that gets raised when the sheet has completed it's animation and is closed
+        /// </summary>
+        public event EventHandler? OnClose;
+
+        /// <summary>
+        /// Command that executes when the sheet has completed it's animation and is closed.
         /// </summary>
         public ICommand OnCloseCommand
         {
@@ -267,7 +291,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// The parameter to pass to the <see cref="OnCloseCommand"/>
+        /// The parameter to pass to the <see cref="OnCloseCommand"/>.
         /// </summary>
         public object OnCloseCommandParameter
         {
@@ -394,9 +418,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 return;
             }
 
+            m_isLazyLoadingView = true;
+
             if (IsOpen)
             {
                 m_sheetView = new SheetView(this);
+
+                if (DrawOptions == SheetContentDrawOptions.BeforeOpen)
+                {
+                    m_sheetView.SheetContentView.Content = SheetContent;
+                }
+
                 m_sheetView.Initialize();
                 SheetContent.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
 
@@ -416,18 +448,29 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
-                
                 //Set position based on size of content
                 if (Position <= 0)
                 {
-                    //Calculate what size the content needs if the position is set to 0
-                    Position = m_sheetView.SheetContentHeighRequest / m_modalityLayout.Height;
+                    if (DrawOptions == SheetContentDrawOptions.OnOpen)
+                    {
+                        Position = MinPosition;
+                    }
+                    else
+                    {
+                        //Calculate what size the content needs if the position is set to 0
+                        Position = m_sheetView.SheetContentHeightRequest / m_modalityLayout.Height;
+                    }
                 }
                 else //Set position from input
                 {
                     await TranslateBasedOnPosition(false);
                     OnOpenCommand?.Execute(OnOpenCommandParameter);
                     OnOpen?.Invoke(this, new EventArgs());
+                }
+
+                if (DrawOptions == SheetContentDrawOptions.OnOpen)
+                {
+                    m_sheetView.SheetContentView.Content = SheetContent;
                 }
             }
             else
@@ -551,5 +594,20 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     The content will use the entire sheet as space.
         /// </summary>
         Fill
+    }
+
+    /// <summary>
+    /// The sheet content draw options
+    /// </summary>
+    public enum SheetContentDrawOptions
+    {
+        /// <summary>
+        /// Draw the sheet content before the sheet is open, this happens the moment the sheet starts to open
+        /// </summary>
+        BeforeOpen = 0,
+        /// <summary>
+        /// Draw the sheet content when the sheet is open, this happens after the sheet has animated to it's position
+        /// </summary>
+        OnOpen
     }
 }
