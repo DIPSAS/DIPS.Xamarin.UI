@@ -31,9 +31,7 @@
                                 MinPosition="{Binding MinPosition}"
                                 MaxPosition="{Binding MaxPosition}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
-                                OnOpen="SheetBehavior_OnOnOpen"
-                                OnClose="SheetBehavior_OnOnClose"
-                                >
+                            >
             </dxui:SheetBehavior>
         </dxui:ModalityLayout.Behaviors>
 
