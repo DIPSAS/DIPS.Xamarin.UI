@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DIPS.Xamarin.UI.Controls.Modality
 {
@@ -10,8 +11,20 @@ namespace DIPS.Xamarin.UI.Controls.Modality
     public interface IModalityHandler
     {
         /// <summary>
-        /// Hides the modality component
+        /// Method that gets invoked when the user clicks the overlay and wants to hide the modal component
         /// </summary>
         void Hide();
+
+        /// <summary>
+        /// Task that should be ran before removal of the current modal component
+        /// </summary>
+        /// <returns></returns>
+        Task BeforeRemoval();
+
+        /// <summary>
+        /// Task that should be ran after removal of the current modal component
+        /// </summary>
+        /// <returns></returns>
+        Task AfterRemoval();
     }
 }

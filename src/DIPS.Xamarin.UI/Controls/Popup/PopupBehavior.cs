@@ -102,6 +102,17 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             IsOpen = false;
         }
 
+        /// <inheritdoc />
+        public async Task BeforeRemoval()
+        {
+            if (Content == null) return;
+
+            await AnimateBack(Content);
+        }
+
+        /// <inheritdoc />
+        public Task AfterRemoval() => Task.CompletedTask;
+
         /// <summary>
         ///     Handels attaching to item.
         /// </summary>
@@ -317,7 +328,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
 
             if (Content == null) return;
 
-            layout.Hide(Content, AnimateBack(Content));
+            layout.Hide(Content);
         }
     }
 

@@ -428,6 +428,31 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             IsOpen = false;
         }
 
+        /// <inheritdoc />
+        public async Task BeforeRemoval()
+        {
+            if (m_modalityLayout == null) return;
+            if (m_sheetView == null) return;
+
+            var y = Alignment switch
+            {
+                AlignmentOptions.Bottom => m_modalityLayout.Height,
+                AlignmentOptions.Top => -m_modalityLayout.Height,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
+        }
+
+        /// <inheritdoc />
+        public Task AfterRemoval()
+        {
+            OnCloseCommand?.Execute(OnCloseCommandParameter);
+            OnClose?.Invoke(this, new EventArgs());
+
+            return Task.CompletedTask;
+        }
+
         private static async void OnPositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is SheetBehavior sheetBehavior)) return;
@@ -527,16 +552,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 OnBeforeCloseCommand?.Execute(OnBeforeCloseCommandParameter);
                 OnBeforeClose?.Invoke(this, new EventArgs());
 
-                var y = Alignment switch { 
-                        AlignmentOptions.Bottom => m_modalityLayout.Height,
-                        AlignmentOptions.Top => -m_modalityLayout.Height,
-                        _ => throw new ArgumentOutOfRangeException()
-                    };
-                m_modalityLayout.Hide(m_sheetView.SheetFrame, m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y), () =>
-                {
-                    OnCloseCommand?.Execute(OnCloseCommandParameter);
-                    OnClose?.Invoke(this, new EventArgs());
-                });
+                m_modalityLayout.Hide(m_sheetView.SheetFrame);
             }
 
             m_fromIsOpenContext = false;
