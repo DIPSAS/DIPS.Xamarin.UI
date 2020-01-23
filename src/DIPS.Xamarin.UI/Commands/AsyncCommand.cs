@@ -39,21 +39,20 @@ namespace DIPS.Xamarin.UI.Commands
         public bool CanExecute(object? parameter) => m_canExecute();
 
         /// <inheritdoc />
-        public Task ExecuteAsync()
+        public async Task ExecuteAsync()
         {
             try
             {
                 if (!CanExecute(null))
                 {
-                    return Task.CompletedTask;
+                    return;
                 }
 
-                return m_execute();
+                await m_execute();
             }
             catch (Exception exception)
             {
                 m_onException(exception);
-                return Task.CompletedTask;
             }
         }
 
@@ -118,31 +117,30 @@ namespace DIPS.Xamarin.UI.Commands
         }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(T value)
+        public async Task ExecuteAsync(T value)
         {
-            if (value == null) return Task.CompletedTask;
+            if (value == null) return;
             try
             {
                 if (!(value is T actualValue) || !m_canExecute(actualValue))
                 {
-                    return Task.CompletedTask;
+                    return;
                 }
 
-                return m_execute(actualValue);
+                await m_execute(actualValue);
             }
             catch (Exception exception)
             {
                 m_onException(exception);
-                return Task.CompletedTask;
             }
         }
 
 #pragma warning disable RECS0165
         /// <inheritdoc />
-        public async void Execute(object parameter)
+        public void Execute(object parameter)
         {
             if (!(parameter is T value)) return;
-            await ExecuteAsync(value);
+            ExecuteAsync(value);
         }
 #pragma warning restore RECS0165
 
