@@ -169,8 +169,6 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// </summary>
         /// <remarks>Also hides the overlay</remarks>
         /// <param name="view"></param>
-        /// <param name="beforeRemovalTask">Optional task that</param>
-        /// <param name="finishedHidingCallback">A callback that will get invoked when the view is not visible anymore</param>
         public async void Hide(View view)
         {
             if (!relativeLayout.Children.Contains(view)) return;
