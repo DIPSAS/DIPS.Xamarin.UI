@@ -195,7 +195,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             if (m_currentShowingModalityHandler == null) return;
             if (m_currentView == null) return;
 
-            if (e.Element == m_currentView)
+            if (!relativeLayout.Children.Contains(m_currentView))
             {
                 m_currentShowingModalityHandler.AfterRemoval();
                 m_currentView = null;
