@@ -36,28 +36,31 @@ namespace DIPS.Xamarin.UI.Commands
         }
 
         /// <inheritdoc />
-        public bool CanExecute(object parameter) => m_canExecute();
+        public bool CanExecute(object? parameter) => m_canExecute();
 
         /// <inheritdoc />
-        public Task ExecuteAsync() => m_execute();
-
-#pragma warning disable RECS0165
-        /// <inheritdoc />
-        public async void Execute(object parameter)
+        public async Task ExecuteAsync()
         {
             try
             {
-                if (!CanExecute(parameter))
+                if (!CanExecute(null))
                 {
                     return;
                 }
 
-                await ExecuteAsync();
+                await m_execute();
             }
             catch (Exception exception)
             {
                 m_onException(exception);
             }
+        }
+
+#pragma warning disable RECS0165
+        /// <inheritdoc />
+        public async void Execute(object parameter)
+        {
+            await ExecuteAsync();
         }
 #pragma warning restore RECS0165
 
@@ -114,25 +117,30 @@ namespace DIPS.Xamarin.UI.Commands
         }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(T value) => m_execute(value);
-
-#pragma warning disable RECS0165
-        /// <inheritdoc />
-        public async void Execute(object parameter)
+        public async Task ExecuteAsync(T value)
         {
+            if (value == null) return;
             try
             {
-                if(!(parameter is T value) || !m_canExecute(value))
+                if (!(value is T actualValue) || !m_canExecute(actualValue))
                 {
                     return;
                 }
 
-                await ExecuteAsync(value);
+                await m_execute(actualValue);
             }
             catch (Exception exception)
             {
                 m_onException(exception);
             }
+        }
+
+#pragma warning disable RECS0165
+        /// <inheritdoc />
+        public void Execute(object parameter)
+        {
+            if (!(parameter is T value)) return;
+            ExecuteAsync(value);
         }
 #pragma warning restore RECS0165
 
