@@ -4,11 +4,17 @@ using Xamarin.Forms;
 using System.Collections.Generic;
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
+    /// <summary>
+    /// To be added
+    /// </summary>
     public class SlidableLayout : ContentView
     {
         private int m_lastId = -1;
         private double m_startSlideLocation;
         private int m_lastIndex = int.MinValue;
+        /// <summary>
+        /// To be added
+        /// </summary>
         public SlidableLayout()
         {
             ElementWidth = 0.2;
@@ -32,6 +38,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             me.OnScrolledInternal();
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
@@ -71,12 +82,21 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             return (dist-Width/2) / width;
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         protected double CalculateDist(double index)
         {
             var width = GetItemWidth();
             return index * width + Width / 2;
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
+        /// <returns></returns>
         protected double GetItemWidth()
         {
             if (!WidthIsProportional) return ElementWidth;
@@ -95,26 +115,45 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             OnScrolled((SlideProperties.Position+0.5), Width / 2 - GetItemWidth()/2, index);
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="offset"></param>
+        /// <param name="selectedIndex"></param>
         protected virtual void OnScrolled(double index, double offset, int selectedIndex)
         {
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
+        /// <param name="location"></param>
         protected virtual void OnClick(int location)
         {
             // On click is only for when a tap gesture is done and we enble tap. 
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public static readonly BindableProperty ConfigProperty = BindableProperty.Create(
             nameof(Config),
             typeof(SliderConfig),
             typeof(SlidableLayout));
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public SliderConfig Config
         {
             get => (SliderConfig)GetValue(ConfigProperty);
             set => SetValue(ConfigProperty, value);
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public static readonly BindableProperty SlidePropertiesProperty = BindableProperty.Create(
             nameof(SlideProperties),
             typeof(SlidableProperties),
@@ -122,39 +161,60 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             defaultBindingMode: BindingMode.TwoWay,
             propertyChanged: OnChanged);
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public SlidableProperties SlideProperties
         {
             get => (SlidableProperties)GetValue(SlidePropertiesProperty);
             set => SetValue(SlidePropertiesProperty, value);
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(
             nameof(SelectedItemChangedCommand),
             typeof(ICommand),
             typeof(SlidableLayout));
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public ICommand SelectedItemChangedCommand
         {
             get => (ICommand)GetValue(SelectedItemChangedCommandProperty);
             set => SetValue(SelectedItemChangedCommandProperty, value);
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public static readonly BindableProperty ElementWidthProperty = BindableProperty.Create(
             nameof(ElementWidth),
             typeof(double),
             typeof(SlidableLayout));
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public double ElementWidth
         {
             get => (double)GetValue(ElementWidthProperty);
             set => SetValue(ElementWidthProperty, value);
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public static readonly BindableProperty WidthIsProportionalProperty = BindableProperty.Create(
             nameof(WidthIsProportional),
             typeof(bool),
             typeof(SlidableLayout));
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public bool WidthIsProportional
         {
             get => (bool)GetValue(WidthIsProportionalProperty);

@@ -2,8 +2,14 @@
 using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
+    /// <summary>
+    /// To be added
+    /// </summary>
     public class DefaultSliderView : BoxView, ISliderSelectable
     {
+        /// <summary>
+        /// To be added
+        /// </summary>
         public DefaultSliderView()
         {
             Margin = 0;
@@ -14,6 +20,10 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             VerticalOptions = LayoutOptions.Center;
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
+        /// <param name="selected"></param>
         public void OnSelectionChanged(bool selected)
         {
             if (selected)

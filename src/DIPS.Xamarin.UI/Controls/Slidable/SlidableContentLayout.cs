@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
+    /// <summary>
+    /// To be added
+    /// </summary>
     [ContentProperty(nameof(ItemTemplate))]
     public class SlidableContentLayout : SlidableLayout
     {
@@ -13,7 +16,12 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             Content = m_container;
             m_container.IsClippedToBounds = true;
         }
-
+        /// <summary>
+        /// To be added
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="offset"></param>
+        /// <param name="selectedIndex"></param>
         protected override void OnScrolled(double index, double offset, int selectedIndex)
         {
             if (Width < 0.1) return;
@@ -53,23 +61,34 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             return element;
         }
 
-
+        /// <summary>
+        /// To be added
+        /// </summary>
         public static readonly BindableProperty BindingContextFactoryProperty = BindableProperty.Create(
             nameof(BindingContextFactory),
             typeof(Func<int, object>),
             typeof(SlidableLayout));
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public Func<int, object> BindingContextFactory
         {
             get { return (Func<int, object>)GetValue(BindingContextFactoryProperty); }
             set { SetValue(BindingContextFactoryProperty, value); }
         }
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(
             nameof(ItemTemplate),
             typeof(DataTemplate),
             typeof(SlidableLayout));
 
+        /// <summary>
+        /// To be added
+        /// </summary>
         public DataTemplate ItemTemplate
         {
             get => (DataTemplate)GetValue(ItemTemplateProperty);
