@@ -32,7 +32,17 @@
                                 MaxPosition="{Binding MaxPosition}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                             >
-                <Label Text="Lol"/>
+                <StackLayout>
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Entry x:Name="entry"
+                           Placeholder="TextEntry" />
+                    <Button Text="Close sheet"
+                            dxui:Modality.CloseOnClick="True" />
+                </StackLayout>
             </dxui:SheetBehavior>
         </dxui:ModalityLayout.Behaviors>
 
