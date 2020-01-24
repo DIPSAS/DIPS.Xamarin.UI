@@ -11,6 +11,9 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
     {
         private readonly Dictionary<int, View> m_viewMapping = new Dictionary<int, View>();
         private readonly AbsoluteLayout m_container = new AbsoluteLayout();
+        /// <summary>
+        /// To be added
+        /// </summary>
         public SlidableContentLayout()
         {
             Content = m_container;
