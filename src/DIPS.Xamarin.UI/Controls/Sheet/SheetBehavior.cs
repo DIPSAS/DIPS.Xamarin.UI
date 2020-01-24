@@ -448,7 +448,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         public Task AfterRemoval()
         {
             OnCloseCommand?.Execute(OnCloseCommandParameter);
-            OnClose?.Invoke(this, new EventArgs());
+            OnClose?.Invoke(this, EventArgs.Empty);
 
             return Task.CompletedTask;
         }
@@ -510,7 +510,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (IsOpen)
             {
                 OnBeforeOpenCommand?.Execute(OnBeforeOpenCommandParameter);
-                OnBeforeOpen?.Invoke(this, new EventArgs());
+                OnBeforeOpen?.Invoke(this, EventArgs.Empty);
 
                 m_sheetView = new SheetView(this);
                 m_sheetView.Initialize();
@@ -542,7 +542,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 {
                     await TranslateBasedOnPosition(false);
                     OnOpenCommand?.Execute(OnOpenCommandParameter);
-                    OnOpen?.Invoke(this, new EventArgs());
+                    OnOpen?.Invoke(this, EventArgs.Empty);
                 }
             }
             else
@@ -550,7 +550,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 if (m_sheetView == null) return;
 
                 OnBeforeCloseCommand?.Execute(OnBeforeCloseCommandParameter);
-                OnBeforeClose?.Invoke(this, new EventArgs());
+                OnBeforeClose?.Invoke(this, EventArgs.Empty);
 
                 m_modalityLayout.Hide(m_sheetView.SheetFrame);
             }
@@ -598,7 +598,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             var yTranslation = Alignment switch { 
                     AlignmentOptions.Bottom => m_sheetView.SheetFrame.Height * (1 - Position), 
                     AlignmentOptions.Top => -m_sheetView.SheetFrame.Height * (1 - Position) - m_sheetView.SheetFrame.CornerRadius, 
-                    _ => throw new ArgumentOutOfRangeException()
+                    _ => 0
             };
 
             if (m_fromIsOpenContext || !m_fromIsDraggingContext)
