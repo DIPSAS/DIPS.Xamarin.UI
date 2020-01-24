@@ -39,6 +39,8 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             typeof(ModalityLayout),
             Color.Gray);
 
+        private View? m_currentView;
+
         /// <summary>
         ///     Create an instance
         /// </summary>
@@ -141,6 +143,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         public void Show(IModalityHandler modalityHandler, View view, Constraint? xConstraint = null, Constraint? yConstraint = null, Constraint? widthConstraint = null, Constraint? heightConstraint = null)
         {
             m_currentShowingModalityHandler = modalityHandler;
+            m_currentView = view;
 
             ShowOverlay();
 
@@ -166,21 +169,16 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// </summary>
         /// <remarks>Also hides the overlay</remarks>
         /// <param name="view"></param>
-        /// <param name="beforeRemovalTask">Optional task that</param>
-        /// <param name="finishedHidingCallback">A callback that will get invoked when the view is not visible anymore</param>
-        public async void Hide(View view, Task? beforeRemovalTask = null, Action? finishedHidingCallback = null)
+        public async void Hide(View view)
         {
             if (!relativeLayout.Children.Contains(view)) return;
+            if (m_currentShowingModalityHandler == null) return;
 
             HideOverlay();
 
-            if (beforeRemovalTask != null)
-            {
-                await beforeRemovalTask;
-            }
+            await m_currentShowingModalityHandler.BeforeRemoval();
 
             relativeLayout.Children.Remove(view);
-            finishedHidingCallback?.Invoke();
         }
 
         private async void HideOverlay()
@@ -188,6 +186,18 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             var overlay = m_overLay.Value;
             await overlay.FadeTo(0);
             relativeLayout.Children.Remove(overlay);
+        }
+
+        private void OnChildRemoved(object sender, ElementEventArgs e)
+        {
+            if (m_currentShowingModalityHandler == null) return;
+            if (m_currentView == null) return;
+
+            if (!relativeLayout.Children.Contains(m_currentView))
+            {
+                m_currentShowingModalityHandler.AfterRemoval();
+                m_currentView = null;
+            }
         }
     }
 }
