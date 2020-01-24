@@ -32,6 +32,7 @@
                                 MaxPosition="{Binding MaxPosition}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                             >
+                <Label Text="Lol"/>
             </dxui:SheetBehavior>
         </dxui:ModalityLayout.Behaviors>
 
