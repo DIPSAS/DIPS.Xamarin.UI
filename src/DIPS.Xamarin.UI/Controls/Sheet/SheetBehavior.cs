@@ -441,7 +441,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
+            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y, 250);
+            await Task.Delay(250);
+            await translationTask;
         }
 
         /// <inheritdoc />
@@ -459,7 +461,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (!(oldvalue is double doubleOldValue)) return;
             if (!(newvalue is double doubleNewvalue)) return;
             if (doubleOldValue == doubleNewvalue) return;
-            await sheetBehavior.TranslateBasedOnPosition();
+            await sheetBehavior.TranslateBasedOnPosition(doubleNewvalue);
         }
 
         /// <inheritdoc />
@@ -536,13 +538,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 if (Position <= 0)
                 {
                     //Calculate what size the content needs if the position is set to 0
-                        Position = m_sheetView.SheetContentHeightRequest / m_modalityLayout.Height;
+                        var newPosition = m_sheetView.SheetContentHeightRequest / m_modalityLayout.Height;
+                        await TranslateBasedOnPosition(newPosition);
                 }
                 else //Set position from input
                 {
-                    await TranslateBasedOnPosition(false);
-                    OnOpenCommand?.Execute(OnOpenCommandParameter);
-                    OnOpen?.Invoke(this, EventArgs.Empty);
+                    await TranslateBasedOnPosition(Position);
+                    //OnOpenCommand?.Execute(OnOpenCommandParameter);
+                    //OnOpen?.Invoke(this, EventArgs.Empty);
                 }
             }
             else
@@ -564,7 +567,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             SheetContent.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
         }
 
-        private async Task TranslateBasedOnPosition(bool shouldExecuteOpenedCommand = true)
+        private async Task TranslateBasedOnPosition(double newPosition)
         {
             if (!IsOpen) return;
             if (m_modalityLayout == null) return;
@@ -585,31 +588,34 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 MinPosition = (double)MinPositionProperty.DefaultValue;
             }
 
-            if (Position < MinPosition)
+            if (newPosition < MinPosition)
             {
                 Position = MinPosition;
+                return; //Return when we set property because it will lead to recursively calling this method
             }
 
             if (Position > MaxPosition)
             {
                 Position = MaxPosition;
+                return; //Return when we set property because it will lead to recursively calling this method
             }
 
             var yTranslation = Alignment switch { 
-                    AlignmentOptions.Bottom => m_sheetView.SheetFrame.Height * (1 - Position), 
-                    AlignmentOptions.Top => -m_sheetView.SheetFrame.Height * (1 - Position) - m_sheetView.SheetFrame.CornerRadius, 
+                    AlignmentOptions.Bottom => m_sheetView.SheetFrame.Height * (1 - newPosition), 
+                    AlignmentOptions.Top => -m_sheetView.SheetFrame.Height * (1 - newPosition) - m_sheetView.SheetFrame.CornerRadius, 
                     _ => 0
             };
 
             if (m_fromIsOpenContext || !m_fromIsDraggingContext)
             {
-                await m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
 
-                if (shouldExecuteOpenedCommand)
-                {
-                    OnOpenCommand?.Execute(OnOpenCommandParameter);
-                    OnOpen?.Invoke(this, new EventArgs());
-                }
+                var translationTask =  m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 250);
+
+                await Task.Delay(250);
+                await translationTask;
+
+                OnOpenCommand?.Execute(OnOpenCommandParameter);
+                OnOpen?.Invoke(this, new EventArgs());
             }
             else
             {

@@ -174,14 +174,15 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             if (!relativeLayout.Children.Contains(view)) return;
             if (m_currentShowingModalityHandler == null) return;
 
-            HideOverlay();
+            var hideOverLayTask = HideOverlay();
 
             await m_currentShowingModalityHandler.BeforeRemoval();
+            await hideOverLayTask;
 
             relativeLayout.Children.Remove(view);
         }
 
-        private async void HideOverlay()
+        private async Task HideOverlay()
         {
             var overlay = m_overLay.Value;
             await overlay.FadeTo(0);
