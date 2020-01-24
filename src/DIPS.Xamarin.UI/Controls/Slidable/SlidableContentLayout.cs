@@ -17,7 +17,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         protected override void OnScrolled(double index, double offset, int selectedIndex)
         {
             if (Width < 0.1) return;
-            if (m_viewMapping.Count > 1000)
+            if (m_viewMapping.Count > 100)
             {
                 m_viewMapping.Clear(); // Simple cache clearing
             }

@@ -29,7 +29,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             }
 
             var index = me.SlideProperties.Position;
-            var dist = me.CalculateDist(index);
             me.OnScrolledInternal();
         }
 
@@ -98,13 +97,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
         protected virtual void OnScrolled(double index, double offset, int selectedIndex)
         {
-
         }
 
         protected virtual void OnClick(int location)
         {
             // On click is only for when a tap gesture is done and we enble tap. 
-
         }
 
         public static readonly BindableProperty ConfigProperty = BindableProperty.Create(
