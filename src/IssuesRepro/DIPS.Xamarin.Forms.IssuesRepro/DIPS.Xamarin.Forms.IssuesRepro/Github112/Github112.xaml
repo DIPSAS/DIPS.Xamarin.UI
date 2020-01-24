@@ -8,6 +8,19 @@
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github112.Github112">
     <StackLayout>
+        <dxui:RadioButtonGroup Grid.Row="0"
+                               Margin="0,5,0,0"
+                               HorizontalOptions="{Binding Source={x:Reference HorizontalOptions},Path=SelectedItem}"
+                               VerticalOptions="{Binding Source={x:Reference VerticalOptions},Path=SelectedItem}">
+            <dxui:RadioButtonGroup.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>First item</x:String>
+                    <x:String>Second item</x:String>
+                    <x:String>Third item</x:String>
+                </x:Array>
+            </dxui:RadioButtonGroup.ItemsSource>
+        </dxui:RadioButtonGroup>
+
         <StackLayout Orientation="Horizontal">
             <Label Text="HorizontalOptions" />
             <Picker x:Name="HorizontalOptions">
@@ -43,18 +56,5 @@
                 </Picker.ItemsSource>
             </Picker>
         </StackLayout>
-
-        <dxui:RadioButtonGroup Grid.Row="0"
-                               Margin="0,5,0,0"
-                               HorizontalOptions="{Binding Source={x:Reference HorizontalOptions},Path=SelectedItem}"
-                               VerticalOptions="{Binding Source={x:Reference VerticalOptions},Path=SelectedItem}">
-            <dxui:RadioButtonGroup.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>First item</x:String>
-                    <x:String>Second item</x:String>
-                    <x:String>Third item</x:String>
-                </x:Array>
-            </dxui:RadioButtonGroup.ItemsSource>
-        </dxui:RadioButtonGroup>
     </StackLayout>
 </ContentPage>
