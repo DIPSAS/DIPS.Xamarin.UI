@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Input;
+using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples.Controls.Popup
@@ -9,35 +10,9 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Popup
     {
         public PopupPage()
         {
-            Ascending = true;
             InitializeComponent();
-            BindingContext = this;
-            SaveCommand = new Command(o => Update((PopupFilterViewModel)o));
+
+            BindingContext = new PopupPageViewModel();
         }
-
-        private void Update(PopupFilterViewModel popupFilterViewModel)
-        {
-            Ascending = popupFilterViewModel.Ascending;
-            OnPropertyChanged(nameof(Ascending));
-        }
-
-        public string MyString { get; } = "Hello popupContent";
-
-        public ICommand SaveCommand { get; }
-
-        public bool Ascending { get; set; }
-
-        public Func<PopupPage> GetViewModel => () => this;
-
-        public Func<PopupFilterViewModel> FilterViewModelFactory => new Func<PopupFilterViewModel>(() => new PopupFilterViewModel { Ascending = Ascending, SaveCommand = SaveCommand });
-    }
-
-    public class PopupFilterViewModel : INotifyPropertyChanged
-    {
-        public bool Ascending { get; set; }
-
-        public ICommand? SaveCommand { get; set; }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

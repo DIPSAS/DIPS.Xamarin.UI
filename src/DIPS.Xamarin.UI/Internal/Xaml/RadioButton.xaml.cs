@@ -1,9 +1,10 @@
 ﻿using System;
+using DIPS.Xamarin.UI.Controls.RadioButtonGroup;
 using DIPS.Xamarin.UI.Controls.RadioButtonGroup.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
+namespace DIPS.Xamarin.UI.Internal.xaml
 {
     /// <summary>
     ///     Radio button is a checkbox that can be toggled by it, this component should contain inside of a a

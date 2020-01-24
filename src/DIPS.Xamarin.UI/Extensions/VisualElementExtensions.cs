@@ -20,9 +20,9 @@ namespace DIPS.Xamarin.UI.Extensions
                 var parent = element.Parent;
                 while (parent != null)
                 {
-                    if (parent is T popupLayout)
+                    if (parent is T expectedParent)
                     {
-                        return popupLayout;
+                        return expectedParent;
                     }
 
                     parent = parent.Parent;

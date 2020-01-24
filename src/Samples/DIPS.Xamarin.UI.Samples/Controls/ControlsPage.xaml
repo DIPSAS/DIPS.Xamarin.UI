@@ -12,9 +12,15 @@
             <Button Text="Popup" 
                     Command="{Binding NavigateToCommand}" 
                     CommandParameter="Popup"  />
+            <Button Text="Sheet" 
+                    Command="{Binding NavigateToCommand}" 
+                    CommandParameter="Sheet"  />
             <Button Text="DatePicker"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="DatePicker" />
+            <Button Text="TimePicker"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TimePicker" />
             <Button Text="RadioButtonGroup"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="RadioButtonGroup" />

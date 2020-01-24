@@ -18,7 +18,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackLayout>
+            <ScrollView>
             <dxui:RadioButtonGroup Grid.Row="0"
                                     ItemsSource="{Binding Items}"
                                     SelectedItem="{Binding SelectedItem}"
@@ -27,7 +27,7 @@
                                     SelectedColor="{Binding SelectedColor}"
                                     DeSelectedColor="{Binding DeSelectedColor}"
                                     SeparatorColor="{Binding SeparatorColor}" />
-        </StackLayout>
+            </ScrollView>
         <ScrollView Grid.Row="1">
             <StackLayout>
                 <Button Command="{Binding AddNewCommand}"

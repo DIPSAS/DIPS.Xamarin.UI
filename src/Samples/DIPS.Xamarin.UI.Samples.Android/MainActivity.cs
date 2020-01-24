@@ -6,8 +6,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using DIPS.Xamarin.UI.Samples.Droid.MobileSettings;
+using Java.Security;
 using Essentials = Xamarin.Essentials;
 using Content = Android.Content;
+using Provider = Android.Provider;
 
 namespace DIPS.Xamarin.UI.Samples.Droid
 {
@@ -24,6 +27,9 @@ namespace DIPS.Xamarin.UI.Samples.Droid
             Essentials.Platform.Init(this, savedInstanceState); //Xamarin essentials
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             DIPS.Xamarin.UI.Android.Library.Initialize();
+
+            InternalShared.MobileSettings.Instance = new AndroidSettings(this);
+
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Content.PM.Permission[] grantResults)
