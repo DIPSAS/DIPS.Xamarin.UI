@@ -103,6 +103,40 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             propertyChanged: IsOpenPropertyChanged);
 
         /// <summary>
+        /// <see cref="OnPositionChangedCommand"/>
+        /// </summary>
+        public static readonly BindableProperty OnPositionChangedCommandProperty = BindableProperty.Create(nameof(OnPositionChangedCommand), typeof(ICommand), typeof(SheetBehavior));
+
+        /// <summary>
+        /// A command that executes when the position of the sheet changes.
+        /// This is a bindable property.
+        /// </summary>
+        public ICommand OnPositionChangedCommand
+        {
+            get => (ICommand)GetValue(OnPositionChangedCommandProperty);
+            set => SetValue(OnPositionChangedCommandProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="OnPositionChangedCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty OnPositionChangedCommandParameterProperty = BindableProperty.Create(nameof(OnPositionChangedCommandParameter), typeof(object), typeof(SheetBehavior));
+
+        /// <summary>
+        /// Event that gets raised when the sheet has changed it's position.
+        /// </summary>
+        public event EventHandler? OnPositionChanged;
+
+        /// <summary>
+        /// Parameter to pass to <see cref="OnPositionChangedCommand"/>.
+        /// </summary>
+        public object OnPositionChangedCommandParameter
+        {
+            get => (object)GetValue(OnPositionChangedCommandParameterProperty);
+            set => SetValue(OnPositionChangedCommandParameterProperty, value);
+        }
+
+        /// <summary>
         ///     <see cref="SheetContent" />
         /// </summary>
         public static readonly BindableProperty SheetContentProperty = BindableProperty.Create(
@@ -462,6 +496,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (!(newvalue is double doubleNewvalue)) return;
             if (doubleOldValue == doubleNewvalue) return;
             await sheetBehavior.TranslateBasedOnPosition(doubleNewvalue);
+
         }
 
         /// <inheritdoc />
