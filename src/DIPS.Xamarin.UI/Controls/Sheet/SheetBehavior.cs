@@ -121,7 +121,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <summary>
         /// Event that gets raised when the sheet has changed it's position.
         /// </summary>
-        public event EventHandler<PositionChangedEventArgs>? OnPositionChanged;
+        public event EventHandler<PositionEventArgs>? OnPositionChanged;
 
         /// <summary>
         ///     <see cref="SheetContent" />
