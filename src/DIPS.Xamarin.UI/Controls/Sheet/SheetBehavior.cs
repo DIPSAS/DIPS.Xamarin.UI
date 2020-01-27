@@ -480,12 +480,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             if (!(bindable is SheetBehavior sheetBehavior)) return;
             if (!(oldvalue is double doubleOldValue)) return;
-            if (!(newvalue is double doubleNewvalue)) return;
-            if (doubleOldValue == doubleNewvalue) return;
-            await sheetBehavior.TranslateBasedOnPosition(doubleNewvalue);
+            if (!(newvalue is double doubleNewValue)) return;
+            if (Math.Abs(doubleOldValue - doubleNewValue) < 0.0001) return;
+            await sheetBehavior.TranslateBasedOnPosition(doubleNewValue);
 
-            sheetBehavior.OnPositionChangedCommand?.Execute(doubleNewvalue);
-            sheetBehavior.OnPositionChanged?.Invoke(sheetBehavior, new PositionEventArgs(doubleNewvalue, doubleOldValue));
+            sheetBehavior.OnPositionChangedCommand?.Execute(doubleNewValue);
+            sheetBehavior.OnPositionChanged?.Invoke(sheetBehavior, new PositionEventArgs(doubleNewValue, doubleOldValue));
         }
 
         /// <inheritdoc />
