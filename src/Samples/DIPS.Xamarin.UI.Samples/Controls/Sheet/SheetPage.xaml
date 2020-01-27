@@ -30,6 +30,7 @@
                                 Position="{Binding Position}"
                                 MinPosition="{Binding MinPosition}"
                                 MaxPosition="{Binding MaxPosition}"
+                                HasAnticipationEffect="{Binding HasAnticipationEffect}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                             >
                 <StackLayout>
@@ -130,6 +131,18 @@
                        VerticalTextAlignment="Center" />
                 <CheckBox Grid.Column="1"
                           IsChecked="{Binding HasShadow}" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                       Text="HasAnticipationEffect"
+                       VerticalTextAlignment="Center" />
+                <CheckBox Grid.Column="1"
+                          IsChecked="{Binding HasAnticipationEffect}" />
             </Grid>
 
             <Grid>

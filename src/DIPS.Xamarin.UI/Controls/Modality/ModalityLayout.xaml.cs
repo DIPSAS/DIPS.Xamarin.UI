@@ -169,12 +169,13 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// </summary>
         /// <remarks>Also hides the overlay</remarks>
         /// <param name="view"></param>
-        public async void Hide(View view)
+        /// <param name="fadeLength">The length of the fade animation</param>
+        public async void Hide(View view, uint fadeLength = 250)
         {
             if (!relativeLayout.Children.Contains(view)) return;
             if (m_currentShowingModalityHandler == null) return;
 
-            var hideOverLayTask = HideOverlay();
+            var hideOverLayTask = HideOverlay(fadeLength);
 
             await m_currentShowingModalityHandler.BeforeRemoval();
             await hideOverLayTask;
@@ -182,10 +183,10 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             relativeLayout.Children.Remove(view);
         }
 
-        private async Task HideOverlay()
+        private async Task HideOverlay(uint animationLength = 250)
         {
             var overlay = m_overLay.Value;
-            await overlay.FadeTo(0);
+            await overlay.FadeTo(0, animationLength);
             relativeLayout.Children.Remove(overlay);
         }
 

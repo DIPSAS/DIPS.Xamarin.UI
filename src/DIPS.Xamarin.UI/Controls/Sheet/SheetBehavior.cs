@@ -194,6 +194,21 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private bool m_fromIsDraggingContext;
 
         /// <summary>
+        /// See <see cref="HasAnticipationEffect"/>
+        /// </summary>
+        public static readonly BindableProperty HasAnticipationEffectProperty = BindableProperty.Create(nameof(HasAnticipationEffect), typeof(bool), typeof(SheetBehavior), true);
+
+        /// <summary>
+        /// Determines whether the sheet should animate in the opposite direction of it's opening and closing animation.
+        /// This is a bindable property.
+        /// </summary>
+        public bool HasAnticipationEffect
+        {
+            get => (bool)GetValue(HasAnticipationEffectProperty);
+            set => SetValue(HasAnticipationEffectProperty, value);
+        }
+
+        /// <summary>
         ///     Determines the position of the sheet when it appears.
         ///     This is a bindable property.
         /// </summary>
@@ -441,8 +456,19 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y, 250);
-            await Task.Delay(250);
+            var length = 250;
+            Task translationTask = Task.CompletedTask;
+            if (HasAnticipationEffect)
+            {
+                length = 600;
+                translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y, (uint)length, Easing.SpringIn);
+            }
+            else
+            {
+                translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
+            }
+            
+            await Task.Delay(600);
             await translationTask;
         }
 
@@ -555,7 +581,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 OnBeforeCloseCommand?.Execute(OnBeforeCloseCommandParameter);
                 OnBeforeClose?.Invoke(this, EventArgs.Empty);
 
-                m_modalityLayout.Hide(m_sheetView.SheetFrame);
+                m_modalityLayout.Hide(m_sheetView.SheetFrame, 600);
             }
 
             m_fromIsOpenContext = false;
@@ -608,10 +634,21 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (m_fromIsOpenContext || !m_fromIsDraggingContext)
             {
+                var animationLength = 250;
 
-                var translationTask =  m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 250);
+                Task translationTask = Task.CompletedTask;
+                if (HasAnticipationEffect)
+                {
+                    animationLength = 600;
+                    translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, (uint)animationLength, Easing.SpringOut);
+                }
+                else
+                {
+                    translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, (uint)animationLength);
+                }
+                
 
-                await Task.Delay(250);
+                await Task.Delay(animationLength);
                 await translationTask;
 
                 OnOpenCommand?.Execute(OnOpenCommandParameter);
