@@ -109,6 +109,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         /// <summary>
         /// A command that executes when the position of the sheet changes.
+        /// The command parameter will be the new positional value, same as <see cref="Position"/>.
         /// This is a bindable property.
         /// </summary>
         public ICommand OnPositionChangedCommand
@@ -118,23 +119,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// <see cref="OnPositionChangedCommandParameter"/>
-        /// </summary>
-        public static readonly BindableProperty OnPositionChangedCommandParameterProperty = BindableProperty.Create(nameof(OnPositionChangedCommandParameter), typeof(object), typeof(SheetBehavior));
-
-        /// <summary>
         /// Event that gets raised when the sheet has changed it's position.
         /// </summary>
         public event EventHandler? OnPositionChanged;
-
-        /// <summary>
-        /// Parameter to pass to <see cref="OnPositionChangedCommand"/>.
-        /// </summary>
-        public object OnPositionChangedCommandParameter
-        {
-            get => (object)GetValue(OnPositionChangedCommandParameterProperty);
-            set => SetValue(OnPositionChangedCommandParameterProperty, value);
-        }
 
         /// <summary>
         ///     <see cref="SheetContent" />
@@ -497,6 +484,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (doubleOldValue == doubleNewvalue) return;
             await sheetBehavior.TranslateBasedOnPosition(doubleNewvalue);
 
+            sheetBehavior.OnPositionChangedCommand?.Execute(doubleNewvalue);
+            sheetBehavior.OnPositionChanged?.Invoke(sheetBehavior, new PositionEventArgs(doubleNewvalue, doubleOldValue));
         }
 
         /// <inheritdoc />
@@ -707,5 +696,27 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     The content will use the entire sheet as space.
         /// </summary>
         Fill
+    }
+
+    /// <summary>
+    /// Event args that will be sent when the position changes
+    /// </summary>
+    public class PositionEventArgs : EventArgs
+    {
+        /// <inheritdoc />
+        public PositionEventArgs(double newPosition, double oldPosition)
+        {
+            NewPosition = newPosition;
+            OldPosition = oldPosition;
+        }
+
+        /// <summary>
+        /// The new position when the sheet changed it's position
+        /// </summary>
+        public double NewPosition { get; }
+        /// <summary>
+        /// The old position when the sheet changed it's position
+        /// </summary>
+        public double OldPosition { get; }
     }
 }
