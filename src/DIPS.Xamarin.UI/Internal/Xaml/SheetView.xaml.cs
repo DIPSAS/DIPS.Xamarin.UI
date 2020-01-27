@@ -32,6 +32,8 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                   OuterSheetFrame.CornerRadius
                 : 0;
 
+        internal BoxView Handle => HandleBoxView;
+
         /// <summary>
         /// The internal outer sheet frame of the view
         /// </summary>
