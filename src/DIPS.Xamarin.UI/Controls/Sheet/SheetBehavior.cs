@@ -664,6 +664,18 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             get => m_fromIsDraggingContext;
             set => m_fromIsDraggingContext = value;
         }
+
+        /// <summary>
+        /// Get position based on a height
+        /// </summary>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public double GetPositionBasedOnHeight(double height)
+        {
+            if (m_sheetView == null) return 0;
+            return m_sheetView.Handle.Height + m_sheetView.SheetFrame.Padding.Top + m_sheetView.SheetFrame.Padding.Bottom +
+                   m_sheetView.SheetFrame.CornerRadius;
+        }
     }
 
     /// <summary>
