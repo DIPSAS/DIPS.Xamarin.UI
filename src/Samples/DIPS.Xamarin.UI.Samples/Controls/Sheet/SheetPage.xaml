@@ -160,8 +160,8 @@
                        VerticalTextAlignment="Center" />
                 <Slider Grid.Column="1"
                         Grid.Row="0"
-                        Maximum="1"
-                        Minimum="0"
+                        Maximum="{Binding MaxPosition}"
+                        Minimum="{Binding MinPosition}"
                         MaximumTrackColor="Tomato"
                         MinimumTrackColor="Tomato"
                         Value="{Binding Position}" />

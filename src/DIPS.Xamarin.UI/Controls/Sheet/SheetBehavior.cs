@@ -457,8 +457,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             };
 
             var length = 250;
-            Task translationTask = Task.CompletedTask;
-            if (HasAnticipationEffect)
+            Task translationTask;
+            if (HasAnticipationEffect && Position < 0.9)
             {
                 length = 600;
                 translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y, (uint)length, Easing.SpringIn);
@@ -468,7 +468,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
             }
             
-            await Task.Delay(600);
+            await Task.Delay(length);
             await translationTask;
         }
 
@@ -581,7 +581,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 OnBeforeCloseCommand?.Execute(OnBeforeCloseCommandParameter);
                 OnBeforeClose?.Invoke(this, EventArgs.Empty);
 
-                m_modalityLayout.Hide(m_sheetView.SheetFrame, 600);
+                m_modalityLayout.Hide(m_sheetView.SheetFrame, ((HasAnticipationEffect) ? (uint)600 : 250));
             }
 
             m_fromIsOpenContext = false;
@@ -632,14 +632,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     _ => 0
             };
 
-            if (m_fromIsOpenContext || !m_fromIsDraggingContext)
+            if (m_fromIsOpenContext || !m_fromIsDraggingContext) //Only run this translation when the sheet is opened or if the position is changed by the consumer
             {
                 var animationLength = 250;
 
                 Task translationTask = Task.CompletedTask;
-                if (HasAnticipationEffect)
+                if (HasAnticipationEffect && newPosition < 0.9)
                 {
-                    animationLength = 600;
+                    animationLength = 500;
                     translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, (uint)animationLength, Easing.SpringOut);
                 }
                 else
@@ -654,7 +654,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 OnOpenCommand?.Execute(OnOpenCommandParameter);
                 OnOpen?.Invoke(this, new EventArgs());
             }
-            else
+            else //Only run this translation when we are dragging
             {
                 m_sheetView.SheetFrame.TranslationY = yTranslation;
             }
