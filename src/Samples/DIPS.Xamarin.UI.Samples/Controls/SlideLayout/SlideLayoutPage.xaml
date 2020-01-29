@@ -1,35 +1,34 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:dxui="http://dips.xamarin.ui.com"
-             x:Class="DIPS.Xamarin.UI.Samples.Controls.SlideLayout.SlideLayoutPage">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="DIPS.Xamarin.UI.Samples.Controls.SlideLayout.SlideLayoutPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dxui="http://dips.xamarin.ui.com">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="75"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="75" />
         </Grid.RowDefinitions>
-        
-        <Label Text="{Binding Selected}"
-               Grid.Row="0"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"/>
 
-        <dxui:SlidableLayout BackgroundColor="WhiteSmoke"
-                             Grid.Row="1"
-                             Config="{Binding Config}"
-                             SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-                             SlideProperties="{Binding SlidableProperties}">
-        </dxui:SlidableLayout>
+        <Label
+            Grid.Row="0"
+            HorizontalOptions="Center"
+            Text="{Binding Selected}"
+            VerticalOptions="Center" />
+        <ScrollView Grid.Row="1">
+            <dxui:SlidableLayout
+                BackgroundColor="WhiteSmoke"
+                Config="{Binding Config}"
+                SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
+                SlideProperties="{Binding SlidableProperties}" />
+        </ScrollView>
 
-
-        <dxui:SlidableContentLayout SlideProperties="{Binding SlidableProperties}"
-                                    Grid.Row="2"
-                                    BackgroundColor="LightGray"
-                                    Padding="0,10"
-                                    Config="{Binding Config}"
-                                    >
-           
-        </dxui:SlidableContentLayout>
+        <dxui:SlidableContentLayout
+            Grid.Row="2"
+            Padding="0,10"
+            BackgroundColor="LightGray"
+            Config="{Binding Config}"
+            SlideProperties="{Binding SlidableProperties}" />
     </Grid>
 </ContentPage>
