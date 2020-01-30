@@ -19,25 +19,13 @@ namespace DIPS.Xamarin.UI.Controls.Content
 
         private void ContentControl_BindingContextChanged(object sender, EventArgs e)
         {
-            if(BindingContext == null)
+            if(BindingContext == null || TemplateSelector == null)
             {
                 return;
             }
 
-            if(TemplateSelector != null)
-            {
-                var template = TemplateSelector.SelectTemplate(BindingContext, this);
-                Content = template.CreateContent() as View;
-            }
-            else
-            {
-                var resources = Resources;
-                foreach(var resource in resources)
-                {
-                    var obj = resource.Value;
-                    if (!(obj is DataTemplate template)) continue;
-                }
-            }
+            var template = TemplateSelector.SelectTemplate(BindingContext, this);
+            Content = template.CreateContent() as View;
         }
 
         /// <summary>
