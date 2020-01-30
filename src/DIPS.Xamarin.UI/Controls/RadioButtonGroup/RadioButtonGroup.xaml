@@ -5,6 +5,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButtonGroup">
-    <StackLayout x:Name="container" Orientation="Vertical"/>
+             x:Class="DIPS.Xamarin.UI.Controls.RadioButtonGroup.RadioButtonGroup"
+             x:Name="codeBehind">
+    <StackLayout x:Name="container"
+                 Orientation="Vertical"
+                 HorizontalOptions="{Binding Source={x:Reference codeBehind}, Path=HorizontalOptions}"
+                 VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}"
+                 />
 </ContentView>

@@ -1,4 +1,4 @@
-﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,27 +9,30 @@
              Title="Controls">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="Popup" 
-                    Command="{Binding NavigateToCommand}" 
-                    CommandParameter="Popup"  />
-            <Button Text="Sheet" 
-                    Command="{Binding NavigateToCommand}" 
-                    CommandParameter="Sheet"  />
+            <Button Command="{Binding NavigateToCommand}"
+                    CommandParameter="ContentControl"
+                    Text="ContentControl" />
             <Button Text="DatePicker"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="DatePicker" />
-            <Button Text="TimePicker"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="TimePicker" />
+            <Button Text="Popup" 
+                    Command="{Binding NavigateToCommand}" 
+                    CommandParameter="Popup"  />
             <Button Text="RadioButtonGroup"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="RadioButtonGroup" />
-            <Button Text="Trend graph"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="TrendGraph" />
+            <Button Text="Sheet" 
+                    Command="{Binding NavigateToCommand}" 
+                    CommandParameter="Sheet"  />
             <Button Text="Slidable layout"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="Sliding" />
+            <Button Text="TimePicker"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TimePicker" />
+            <Button Text="Trend graph"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TrendGraph" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

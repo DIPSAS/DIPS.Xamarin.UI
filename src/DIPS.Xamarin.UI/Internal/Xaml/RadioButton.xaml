@@ -14,14 +14,9 @@
         <Thickness x:Key="spacing"
                    Left="10" />
     </ContentView.Resources>
-    <Grid BindingContext="{Binding Source={x:Reference codeBehind}}"
-          Padding="{StaticResource spacing}"
-          ColumnSpacing="0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
+    <StackLayout BindingContext="{Binding Source={x:Reference codeBehind}}"
+                 Padding="{StaticResource spacing}"
+                 Orientation="Horizontal">
         <Grid VerticalOptions="Center"
               HorizontalOptions="Center">
             <Button x:Name="outerButton"
@@ -40,12 +35,11 @@
         </Grid>
 
         <Label x:Name="label"
-               Grid.Column="1"
                HeightRequest="{Binding Source={x:Reference outerButton}, Path=HeightRequest}"
                VerticalOptions="Center"
                Text="{Binding Text}"
                FontSize="Body"
                InputTransparent="True"
                Margin="{StaticResource spacing}" />
-    </Grid>
+    </StackLayout>
 </ContentView>

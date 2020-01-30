@@ -14,6 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Github112\Github112.xaml.cs">
+      <DependentUpon>Github112.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Github112\Github112.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Github64\Github64.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

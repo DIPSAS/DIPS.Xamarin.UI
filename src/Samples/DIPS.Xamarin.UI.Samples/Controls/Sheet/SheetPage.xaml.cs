@@ -16,6 +16,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             InitializeComponent();
         }
+
+        private void SheetBehavior_OnOnPositionChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 
     public class SheetPageViewModel : INotifyPropertyChanged
