@@ -340,3 +340,5 @@ ASALocalRun/
 
 # Remove XML documentation 
 DIPS.Xamarin.UI*.xml
+Resource.designer.cs
+src/DIPS.Xamarin.UI.Android/Resources/Resource.designer.cs

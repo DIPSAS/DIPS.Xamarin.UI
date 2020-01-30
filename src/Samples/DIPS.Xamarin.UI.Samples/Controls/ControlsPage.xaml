@@ -1,32 +1,47 @@
-﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:Controls="clr-namespace:DIPS.Xamarin.UI.Samples.Controls;assembly=DIPS.Xamarin.UI.Samples"
-             mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.UI.Samples.Controls.ControlsPage"
-             x:DataType="Controls:ControlsViewModel"
-             Title="Controls">
+﻿<ContentPage
+    x:Class="DIPS.Xamarin.UI.Samples.Controls.ControlsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Controls="clr-namespace:DIPS.Xamarin.UI.Samples.Controls;assembly=DIPS.Xamarin.UI.Samples"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Controls"
+    x:DataType="Controls:ControlsViewModel"
+    mc:Ignorable="d">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="Popup" 
-                    Command="{Binding NavigateToCommand}" 
-                    CommandParameter="Popup"  />
-            <Button Text="Sheet" 
-                    Command="{Binding NavigateToCommand}" 
-                    CommandParameter="Sheet"  />
-            <Button Text="DatePicker"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="DatePicker" />
-            <Button Text="TimePicker"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="TimePicker" />
-            <Button Text="RadioButtonGroup"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="RadioButtonGroup" />
-            <Button Text="Trend graph"
-                    Command="{Binding NavigateToCommand}"
-                    CommandParameter="TrendGraph" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Popup"
+                Text="Popup" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Sheet"
+                Text="Sheet" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="DatePicker"
+                Text="DatePicker" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="TimePicker"
+                Text="TimePicker" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="RadioButtonGroup"
+                Text="RadioButtonGroup" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="TrendGraph"
+                Text="Trend graph" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Picker"
+                Text="Picker" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="ContentControl"
+                Text="ContentControl" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

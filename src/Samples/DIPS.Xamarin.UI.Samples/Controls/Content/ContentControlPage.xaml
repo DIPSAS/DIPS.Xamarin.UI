@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="DIPS.Xamarin.UI.Samples.Controls.Content.ContentControlPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ViewModel="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Content;assembly=DIPS.Xamarin.UI.Samples"
+    xmlns:content="http://dips.xamarin.ui.com">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="vm1Template">
+            <Frame BackgroundColor="WhiteSmoke" HasShadow="False">
+                <Label Text="{Binding LuckyNumber}" />
+            </Frame>
+        </DataTemplate>
+
+        <DataTemplate x:Key="vm2Template">
+            <Frame BackgroundColor="#343434" HasShadow="False">
+                <Label Text="{Binding Title}" TextColor="WhiteSmoke" />
+            </Frame>
+        </DataTemplate>
+        <ViewModel:ContentControlTemplateSelector
+            x:Key="templateSelector"
+            VM1Template="{StaticResource vm1Template}"
+            VM2Template="{StaticResource vm2Template}" />
+    </ContentPage.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <content:ContentControl BindingContext="{Binding Content}" TemplateSelector="{StaticResource templateSelector}" />
+
+        <Button
+            Grid.Row="1"
+            BackgroundColor="WhiteSmoke"
+            BorderColor="Black"
+            BorderWidth="1"
+            Command="{Binding SwapCommand}"
+            CornerRadius="20"
+            HorizontalOptions="Fill"
+            Text="Swap"
+            VerticalOptions="Fill" />
+    </Grid>
+</ContentPage>
