@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Content
 {
@@ -14,10 +12,10 @@ namespace DIPS.Xamarin.UI.Controls.Content
         /// </summary>
         public ContentControl()
         {
-            BindingContextChanged += ContentControl_BindingContextChanged;
+            BindingContextChanged += (s, e) => UpdateContent();
         }
 
-        private void ContentControl_BindingContextChanged(object sender, EventArgs e)
+        private void UpdateContent()
         {
             if(BindingContext == null || TemplateSelector == null)
             {
@@ -37,7 +35,7 @@ namespace DIPS.Xamarin.UI.Controls.Content
             typeof(ContentControl),
             null,
             BindingMode.TwoWay,
-            propertyChanged: (s, o, n) => ((ContentControl)s).ContentControl_BindingContextChanged(s, EventArgs.Empty));
+            propertyChanged: (s, o, n) => ((ContentControl)s).UpdateContent());
 
         /// <summary>
         /// Sets the selector to show the content as defined by the BindingContext of this control
