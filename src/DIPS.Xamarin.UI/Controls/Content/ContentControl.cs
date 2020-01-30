@@ -31,12 +31,11 @@ namespace DIPS.Xamarin.UI.Controls.Content
             }
             else
             {
-                var resources = Application.Current.Resources;
+                var resources = Resources;
                 foreach(var resource in resources)
                 {
                     var obj = resource.Value;
                     if (!(obj is DataTemplate template)) continue;
-
                 }
             }
         }
