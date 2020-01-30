@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using DIPS.Xamarin.UI.Samples.Controls.Content;
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Controls.Popup;
 using DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;
@@ -29,7 +30,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls
             if (parameter.Equals("Sheet")) m_navigation.PushAsync(new SheetPage() { Title = parameter });
             if (parameter.Equals("RadioButtonGroup")) m_navigation.PushAsync(new RadioButtonGroupPage() { Title = parameter });
             if (parameter.Equals("TrendGraph")) m_navigation.PushAsync(new TrendGraphPage() { Title = parameter });
-            
+            if (parameter.Equals("ContentControl")) m_navigation.PushAsync(new ContentControlPage() { Title = parameter });
         }
     }
 }
