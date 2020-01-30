@@ -34,7 +34,7 @@ namespace DIPS.Xamarin.UI.Controls.Content
             typeof(DataTemplateSelector),
             typeof(ContentControl),
             null,
-            BindingMode.TwoWay,
+            BindingMode.OneWay,
             propertyChanged: (s, o, n) => ((ContentControl)s).UpdateContent());
 
         /// <summary>
