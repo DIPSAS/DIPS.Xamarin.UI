@@ -342,3 +342,4 @@ ASALocalRun/
 DIPS.Xamarin.UI*.xml
 Resource.designer.cs
 src/DIPS.Xamarin.UI.Android/Resources/Resource.designer.cs
+src/Samples/DIPS.Xamarin.UI.Samples.Android/Resources/Resource.designer.cs
