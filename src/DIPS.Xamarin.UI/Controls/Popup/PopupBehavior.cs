@@ -45,7 +45,7 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         /// </summary>
         public PopupBehavior()
         {
-            m_onTappedCommand = new Command(ShowPopup);
+            m_onTappedCommand = new Command(OnClick);
         }
 
         /// <summary>
@@ -123,11 +123,18 @@ namespace DIPS.Xamarin.UI.Controls.Popup
             BindingContext = bindable.BindingContext;
             bindable.BindingContextChanged += (s, e) => BindingContext = bindable.BindingContext;
             if (bindable is Button button)
-                button.Clicked += (s, e) => ShowPopup();
+                button.Clicked += (s, e) => OnClick();
             else
                 bindable.GestureRecognizers.Add(new TapGestureRecognizer { Command = m_onTappedCommand });
 
             base.OnAttachedTo(bindable);
+        }
+
+        private void OnClick()
+        {
+            if (m_attachedTo == null) return;
+            if (!Popup.GetOpenOnClick(m_attachedTo)) return;
+            ShowPopup();
         }
 
         private static void OnIsOpenChanged(BindableObject bindable, object oldValue, object newValue)
