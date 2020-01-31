@@ -18,21 +18,24 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             CornerRadius = 1;
             HorizontalOptions = LayoutOptions.Center;
             VerticalOptions = LayoutOptions.Center;
+            Scale = 0.8;
         }
 
         /// <summary>
         /// To be added
         /// </summary>
         /// <param name="selected"></param>
-        public void OnSelectionChanged(bool selected)
+        public async void OnSelectionChanged(bool selected)
         {
             if (selected)
             {
                 Opacity = 1;
+                await ((View)this).ScaleTo(1.0, 150, Easing.BounceIn);
             }
             else
             {
                 Opacity = 0.25;
+                await ((View)this).ScaleTo(0.8, 150, Easing.BounceIn);
             }
         }
     }

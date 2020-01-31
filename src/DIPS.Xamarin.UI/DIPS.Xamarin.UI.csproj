@@ -65,5 +65,6 @@
     <Folder Include="Controls\TrendGraph\" />
     <Folder Include="Controls\Slidable\" />
     <Folder Include="Controls\Content\" />
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>

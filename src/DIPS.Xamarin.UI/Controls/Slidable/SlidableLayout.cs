@@ -2,6 +2,8 @@
 using System.Windows.Input;
 using Xamarin.Forms;
 using System.Collections.Generic;
+using DIPS.Xamarin.UI.Util;
+
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
     /// <summary>
@@ -12,6 +14,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         private int m_lastId = -1;
         private double m_startSlideLocation;
         private int m_lastIndex = int.MinValue;
+        private AccelerationService m_accelerator = new AccelerationService(true);
         /// <summary>
         /// To be added
         /// </summary>
@@ -49,8 +52,10 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             OnScrolledInternal();
         }
 
+        private List<PanUpdatedEventArgs> args = new List<PanUpdatedEventArgs>();
         private void Rec_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
+            args.Add(e);
             var currentId = e.GestureId;
             if (!(m_lastId == SlideProperties.HoldId || !SlideProperties.IsHeld || currentId == m_lastId))
             {
@@ -64,16 +69,42 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             }
 
             var currentPos = m_startSlideLocation - e.TotalX;
+            
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
-                // Slide more.
-                currentPos = CalculateDist(Math.Round(SlideProperties.Position));
+                //currentPos = CalculateDist(Math.Round(SlideProperties.Position));
+
+            }
+            else
+            {
+                
             }
 
             m_lastId = currentId;
             var index = Math.Max(Config.MinValue-0.45, Math.Min(Config.MaxValue+0.45, CalculateIndex(currentPos)));
             SlideProperties = new SlidableProperties(index, m_lastId, e.StatusType != GestureStatus.Completed && e.StatusType != GestureStatus.Canceled);
             OnScrolledInternal();
+
+            if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
+            {
+                m_accelerator.EndDrag(index);
+                Device.StartTimer(TimeSpan.FromMilliseconds(60d / 1000d), () =>
+                {
+                    var next = m_accelerator.GetValue(out bool isDone);
+                    index = Math.Max(Config.MinValue - 0.45, Math.Min(Config.MaxValue + 0.45, next));
+                    if (SlideProperties.IsHeld) return false;
+                    SlideProperties = new SlidableProperties(index, m_lastId, false);
+                    return isDone;
+                });
+            }
+            else if (e.StatusType == GestureStatus.Started)
+            {
+                m_accelerator.StartDrag(index);
+            }
+            else
+            {
+                m_accelerator.OnDrag(index);
+            }
         }
 
         private double CalculateIndex(double dist)

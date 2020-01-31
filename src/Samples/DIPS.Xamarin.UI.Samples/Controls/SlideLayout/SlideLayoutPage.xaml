@@ -16,13 +16,12 @@
             HorizontalOptions="Center"
             Text="{Binding Selected}"
             VerticalOptions="Center" />
-        <ScrollView Grid.Row="1">
-            <dxui:SlidableLayout
-                BackgroundColor="WhiteSmoke"
-                Config="{Binding Config}"
-                SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-                SlideProperties="{Binding SlidableProperties}" />
-        </ScrollView>
+        <dxui:SlidableLayout
+            Grid.Row="1"
+            BackgroundColor="WhiteSmoke"
+            Config="{Binding Config}"
+            SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
+            SlideProperties="{Binding SlidableProperties}" />
 
         <dxui:SlidableContentLayout
             Grid.Row="2"
