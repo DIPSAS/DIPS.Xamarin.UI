@@ -8,7 +8,8 @@
              x:Name="CodeBehind"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.MenuButton">
-    <Grid BindingContext="{x:Reference CodeBehind}">
+    <Grid BindingContext="{x:Reference CodeBehind}"
+          ColumnSpacing="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

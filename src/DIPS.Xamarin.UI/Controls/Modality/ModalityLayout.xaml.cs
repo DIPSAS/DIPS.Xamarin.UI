@@ -150,7 +150,6 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
         }
 
-
         private void ShowOverlay()
         {
             var overlay = m_overLay.Value;

@@ -10,13 +10,14 @@
              x:Class="DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu.FloatingActionMenuPage">
     <ContentPage.Content>
 
-        <RelativeLayout BackgroundColor="AntiqueWhite">
+        <dxui:ModalityLayout BackgroundColor="AntiqueWhite">
+
             <floatingActionMenu:FloatingActionMenu Size="60"
                                                    ExpandButtonBackgroundColor="CornflowerBlue"
                                                    ExpandButtonText="Icon"
                                                    ExpandButtonTextColor="Bisque"
-                                                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.75}"
-                                                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=.85}">
+                                                   XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.75}"
+                                                   YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=.85}">
 
                 <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
@@ -35,6 +36,7 @@
                                                FontIconColor="White"
                                                Title="Second page" />
             </floatingActionMenu:FloatingActionMenu>
-        </RelativeLayout>
+
+        </dxui:ModalityLayout>
     </ContentPage.Content>
 </ContentPage>
