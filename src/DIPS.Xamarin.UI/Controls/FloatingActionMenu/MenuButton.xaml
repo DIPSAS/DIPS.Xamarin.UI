@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             x:Name="CodeBehind"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.MenuButton">
+    <Grid BindingContext="{x:Reference CodeBehind}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Frame
+            Padding="5"
+            CornerRadius="5"
+            VerticalOptions="Center"
+            HorizontalOptions="End">
+            <Label Text="{Binding Title}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="End" />
+        </Frame>
+
+        <Frame Grid.Column="1"
+               HeightRequest="{Binding Size}"
+               WidthRequest="{Binding Size}"
+               CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=2.0}}"
+               Padding="0"
+               HasShadow="False">
+
+
+            <Frame HeightRequest="{Binding Size}"
+                   WidthRequest="{Binding Size}"
+                   CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=2.0}}"
+                   BackgroundColor="{Binding BackgroundColor}"
+                   Padding="0"
+                   Margin="3"
+                   HasShadow="False">
+
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="MenuButton_OnTapped" />
+                </Frame.GestureRecognizers>
+
+                <Label Text="{Binding FontIcon}"
+                       TextColor="{Binding FontIconColor}"
+                       FontFamily="{Binding FontFamily}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center" />
+            </Frame>
+        </Frame>
+    </Grid>
+</ContentView>

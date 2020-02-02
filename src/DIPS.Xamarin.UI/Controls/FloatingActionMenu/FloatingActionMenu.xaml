@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             mc:Ignorable="d"
+             x:Name="CodeBehind"
+             x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.FloatingActionMenu">
+    <Frame x:Name="ExpandButton"
+           BindingContext="{x:Reference CodeBehind}"
+           Padding="0"
+           Opacity=".5"
+           HasShadow="False"
+           HeightRequest="{Binding Size}"
+           WidthRequest="{Binding Size}"
+           CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=2.0}}">
+
+        <Frame
+            HeightRequest="{Binding Size}"
+            WidthRequest="{Binding Size}"
+            CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=2.0}}"
+            BackgroundColor="{Binding ExpandButtonBackgroundColor}"
+            Padding="0"
+            Margin="3"
+            HasShadow="False">
+
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ExpandButton_OnTapped" />
+            </Frame.GestureRecognizers>
+
+            <Label
+                Text="{Binding ExpandButtonText}"
+                TextColor="{Binding ExpandButtonTextColor}"
+                FontFamily="{Binding ExpandButtonFontFamily}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
+        </Frame>
+    </Frame>
+</ContentView>
