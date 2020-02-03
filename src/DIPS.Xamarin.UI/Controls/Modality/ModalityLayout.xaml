@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIPS.Xamarin.UI.Controls.Modality.ModalityLayout"
              IsClippedToBounds="True">
+    
     <RelativeLayout x:Name="relativeLayout"
                     ChildRemoved="OnChildRemoved"
-                    x:FieldModifier="public"/>
+                    x:FieldModifier="internal"/>
 </ContentView>

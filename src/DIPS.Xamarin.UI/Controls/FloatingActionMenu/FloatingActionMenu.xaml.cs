@@ -153,16 +153,27 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             set => SetValue(CloseMenuProperty, value);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Hide()
         {
             if (m_animationComplete) AnimateAll(true);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Task BeforeRemoval()
         {
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Task AfterRemoval()
         {
             return Task.CompletedTask;

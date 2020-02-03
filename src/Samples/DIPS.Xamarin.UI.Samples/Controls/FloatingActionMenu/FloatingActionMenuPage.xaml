@@ -6,7 +6,6 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dxui="http://dips.xamarin.ui.com"
-             xmlns:floatingActionMenu="clr-namespace:DIPS.Xamarin.UI.Controls.FloatingActionMenu;assembly=DIPS.Xamarin.UI"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu.FloatingActionMenuPage">
     <ContentPage.Content>
@@ -14,29 +13,29 @@
         <dxui:ModalityLayout BackgroundColor="AntiqueWhite">
 
 
-            <floatingActionMenu:FloatingActionMenu Size="60"
+            <dxui:FloatingActionMenu Size="60"
                                                    ExpandButtonBackgroundColor="CornflowerBlue"
                                                    ExpandButtonText="Icon"
                                                    XConstraint=".75"
                                                    YConstraint=".85">
 
-                <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
                                                FontIconColor="White"
                                                Title="First page" />
-                <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
                                                FontIconColor="White"
                                                Title="Second page" />
-                <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
                                                FontIconColor="White"
                                                Title="Third page" />
-                <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
                                                FontIconColor="White"
                                                Title="Fourth page" />
-            </floatingActionMenu:FloatingActionMenu>
+            </dxui:FloatingActionMenu>
 
         </dxui:ModalityLayout>
     </ContentPage.Content>
