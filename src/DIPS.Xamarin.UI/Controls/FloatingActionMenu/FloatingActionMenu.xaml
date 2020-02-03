@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
 
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -8,34 +9,19 @@
              mc:Ignorable="d"
              x:Name="CodeBehind"
              x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.FloatingActionMenu">
-    <Frame x:Name="ExpandButton"
-           BindingContext="{x:Reference CodeBehind}"
-           Padding="0"
-           Opacity=".5"
-           HasShadow="False"
-           HeightRequest="{Binding Size}"
-           WidthRequest="{Binding Size}"
-           CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=2.0}}">
 
-        <Frame
-            HeightRequest="{Binding Size}"
+    <Button x:Name="ExpandButton"
+            BindingContext="{x:Reference CodeBehind}"
+            Opacity=".5"
             WidthRequest="{Binding Size}"
-            CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=2.0}}"
+            HeightRequest="{Binding Size}"
+            CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
             BackgroundColor="{Binding ExpandButtonBackgroundColor}"
-            Padding="0"
-            Margin="3"
-            HasShadow="False">
-
-            <Frame.GestureRecognizers>
-                <TapGestureRecognizer Tapped="ExpandButton_OnTapped" />
-            </Frame.GestureRecognizers>
-
-            <Label
-                Text="{Binding ExpandButtonText}"
-                TextColor="{Binding ExpandButtonTextColor}"
-                FontFamily="{Binding ExpandButtonFontFamily}"
-                VerticalOptions="Center"
-                HorizontalOptions="Center" />
-        </Frame>
-    </Frame>
+            BorderColor="White"
+            BorderWidth="3"
+            FontSize="12"
+            Text="{Binding ExpandButtonText}"
+            TextColor="{Binding ExpandButtonTextColor}"
+            FontFamily="{Binding ExpandButtonFontFamily}" 
+            Clicked="ExpandButton_OnClicked"/>
 </ContentView>

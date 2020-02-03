@@ -131,7 +131,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         public void Show(IModalityHandler modalityHandler, View view, View relativeView) => Show(modalityHandler, view, yConstraint: Constraint.RelativeToParent(r => Y + relativeView.Height));
 
         /// <summary>
-        /// Shows a view with relative to the modality layout by constraints
+        /// Shows a view relative to the modality layout by constraints
         /// </summary>
         /// <param name="modalityHandler">The handler of a modality</param>
         /// <param name="view">The view to show</param>
@@ -148,6 +148,25 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             ShowOverlay();
 
             relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
+        }
+
+        /// <summary>
+        ///     Displays an overlay underneath the <paramref name="view" />
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="modalityHandler">The handler of a modality</param>
+        public void Show(IModalityHandler modalityHandler, View view)
+        {
+            m_currentShowingModalityHandler = modalityHandler;
+            var overlay = m_overLay.Value;
+            overlay.FadeTo(0.5);
+            RelativeLayout.SetXConstraint(overlay, Constraint.RelativeToParent(r => 0));
+            RelativeLayout.SetYConstraint(overlay, Constraint.RelativeToParent(r => 0));
+            RelativeLayout.SetHeightConstraint(overlay, Constraint.RelativeToParent(r => r.Height));
+            RelativeLayout.SetWidthConstraint(overlay, Constraint.RelativeToParent(r => r.Width));
+
+            var indexOfView = relativeLayout.Children.IndexOf(view);
+            relativeLayout.Children.Insert(indexOfView, m_overLay.Value);
         }
 
         private void ShowOverlay()
@@ -174,14 +193,17 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             if (m_currentShowingModalityHandler == null) return;
 
             var hideOverLayTask = HideOverlay();
-
             await m_currentShowingModalityHandler.BeforeRemoval();
             await hideOverLayTask;
 
             relativeLayout.Children.Remove(view);
         }
 
-        private async Task HideOverlay()
+        /// <summary>
+        /// Removes the overlay from view.
+        /// </summary>
+        /// <returns></returns>
+        public async Task HideOverlay()
         {
             var overlay = m_overLay.Value;
             await overlay.FadeTo(0);

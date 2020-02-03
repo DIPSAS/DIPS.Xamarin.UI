@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -12,12 +13,12 @@
 
         <dxui:ModalityLayout BackgroundColor="AntiqueWhite">
 
+
             <floatingActionMenu:FloatingActionMenu Size="60"
                                                    ExpandButtonBackgroundColor="CornflowerBlue"
                                                    ExpandButtonText="Icon"
-                                                   ExpandButtonTextColor="Bisque"
-                                                   XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.75}"
-                                                   YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=.85}">
+                                                   XConstraint=".75"
+                                                   YConstraint=".85">
 
                 <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
@@ -26,15 +27,15 @@
                 <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
                                                FontIconColor="White"
-                                               Title="First page" />
-                <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
-                                               FontIcon="A"
-                                               FontIconColor="White"
-                                               Title="First page" />
-                <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
-                                               FontIcon="A"
-                                               FontIconColor="White"
                                                Title="Second page" />
+                <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
+                                               FontIcon="A"
+                                               FontIconColor="White"
+                                               Title="Third page" />
+                <floatingActionMenu:MenuButton BackgroundColor="LightSeaGreen"
+                                               FontIcon="A"
+                                               FontIconColor="White"
+                                               Title="Fourth page" />
             </floatingActionMenu:FloatingActionMenu>
 
         </dxui:ModalityLayout>

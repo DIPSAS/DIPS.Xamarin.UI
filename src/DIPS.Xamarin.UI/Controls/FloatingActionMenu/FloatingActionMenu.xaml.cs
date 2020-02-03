@@ -13,49 +13,67 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [ContentProperty(nameof(Children))]
-    public partial class FloatingActionMenu : ContentView
+    public partial class FloatingActionMenu : ContentView, IModalityHandler
     {
         /// <summary>
         /// </summary>
-        public static readonly BindableProperty SizeProperty =
-            BindableProperty.Create(nameof(Size), typeof(double), typeof(FloatingActionMenu), 60.0);
+        public static readonly BindableProperty SizeProperty = BindableProperty.Create(
+            nameof(Size),
+            typeof(double),
+            typeof(FloatingActionMenu),
+            60.0);
 
         /// <summary>
         /// </summary>
-        public static readonly BindableProperty FontFamilyProperty =
-            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(FloatingActionMenu));
+        public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
+            nameof(FontFamily),
+            typeof(string),
+            typeof(FloatingActionMenu));
 
         /// <summary>
         /// </summary>
-        public static readonly BindableProperty ExpandButtonTextProperty =
-            BindableProperty.Create(nameof(ExpandButtonText), typeof(string), typeof(FloatingActionMenu), string.Empty);
+        public static readonly BindableProperty ExpandButtonTextProperty = BindableProperty.Create(
+            nameof(ExpandButtonText),
+            typeof(string),
+            typeof(FloatingActionMenu),
+            string.Empty);
 
         /// <summary>
         /// </summary>
-        public static readonly BindableProperty ExpandButtonBackgroundColorProperty =
-            BindableProperty.Create(nameof(ExpandButtonBackgroundColor), typeof(Color), typeof(FloatingActionMenu),
-                Color.MediumPurple);
+        public static readonly BindableProperty ExpandButtonBackgroundColorProperty = BindableProperty.Create(
+            nameof(ExpandButtonBackgroundColor),
+            typeof(Color),
+            typeof(FloatingActionMenu),
+            Color.MediumPurple);
 
         /// <summary>
         /// </summary>
-        public static readonly BindableProperty ExpandButtonFontIconColorProperty =
-            BindableProperty.Create(nameof(ExpandButtonTextColor), typeof(Color), typeof(FloatingActionMenu),
-                Color.White);
+        public static readonly BindableProperty ExpandButtonFontIconColorProperty = BindableProperty.Create(
+            nameof(ExpandButtonTextColor),
+            typeof(Color),
+            typeof(FloatingActionMenu),
+            Color.White);
 
         /// <summary>
         /// </summary>
-        public static readonly BindableProperty ExpandButtonFontFamilyProperty =
-            BindableProperty.Create(nameof(ExpandButtonFontFamily), typeof(string), typeof(FloatingActionMenu));
+        public static readonly BindableProperty ExpandButtonFontFamilyProperty = BindableProperty.Create(
+            nameof(ExpandButtonFontFamily),
+            typeof(string),
+            typeof(FloatingActionMenu));
 
         /// <summary>
         /// </summary>
-        public static readonly BindableProperty CloseMenuProperty =
-            BindableProperty.Create(nameof(CloseMenu), typeof(bool), typeof(FloatingActionMenu), false,
-                propertyChanged: CloseMenuPropertyChanged);
+        public static readonly BindableProperty CloseMenuProperty = BindableProperty.Create(
+            nameof(CloseMenu),
+            typeof(bool),
+            typeof(FloatingActionMenu),
+            false,
+            propertyChanged: CloseMenuPropertyChanged);
 
         private readonly double m_spaceBetween = 10;
         private bool m_animationComplete = true;
         private bool m_isExpanded;
+        private ModalityLayout? m_modalityLayout;
         private double m_yTranslate;
 
         /// <summary>
@@ -68,19 +86,18 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <summary>
-        /// 
         /// </summary>
-        public Constraint? XConstraint { get; set; }
+        public double XConstraint { get; set; }
+
         /// <summary>
-        /// 
         /// </summary>
-        public Constraint? YConstraint { get; set; }
+        public double YConstraint { get; set; }
 
         /// <summary>
         /// </summary>
         public string ExpandButtonFontFamily
         {
-            get => (string) GetValue(ExpandButtonFontFamilyProperty);
+            get => (string)GetValue(ExpandButtonFontFamilyProperty);
             set => SetValue(ExpandButtonFontFamilyProperty, value);
         }
 
@@ -92,7 +109,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// </summary>
         public Color ExpandButtonTextColor
         {
-            get => (Color) GetValue(ExpandButtonFontIconColorProperty);
+            get => (Color)GetValue(ExpandButtonFontIconColorProperty);
             set => SetValue(ExpandButtonFontIconColorProperty, value);
         }
 
@@ -100,7 +117,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// </summary>
         public Color ExpandButtonBackgroundColor
         {
-            get => (Color) GetValue(ExpandButtonBackgroundColorProperty);
+            get => (Color)GetValue(ExpandButtonBackgroundColorProperty);
             set => SetValue(ExpandButtonBackgroundColorProperty, value);
         }
 
@@ -108,7 +125,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// </summary>
         public string ExpandButtonText
         {
-            get => (string) GetValue(ExpandButtonTextProperty);
+            get => (string)GetValue(ExpandButtonTextProperty);
             set => SetValue(ExpandButtonTextProperty, value);
         }
 
@@ -116,7 +133,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// </summary>
         public string FontFamily
         {
-            get => (string) GetValue(FontFamilyProperty);
+            get => (string)GetValue(FontFamilyProperty);
             set => SetValue(FontFamilyProperty, value);
         }
 
@@ -124,7 +141,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// </summary>
         public double Size
         {
-            get => (double) GetValue(SizeProperty);
+            get => (double)GetValue(SizeProperty);
             set => SetValue(SizeProperty, value);
         }
 
@@ -132,8 +149,23 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// </summary>
         public bool CloseMenu
         {
-            get => (bool) GetValue(CloseMenuProperty);
+            get => (bool)GetValue(CloseMenuProperty);
             set => SetValue(CloseMenuProperty, value);
+        }
+
+        public void Hide()
+        {
+            if (m_animationComplete) AnimateAll(true);
+        }
+
+        public Task BeforeRemoval()
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task AfterRemoval()
+        {
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -159,13 +191,17 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         private async Task AnimateAll(bool isExpanded)
         {
             m_animationComplete = false;
+
+            if (!isExpanded) m_modalityLayout?.Show(this, Children[1]);
+            else m_modalityLayout?.HideOverlay();
+
             var multiplier = 1;
 
             foreach (var menuButton in Children)
                 if (menuButton is MenuButton button)
                 {
-                    var maxOpacity = 1.0;
-                    if (!button.IsEnabled) maxOpacity = .5;
+                    button.InputTransparent = isExpanded;
+                    var maxOpacity = button.IsEnabled ? 1 : .5;
                     button.TranslateTo(0, isExpanded ? 0 : -m_yTranslate * multiplier, 250, Easing.CubicInOut);
                     button.FadeTo(isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
                     multiplier += 1;
@@ -175,19 +211,25 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             else ExpandButton.FadeTo(1, 250, Easing.CubicInOut);
 
             await ExpandButton.RelRotateTo(180, 250, Easing.CubicInOut);
-            m_animationComplete = true;
             m_isExpanded = !isExpanded;
+            m_animationComplete = true;
         }
 
-        private async void ExpandButton_OnTapped(object sender, EventArgs e)
+        private async void ExpandButton_OnClicked(object sender, EventArgs e)
         {
             if (m_animationComplete) await AnimateAll(m_isExpanded);
         }
 
         private void AddButtons()
         {
-            if (!(Parent is RelativeLayout modalityLayout)) return;
-            var currentPage = Navigation.NavigationStack.Last();
+            m_modalityLayout = this.GetParentOfType<ModalityLayout>();
+            var relativeParent = this.GetParentOfType<RelativeLayout>();
+
+            if (m_modalityLayout == null && relativeParent == null) return;
+            if (relativeParent == null) return;
+
+            var relativeLayout = m_modalityLayout == null ? relativeParent : m_modalityLayout.relativeLayout;
+
             foreach (var child in Children)
             {
                 if (child is MenuButton menuButton)
@@ -195,16 +237,13 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                     menuButton.FloatingActionMenuParent = this;
                     menuButton.Size = Size;
                     menuButton.Opacity = 0;
-
-                    if (menuButton.Page == currentPage.GetType()) menuButton.IsEnabled = false;
                 }
 
-                modalityLayout.Children.Add(child, XConstraint,
-                    YConstraint);
+                relativeLayout.Children.Add(child, Constraint.RelativeToParent(parent => parent.Width * XConstraint), Constraint.RelativeToParent(parent => parent.Height * YConstraint));
             }
 
             AdjustXPositions();
-            modalityLayout.RaiseChild(ExpandButton);
+            relativeLayout.RaiseChild(ExpandButton);
             m_yTranslate = Size + m_spaceBetween;
         }
 
@@ -212,26 +251,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         {
             foreach (var child in Children)
                 if (child is MenuButton menuButton)
-                    RelativeLayout.SetXConstraint(menuButton,
-                        Constraint.Constant(ExpandButton.X + Size - menuButton.Width));
-        }
-    }
-
-    internal class ModHandler : IModalityHandler
-    {
-        public void Hide()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task BeforeRemoval()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task AfterRemoval()
-        {
-            throw new NotImplementedException();
+                    RelativeLayout.SetXConstraint(menuButton, Constraint.Constant(ExpandButton.X + Size - menuButton.Width));
         }
     }
 }

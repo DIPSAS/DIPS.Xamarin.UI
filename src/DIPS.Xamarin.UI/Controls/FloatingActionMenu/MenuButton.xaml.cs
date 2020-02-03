@@ -188,7 +188,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void MenuButton_OnTapped(object sender, EventArgs e)
+        public void MenuButton_OnClicked(object sender, EventArgs e)
         {
             if (TapCommand != null && IsEnabled && FloatingActionMenuParent != null)
             {
