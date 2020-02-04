@@ -55,7 +55,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             OnScrolledInternal();
         }
 
-        public void Rec_PanUpdated(object sender, PanUpdatedEventArgs e)
+        private void Rec_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
             if (DisableTouchScroll)
             {
