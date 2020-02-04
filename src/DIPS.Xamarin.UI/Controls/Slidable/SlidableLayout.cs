@@ -14,7 +14,10 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         private int m_lastId = -1;
         private double m_startSlideLocation;
         private int m_lastIndex = int.MinValue;
+        private readonly PanGestureRecognizer m_rec = new PanGestureRecognizer();
         private AccelerationService m_accelerator = new AccelerationService(true);
+        private bool disableTouchScroll;
+
         /// <summary>
         /// To be added
         /// </summary>
@@ -24,15 +27,15 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             WidthIsProportional = true;
             Config = new SliderConfig(int.MinValue, int.MaxValue);
             SlideProperties = new SlidableProperties(0, -1, false);
-            var rec = new PanGestureRecognizer();
-            GestureRecognizers.Add(rec);
-            rec.PanUpdated += Rec_PanUpdated;
+            m_rec = new PanGestureRecognizer();
+            GestureRecognizers.Add(m_rec);
+            m_rec.PanUpdated += Rec_PanUpdated;
         }
 
         private static void OnChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var me = (SlidableLayout)bindable;
-            if(me.m_lastId == me.SlideProperties.HoldId)
+            if (me.m_lastId == me.SlideProperties.HoldId)
             {
                 return;
             }
@@ -52,10 +55,13 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             OnScrolledInternal();
         }
 
-        private List<PanUpdatedEventArgs> args = new List<PanUpdatedEventArgs>();
         public void Rec_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
-            args.Add(e);
+            if (DisableTouchScroll)
+            {
+                return;
+            }
+
             var currentId = e.GestureId;
             //if (!(m_lastId == SlideProperties.HoldId || !SlideProperties.IsHeld || currentId == m_lastId))
             //{
@@ -69,7 +75,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             }
 
             var currentPos = m_startSlideLocation - e.TotalX;
-            
+
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
                 currentPos = CalculateDist(Math.Round(SlideProperties.Position));
@@ -77,11 +83,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             }
             else
             {
-                
+
             }
 
             m_lastId = currentId;
-            var index = Math.Max(Config.MinValue-0.45, Math.Min(Config.MaxValue+0.45, CalculateIndex(currentPos)));
+            var index = Math.Max(Config.MinValue - 0.45, Math.Min(Config.MaxValue + 0.45, CalculateIndex(currentPos)));
             SlideProperties = new SlidableProperties(index, m_lastId, e.StatusType != GestureStatus.Completed && e.StatusType != GestureStatus.Canceled);
             OnScrolledInternal();
 
@@ -110,7 +116,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         private double CalculateIndex(double dist)
         {
             var width = GetItemWidth();
-            return (dist-Width/2) / width;
+            return (dist - Width / 2) / width;
         }
 
         /// <summary>
@@ -143,7 +149,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 m_lastIndex = index;
             }
             if (Width < 0.1) return;
-            OnScrolled((SlideProperties.Position+0.5), Width / 2 - GetItemWidth()/2, index);
+            OnScrolled((SlideProperties.Position + 0.5), Width / 2 - GetItemWidth() / 2, index);
         }
 
         /// <summary>
@@ -250,6 +256,21 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         {
             get => (bool)GetValue(WidthIsProportionalProperty);
             set => SetValue(WidthIsProportionalProperty, value);
+        }
+
+        /// <summary>
+        /// Disables the scrolling on this Layout. Use this if you layout has to be inside a ScrollView on Android.
+        /// </summary>
+        public bool DisableTouchScroll { get => disableTouchScroll;
+            set
+            {
+                disableTouchScroll = value;
+                GestureRecognizers.Remove(m_rec);
+                if (!value)
+                {
+                    GestureRecognizers.Add(m_rec);
+                }
+            }
         }
     }
 }

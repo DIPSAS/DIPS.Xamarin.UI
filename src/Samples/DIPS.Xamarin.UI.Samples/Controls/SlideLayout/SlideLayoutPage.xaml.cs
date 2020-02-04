@@ -12,5 +12,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
             BindingContext = new SlideLayoutViewModel();
             InitializeComponent();
         }
+
     }
 }

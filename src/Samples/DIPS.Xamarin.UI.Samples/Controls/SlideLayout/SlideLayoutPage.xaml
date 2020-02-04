@@ -4,7 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:dxui="http://dips.xamarin.ui.com">
-    <Grid>
+    <Grid x:Name="griid">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -16,29 +16,50 @@
             HorizontalOptions="Center"
             Text="{Binding Selected}"
             VerticalOptions="Center" />
-        <ScrollView Grid.Row="1">
+        <ScrollView x:Name="scroller" Grid.Row="1">
             <StackLayout>
                 <dxui:SlidableLayout
                     Margin="0,10"
-                    BackgroundColor="WhiteSmoke"
+                    BackgroundColor="DarkGreen"
                     Config="{Binding Config}"
                     HeightRequest="100"
                     SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-                    SlideProperties="{Binding SlidableProperties}" />
+                    SlideProperties="{Binding SlidableProperties}">
+                    <dxui:SlidableLayout.DisableTouchScroll>
+                        <OnPlatform
+                            x:TypeArguments="x:Boolean"
+                            Android="true"
+                            iOS="true" />
+                    </dxui:SlidableLayout.DisableTouchScroll>
+                </dxui:SlidableLayout>
                 <dxui:SlidableLayout
                     Margin="0,10"
                     BackgroundColor="Red"
                     Config="{Binding Config}"
-                    HeightRequest="100"
+                    HeightRequest="200"
                     SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-                    SlideProperties="{Binding SlidableProperties}" />
+                    SlideProperties="{Binding SlidableProperties}">
+                    <dxui:SlidableLayout.DisableTouchScroll>
+                        <OnPlatform
+                            x:TypeArguments="x:Boolean"
+                            Android="true"
+                            iOS="true" />
+                    </dxui:SlidableLayout.DisableTouchScroll>
+                </dxui:SlidableLayout>
                 <dxui:SlidableLayout
                     Margin="0,10"
                     BackgroundColor="Orange"
                     Config="{Binding Config}"
-                    HeightRequest="100"
+                    HeightRequest="200"
                     SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-                    SlideProperties="{Binding SlidableProperties}" />
+                    SlideProperties="{Binding SlidableProperties}">
+                    <dxui:SlidableLayout.DisableTouchScroll>
+                        <OnPlatform
+                            x:TypeArguments="x:Boolean"
+                            Android="true"
+                            iOS="true" />
+                    </dxui:SlidableLayout.DisableTouchScroll>
+                </dxui:SlidableLayout>
             </StackLayout>
 
         </ScrollView>
