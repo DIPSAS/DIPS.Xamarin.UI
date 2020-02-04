@@ -177,12 +177,6 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             return Task.CompletedTask;
         }
 
-
-        protected override void OnChildAdded(Element child)
-        {
-            base.OnChildAdded(child);
-        }
-
         /// <summary>
      /// 
      /// </summary>
