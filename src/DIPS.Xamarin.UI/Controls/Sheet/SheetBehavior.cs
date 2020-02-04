@@ -456,19 +456,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            var length = 250;
-            Task translationTask;
-            if (HasAnticipationEffect && Position < 0.9)
-            {
-                length = 600;
-                translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y, (uint)length, Easing.SpringIn);
-            }
-            else
-            {
-                translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
-            }
-            
-            await Task.Delay(length);
+            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y, 250);
+
+            await Task.Delay(250);
             await translationTask;
         }
 
@@ -581,7 +571,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 OnBeforeCloseCommand?.Execute(OnBeforeCloseCommandParameter);
                 OnBeforeClose?.Invoke(this, EventArgs.Empty);
 
-                m_modalityLayout.Hide(m_sheetView.SheetFrame, ((HasAnticipationEffect) ? (uint)600 : 250));
+                m_modalityLayout.Hide(m_sheetView.SheetFrame);
             }
 
             m_fromIsOpenContext = false;
@@ -636,7 +626,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             {
                 var animationLength = 250;
 
-                Task translationTask = Task.CompletedTask;
+                Task translationTask;
                 if (HasAnticipationEffect && newPosition < 0.9)
                 {
                     animationLength = 500;
