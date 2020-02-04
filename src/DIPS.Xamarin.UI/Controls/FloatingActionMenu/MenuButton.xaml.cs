@@ -192,7 +192,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         {
             if (TapCommand != null && IsEnabled && FloatingActionMenuParent != null)
             {
-                TapCommand?.Execute(Page);
+                TapCommand.Execute(TapCommandParameter);
                 FloatingActionMenuParent.CloseMenu = true;
             }
         }

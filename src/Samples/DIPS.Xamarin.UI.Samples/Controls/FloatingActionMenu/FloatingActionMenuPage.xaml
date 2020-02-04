@@ -11,8 +11,6 @@
     <ContentPage.Content>
 
         <dxui:ModalityLayout BackgroundColor="AntiqueWhite">
-
-
             <dxui:FloatingActionMenu Size="60"
                                                    ExpandButtonBackgroundColor="CornflowerBlue"
                                                    ExpandButtonText="Icon"
@@ -22,16 +20,21 @@
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
                                                FontIconColor="White"
+                                               TitleTextColor="LightSeaGreen"
                                                Title="First page" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
                                                FontIconColor="White"
+                                               TitleTextColor="LightSeaGreen"
+
                                                Title="Second page" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                                FontIcon="A"
+                                               TitleTextColor="LightSeaGreen"
                                                FontIconColor="White"
                                                Title="Third page" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                               TitleTextColor="LightSeaGreen"
                                                FontIcon="A"
                                                FontIconColor="White"
                                                Title="Fourth page" />

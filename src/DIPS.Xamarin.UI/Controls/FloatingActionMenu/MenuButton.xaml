@@ -24,6 +24,7 @@
                VerticalOptions="Center"
                HorizontalOptions="End">
             <Label Text="{Binding Title}"
+                   TextColor="{Binding TitleTextColor}"
                    VerticalOptions="Center"
                    HorizontalOptions="End" />
         </Frame>
