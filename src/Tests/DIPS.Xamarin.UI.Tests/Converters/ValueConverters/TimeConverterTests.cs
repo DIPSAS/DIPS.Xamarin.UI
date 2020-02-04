@@ -19,12 +19,19 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         [InlineData(0.0)]
         [InlineData(0.0f)]
         [InlineData("test")]
-        [InlineData(null)]
         public void Convert_InvalidInput_ThrowsArgumentException(object invalidInput)
         {
             Action act = () => m_timeConverter.Convert<string>(invalidInput);
 
             act.Should().Throw<ArgumentException>();
+        }
+
+        [Fact]
+        public void Convert_NullInput_ShouldReturnEmptyString()
+        {
+            var actual = m_timeConverter.Convert<string>(null);
+
+            actual.Should().Be(string.Empty);
         }
 
         public static IEnumerable<object[]> TestDataForDefaultFormat =>
