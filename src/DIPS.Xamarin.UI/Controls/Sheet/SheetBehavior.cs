@@ -594,14 +594,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private async Task TranslateBasedOnPosition(double newPosition)
         {
-            if (Math.Abs(newPosition) <= m_autoCloseThreshold)
-            {
-                if (m_modalityLayout == null) return;
-                if (m_sheetView == null) return;
-
-                IsOpen = false;
-            }
-
             if (!IsOpen) return;
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
@@ -619,7 +611,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (newPosition < MinPosition)
             {
-                Position = MinPosition;
+                if (MinPosition > m_autoCloseThreshold)
+                {
+                    Position = MinPosition;
+                }
+                else
+                {
+                    IsOpen = false;
+                }
                 return; //Return when we set property because it will lead to recursively calling this method
             }
 
@@ -628,6 +627,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 Position = MaxPosition;
                 return; //Return when we set property because it will lead to recursively calling this method
             }
+
+            //if (Math.Abs(newPosition) <= m_autoCloseThreshold)
+            //{
+            //    IsOpen = false;
+            //}
 
             var yTranslation = Alignment switch { 
                     AlignmentOptions.Bottom => m_sheetView.SheetFrame.Height * (1 - newPosition), 
