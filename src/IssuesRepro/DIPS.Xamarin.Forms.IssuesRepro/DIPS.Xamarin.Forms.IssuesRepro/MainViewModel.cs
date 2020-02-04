@@ -20,6 +20,8 @@ namespace DIPS.Xamarin.Forms.IssuesRepro
                 Application.Current.MainPage.Navigation.PushAsync(new Github86.Github86());
             if (obj.Equals("112"))
                 Application.Current.MainPage.Navigation.PushAsync(new Github112.Github112());
+            if (obj.Equals("123"))
+                Application.Current.MainPage.Navigation.PushAsync(new Github123.Github123());
         }
     }
 }
