@@ -15,11 +15,6 @@ namespace DIPS.Xamarin.UI.Controls.Content
             BindingContextChanged += (s, e) => UpdateContent();
         }
 
-        /// <summary>
-        /// Ignored Content as Content is overridden by BindingContextChanged or SelectorItem changed.
-        /// </summary>
-        public new object? Content { get; set; } = null;
-
         private void UpdateContent()
         {
             if(BindingContext == null || TemplateSelector == null)
@@ -28,7 +23,7 @@ namespace DIPS.Xamarin.UI.Controls.Content
             }
 
             var template = TemplateSelector.SelectTemplate(SelectorItem ?? BindingContext, this);
-            base.Content = template.CreateContent() as View;
+            Content = template.CreateContent() as View;
         }
 
         /// <summary>
