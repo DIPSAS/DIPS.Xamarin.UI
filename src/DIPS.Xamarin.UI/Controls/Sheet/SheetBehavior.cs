@@ -598,12 +598,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
 
-            if (MinPosition < m_autoCloseThreshold || MinPosition > MaxPosition)
+            if (MinPosition < m_autoCloseThreshold || MinPosition > MaxPosition) //Min position should be bigger than the auto close threshold and max position
             {
                 MinPosition = (double)MinPositionProperty.DefaultValue;
             }
 
-            if (MaxPosition <= 0 || MaxPosition > 1)
+            if (MaxPosition <= 0 || MaxPosition > 1) //Max position should be should be between 0-1
             {
                 MaxPosition = (double)MaxPositionProperty.DefaultValue;
             }
@@ -611,11 +611,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (newPosition < MinPosition)
             {
-                if (MinPosition > m_autoCloseThreshold)
+                if (MinPosition > m_autoCloseThreshold) //Do not auto- close if the minimum position set by the consumer is bigger than the auto close threshold
                 {
                     Position = MinPosition;
                 }
-                else
+                else //Auto close
                 {
                     IsOpen = false;
                 }
@@ -627,11 +627,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 Position = MaxPosition;
                 return; //Return when we set property because it will lead to recursively calling this method
             }
-
-            //if (Math.Abs(newPosition) <= m_autoCloseThreshold)
-            //{
-            //    IsOpen = false;
-            //}
 
             var yTranslation = Alignment switch { 
                     AlignmentOptions.Bottom => m_sheetView.SheetFrame.Height * (1 - newPosition), 
