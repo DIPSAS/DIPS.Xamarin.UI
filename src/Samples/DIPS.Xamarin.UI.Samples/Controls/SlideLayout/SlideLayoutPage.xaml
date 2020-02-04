@@ -16,12 +16,32 @@
             HorizontalOptions="Center"
             Text="{Binding Selected}"
             VerticalOptions="Center" />
-        <dxui:SlidableLayout
-            Grid.Row="1"
-            BackgroundColor="WhiteSmoke"
-            Config="{Binding Config}"
-            SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-            SlideProperties="{Binding SlidableProperties}" />
+        <ScrollView Grid.Row="1">
+            <StackLayout>
+                <dxui:SlidableLayout
+                    Margin="0,10"
+                    BackgroundColor="WhiteSmoke"
+                    Config="{Binding Config}"
+                    HeightRequest="100"
+                    SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
+                    SlideProperties="{Binding SlidableProperties}" />
+                <dxui:SlidableLayout
+                    Margin="0,10"
+                    BackgroundColor="Red"
+                    Config="{Binding Config}"
+                    HeightRequest="100"
+                    SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
+                    SlideProperties="{Binding SlidableProperties}" />
+                <dxui:SlidableLayout
+                    Margin="0,10"
+                    BackgroundColor="Orange"
+                    Config="{Binding Config}"
+                    HeightRequest="100"
+                    SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
+                    SlideProperties="{Binding SlidableProperties}" />
+            </StackLayout>
+
+        </ScrollView>
 
         <dxui:SlidableContentLayout
             Grid.Row="2"
