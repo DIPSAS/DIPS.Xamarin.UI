@@ -16,9 +16,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Content
             {
                 if (content is ViewModel1) Content = new ViewModel2();
                 else Content = new ViewModel1();
+                VM1.SwapTemplate = !VM1.SwapTemplate;
             });
         }
 
+        public ViewModel1 VM1 { get; } = new ViewModel1();
         public ICommand SwapCommand { get; }
         public object Content { get => content; set => PropertyChanged.RaiseWhenSet(ref content, value); }
 

@@ -24,10 +24,34 @@ namespace DIPS.Xamarin.UI.Tests.Controls.Content
         {
             var contentControl = new ContentControl();
 
-            contentControl.BindingContext = "text";
             contentControl.TemplateSelector = new TemplateSelector();
+            contentControl.BindingContext = "text";
 
             contentControl.Content.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void UpdateContent_SelectorItem_notString()
+        {
+            var contentControl = new ContentControl();
+
+            contentControl.TemplateSelector = new TemplateSelector();
+            contentControl.BindingContext = "Text";
+            contentControl.SelectorItem = 5;
+
+            contentControl.Content.Should().BeOfType<Button>();
+        }
+
+        [Fact]
+        public void UpdateContent_SelectorItem_String()
+        {
+            var contentControl = new ContentControl();
+
+            contentControl.TemplateSelector = new TemplateSelector();
+            contentControl.BindingContext = 5;
+            contentControl.SelectorItem = "text";
+
+            contentControl.Content.Should().BeOfType<StackLayout>();
         }
     }
 
@@ -37,7 +61,10 @@ namespace DIPS.Xamarin.UI.Tests.Controls.Content
         {
             return new DataTemplate(() =>
             {
-                return new StackLayout();
+                if (item is string)
+                    return new StackLayout();
+                else
+                    return new Button();
             });
         }
     }
