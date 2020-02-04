@@ -32,6 +32,7 @@
                                 MaxPosition="{Binding MaxPosition}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                                 OnPositionChanged="SheetBehavior_OnOnPositionChanged"
+                                SnapPositions="0.2, 0.3, 0.4"
                             >
                 <StackLayout>
                     <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
