@@ -12,6 +12,12 @@
             </Frame>
         </DataTemplate>
 
+        <DataTemplate x:Key="trueTemplate">
+            <Frame BackgroundColor="DarkGreen" HasShadow="False">
+                <Label Text="{Binding LuckyNumber}" TextColor="WhiteSmoke" />
+            </Frame>
+        </DataTemplate>
+
         <DataTemplate x:Key="vm2Template">
             <Frame BackgroundColor="#343434" HasShadow="False">
                 <Label Text="{Binding Title}" TextColor="WhiteSmoke" />
@@ -21,17 +27,28 @@
             x:Key="templateSelector"
             VM1Template="{StaticResource vm1Template}"
             VM2Template="{StaticResource vm2Template}" />
+
+        <ViewModel:ContentControlTemplateSelector
+            x:Key="boolSelector"
+            VM1Template="{StaticResource vm1Template}"
+            VM2Template="{StaticResource trueTemplate}" />
     </ContentPage.Resources>
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition />
+            <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <content:ContentControl BindingContext="{Binding Content}" TemplateSelector="{StaticResource templateSelector}" />
+        <content:ContentControl
+            Grid.Row="1"
+            BindingContext="{Binding VM1}"
+            SelectorItem="{Binding SwapTemplate}"
+            TemplateSelector="{StaticResource boolSelector}" />
 
         <Button
-            Grid.Row="1"
+            Grid.Row="2"
             BackgroundColor="WhiteSmoke"
             BorderColor="Black"
             BorderWidth="1"

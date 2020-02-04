@@ -11,6 +11,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Content
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
             if (VM1Template == null || VM2Template == null) throw new ArgumentNullException();
+            if (item is bool val)
+            {
+                if(val) return VM2Template;
+                return VM1Template;
+            }
+
             if (item is ViewModel1) return VM1Template;
             return VM2Template;
         }
