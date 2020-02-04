@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DIPS.Xamarin.UI.Util
 {
-    public class AccelerationService
+    interface class AccelerationService
     {
         private const double DefaultFriction = 0.66, DefaultGravity = 1.0, DefaultTrackTime = 0.18, ErrorMargin = 0.01;
         private readonly TimeTracker m_timeTracker = new TimeTracker();
