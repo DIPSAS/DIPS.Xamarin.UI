@@ -175,7 +175,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(MinPosition),
             typeof(double),
             typeof(SheetBehavior),
-            0.1,
+            0.05,
             BindingMode.TwoWay);
 
         /// <summary>
@@ -213,6 +213,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             ColorPalette.QuinaryAir);
 
         private bool m_fromIsDraggingContext;
+        private double m_autoCloseThreshold = 0.05;
 
         /// <summary>
         ///     Determines the position of the sheet when it appears.
@@ -559,7 +560,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 };
 
                 //Set position based on size of content
-                if (Position <= 0)
+                if (Position <= m_autoCloseThreshold)
                 {
                     //Calculate what size the content needs if the position is set to 0
                         var newPosition = m_sheetView.SheetContentHeightRequest / m_modalityLayout.Height;
@@ -593,11 +594,19 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private async Task TranslateBasedOnPosition(double newPosition)
         {
+            if (Math.Abs(newPosition) <= m_autoCloseThreshold)
+            {
+                if (m_modalityLayout == null) return;
+                if (m_sheetView == null) return;
+
+                IsOpen = false;
+            }
+
             if (!IsOpen) return;
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
 
-            if (MinPosition <= 0 || MinPosition > 1)
+            if (MinPosition < m_autoCloseThreshold || MinPosition > MaxPosition)
             {
                 MinPosition = (double)MinPositionProperty.DefaultValue;
             }
@@ -607,10 +616,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 MaxPosition = (double)MaxPositionProperty.DefaultValue;
             }
 
-            if (MinPosition > MaxPosition)
-            {
-                MinPosition = (double)MinPositionProperty.DefaultValue;
-            }
 
             if (newPosition < MinPosition)
             {
