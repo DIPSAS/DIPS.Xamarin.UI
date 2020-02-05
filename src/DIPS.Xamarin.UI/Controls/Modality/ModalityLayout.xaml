@@ -3,7 +3,6 @@
     x:Class="DIPS.Xamarin.UI.Controls.Modality.ModalityLayout"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:dxui="clr-namespace:DIPS.Xamarin.UI.Controls.Modality;assembly=DIPS.Xamarin.UI"
     IsClippedToBounds="True">
-    <dxui:ModalityRelativeLayout x:Name="relativeLayout" ChildRemoved="OnChildRemoved" />
+    <RelativeLayout x:Name="relativeLayout" ChildRemoved="OnChildRemoved" />
 </ContentView>
