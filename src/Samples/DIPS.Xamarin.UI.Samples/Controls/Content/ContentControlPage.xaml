@@ -4,7 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ViewModel="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Content;assembly=DIPS.Xamarin.UI.Samples"
-    xmlns:dxui="http://dips.xamarin.ui.com">
+    xmlns:dxui="http://dips.xamarin.ui.com"
+    NavigationPage.HasNavigationBar="">
     <ContentPage.Resources>
         <DataTemplate x:Key="vm1Template">
             <Frame BackgroundColor="WhiteSmoke" HasShadow="False">
