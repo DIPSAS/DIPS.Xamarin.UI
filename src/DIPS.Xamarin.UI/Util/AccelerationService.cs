@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace DIPS.Xamarin.UI.Util
 {
+    /// <summary>
+    /// Class to simulate acceleration. Use this in connection to a repeated invocation after touch and use GetValue
+    /// </summary>
     internal class AccelerationService
     {
         private const double DefaultFriction = 0.66, DefaultGravity = 1.0, DefaultTrackTime = 0.18, ErrorMargin = 0.01;
@@ -11,11 +14,28 @@ namespace DIPS.Xamarin.UI.Util
         private readonly Snapper? m_snapper;
         private readonly double m_friction, m_gravity, m_trackTime;
         private readonly object m_lock = new object();
+        private readonly double? m_max, m_min;
 
         private double m_value, m_speed;
         private bool m_isDragging;
         private List<Tuple<double, double>> m_moves = new List<Tuple<double, double>>();
 
+        /// <summary>
+        /// Maximum value of this accelerator. Will be used in by GetValue
+        /// </summary>
+        public double? Max { get; set; }
+        /// <summary>
+        /// Minimum value of this accelerator. Will be used in by GetValue
+        /// </summary>
+        public double? Min { get; set; }
+
+        /// <summary>
+        /// Creates an instance with whole number snaps if set to true
+        /// </summary>
+        /// <param name="snap"></param>
+        /// <param name="friction"></param>
+        /// <param name="gravity"></param>
+        /// <param name="trackTime"></param>
         public AccelerationService(
             bool snap,
             double friction = DefaultFriction,
@@ -36,6 +56,13 @@ namespace DIPS.Xamarin.UI.Util
             m_trackTime = trackTime;
         }
 
+        /// <summary>
+        /// Creates an instance where snapping happends on double locations
+        /// </summary>
+        /// <param name="snapPoints"></param>
+        /// <param name="friction"></param>
+        /// <param name="gravity"></param>
+        /// <param name="trackTime"></param>
         public AccelerationService(
             double[] snapPoints,
             double friction = DefaultFriction,
@@ -60,6 +87,10 @@ namespace DIPS.Xamarin.UI.Util
             }
         }
 
+        /// <summary>
+        /// Invoke this when you start a new drag
+        /// </summary>
+        /// <param name="value"></param>
         public void StartDrag(double value)
         {
             lock (m_lock)
@@ -70,13 +101,20 @@ namespace DIPS.Xamarin.UI.Util
             }
         }
 
+        /// <summary>
+        /// Invoke every time it's dragged
+        /// </summary>
+        /// <param name="value"></param>
         public void OnDrag(double value) => AddDrag(value);
 
-        public void EndDrag(double value)
+        /// <summary>
+        /// Invoke when dragging is done. If you have a value on the last drag, invoke OnDrag first.
+        /// </summary>
+        /// <param name="value"></param>
+        public void EndDrag()
         {
             lock (m_lock)
             {
-                //AddDrag(value);
                 m_isDragging = false;
                 var time = 0.0;
                 var dist = 0.0;
@@ -109,6 +147,11 @@ namespace DIPS.Xamarin.UI.Util
             }
         }
 
+        /// <summary>
+        /// Called in a small loop defining your wanted FPS. 
+        /// </summary>
+        /// <param name="isDone">Set to true if the location is close to a snap area with a low speed. Or true if speed is low and there are no defined snap values.</param>
+        /// <returns></returns>
         public double GetValue(out bool isDone)
         {
             lock (m_lock)

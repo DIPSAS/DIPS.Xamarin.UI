@@ -23,8 +23,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         /// </summary>
         public SlidableLayout()
         {
-            ElementWidth = 0.2;
-            WidthIsProportional = true;
             Config = new SliderConfig(int.MinValue, int.MaxValue);
             SlideProperties = new SlidableProperties(0, -1, false);
             m_rec = new PanGestureRecognizer();
@@ -40,7 +38,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 return;
             }
 
-            var index = me.SlideProperties.Position;
             me.OnScrolledInternal();
         }
 
@@ -79,7 +76,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
                 currentPos = CalculateDist(Math.Round(SlideProperties.Position));
-
             }
             else
             {
@@ -230,7 +226,8 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         public static readonly BindableProperty ElementWidthProperty = BindableProperty.Create(
             nameof(ElementWidth),
             typeof(double),
-            typeof(SlidableLayout));
+            typeof(SlidableLayout),
+            0.2);
 
         /// <summary>
         /// To be added
@@ -247,7 +244,8 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         public static readonly BindableProperty WidthIsProportionalProperty = BindableProperty.Create(
             nameof(WidthIsProportional),
             typeof(bool),
-            typeof(SlidableLayout));
+            typeof(SlidableLayout),
+            true);
 
         /// <summary>
         /// To be added
