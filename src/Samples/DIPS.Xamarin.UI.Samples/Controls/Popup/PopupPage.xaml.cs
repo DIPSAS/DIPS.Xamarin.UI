@@ -15,4 +15,14 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Popup
             BindingContext = new PopupPageViewModel();
         }
     }
+
+    public class TemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate? T1 { get; set; }
+        public DataTemplate? T2 { get; set; }
+        protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
+        {
+            return (item as bool?) == true ? T1 : T2;
+        }
+    }
 }

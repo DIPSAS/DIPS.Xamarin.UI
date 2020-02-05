@@ -3,7 +3,8 @@
     x:Class="DIPS.Xamarin.UI.Samples.Controls.Popup.PopupPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:dxui="http://dips.xamarin.ui.com">
+    xmlns:dxui="http://dips.xamarin.ui.com"
+    xmlns:local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Popup;assembly=DIPS.Xamarin.UI.Samples">
     <ContentPage.Resources>
         <Style x:Key="popupButtonStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="DarkGray" />
@@ -19,6 +20,48 @@
             <Setter Property="BorderColor" Value="Black" />
             <Setter Property="BackgroundColor" Value="WhiteSmoke" />
         </Style>
+
+        <DataTemplate x:Key="dt1">
+            <Frame BackgroundColor="DarkGreen" CornerRadius="0">
+                <StackLayout>
+                    <CheckBox IsChecked="{Binding IsOpen}" />
+
+                    <Label
+                        dxui:Modality.CloseOnClick="True"
+                        LineBreakMode="WordWrap"
+                        Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
+                        TextColor="WhiteSmoke" />
+
+                    <Label
+                        Margin="20"
+                        Text="{Binding MyString}"
+                        TextColor="WhiteSmoke" />
+                </StackLayout>
+            </Frame>
+        </DataTemplate>
+        <DataTemplate x:Key="dt2">
+            <Frame BackgroundColor="DarkBlue" CornerRadius="0">
+                <StackLayout>
+                    <CheckBox IsChecked="{Binding IsOpen}" />
+
+                    <Label
+                        dxui:Modality.CloseOnClick="True"
+                        LineBreakMode="WordWrap"
+                        Text="The text is some shorter."
+                        TextColor="WhiteSmoke" />
+
+                    <Label
+                        Margin="0"
+                        Text="{Binding MyString}"
+                        TextColor="WhiteSmoke" />
+                </StackLayout>
+            </Frame>
+        </DataTemplate>
+
+        <local:TemplateSelector
+            x:Key="selector"
+            T1="{StaticResource dt1}"
+            T2="{StaticResource dt2}" />
     </ContentPage.Resources>
     <dxui:ModalityLayout>
         <Grid BackgroundColor="WhiteSmoke">
@@ -117,22 +160,7 @@
                         HorizontalOptions="Center"
                         IsOpen="{Binding IsOpen}"
                         VerticalOptions="Auto">
-                        <Frame BackgroundColor="DarkGreen" CornerRadius="0">
-                            <StackLayout>
-                                <CheckBox IsChecked="{Binding IsOpen}" />
-
-                                <Label
-                                    dxui:Modality.CloseOnClick="True"
-                                    LineBreakMode="WordWrap"
-                                    Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
-                                    TextColor="WhiteSmoke" />
-
-                                <Label
-                                    Margin="20"
-                                    Text="{Binding MyString}"
-                                    TextColor="WhiteSmoke" />
-                            </StackLayout>
-                        </Frame>
+                        <dxui:ContentControl SelectorItem="{Binding ReversedBool}" TemplateSelector="{StaticResource selector}" />
                     </dxui:PopupBehavior>
                 </Grid.Behaviors>
             </Grid>
