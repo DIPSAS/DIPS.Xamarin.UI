@@ -4,7 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ViewModel="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Content;assembly=DIPS.Xamarin.UI.Samples"
-    xmlns:content="http://dips.xamarin.ui.com">
+    xmlns:dxui="http://dips.xamarin.ui.com">
     <ContentPage.Resources>
         <DataTemplate x:Key="vm1Template">
             <Frame BackgroundColor="WhiteSmoke" HasShadow="False">
@@ -40,12 +40,12 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <content:ContentControl BindingContext="{Binding Content}" TemplateSelector="{StaticResource templateSelector}" />
-        <content:ContentControl
+        <dxui:ContentControl BindingContext="{Binding Content}" TemplateSelector="{StaticResource templateSelector}" />
+        <dxui:ContentControl
             Grid.Row="1"
             BindingContext="{Binding VM1}"
             SelectorItem="{Binding SwapTemplate}"
-            TemplateSelector="{StaticResource boolSelector}" />
+            TemplateSelector="{dxui:BooleanDataTemplateSelector TrueTemplate={StaticResource vm1Template}, FalseTemplate={StaticResource trueTemplate}}" />
 
         <Button
             Grid.Row="2"
