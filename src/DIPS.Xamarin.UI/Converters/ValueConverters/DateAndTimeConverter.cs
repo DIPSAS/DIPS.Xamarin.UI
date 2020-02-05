@@ -49,7 +49,8 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || !(value is DateTime dateTimeInput))
+            if (value == null) return string.Empty;
+            if (!(value is DateTime dateTimeInput))
                 throw new ArgumentException("The input has to be of type DateTime");
             return Format switch 
             {

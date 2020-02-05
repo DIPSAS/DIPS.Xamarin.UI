@@ -38,7 +38,8 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var dateTimeInput = DateTime.MinValue;
-            if (value == null || !(value is DateTime) && !(value is TimeSpan))
+            if (value == null) return string.Empty;
+            if (!(value is DateTime) && !(value is TimeSpan))
                 throw new ArgumentException("The input has to be of type DateTime or TimeSpan");
 
             switch (value)

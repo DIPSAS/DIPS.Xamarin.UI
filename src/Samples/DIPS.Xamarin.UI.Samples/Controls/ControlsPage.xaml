@@ -36,10 +36,6 @@
                 Text="Trend graph" />
             <Button
                 Command="{Binding NavigateToCommand}"
-                CommandParameter="Picker"
-                Text="Picker" />
-            <Button
-                Command="{Binding NavigateToCommand}"
                 CommandParameter="ContentControl"
                 Text="ContentControl" />
         </StackLayout>

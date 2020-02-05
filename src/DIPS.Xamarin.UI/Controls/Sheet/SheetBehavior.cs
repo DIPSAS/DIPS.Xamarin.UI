@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Modality;
+using DIPS.Xamarin.UI.Converters.TypeConverters;
 using DIPS.Xamarin.UI.Internal.xaml;
 using DIPS.Xamarin.UI.Resources.Colors;
 using Xamarin.Forms;
@@ -175,9 +176,22 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(MinPosition),
             typeof(double),
             typeof(SheetBehavior),
-            0.1,
+            0.05,
             BindingMode.TwoWay);
+        /// <summary>
+        /// <see cref="SnapPositions"/>
+        /// </summary>
+        public static readonly BindableProperty SnapPositionsProperty = BindableProperty.Create(nameof(SnapPositions), typeof(double[]), typeof(SheetBehavior), new double[]{});
 
+        /// <summary>
+        /// Enables snapping. The positions to snap to should be between 0-1.
+        /// </summary>
+        [TypeConverter(typeof(DoubleArrayConverter))]
+        public double[] SnapPositions
+        {
+            get => (double[])GetValue(SnapPositionsProperty);
+            set => SetValue(SnapPositionsProperty, value);
+        }
         /// <summary>
         ///     <see cref="BindingContextFactory" />
         /// </summary>
@@ -213,6 +227,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             ColorPalette.QuinaryAir);
 
         private bool m_fromIsDraggingContext;
+        private double m_autoCloseThreshold = 0.05;
 
         /// <summary>
         ///     Determines the position of the sheet when it appears.
@@ -559,7 +574,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 };
 
                 //Set position based on size of content
-                if (Position <= 0)
+                if (Position <= m_autoCloseThreshold)
                 {
                     //Calculate what size the content needs if the position is set to 0
                         var newPosition = m_sheetView.SheetContentHeightRequest / m_modalityLayout.Height;
@@ -568,8 +583,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 else //Set position from input
                 {
                     await TranslateBasedOnPosition(Position);
-                    //OnOpenCommand?.Execute(OnOpenCommandParameter);
-                    //OnOpen?.Invoke(this, EventArgs.Empty);
                 }
             }
             else
@@ -597,24 +610,27 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
 
-            if (MinPosition <= 0 || MinPosition > 1)
+            if (MinPosition < m_autoCloseThreshold || MinPosition > MaxPosition) //Min position should be bigger than the auto close threshold and max position
             {
                 MinPosition = (double)MinPositionProperty.DefaultValue;
             }
 
-            if (MaxPosition <= 0 || MaxPosition > 1)
+            if (MaxPosition <= 0 || MaxPosition > 1) //Max position should be should be between 0-1
             {
                 MaxPosition = (double)MaxPositionProperty.DefaultValue;
             }
 
-            if (MinPosition > MaxPosition)
-            {
-                MinPosition = (double)MinPositionProperty.DefaultValue;
-            }
 
             if (newPosition < MinPosition)
             {
-                Position = MinPosition;
+                if (MinPosition > m_autoCloseThreshold) //Do not auto- close if the minimum position set by the consumer is bigger than the auto close threshold
+                {
+                    Position = MinPosition;
+                }
+                else //Auto close
+                {
+                    IsOpen = false;
+                }
                 return; //Return when we set property because it will lead to recursively calling this method
             }
 

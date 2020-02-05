@@ -4,11 +4,18 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ViewModel="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Content;assembly=DIPS.Xamarin.UI.Samples"
-    xmlns:content="http://dips.xamarin.ui.com">
+    xmlns:dxui="http://dips.xamarin.ui.com"
+    >
     <ContentPage.Resources>
         <DataTemplate x:Key="vm1Template">
             <Frame BackgroundColor="WhiteSmoke" HasShadow="False">
                 <Label Text="{Binding LuckyNumber}" />
+            </Frame>
+        </DataTemplate>
+
+        <DataTemplate x:Key="trueTemplate">
+            <Frame BackgroundColor="DarkGreen" HasShadow="False">
+                <Label Text="{Binding LuckyNumber}" TextColor="WhiteSmoke" />
             </Frame>
         </DataTemplate>
 
@@ -21,17 +28,28 @@
             x:Key="templateSelector"
             VM1Template="{StaticResource vm1Template}"
             VM2Template="{StaticResource vm2Template}" />
+
+        <ViewModel:ContentControlTemplateSelector
+            x:Key="boolSelector"
+            VM1Template="{StaticResource vm1Template}"
+            VM2Template="{StaticResource trueTemplate}" />
     </ContentPage.Resources>
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition />
+            <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <content:ContentControl BindingContext="{Binding Content}" TemplateSelector="{StaticResource templateSelector}" />
+        <dxui:ContentControl BindingContext="{Binding Content}" TemplateSelector="{StaticResource templateSelector}" />
+        <dxui:ContentControl
+            Grid.Row="1"
+            BindingContext="{Binding VM1}"
+            SelectorItem="{Binding SwapTemplate}"
+            TemplateSelector="{dxui:BooleanDataTemplateSelector TrueTemplate={StaticResource vm1Template}, FalseTemplate={StaticResource trueTemplate}}" />
 
         <Button
-            Grid.Row="1"
+            Grid.Row="2"
             BackgroundColor="WhiteSmoke"
             BorderColor="Black"
             BorderWidth="1"

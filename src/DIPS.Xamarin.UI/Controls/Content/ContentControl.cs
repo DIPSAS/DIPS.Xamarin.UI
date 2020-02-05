@@ -22,28 +22,34 @@ namespace DIPS.Xamarin.UI.Controls.Content
                 return;
             }
 
-            var template = TemplateSelector.SelectTemplate(BindingContext, this);
+            var template = TemplateSelector.SelectTemplate(SelectorItem ?? BindingContext, this);
             Content = template.CreateContent() as View;
         }
 
         /// <summary>
-        ///  <see cref="TemplateSelector" />
+        /// Sets the selector to show the content as defined by the BindingContext of this control
         /// </summary>
-        public static readonly BindableProperty TemplateSelectorProperty = BindableProperty.Create(
-            nameof(TemplateSelector),
-            typeof(DataTemplateSelector),
+        public DataTemplateSelector? TemplateSelector { get; set; }
+
+
+        /// <summary>
+        ///  <see cref="SelectorItem" />
+        /// </summary>
+        public static readonly BindableProperty SelectorItemProperty = BindableProperty.Create(
+            nameof(SelectorItem),
+            typeof(object),
             typeof(ContentControl),
             null,
             BindingMode.OneWay,
             propertyChanged: (s, o, n) => ((ContentControl)s).UpdateContent());
 
         /// <summary>
-        /// Sets the selector to show the content as defined by the BindingContext of this control
+        /// Used to select the template in the selector
         /// </summary>
-        public DataTemplateSelector TemplateSelector
+        public object SelectorItem
         {
-            get => (DataTemplateSelector)GetValue(TemplateSelectorProperty);
-            set => SetValue(TemplateSelectorProperty, value);
+            get => (object)GetValue(SelectorItemProperty);
+            set => SetValue(SelectorItemProperty, value);
         }
     }
 }

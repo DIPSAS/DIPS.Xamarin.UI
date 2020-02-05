@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DIPS.Xamarin.UI.Controls.Sheet;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -42,6 +43,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         internal ContentView SheetContentView => sheetContentView;
 
         private double m_newY;
+
         private void OnDrag(object sender, PanUpdatedEventArgs e)
         {
             if (!m_sheetBehaviour.IsDraggable) return;
@@ -68,7 +70,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 case GestureStatus.Completed:
                     m_newY = SheetFrame.TranslationY;
                     m_sheetBehaviour.IsDragging = false;
-                    //Snap?
+                    TryVerticalSnap();
                     break;
                 case GestureStatus.Canceled:
                     m_sheetBehaviour.IsDragging = false;
@@ -76,6 +78,24 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void TryVerticalSnap()
+        {
+            if (!m_sheetBehaviour.SnapPositions.Any()) return;
+
+            var currentNearest = m_sheetBehaviour.SnapPositions[0];
+            var currentDifference = Math.Abs(currentNearest - m_sheetBehaviour.Position);
+
+            for (var i = 1; i < m_sheetBehaviour.SnapPositions.Length; i++)
+            {
+                var diff = Math.Abs(m_sheetBehaviour.SnapPositions[i] - m_sheetBehaviour.Position);
+                if (!(diff < currentDifference)) continue;
+                currentDifference = diff;
+                currentNearest = m_sheetBehaviour.SnapPositions[i];
+            }
+
+            m_sheetBehaviour.Position = currentNearest;
         }
 
         internal void Initialize()

@@ -32,8 +32,7 @@
                                 MaxPosition="{Binding MaxPosition}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                                 OnPositionChanged="SheetBehavior_OnOnPositionChanged"
-                                SnapPositions="0.2, 0.3, 0.4"
-                            >
+                                SnapPositions="0.2, 0.3, 0.4">
                 <StackLayout>
                     <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
                     <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
@@ -213,7 +212,7 @@
             </Grid>
 
             <Label Text="{Binding StateText, StringFormat='State: {0}'}"
-                   IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}"/>
+                   IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}" />
             <Button Text="Open sheet"
                     Command="{Binding OpenSheetCommand}" />
 
