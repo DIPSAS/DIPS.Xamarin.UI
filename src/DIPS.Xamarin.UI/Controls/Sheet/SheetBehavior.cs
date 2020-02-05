@@ -569,8 +569,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 else //Set position from input
                 {
                     await TranslateBasedOnPosition(Position);
-                    //OnOpenCommand?.Execute(OnOpenCommandParameter);
-                    //OnOpen?.Invoke(this, EventArgs.Empty);
                 }
             }
             else
