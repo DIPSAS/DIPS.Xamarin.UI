@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Modality;
+using DIPS.Xamarin.UI.Converters.TypeConverters;
 using DIPS.Xamarin.UI.Internal.xaml;
 using DIPS.Xamarin.UI.Resources.Colors;
 using Xamarin.Forms;
@@ -177,7 +178,20 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(SheetBehavior),
             0.05,
             BindingMode.TwoWay);
+        /// <summary>
+        /// <see cref="SnapPositions"/>
+        /// </summary>
+        public static readonly BindableProperty SnapPositionsProperty = BindableProperty.Create(nameof(SnapPositions), typeof(double[]), typeof(SheetBehavior), new double[]{});
 
+        /// <summary>
+        /// Enables snapping. The positions to snap to should be between 0-1.
+        /// </summary>
+        [TypeConverter(typeof(DoubleArrayConverter))]
+        public double[] SnapPositions
+        {
+            get => (double[])GetValue(SnapPositionsProperty);
+            set => SetValue(SnapPositionsProperty, value);
+        }
         /// <summary>
         ///     <see cref="BindingContextFactory" />
         /// </summary>
