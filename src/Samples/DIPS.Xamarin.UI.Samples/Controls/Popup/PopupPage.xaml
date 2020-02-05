@@ -3,8 +3,7 @@
     x:Class="DIPS.Xamarin.UI.Samples.Controls.Popup.PopupPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:dxui="http://dips.xamarin.ui.com"
-    xmlns:local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Popup;assembly=DIPS.Xamarin.UI.Samples">
+    xmlns:dxui="http://dips.xamarin.ui.com">
     <ContentPage.Resources>
         <Style x:Key="popupButtonStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="DarkGray" />
@@ -57,11 +56,6 @@
                 </StackLayout>
             </Frame>
         </DataTemplate>
-
-        <local:TemplateSelector
-            x:Key="selector"
-            T1="{StaticResource dt1}"
-            T2="{StaticResource dt2}" />
     </ContentPage.Resources>
     <dxui:ModalityLayout>
         <Grid BackgroundColor="WhiteSmoke">
@@ -160,7 +154,7 @@
                         HorizontalOptions="Center"
                         IsOpen="{Binding IsOpen}"
                         VerticalOptions="Auto">
-                        <dxui:ContentControl SelectorItem="{Binding ReversedBool}" TemplateSelector="{StaticResource selector}" />
+                        <dxui:ContentControl SelectorItem="{Binding ReversedBool}" TemplateSelector="{dxui:BooleanDataTemplateSelector TrueTemplate={StaticResource dt1}, FalseTemplate={StaticResource dt2}}" />
                     </dxui:PopupBehavior>
                 </Grid.Behaviors>
             </Grid>
