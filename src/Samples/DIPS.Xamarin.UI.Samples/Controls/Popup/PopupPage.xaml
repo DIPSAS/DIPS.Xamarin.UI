@@ -19,6 +19,43 @@
             <Setter Property="BorderColor" Value="Black" />
             <Setter Property="BackgroundColor" Value="WhiteSmoke" />
         </Style>
+
+        <DataTemplate x:Key="dt1">
+            <Frame BackgroundColor="DarkGreen" CornerRadius="0">
+                <StackLayout>
+                    <CheckBox IsChecked="{Binding IsOpen}" />
+
+                    <Label
+                        dxui:Modality.CloseOnClick="True"
+                        LineBreakMode="WordWrap"
+                        Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
+                        TextColor="WhiteSmoke" />
+
+                    <Label
+                        Margin="20"
+                        Text="{Binding MyString}"
+                        TextColor="WhiteSmoke" />
+                </StackLayout>
+            </Frame>
+        </DataTemplate>
+        <DataTemplate x:Key="dt2">
+            <Frame BackgroundColor="DarkBlue" CornerRadius="0">
+                <StackLayout>
+                    <CheckBox IsChecked="{Binding IsOpen}" />
+
+                    <Label
+                        dxui:Modality.CloseOnClick="True"
+                        LineBreakMode="WordWrap"
+                        Text="The text is some shorter."
+                        TextColor="WhiteSmoke" />
+
+                    <Label
+                        Margin="0"
+                        Text="{Binding MyString}"
+                        TextColor="WhiteSmoke" />
+                </StackLayout>
+            </Frame>
+        </DataTemplate>
     </ContentPage.Resources>
     <dxui:ModalityLayout>
         <Grid BackgroundColor="WhiteSmoke">
@@ -117,22 +154,7 @@
                         HorizontalOptions="Center"
                         IsOpen="{Binding IsOpen}"
                         VerticalOptions="Auto">
-                        <Frame BackgroundColor="DarkGreen" CornerRadius="0">
-                            <StackLayout>
-                                <CheckBox IsChecked="{Binding IsOpen}" />
-
-                                <Label
-                                    dxui:Modality.CloseOnClick="True"
-                                    LineBreakMode="WordWrap"
-                                    Text="The text below is to prove this Binding context is inherited from the attached element. This is a view to show some kind of complex tooltip, without any button. This is now a longer text that needs to have some nice place. And simply show. So how is life? Lorem ipsum x 1000"
-                                    TextColor="WhiteSmoke" />
-
-                                <Label
-                                    Margin="20"
-                                    Text="{Binding MyString}"
-                                    TextColor="WhiteSmoke" />
-                            </StackLayout>
-                        </Frame>
+                        <dxui:ContentControl SelectorItem="{Binding ReversedBool}" TemplateSelector="{dxui:BooleanDataTemplateSelector TrueTemplate={StaticResource dt1}, FalseTemplate={StaticResource dt2}}" />
                     </dxui:PopupBehavior>
                 </Grid.Behaviors>
             </Grid>

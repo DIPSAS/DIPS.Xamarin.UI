@@ -260,25 +260,25 @@ namespace DIPS.Xamarin.UI.Controls.Popup
                 verticalDirection = itemPosition > center ? VerticalPopupOptions.Above : VerticalPopupOptions.Below;
             }
 
-            var diffY = 0.0;
+            Func<double> diffY = ()=>0.0;
 
             if (verticalDirection == VerticalPopupOptions.Above)
             {
-                diffY = -popupView.Height - sumMarginY;
+                diffY = ()=>-popupView.Height - sumMarginY;
             }
             else if (verticalDirection == VerticalPopupOptions.Below)
             {
-                diffY = relativeView.Height;
+                diffY = ()=>relativeView.Height;
             }
             else if (verticalDirection == VerticalPopupOptions.Center)
             {
-                diffY = relativeView.Height / 2 - popupView.Height / 2 - popupView.Margin.Top;
+                diffY = ()=>relativeView.Height / 2 - popupView.Height / 2 - popupView.Margin.Top;
             }
 
-            m_slideUp = diffY < 0;
+            m_slideUp = diffY() < 0;
             RelativeLayout.SetYConstraint(
                 popupView,
-                Constraint.RelativeToParent(r => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(layout) + diffY))));
+                Constraint.RelativeToParent(r => Math.Max(0, Math.Min(r.Height - popupView.Height - sumMarginY, relativeView.GetY(layout) + diffY()))));
         }
 
         private async Task Animate(View popupView)
