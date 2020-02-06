@@ -10,18 +10,20 @@
              x:Name="CodeBehind"
              x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.FloatingActionMenu">
 
-    <Button x:Name="ExpandButton"
-            BindingContext="{x:Reference CodeBehind}"
-            Opacity=".5"
-            WidthRequest="{Binding Size}"
-            HeightRequest="{Binding Size}"
-            CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
-            BackgroundColor="{Binding ExpandButtonBackgroundColor}"
-            BorderColor="White"
-            BorderWidth="3"
-            FontSize="12"
-            Text="{Binding ExpandButtonText}"
-            TextColor="{Binding ExpandButtonTextColor}"
-            FontFamily="{Binding ExpandButtonFontFamily}" 
-            Clicked="ExpandButton_OnClicked"/>
+    <ContentView.Content>
+        <Button x:Name="ExpandButton"
+                BindingContext="{x:Reference CodeBehind}"
+                Opacity=".5"
+                WidthRequest="{Binding Size}"
+                HeightRequest="{Binding Size}"
+                CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
+                BackgroundColor="{Binding ExpandButtonBackgroundColor}"
+                BorderColor="White"
+                BorderWidth="3"
+                FontSize="{Binding FontSize}"
+                Text="{Binding ExpandButtonText}"
+                TextColor="{Binding ExpandButtonTextColor}"
+                FontFamily="{Binding FontFamily}"
+                Clicked="ExpandButton_OnClicked" />
+    </ContentView.Content>
 </ContentView>

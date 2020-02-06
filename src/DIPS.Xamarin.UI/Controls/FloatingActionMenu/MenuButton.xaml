@@ -8,6 +8,7 @@
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              x:Name="CodeBehind"
              mc:Ignorable="d"
+             Opacity="0"
              InputTransparent="True"
              x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.MenuButton">
     <Grid BindingContext="{x:Reference CodeBehind}"
@@ -24,6 +25,8 @@
                VerticalOptions="Center"
                HorizontalOptions="End">
             <Label Text="{Binding Title}"
+                   TextColor="{Binding TitleTextColor}"
+                   FontSize="{Binding TitleFontSize}"
                    VerticalOptions="Center"
                    HorizontalOptions="End" />
         </Frame>
@@ -36,8 +39,9 @@
                 BackgroundColor="{Binding BackgroundColor}"
                 BorderColor="White"
                 BorderWidth="3"
-                Text="{Binding FontIcon}"
-                TextColor="{Binding FontIconColor}"
+                FontSize="{Binding FontSize}"
+                Text="{Binding Text}"
+                TextColor="{Binding TextColor}"
                 FontFamily="{Binding FontFamily}"
                 Clicked="MenuButton_OnClicked" />
     </Grid>
