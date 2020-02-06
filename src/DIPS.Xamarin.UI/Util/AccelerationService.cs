@@ -201,7 +201,7 @@ namespace DIPS.Xamarin.UI.Util
 
         private void ApplyGravity(double time, double snapPoint)
         {
-            if (Math.Abs(m_speed) > 3)
+            if (Math.Abs(m_speed) > 5)
                 return;
 
             var forceSpeed = m_gravity;
