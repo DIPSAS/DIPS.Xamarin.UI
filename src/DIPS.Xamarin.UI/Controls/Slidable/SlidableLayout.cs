@@ -95,15 +95,16 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
-                m_accelerator.Max = Config.MaxValue + 0.45;
-                m_accelerator.Min = Config.MinValue + 0.45;
                 m_accelerator.EndDrag();
                 Device.StartTimer(TimeSpan.FromMilliseconds(32), () => // ~30 fps
                 {
+                    m_accelerator.Min = Config.MinValue - 0.45;
+                    m_accelerator.Max = Config.MaxValue + 0.45;
                     var next = m_accelerator.GetValue(out bool isDone);
                     index = next;
-                    if (SlideProperties.IsHeld) return true;
+                    if (SlideProperties.IsHeld) return false;
                     SlideProperties = new SlidableProperties(index, m_lastId, false);
+                    OnScrolledInternal();
                     return !isDone;
                 });
             }

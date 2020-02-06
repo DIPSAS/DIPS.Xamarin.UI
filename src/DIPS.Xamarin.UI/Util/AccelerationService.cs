@@ -8,13 +8,12 @@ namespace DIPS.Xamarin.UI.Util
     /// </summary>
     internal class AccelerationService
     {
-        private const double DefaultFriction = 0.66, DefaultGravity = 1.0, DefaultTrackTime = 0.18, ErrorMargin = 0.01;
+        private const double DefaultFriction = 0.2, DefaultGravity = 10.0, DefaultTrackTime = 0.18, ErrorMargin = 0.01;
         private readonly TimeTracker m_timeTracker = new TimeTracker();
 
         private readonly Snapper? m_snapper;
         private readonly double m_friction, m_gravity, m_trackTime;
         private readonly object m_lock = new object();
-        private readonly double? m_max, m_min;
 
         private double m_value, m_speed;
         private bool m_isDragging;
@@ -173,20 +172,20 @@ namespace DIPS.Xamarin.UI.Util
 
         private void CapValueAndSpeed()
         {
-            if(m_min != null && m_value < m_min)
+            if(Max != null && m_value < Min)
             {
                 m_speed = 0;
-                m_value = m_min.Value;
+                m_value = Min.Value;
             }
 
-            if(m_max != null && m_value > m_max)
+            if(Max != null && m_value > Max)
             {
                 m_speed = 0;
-                m_value = m_max.Value;
+                m_value = Max.Value;
             }
         }
 
-        private bool IsDoneWithoutSnap() => Math.Abs(m_speed) < ErrorMargin;
+        private bool IsDoneWithoutSnap() => Math.Abs(m_speed) < 1;
 
         private bool IsDone(double snapPoint) => Math.Abs(snapPoint - m_value) < ErrorMargin && IsDoneWithoutSnap();
 
@@ -197,7 +196,7 @@ namespace DIPS.Xamarin.UI.Util
 
         private void ApplyFriction(double time)
         {
-            m_speed -= m_speed * m_friction * time;
+            m_speed -= m_speed * m_friction;
         }
 
         private void ApplyGravity(double time, double snapPoint)
