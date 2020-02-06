@@ -10,8 +10,8 @@
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu.FloatingActionMenuPage">
     <ContentPage.Content>
-        <dxui:ModalityLayout>
-            <dxui:ModalityLayout.Behaviors>
+        <RelativeLayout>
+            <RelativeLayout.Behaviors>
                 <dxui:FloatingActionMenuBehaviour>
                     <dxui:FloatingActionMenu Size="60"
                                              ExpandButtonBackgroundColor="CornflowerBlue"
@@ -36,7 +36,7 @@
                                          Title="Fourth page" />
                     </dxui:FloatingActionMenu>
                 </dxui:FloatingActionMenuBehaviour>
-            </dxui:ModalityLayout.Behaviors>
-        </dxui:ModalityLayout>
+            </RelativeLayout.Behaviors>
+        </RelativeLayout>
     </ContentPage.Content>
 </ContentPage>

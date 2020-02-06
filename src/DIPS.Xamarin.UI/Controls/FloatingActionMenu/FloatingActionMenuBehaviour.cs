@@ -29,15 +29,13 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             base.OnAttachedTo(bindable);
 
             m_floatingActionMenu = Content as FloatingActionMenu ?? Content?.Children.First(c => c.GetType() == typeof(FloatingActionMenu)) as FloatingActionMenu;
-
-            if (bindable is ModalityLayout modality) m_floatingActionMenu?.AddTo(modality.relativeLayout);
-            else m_floatingActionMenu?.AddTo(bindable);
-
+            if (!(bindable is ModalityLayout)) m_floatingActionMenu?.AddTo(bindable);
             bindable.SizeChanged += BindableOnSizeChanged;
         }
 
         private void BindableOnSizeChanged(object sender, EventArgs e)
         {
+            if (sender is ModalityLayout modality) m_floatingActionMenu?.AddTo(modality.relativeLayout);
             m_floatingActionMenu?.RaiseMenu();
         }
 

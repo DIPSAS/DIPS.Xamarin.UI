@@ -71,7 +71,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             propertyChanged: CloseMenuPropertyChanged);
 
         private readonly IGestureRecognizer m_closeMenuRecognizer;
-        private readonly Lazy<Frame> m_overLay;
+        private readonly Frame m_overLay;
 
         private readonly double m_spaceBetween = 10;
         private bool m_animationComplete = true;
@@ -86,7 +86,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         {
             Children = new List<View>();
             InitializeComponent();
-            m_overLay = new Lazy<Frame>(CreateOverlay);
+            m_overLay = new Frame { BackgroundColor = Color.Gray, InputTransparent = true, Opacity = 0.0, IsVisible = false};
             m_closeMenuRecognizer = new TapGestureRecognizer { Command = new Command(Hide) };
         }
 
@@ -159,14 +159,6 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             set => SetValue(CloseMenuProperty, value);
         }
 
-        private Frame CreateOverlay()
-        {
-            var overlayFrame = new Frame { BackgroundColor = Color.Gray, InputTransparent = true, Opacity = 0.0 };
-
-            overlayFrame.GestureRecognizers.Add(m_closeMenuRecognizer);
-            return overlayFrame;
-        }
-
         private void Hide()
         {
             if (m_animationComplete) AnimateAll(true);
@@ -187,13 +179,15 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
 
             if (!isExpanded)
             {
-                m_overLay.Value.InputTransparent = false;
-                m_overLay.Value.FadeTo(.5);
+                m_overLay.InputTransparent = false;
+                m_overLay.IsVisible = true;
+                m_overLay.FadeTo(.5, 100);
             }
             else
             {
-                m_overLay.Value.InputTransparent = true;
-                m_overLay.Value.FadeTo(0);
+                m_overLay.InputTransparent = true;
+                m_overLay.FadeTo(0,100);
+                m_overLay.IsVisible = false;
             }
 
             var multiplier = 1;
@@ -238,6 +232,8 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                 default:
                     return;
             }
+            
+            m_overLay.GestureRecognizers.Add(m_closeMenuRecognizer);
 
             m_parent = layout;
             m_yTranslate = Size + m_spaceBetween;
@@ -245,7 +241,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
 
         private void AddButtonsToAbsolute(AbsoluteLayout parent)
         {
-            parent.Children.Add(m_overLay.Value, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.SizeProportional);
+            parent.Children.Add(m_overLay, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.SizeProportional);
             parent.Children.Add(
                 ExpandButton,
                 new Rectangle(XConstraint, YConstraint, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize),
@@ -265,7 +261,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         private void AddButtonsToRelative(RelativeLayout parent)
         {
             parent.Children.Add(
-                m_overLay.Value,
+                m_overLay,
                 Constraint.RelativeToParent(p => p.X),
                 Constraint.RelativeToParent(p => p.Y),
                 Constraint.RelativeToParent(p => p.Width),
@@ -310,7 +306,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// </summary>
         public void RaiseMenu()
         {
-            m_parent?.RaiseChild(m_overLay.Value);
+            m_parent?.RaiseChild(m_overLay);
             foreach (var child in Children) m_parent?.RaiseChild(child);
             m_parent?.RaiseChild(ExpandButton);
         }
