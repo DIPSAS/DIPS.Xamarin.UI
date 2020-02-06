@@ -104,7 +104,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                     index = next;
                     if (SlideProperties.IsHeld) return true;
                     SlideProperties = new SlidableProperties(index, m_lastId, false);
-                    return isDone;
+                    return !isDone;
                 });
             }
             else if (e.StatusType == GestureStatus.Started)

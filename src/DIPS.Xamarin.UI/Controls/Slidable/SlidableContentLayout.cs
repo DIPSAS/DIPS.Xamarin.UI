@@ -59,7 +59,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 var view = CreateItem(iIndex);
                 if (view is ISliderSelectable selectable) selectable.OnSelectionChanged(selectedIndex == iIndex);
                 var dist = (Math.Abs(index - iIndex) / itemCount);
-                var position = (itemWidth * (1 - dist * 0.5) * (iIndex - index));
+                var position = (itemWidth * (1 - dist * 0.33) * (iIndex - index));
                 AbsoluteLayout.SetLayoutBounds(view, new Rectangle(Center + position-itemWidth/2, 0, ElementWidth, 1));
                 toAdd.Add(view);
                 view.Scale = 1-dist*0.5;
