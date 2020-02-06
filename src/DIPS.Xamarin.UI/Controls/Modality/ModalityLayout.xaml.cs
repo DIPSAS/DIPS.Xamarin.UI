@@ -153,7 +153,6 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         private void ContentSizeChanged(object sender, EventArgs e)
         {
-            ForceLayout();
             relativeLayout.ForceLayout();
         }
 
