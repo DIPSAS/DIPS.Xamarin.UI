@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
@@ -10,7 +11,14 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
     public class SlidableContentLayout : SlidableLayout
     {
         private readonly Dictionary<int, View> m_viewMapping = new Dictionary<int, View>();
-        private readonly AbsoluteLayout m_container = new AbsoluteLayout();
+        private readonly AbsoluteLayout m_container = new AbsoluteLayout()
+        {
+            HorizontalOptions = LayoutOptions.FillAndExpand,
+            VerticalOptions = LayoutOptions.FillAndExpand,
+            Padding = 0,
+            Margin = 0
+        };
+
         /// <summary>
         /// To be added
         /// </summary>
@@ -23,30 +31,50 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         /// To be added
         /// </summary>
         /// <param name="index"></param>
-        /// <param name="offset"></param>
-        /// <param name="selectedIndex"></param>
-        protected override void OnScrolled(double index, double offset, int selectedIndex)
+        protected override void OnScrolled(double index)
         {
+            base.OnScrolled(index);
             if (Width < 0.1) return;
-            if (m_viewMapping.Count > 100)
+            var center = base.Center;
+            var itemWidth = base.GetItemWidth();
+            var selectedIndex = GetIndexFromValue(index);
+            var itemCount = (center * 2) / itemWidth;
+
+            if (m_viewMapping.Count > itemCount*20)
             {
-                m_viewMapping.Clear(); // Simple cache clearing
+                foreach(var key in m_viewMapping.Select(d => d.Key).ToList())
+                {
+                    if(Math.Abs(index - key) > itemCount * 2)
+                    {
+                        m_viewMapping.Remove(key);
+                    }
+                }
             }
 
-            base.OnScrolled(index, offset, selectedIndex);
-            var itemWidth = GetItemWidth();
-            var totalWidth = (Width/ itemWidth);
-            m_container.Children.Clear();
-
-            for (var i = selectedIndex - totalWidth/2-1; i <= selectedIndex + totalWidth/2+1; i++)
+            var toAdd = new HashSet<View>();
+            for (var i = index - itemCount; i <= index + itemCount; i++)
             {
-                var pos = (int)Math.Floor(i);
-                if (pos < Config.MinValue || pos > Config.MaxValue) continue;
-                var isSelected = selectedIndex == pos;
-                var view = CreateItem(pos);
-                if (view is ISliderSelectable selectable) selectable.OnSelectionChanged(isSelected);
-                AbsoluteLayout.SetLayoutBounds(view, new Rectangle(offset  + itemWidth * (i-index), 0, ElementWidth, 1));
-                m_container.Children.Add(view);
+                var iIndex = (int)Math.Round(i);
+                if (iIndex < Config.MinValue || iIndex > Config.MaxValue) continue;
+                var view = CreateItem(iIndex);
+                if (view is ISliderSelectable selectable) selectable.OnSelectionChanged(selectedIndex == iIndex);
+                var dist = (Math.Abs(index - iIndex) / itemCount);
+                var position = (itemWidth * (1 - dist * 0.5) * (iIndex - index));
+                AbsoluteLayout.SetLayoutBounds(view, new Rectangle(Center + position-itemWidth/2, 0, ElementWidth, 1));
+                toAdd.Add(view);
+                view.Scale = 1-dist*0.5;
+            }
+
+            for (var i = m_container.Children.Count-1; i >= 0; i--)
+            {
+                var item = m_container.Children[i];
+                if (!toAdd.Contains(item)) m_container.Children.RemoveAt(i);
+            }
+
+            foreach(var item in toAdd)
+            {
+                if (m_container.Children.Contains(item)) continue;
+                m_container.Children.Add(item);
             }
         }
 
@@ -54,7 +82,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
         private View CreateItem(int id)
         {
-            //TODO: Reuse elements? Try without first.
             if (m_viewMapping.TryGetValue(id, out var element)) return element;
             element = (View)(ItemTemplate?.CreateContent() ?? CreateDefault());
             element.Parent = this;
@@ -88,6 +115,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             nameof(ItemTemplate),
             typeof(DataTemplate),
             typeof(SlidableLayout));
+
+        /// <summary>
+        /// Indicates if items should be scaled down when getting further away from the center.
+        /// </summary>
+        public bool ScaleDown { get; set; } = true;
 
         /// <summary>
         /// To be added

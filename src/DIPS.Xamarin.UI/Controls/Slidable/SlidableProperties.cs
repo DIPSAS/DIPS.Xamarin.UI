@@ -16,6 +16,7 @@
             Position = position;
             HoldId = holdId;
             IsHeld = isHeld;
+            //tests
         }
 
         /// <summary>

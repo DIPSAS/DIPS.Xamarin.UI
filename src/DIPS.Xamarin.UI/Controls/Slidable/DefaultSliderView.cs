@@ -29,13 +29,12 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         {
             if (selected)
             {
-                Opacity = 1;
-                await ((View)this).ScaleTo(1.0, 150, Easing.BounceIn);
+                await this.FadeTo(1.0, 100);
             }
             else
             {
-                Opacity = 0.25;
-                await ((View)this).ScaleTo(0.8, 150, Easing.BounceIn);
+                await this.FadeTo(0.25, 100);
+                //Opacity = 0.25;
             }
         }
     }

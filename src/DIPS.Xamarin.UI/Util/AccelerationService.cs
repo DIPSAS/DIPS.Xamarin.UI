@@ -24,6 +24,7 @@ namespace DIPS.Xamarin.UI.Util
         /// Maximum value of this accelerator. Will be used in by GetValue
         /// </summary>
         public double? Max { get; set; }
+
         /// <summary>
         /// Minimum value of this accelerator. Will be used in by GetValue
         /// </summary>
@@ -117,33 +118,15 @@ namespace DIPS.Xamarin.UI.Util
             {
                 m_isDragging = false;
                 var time = 0.0;
-                var dist = 0.0;
-                var prev = m_moves[m_moves.Count - 1];
-                for (var i = m_moves.Count-1; i >= 0 && time < DefaultTrackTime; i--)
+                var i = m_moves.Count - 1;
+                for (; i >= 0; i--)
                 {
-                    var move = m_moves[i];
-                    var d = move.Item1;
-                    var dt = move.Item2;
-                    time += dt;
-                    if(m_trackTime < time)
-                    {
-                        var diff = prev.Item1-d;
-                        var speed = diff / dt;
-                        var exceeding = time - m_trackTime;
-                        var actualTime = dt - exceeding;
-                        dist += speed * actualTime;
-                        time = m_trackTime;
-                        break;
-                    }
-
-                    dist += prev.Item1-d;
-                    prev = move;
+                    time += m_moves[i].Item2;
+                    if (m_trackTime < time) break;
                 }
 
-                if(time > 0.1)
-                {
-                    m_speed = dist * 1000.0 / time;
-                }
+                if (i < 0) i = 0;
+                m_speed = (m_moves[m_moves.Count - 1].Item1 - m_moves[i].Item1) / time;
             }
         }
 
@@ -165,23 +148,41 @@ namespace DIPS.Xamarin.UI.Util
                 var time = m_timeTracker.GetTimeD();
                 if (m_snapper == null)
                 {
-                    ApplySpeedByTime(time);
                     ApplyFriction(time);
+                    ApplySpeedByTime(time);
                     isDone = IsDoneWithoutSnap();
+                    CapValueAndSpeed();
                     return m_value;
                 }
 
                 var snapPoint = m_snapper.GetSnapPoint(m_value);
                 ApplyGravity(time, snapPoint);
-                ApplySpeedByTime(time);
                 ApplyFriction(time);
+                ApplySpeedByTime(time);
+                CapValueAndSpeed();
                 isDone = IsDone(snapPoint);
                 if (isDone)
                 {
                     m_value = snapPoint;
+                    m_speed = 0;
                 }
-
                 return m_value;
+            }
+        }
+
+
+        private void CapValueAndSpeed()
+        {
+            if(m_min != null && m_value < m_min)
+            {
+                m_speed = 0;
+                m_value = m_min.Value;
+            }
+
+            if(m_max != null && m_value > m_max)
+            {
+                m_speed = 0;
+                m_value = m_max.Value;
             }
         }
 
@@ -201,6 +202,9 @@ namespace DIPS.Xamarin.UI.Util
 
         private void ApplyGravity(double time, double snapPoint)
         {
+            if (Math.Abs(m_speed) > 3)
+                return;
+
             var forceSpeed = m_gravity;
             if(m_value > snapPoint)
             {

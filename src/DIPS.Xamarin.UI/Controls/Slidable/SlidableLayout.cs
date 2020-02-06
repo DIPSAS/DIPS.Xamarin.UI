@@ -11,11 +11,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
     /// </summary>
     public class SlidableLayout : ContentView
     {
+        private readonly PanGestureRecognizer m_rec = new PanGestureRecognizer();
+        private readonly AccelerationService m_accelerator = new AccelerationService(true);
         private int m_lastId = -1;
         private double m_startSlideLocation;
         private int m_lastIndex = int.MinValue;
-        private readonly PanGestureRecognizer m_rec = new PanGestureRecognizer();
-        private AccelerationService m_accelerator = new AccelerationService(true);
         private bool disableTouchScroll;
 
         /// <summary>
@@ -23,6 +23,10 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         /// </summary>
         public SlidableLayout()
         {
+            Padding = 0;
+            Margin = 0;
+            HorizontalOptions = LayoutOptions.FillAndExpand;
+            VerticalOptions = LayoutOptions.FillAndExpand;
             Config = new SliderConfig(int.MinValue, int.MaxValue);
             SlideProperties = new SlidableProperties(0, -1, false);
             m_rec = new PanGestureRecognizer();
@@ -60,10 +64,10 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             }
 
             var currentId = e.GestureId;
-            //if (!(m_lastId == SlideProperties.HoldId || !SlideProperties.IsHeld || currentId == m_lastId))
-            //{
-            //    return;
-            //}
+            if (!(m_lastId == SlideProperties.HoldId || !SlideProperties.IsHeld || currentId == m_lastId))
+            {
+                return;
+            }
 
             if (e.StatusType == GestureStatus.Started)
             {
@@ -72,48 +76,80 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             }
 
             var currentPos = m_startSlideLocation - e.TotalX;
+            m_lastId = currentId;
+            var index = Math.Max(Config.MinValue - 0.45, Math.Min(Config.MaxValue + 0.45, CalculateIndex(currentPos)));
 
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
-                currentPos = CalculateDist(Math.Round(SlideProperties.Position));
+                index = SlideProperties.Position;
+                //TODO: Verify short time and set tap instead of drag.
+                //TODO: Check if a tap is even recognized as a 
+                //currentPos = CalculateDist(Math.Round(SlideProperties.Position));
+                SlideProperties = new SlidableProperties(index, m_lastId, e.StatusType != GestureStatus.Completed && e.StatusType != GestureStatus.Canceled);
             }
             else
             {
-
+                SlideProperties = new SlidableProperties(index, m_lastId, e.StatusType != GestureStatus.Completed && e.StatusType != GestureStatus.Canceled);
+                OnScrolledInternal();
             }
 
-            m_lastId = currentId;
-            var index = Math.Max(Config.MinValue - 0.45, Math.Min(Config.MaxValue + 0.45, CalculateIndex(currentPos)));
-            SlideProperties = new SlidableProperties(index, m_lastId, e.StatusType != GestureStatus.Completed && e.StatusType != GestureStatus.Canceled);
-            OnScrolledInternal();
-
-            //if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
-            //{
-            //    m_accelerator.EndDrag(index);
-            //    Device.StartTimer(TimeSpan.FromMilliseconds(60d / 1000d), () =>
-            //    {
-            //        var next = m_accelerator.GetValue(out bool isDone);
-            //        index = Math.Max(Config.MinValue - 0.45, Math.Min(Config.MaxValue + 0.45, next));
-            //        if (SlideProperties.IsHeld) return false;
-            //        SlideProperties = new SlidableProperties(index, m_lastId, false);
-            //        return isDone;
-            //    });
-            //}
-            //else if (e.StatusType == GestureStatus.Started)
-            //{
-            //    m_accelerator.StartDrag(index);
-            //}
-            //else
-            //{
-            //    m_accelerator.OnDrag(index);
-            //}
+            if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
+            {
+                m_accelerator.Max = Config.MaxValue + 0.45;
+                m_accelerator.Min = Config.MinValue + 0.45;
+                m_accelerator.EndDrag();
+                Device.StartTimer(TimeSpan.FromMilliseconds(32), () => // ~30 fps
+                {
+                    var next = m_accelerator.GetValue(out bool isDone);
+                    index = next;
+                    if (SlideProperties.IsHeld) return true;
+                    SlideProperties = new SlidableProperties(index, m_lastId, false);
+                    return isDone;
+                });
+            }
+            else if (e.StatusType == GestureStatus.Started)
+            {
+                m_accelerator.StartDrag(index);
+            }
+            else
+            {
+                m_accelerator.OnDrag(index);
+            }
         }
 
         private double CalculateIndex(double dist)
         {
-            var width = GetItemWidth();
-            return (dist - Width / 2) / width;
+            var itemWidth = GetItemWidth();
+            return (dist - Width / 2) / itemWidth;
         }
+
+        /// <summary>
+        /// Gets the index of a value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected int GetIndexFromValue(double value) => (int)Math.Round(value);
+
+        /// <summary>
+        /// Center of the screen
+        /// </summary>
+        protected double Center => Width / 2;
+
+        /// <summary>
+        /// Gets the center
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        protected double GetCenterPosition(double value, double index) => Center + GetItemWidth() * (GetIndexFromValue(value) - index);
+
+        /// <summary>
+        /// Gets the left position of the item, used in drawing a bigger item
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        protected double GetLeftPosition(double value, double index) => Center + GetItemWidth() * (GetIndexFromValue(value) - 0.5 - index);
 
         /// <summary>
         /// To be added
@@ -145,16 +181,14 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 m_lastIndex = index;
             }
             if (Width < 0.1) return;
-            OnScrolled((SlideProperties.Position + 0.5), Width / 2 - GetItemWidth() / 2, index);
+            OnScrolled(SlideProperties.Position);
         }
 
         /// <summary>
         /// To be added
         /// </summary>
         /// <param name="index"></param>
-        /// <param name="offset"></param>
-        /// <param name="selectedIndex"></param>
-        protected virtual void OnScrolled(double index, double offset, int selectedIndex)
+        protected virtual void OnScrolled(double index)
         {
         }
 
@@ -162,7 +196,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         /// To be added
         /// </summary>
         /// <param name="location"></param>
-        protected virtual void OnClick(int location)
+        protected virtual void OnClick(int item)
         {
             // On click is only for when a tap gesture is done and we enble tap. 
         }
