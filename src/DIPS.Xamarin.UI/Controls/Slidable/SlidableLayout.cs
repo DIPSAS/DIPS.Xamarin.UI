@@ -196,7 +196,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         /// <summary>
         /// To be added
         /// </summary>
-        /// <param name="location"></param>
+        /// <param name="item"></param>
         protected virtual void OnClick(int item)
         {
             // On click is only for when a tap gesture is done and we enble tap. 
