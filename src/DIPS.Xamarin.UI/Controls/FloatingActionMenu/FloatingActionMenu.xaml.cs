@@ -86,7 +86,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         {
             Children = new List<View>();
             InitializeComponent();
-            m_overLay = new Frame { BackgroundColor = Color.Gray, InputTransparent = true, Opacity = 0.0, IsVisible = false};
+            m_overLay = new Frame { BackgroundColor = Color.Gray, Opacity = 0.0, IsVisible = false};
             m_closeMenuRecognizer = new TapGestureRecognizer { Command = new Command(Hide) };
         }
 
@@ -179,15 +179,12 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
 
             if (!isExpanded)
             {
-                m_overLay.InputTransparent = false;
                 m_overLay.IsVisible = true;
-                m_overLay.FadeTo(.5, 100);
+                m_overLay.FadeTo(.5);
             }
             else
             {
-                m_overLay.InputTransparent = true;
-                m_overLay.FadeTo(0,100);
-                m_overLay.IsVisible = false;
+                m_overLay.FadeTo(0);
             }
 
             var multiplier = 1;
@@ -206,6 +203,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             else ExpandButton.FadeTo(1, 250, Easing.CubicInOut);
 
             await ExpandButton.RelRotateTo(180, 250, Easing.CubicInOut);
+            if (isExpanded) m_overLay.IsVisible = false;
             m_isExpanded = !isExpanded;
             m_animationComplete = true;
         }

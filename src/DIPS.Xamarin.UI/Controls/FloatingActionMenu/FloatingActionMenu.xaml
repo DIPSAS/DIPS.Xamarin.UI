@@ -13,7 +13,7 @@
     <ContentView.Content>
         <Button x:Name="ExpandButton"
                 BindingContext="{x:Reference CodeBehind}"
-                Opacity=".5"
+                Opacity=".4"
                 WidthRequest="{Binding Size}"
                 HeightRequest="{Binding Size}"
                 CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
