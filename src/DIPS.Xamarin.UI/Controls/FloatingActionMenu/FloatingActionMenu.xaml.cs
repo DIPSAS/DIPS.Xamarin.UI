@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DIPS.Xamarin.UI.Controls.Modality;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,7 +21,6 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             60.0);
 
         /// <summary>
-        /// 
         /// </summary>
         public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
             nameof(FontSize),
@@ -81,17 +79,20 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         private double m_yTranslate;
 
         /// <summary>
+        ///     A floating action menu that can be added to either a RelativeLayout or an AbsoluteLayout. Add
+        ///     <value>MenuButtons</value>
+        ///     as content.
         /// </summary>
         public FloatingActionMenu()
         {
-            Children = new List<View>();
+            Children = new List<MenuButton>();
             InitializeComponent();
-            m_overLay = new Frame { BackgroundColor = Color.Gray, Opacity = 0.0, IsVisible = false};
+            m_overLay = new Frame { BackgroundColor = Color.Gray, Opacity = 0.0, IsVisible = false };
             m_closeMenuRecognizer = new TapGestureRecognizer { Command = new Command(Hide) };
         }
 
         /// <summary>
-        /// 
+        ///     FontSize of the text in the expand button.
         /// </summary>
         public double FontSize
         {
@@ -100,16 +101,18 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <summary>
+        ///     The Z-position of the control. Is proportional to the Layout it's added to. Values between 0-1.
         /// </summary>
         public double XConstraint { get; set; }
 
         /// <summary>
+        ///     The Y-position of the control. Is proportional to the Layout it's added to. Values between 0-1.
         /// </summary>
         public double YConstraint { get; set; }
 
         /// <summary>
         /// </summary>
-        public new List<View> Children { get; set; }
+        public new List<MenuButton> Children { get; set; }
 
         /// <summary>
         /// </summary>
@@ -136,6 +139,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <summary>
+        ///     FontFamily of the text in the expand button.
         /// </summary>
         public string FontFamily
         {
@@ -152,6 +156,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <summary>
+        ///     Set to true to close the menu if its open.
         /// </summary>
         public bool CloseMenu
         {
@@ -190,14 +195,13 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             var multiplier = 1;
 
             foreach (var menuButton in Children)
-                if (menuButton is MenuButton button)
-                {
-                    button.InputTransparent = isExpanded;
-                    var maxOpacity = button.IsEnabled ? 1 : .5;
-                    button.TranslateTo(0, isExpanded ? 0 : -m_yTranslate * multiplier, 250, Easing.CubicInOut);
-                    button.FadeTo(isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
-                    multiplier += 1;
-                }
+            {
+                menuButton.InputTransparent = isExpanded;
+                var maxOpacity = menuButton.IsEnabled ? 1 : .5;
+                menuButton.TranslateTo(0, isExpanded ? 0 : -m_yTranslate * multiplier, 250, Easing.CubicInOut);
+                menuButton.FadeTo(isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
+                multiplier += 1;
+            }
 
             if (isExpanded) ExpandButton.FadeTo(.5, 250, Easing.CubicInOut);
             else ExpandButton.FadeTo(1, 250, Easing.CubicInOut);
@@ -214,10 +218,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             if (m_animationComplete) await AnimateAll(m_isExpanded);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="layout"></param>
-        public void AddTo(Layout layout)
+        internal void AddTo(Layout layout)
         {
             switch (layout)
             {
@@ -230,7 +231,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                 default:
                     return;
             }
-            
+
             m_overLay.GestureRecognizers.Add(m_closeMenuRecognizer);
 
             m_parent = layout;
@@ -245,15 +246,14 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                 new Rectangle(XConstraint, YConstraint, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize),
                 AbsoluteLayoutFlags.PositionProportional);
             foreach (var child in Children)
-                if (child is MenuButton menuButton)
-                {
-                    menuButton.FloatingActionMenuParent = this;
-                    menuButton.Size = Size;
-                    parent.Children.Add(
-                        child,
-                        new Rectangle(XConstraint, YConstraint, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize),
-                        AbsoluteLayoutFlags.PositionProportional);
-                }
+            {
+                child.FloatingActionMenuParent = this;
+                child.Size = Size;
+                parent.Children.Add(
+                    child,
+                    new Rectangle(XConstraint, YConstraint, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize),
+                    AbsoluteLayoutFlags.PositionProportional);
+            }
         }
 
         private void AddButtonsToRelative(RelativeLayout parent)
@@ -269,40 +269,35 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                 Constraint.RelativeToParent(p => p.Width * XConstraint),
                 Constraint.RelativeToParent(p => p.Height * YConstraint));
             foreach (var child in Children)
-                if (child is MenuButton menuButton)
-                {
-                    menuButton.FloatingActionMenuParent = this;
-                    menuButton.Size = Size;
-                    parent.Children.Add(
-                        menuButton,
-                        Constraint.RelativeToParent(p => p.Width * XConstraint),
-                        Constraint.RelativeToParent(p => p.Height * YConstraint));
-                }
+            {
+                child.FloatingActionMenuParent = this;
+                child.Size = Size;
+                parent.Children.Add(
+                    child,
+                    Constraint.RelativeToParent(p => p.Width * XConstraint),
+                    Constraint.RelativeToParent(p => p.Height * YConstraint));
+            }
         }
 
         private void AdjustXPositions()
         {
             foreach (var child in Children)
-                if (child is MenuButton menuButton)
+                if (m_parent is AbsoluteLayout)
                 {
-                    if (m_parent is AbsoluteLayout)
-                    {
-                        AbsoluteLayout.SetLayoutFlags(child, AbsoluteLayoutFlags.None);
-                        AbsoluteLayout.SetLayoutBounds(
-                            child,
-                            new Rectangle(ExpandButton.X + Size - menuButton.Width, ExpandButton.Y, menuButton.Width, menuButton.Height));
-                    }
-                    else if (m_parent is RelativeLayout)
-                    {
-                        RelativeLayout.SetXConstraint(menuButton, Constraint.Constant(ExpandButton.X + Size - menuButton.Width));
-                    }
+                    AbsoluteLayout.SetLayoutFlags(child, AbsoluteLayoutFlags.None);
+                    AbsoluteLayout.SetLayoutBounds(
+                        child,
+                        new Rectangle(ExpandButton.X + Size - child.Width, ExpandButton.Y, child.Width, child.Height));
                 }
+                else if (m_parent is RelativeLayout)
+                {
+                    RelativeLayout.SetXConstraint(child, Constraint.Constant(ExpandButton.X + Size - child.Width));
+                }
+
             m_first = false;
         }
 
-        /// <summary>
-        /// </summary>
-        public void RaiseMenu()
+        internal void RaiseMenu()
         {
             m_parent?.RaiseChild(m_overLay);
             foreach (var child in Children) m_parent?.RaiseChild(child);
