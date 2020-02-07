@@ -68,6 +68,5 @@
 
   <ItemGroup>
     <Folder Include="Controls\TrendGraph\" />
-    <Folder Include="Controls\Content\" />
   </ItemGroup>
 </Project>

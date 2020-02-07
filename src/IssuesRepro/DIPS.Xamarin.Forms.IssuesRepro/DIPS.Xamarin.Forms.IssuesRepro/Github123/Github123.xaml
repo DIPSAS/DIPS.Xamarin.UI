@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Github123="clr-namespace:DIPS.Xamarin.Forms.IssuesRepro.Github123;assembly=DIPS.Xamarin.Forms.IssuesRepro"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github123.Github123">
+    <ContentPage.BindingContext>
+        <Github123:Github123ViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout Orientation="Vertical">
+        <Label Text="If this page is showing, the bug is fixed :)" />
+        <Label Text="{Binding DateTimeValue, Converter={dxui:DateConverter}}"/>
+        <Label Text="{Binding DateTimeValue, Converter={dxui:TimeConverter}}"/>
+        <Label Text="{Binding DateTimeValue, Converter={dxui:DateAndTimeConverter}}"/>
+    </StackLayout>
+</ContentPage>

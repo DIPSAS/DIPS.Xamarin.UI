@@ -148,6 +148,12 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             ShowOverlay();
 
             relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
+            view.SizeChanged += ContentSizeChanged;
+        }
+
+        private void ContentSizeChanged(object sender, EventArgs e)
+        {
+            relativeLayout.ForceLayout();
         }
 
         private void ShowOverlay()
@@ -170,10 +176,12 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <param name="view"></param>
         public async void Hide(View view)
         {
+            view.SizeChanged -= ContentSizeChanged;
             if (!relativeLayout.Children.Contains(view)) return;
             if (m_currentShowingModalityHandler == null) return;
 
             var hideOverLayTask = HideOverlay();
+
             await m_currentShowingModalityHandler.BeforeRemoval();
             await hideOverLayTask;
 
