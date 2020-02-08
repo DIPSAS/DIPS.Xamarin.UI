@@ -10,7 +10,7 @@
              x:Name="CodeBehind"
              x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.FloatingActionMenu">
 
-    <ContentView.Content>
+    <ContentView.Content>                                   
         <Button x:Name="ExpandButton"
                 BindingContext="{x:Reference CodeBehind}"
                 Opacity=".4"

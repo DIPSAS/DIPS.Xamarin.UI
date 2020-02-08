@@ -16,33 +16,33 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         private FloatingActionMenu? m_floatingActionMenu;
 
         /// <summary>
-        /// 
+        ///     Content should be a <see cref="FloatingActionMenu"/>
         /// </summary>
         public Layout? Content { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bindable"></param>
+        /// <inheritdoc />
         protected override void OnAttachedTo(Layout bindable)
         {
             base.OnAttachedTo(bindable);
 
             m_floatingActionMenu = Content as FloatingActionMenu ?? Content?.Children.First(c => c.GetType() == typeof(FloatingActionMenu)) as FloatingActionMenu;
-            if (!(bindable is ModalityLayout)) m_floatingActionMenu?.AddTo(bindable);
+            if (!(bindable is ModalityLayout))
+            {
+                m_floatingActionMenu?.AddTo(bindable);
+            }
             bindable.SizeChanged += BindableOnSizeChanged;
         }
 
         private void BindableOnSizeChanged(object sender, EventArgs e)
         {
-            if (sender is ModalityLayout modality) m_floatingActionMenu?.AddTo(modality.relativeLayout);
+            if (sender is ModalityLayout modality)
+            {
+                m_floatingActionMenu?.AddTo(modality.relativeLayout);
+            }
             m_floatingActionMenu?.RaiseMenu();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bindable"></param>
+        /// <inheritdoc />
         protected override void OnDetachingFrom(Layout bindable)
         {
             base.OnDetachingFrom(bindable);

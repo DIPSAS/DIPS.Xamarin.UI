@@ -27,15 +27,15 @@
             <Label Text="{Binding Title}"
                    TextColor="{Binding TitleTextColor}"
                    FontSize="{Binding TitleFontSize}"
+                   FontFamily="{Binding FontFamily}"
                    VerticalOptions="Center"
                    HorizontalOptions="End" />
         </Frame>
 
-        <Button Grid.Column="1"
+        <Button x:Name="button"
+                x:FieldModifier="internal"
+                Grid.Column="1"
                 BindingContext="{x:Reference CodeBehind}"
-                WidthRequest="{Binding Size}"
-                HeightRequest="{Binding Size}"
-                CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
                 BackgroundColor="{Binding BackgroundColor}"
                 BorderColor="White"
                 BorderWidth="3"
