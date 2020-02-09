@@ -75,6 +75,9 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             false,
             propertyChanged: IsOpenPropertyChanged);
 
+        /// <summary>
+        ///     <see cref="ShowOverlay"/>
+        /// </summary>
         public static readonly BindableProperty ShowOverlayProperty = BindableProperty.Create(
             nameof(DisplayOverlay),
             typeof(bool),
