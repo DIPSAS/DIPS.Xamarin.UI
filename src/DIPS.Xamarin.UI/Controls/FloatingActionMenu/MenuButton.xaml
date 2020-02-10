@@ -11,6 +11,7 @@
              Opacity="0"
              InputTransparent="True"
              x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.MenuButton">
+
     <Grid BindingContext="{x:Reference CodeBehind}"
           ColumnSpacing="8">
         <Grid.ColumnDefinitions>

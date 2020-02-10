@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Controls\FloatingActionMenu\FloatingActionMenu.xaml">
+    <EmbeddedResource Update="Internal\Xaml\FloatingActionMenu.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\FloatingActionMenu\MenuButton.xaml">

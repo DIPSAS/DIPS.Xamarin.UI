@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using DIPS.Xamarin.UI.Internal.Xaml;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +12,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
     public partial class MenuButton : ContentView
     {
         /// <summary>
-        ///     <see cref="Title"/>
+        ///     <see cref="Title" />
         /// </summary>
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(
             nameof(Title),
@@ -20,7 +21,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             string.Empty);
 
         /// <summary>
-        ///     <see cref="TapCommand"/>
+        ///     <see cref="TapCommand" />
         /// </summary>
         public static readonly BindableProperty TapCommandProperty = BindableProperty.Create(
             nameof(TapCommand),
@@ -28,7 +29,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             typeof(MenuButton));
 
         /// <summary>
-        ///     <see cref="TapCommandParameter"/>
+        ///     <see cref="TapCommandParameter" />
         /// </summary>
         public static readonly BindableProperty TapCommandParameterProperty = BindableProperty.Create(
             nameof(TapCommandParameter),
@@ -36,7 +37,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             typeof(MenuButton));
 
         /// <summary>
-        ///     <see cref="BackgroundColor"/>
+        ///     <see cref="BackgroundColor" />
         /// </summary>
         public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(
             nameof(BackgroundColor),
@@ -45,7 +46,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             Color.White);
 
         /// <summary>
-        ///     <see cref="TitleTextColor"/>
+        ///     <see cref="TitleTextColor" />
         /// </summary>
         public static readonly BindableProperty TitleTextColorProperty = BindableProperty.Create(
             nameof(TitleTextColor),
@@ -54,7 +55,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             Color.Black);
 
         /// <summary>
-        ///     <see cref="TextColor"/>
+        ///     <see cref="TextColor" />
         /// </summary>
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
             nameof(TextColor),
@@ -63,7 +64,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             Color.Black);
 
         /// <summary>
-        ///     <see cref="Text"/>
+        ///     <see cref="Text" />
         /// </summary>
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             nameof(Text),
@@ -72,12 +73,12 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             string.Empty);
 
         /// <summary>
-        ///     <see cref="FontFamily"/>
+        ///     <see cref="FontFamily" />
         /// </summary>
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MenuButton));
 
         /// <summary>
-        ///     <see cref="IsEnabled"/>
+        ///     <see cref="IsEnabled" />
         /// </summary>
         public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(
             nameof(IsEnabled),
@@ -86,7 +87,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             true);
 
         /// <summary>
-        ///     <see cref="TitleFontSize"/>
+        ///     <see cref="TitleFontSize" />
         /// </summary>
         public static readonly BindableProperty TitleFontSizeProperty = BindableProperty.Create(
             nameof(TitleFontSize),
@@ -95,7 +96,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             12.0);
 
         /// <summary>
-        ///     <see cref="FontSize"/>
+        ///     <see cref="FontSize" />
         /// </summary>
         public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
             nameof(FontSize),
@@ -104,7 +105,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             12.0);
 
         /// <summary>
-        ///     Buttons that can be placed in a <see cref="FloatingActionMenu"/>.
+        ///     Buttons that can be placed in a <see cref="FloatingActionMenuBehaviour" />.
         /// </summary>
         public MenuButton()
         {
@@ -131,7 +132,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             set => SetValue(TitleFontSizeProperty, value);
         }
 
-        internal FloatingActionMenu? FloatingActionMenuParent { get; set; }
+        internal Internal.Xaml.FloatingActionMenu? FloatingActionMenuParent { get; set; }
 
         /// <summary>
         ///     Disables the button command.
@@ -194,7 +195,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <summary>
-        ///     The parameter sent with the <see cref="TapCommand"/>.
+        ///     The parameter sent with the <see cref="TapCommand" />.
         ///     This is a bindable property.
         /// </summary>
         public object TapCommandParameter
@@ -223,17 +224,10 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             set => SetValue(TitleProperty, value);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void MenuButton_OnClicked(object sender, EventArgs e)
         {
-            if (FloatingActionMenuParent != null) FloatingActionMenuParent.IsOpen = false;
-            if (TapCommand != null && IsEnabled)
-            {
-                TapCommand?.Execute(TapCommandParameter);
-            }
+            if (FloatingActionMenuParent != null) FloatingActionMenuParent.m_behaviour.IsOpen = false;
+            if (TapCommand != null && IsEnabled) TapCommand?.Execute(TapCommandParameter);
         }
     }
 }
