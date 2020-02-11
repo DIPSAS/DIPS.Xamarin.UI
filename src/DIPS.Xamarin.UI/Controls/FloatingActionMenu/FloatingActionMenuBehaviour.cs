@@ -8,7 +8,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
     /// <summary>
     /// </summary>
     [ContentProperty(nameof(Children))]
-    public class FloatingActionMenuBehaviour : Behavior<Layout>
+    public class FloatingActionMenuBehaviour : Behavior<ModalityLayout>
     {
         /// <summary>
         ///     <see cref="IsOpen" />
@@ -74,6 +74,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             Color.White);
 
         private Internal.Xaml.FloatingActionMenu? m_floatingActionMenu;
+        private ModalityLayout m_modaliyLayout;
 
         /// <summary>
         ///     Add this behaviour to add a floating action menu.
@@ -174,14 +175,29 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <inheritdoc />
-        protected override void OnAttachedTo(Layout bindable)
+        protected override void OnAttachedTo(ModalityLayout modalityLayout)
         {
-            base.OnAttachedTo(bindable);
+            m_modaliyLayout = modalityLayout;
+            base.OnAttachedTo(m_modaliyLayout);
             m_floatingActionMenu = new Internal.Xaml.FloatingActionMenu(this);
-            bindable.SizeChanged += BindableOnSizeChanged;
+            m_modaliyLayout.SizeChanged += OnModalityLayoutSizeChanged;
+            m_modaliyLayout.BindingContextChanged += OnModalityLayoutBindingContextChanged;
         }
 
-        private void BindableOnSizeChanged(object sender, EventArgs e)
+        /// <inheritdoc />
+        protected override void OnDetachingFrom(ModalityLayout bindable)
+        {
+            base.OnDetachingFrom(bindable);
+            m_modaliyLayout.SizeChanged -= OnModalityLayoutSizeChanged;
+            m_modaliyLayout.BindingContextChanged -= OnModalityLayoutBindingContextChanged;
+        }
+
+        private void OnModalityLayoutBindingContextChanged(object sender, EventArgs e)
+        {
+            BindingContext = m_modaliyLayout?.BindingContext;
+        }
+
+        private void OnModalityLayoutSizeChanged(object sender, EventArgs e)
         {
             if (sender is ModalityLayout modality) m_floatingActionMenu?.AddTo(modality);
         }
@@ -191,7 +207,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         {
             base.OnDetachingFrom(bindable);
 
-            bindable.SizeChanged -= BindableOnSizeChanged;
+            bindable.SizeChanged -= OnModalityLayoutSizeChanged;
         }
     }
 }
