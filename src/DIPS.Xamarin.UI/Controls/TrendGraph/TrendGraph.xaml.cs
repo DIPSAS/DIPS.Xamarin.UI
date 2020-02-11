@@ -80,7 +80,14 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
 
         private void DrawGraph(double x, object item, double widthPerItem)
         {
-            var itemHeight = item.ExtractDouble(ValueMemberPath, MinValue).CalculateRelativePosition(MinValue, MaxValue);
+            var value = item.ExtractDouble(ValueMemberPath, MinValue);
+            var color = GraphColor;
+            if(UpperBound != null && value > UpperBound.Value || LowerBound != null && value < LowerBound.Value)
+            {
+                color = ReferenceColor;
+            }
+
+            var itemHeight = value.CalculateRelativePosition(MinValue, MaxValue);
             var backFrame = CreateBoxView(GraphBackgroundColor);
 
             graphContainer.Children.Add(backFrame,
@@ -89,7 +96,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
                 widthConstraint: Constraint.RelativeToParent(r => widthPerItem),
                 heightConstraint: Constraint.RelativeToParent(r => r.Height));
 
-            graphContainer.Children.Add(CreateBoxView(GraphColor),
+            graphContainer.Children.Add(CreateBoxView(color),
                 xConstraint: Constraint.RelativeToParent(r => backFrame.X),
                 yConstraint: Constraint.RelativeToParent(r => backFrame.Y + backFrame.Height - (itemHeight * backFrame.Height)),
                 widthConstraint: Constraint.RelativeToParent(r => backFrame.Width),
@@ -111,34 +118,20 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
         }
 
         /// <summary>
-        ///  <see cref="GraphColor" />
-        /// </summary>
-        public static readonly BindableProperty GraphColorProperty =
-            BindableProperty.Create(nameof(GraphColor), typeof(Color), typeof(TrendGraph), Color.FromHex("#a26eba"), propertyChanged: OnAnyPropertyChanged);
-
-        /// <summary>
         /// Color of each graph
         /// </summary>
-        public Color GraphColor
-        {
-            get { return (Color)GetValue(GraphColorProperty); }
-            set { SetValue(GraphColorProperty, value); }
-        }
-
-        /// <summary>
-        ///  <see cref="GraphBackgroundColor" />
-        /// </summary>
-        public static readonly BindableProperty GraphBackgroundColorProperty =
-            BindableProperty.Create(nameof(GraphBackgroundColor), typeof(Color), typeof(TrendGraph), Color.FromHex("#edf3f4"), propertyChanged: OnAnyPropertyChanged);
+        public Color GraphColor { get; set; } = Color.FromHex("#a26eba");
 
         /// <summary>
         /// Background color of each graph
         /// </summary>
-        public Color GraphBackgroundColor
-        {
-            get { return (Color)GetValue(GraphBackgroundColorProperty); }
-            set { SetValue(GraphBackgroundColorProperty, value); }
-        }
+        public Color GraphBackgroundColor { get; set; } = Color.FromHex("#edf3f4");
+
+        /// <summary>
+        /// Color to draw the graph with if the value is outside the reference area.
+        /// </summary>
+        public Color ReferenceColor { get; set; } = Color.Red;
+
 
         /// <summary>
         ///  <see cref="MaxValue" />
@@ -213,6 +206,36 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
         {
             get { return (string)GetValue(ValueMemberPathProperty); }
             set { SetValue(ValueMemberPathProperty, value); }
+        }
+
+        /// <summary>
+        ///  <see cref="LowerBound" />
+        /// </summary>
+        public static readonly BindableProperty LowerBoundProperty =
+            BindableProperty.Create(nameof(LowerBound), typeof(double?), typeof(TrendGraph), null, propertyChanged: OnAnyPropertyChanged);
+
+        /// <summary>
+        /// Lower bound of the trend values
+        /// </summary>
+        public double? LowerBound
+        {
+            get { return (double?)GetValue(LowerBoundProperty); }
+            set { SetValue(LowerBoundProperty, value); }
+        }
+
+        /// <summary>
+        ///  <see cref="UpperBound" />
+        /// </summary>
+        public static readonly BindableProperty UpperBoundProperty =
+            BindableProperty.Create(nameof(UpperBound), typeof(double?), typeof(TrendGraph), null, propertyChanged: OnAnyPropertyChanged);
+
+        /// <summary>
+        /// Upper bound of the trend values
+        /// </summary>
+        public double? UpperBound
+        {
+            get { return (double?)GetValue(UpperBoundProperty); }
+            set { SetValue(UpperBoundProperty, value); }
         }
     }
 }
