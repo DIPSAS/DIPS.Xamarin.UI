@@ -74,15 +74,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             Color.White);
 
         private Internal.Xaml.FloatingActionMenu? m_floatingActionMenu;
-        private ModalityLayout m_modaliyLayout;
-
-        /// <summary>
-        ///     Add this behaviour to add a floating action menu.
-        /// </summary>
-        public FloatingActionMenuBehaviour()
-        {
-            Children = new List<MenuButton>();
-        }
+        private ModalityLayout? m_modaliyLayout;
 
         /// <summary>
         ///     Describes the current state of the menu.
@@ -95,9 +87,27 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <summary>
+        /// <see cref="Children"/>
+        /// </summary>
+        public static readonly BindableProperty ChildrenProperty = BindableProperty.Create(nameof(Children), typeof(List<MenuButton>), typeof(FloatingActionMenuBehaviour), new List<MenuButton>(), propertyChanged:OnChildrenChanged);
+
+        private static void OnChildrenChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is FloatingActionMenuBehaviour floatingActionMenuBehaviour)) return;
+            if (floatingActionMenuBehaviour.m_modaliyLayout != null)
+            {
+                floatingActionMenuBehaviour.m_floatingActionMenu?.AddTo(floatingActionMenuBehaviour.m_modaliyLayout);
+            }
+        }
+
+        /// <summary>
         ///     List of menu button children.
         /// </summary>
-        public List<MenuButton> Children { get; set; }
+        public List<MenuButton> Children
+        {
+            get => (List<MenuButton>)GetValue(ChildrenProperty);
+            set => SetValue(ChildrenProperty, value);
+        }
 
         /// <summary>
         ///     The X-position of the control. Is proportional to the Layout it's added to. Values between 0-1.
@@ -200,14 +210,6 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         private void OnModalityLayoutSizeChanged(object sender, EventArgs e)
         {
             if (sender is ModalityLayout modality) m_floatingActionMenu?.AddTo(modality);
-        }
-
-        /// <inheritdoc />
-        protected override void OnDetachingFrom(Layout bindable)
-        {
-            base.OnDetachingFrom(bindable);
-
-            bindable.SizeChanged -= OnModalityLayoutSizeChanged;
         }
     }
 }
