@@ -21,18 +21,18 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             string.Empty);
 
         /// <summary>
-        ///     <see cref="TapCommand" />
+        ///     <see cref="Command" />
         /// </summary>
-        public static readonly BindableProperty TapCommandProperty = BindableProperty.Create(
-            nameof(TapCommand),
+        public static readonly BindableProperty CommandProperty = BindableProperty.Create(
+            nameof(Command),
             typeof(ICommand),
             typeof(MenuButton));
 
         /// <summary>
-        ///     <see cref="TapCommandParameter" />
+        ///     <see cref="CommandParameter" />
         /// </summary>
-        public static readonly BindableProperty TapCommandParameterProperty = BindableProperty.Create(
-            nameof(TapCommandParameter),
+        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(
+            nameof(CommandParameter),
             typeof(object),
             typeof(MenuButton));
 
@@ -195,23 +195,23 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <summary>
-        ///     The parameter sent with the <see cref="TapCommand" />.
+        ///     The parameter sent with the <see cref="Command" />.
         ///     This is a bindable property.
         /// </summary>
-        public object TapCommandParameter
+        public object CommandParameter
         {
-            get => GetValue(TapCommandParameterProperty);
-            set => SetValue(TapCommandParameterProperty, value);
+            get => GetValue(CommandParameterProperty);
+            set => SetValue(CommandParameterProperty, value);
         }
 
         /// <summary>
         ///     The command that is executed when the button is tapped.
         ///     This is a bindable property.
         /// </summary>
-        public ICommand TapCommand
+        public ICommand Command
         {
-            get => (ICommand)GetValue(TapCommandProperty);
-            set => SetValue(TapCommandProperty, value);
+            get => (ICommand)GetValue(CommandProperty);
+            set => SetValue(CommandProperty, value);
         }
 
         /// <summary>
@@ -226,8 +226,15 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
 
         private void MenuButton_OnClicked(object sender, EventArgs e)
         {
-            if (FloatingActionMenuParent != null) FloatingActionMenuParent.m_behaviour.IsOpen = false;
-            if (TapCommand != null && IsEnabled) TapCommand?.Execute(TapCommandParameter);
+            if (FloatingActionMenuParent != null)
+            {
+                FloatingActionMenuParent.m_behaviour.IsOpen = false;
+            }
+
+            if (Command != null && IsEnabled)
+            {
+                Command?.Execute(CommandParameter);
+            }
         }
     }
 }

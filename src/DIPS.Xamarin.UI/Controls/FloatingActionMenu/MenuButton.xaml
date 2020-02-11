@@ -25,12 +25,22 @@
                HasShadow="False"
                VerticalOptions="Center"
                HorizontalOptions="End">
-            <Label Text="{Binding Title}"
+            <Label x:Name="TitleLabel"
+                   Text="{Binding Title}"
                    TextColor="{Binding TitleTextColor}"
                    FontSize="{Binding TitleFontSize}"
                    FontFamily="{Binding FontFamily}"
                    VerticalOptions="Center"
                    HorizontalOptions="End" />
+
+            <Frame.Triggers>
+                <DataTrigger TargetType="Frame"
+                             Binding="{Binding Source={x:Reference TitleLabel}, Path=Text.Length}"
+                             Value="0">
+                    <Setter Property="IsVisible"
+                            Value="False" />
+                </DataTrigger>
+            </Frame.Triggers>
         </Frame>
 
         <Button x:Name="button"

@@ -8,7 +8,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
     /// <summary>
     /// </summary>
     [ContentProperty(nameof(Children))]
-    public class FloatingActionMenuBehaviour : Behavior<Layout>
+    public class FloatingActionMenuBehaviour : Behavior<ModalityLayout>
     {
         /// <summary>
         ///     <see cref="IsOpen" />
@@ -30,19 +30,19 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             60.0);
 
         /// <summary>
-        ///     <see cref="FontSize" />
+        ///     <see cref="ExpandButtonFontSize" />
         /// </summary>
-        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
-            nameof(FontSize),
+        public static readonly BindableProperty ExpandButtonFontSizeProperty = BindableProperty.Create(
+            nameof(ExpandButtonFontSize),
             typeof(double),
             typeof(Internal.Xaml.FloatingActionMenu),
             12.0);
 
         /// <summary>
-        ///     <see cref="FontFamily" />
+        ///     <see cref="ExpandButtonFontFamily" />
         /// </summary>
-        public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
-            nameof(FontFamily),
+        public static readonly BindableProperty ExpandButtonFontFamilyProperty = BindableProperty.Create(
+            nameof(ExpandButtonFontFamily),
             typeof(string),
             typeof(Internal.Xaml.FloatingActionMenu));
 
@@ -74,6 +74,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             Color.White);
 
         private Internal.Xaml.FloatingActionMenu? m_floatingActionMenu;
+        private bool m_first = true;
 
         /// <summary>
         ///     Add this behaviour to add a floating action menu.
@@ -106,7 +107,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// <summary>
         ///     The Y-position of the control. Is proportional to the Layout it's added to. Values between 0-1.
         /// </summary>
-        public double YConstraint { get; set; }
+        public double YPosition { get; set; }
 
         /// <summary>
         ///     The text color of the text in the expand button.
@@ -142,10 +143,10 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         ///     FontFamily of the text in the expand button.
         ///     This is a bindable property.
         /// </summary>
-        public string FontFamily
+        public string ExpandButtonFontFamily
         {
-            get => (string)GetValue(FontFamilyProperty);
-            set => SetValue(FontFamilyProperty, value);
+            get => (string)GetValue(ExpandButtonFontFamilyProperty);
+            set => SetValue(ExpandButtonFontFamilyProperty, value);
         }
 
         /// <summary>
@@ -162,36 +163,44 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         ///     FontSize of the text in the expand button.
         ///     This is a bindable property.
         /// </summary>
-        public double FontSize
+        public double ExpandButtonFontSize
         {
-            get => (double)GetValue(FontSizeProperty);
-            set => SetValue(FontSizeProperty, value);
+            get => (double)GetValue(ExpandButtonFontSizeProperty);
+            set => SetValue(ExpandButtonFontSizeProperty, value);
         }
 
         private static void IsOpenPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (bindable is FloatingActionMenuBehaviour menuBehaviour) menuBehaviour.m_floatingActionMenu?.ShowMenu((bool)newvalue);
+            if (bindable is FloatingActionMenuBehaviour menuBehaviour)
+            {
+                menuBehaviour.m_floatingActionMenu?.ShowMenu((bool)newvalue);
+            }
         }
 
         /// <inheritdoc />
-        protected override void OnAttachedTo(Layout bindable)
+        protected override void OnAttachedTo(ModalityLayout modalityLayout)
         {
-            base.OnAttachedTo(bindable);
+            base.OnAttachedTo(modalityLayout);
+
             m_floatingActionMenu = new Internal.Xaml.FloatingActionMenu(this);
-            bindable.SizeChanged += BindableOnSizeChanged;
+            modalityLayout.SizeChanged += BindableOnSizeChanged;
         }
 
         private void BindableOnSizeChanged(object sender, EventArgs e)
         {
-            if (sender is ModalityLayout modality) m_floatingActionMenu?.AddTo(modality);
+            if (sender is ModalityLayout modality && m_first)
+            {
+                m_first = false;
+                m_floatingActionMenu?.AddTo(modality);
+            }
         }
 
         /// <inheritdoc />
-        protected override void OnDetachingFrom(Layout bindable)
+        protected override void OnDetachingFrom(ModalityLayout modalityLayout)
         {
-            base.OnDetachingFrom(bindable);
+            base.OnDetachingFrom(modalityLayout);
 
-            bindable.SizeChanged -= BindableOnSizeChanged;
+            modalityLayout.SizeChanged -= BindableOnSizeChanged;
         }
     }
 }
