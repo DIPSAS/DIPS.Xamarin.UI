@@ -6,51 +6,59 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:FloatingActionMenu="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;assembly=DIPS.Xamarin.UI.Samples"
              x:Name="CodeBehind"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu.FloatingActionMenuPage">
-
-    <ContentPage.Content>
-        <dxui:ModalityLayout x:Name="modalityLayout"
-                             BackgroundColor="AntiqueWhite">
+    <ContentPage.BindingContext>
+        <FloatingActionMenu:FloatingActionMenuPageViewmodel />
+    </ContentPage.BindingContext>
+    <dxui:ModalityLayout x:Name="modalityLayout"
+                         BackgroundColor="AntiqueWhite">
+        <dxui:ModalityLayout.Behaviors>
+            <dxui:FloatingActionMenuBehaviour Size="60"
+                                              IsOpen="{Binding IsOpen}"
+                                              ExpandButtonBackgroundColor="CadetBlue"
+                                              ExpandButtonText="Open"
+                                              ExpandButtonFontSize="12"
+                                              ExpandButtonTextColor="Azure"
+                                              XPosition=".9"
+                                              YPosition=".95">
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                 Text="A"
+                                 TextColor="White"
+                                 Command="{Binding SetTextCommand}"
+                                 CommandParameter="First tapped!" />
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                 Text="A"
+                                 TextColor="White"
+                                 IsEnabled="False"
+                                 Title="Second page"
+                                 Command="{Binding SetTextCommand}"
+                                 CommandParameter="Second tapped!" />
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                 Text="A"
+                                 TextColor="White"
+                                 Title="Third page"
+                                 Command="{Binding SetTextCommand}"
+                                 CommandParameter="Third tapped!" />
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                 Text="A"
+                                 TextColor="White"
+                                 Title="Fourth page"
+                                 Command="{Binding SetTextCommand}"
+                                 CommandParameter="Fourth tapped!" />
+            </dxui:FloatingActionMenuBehaviour>
+        </dxui:ModalityLayout.Behaviors>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
             <Label x:Name="TextLabel"
-                   Text="Text goes here."
+                   Text="{Binding Text}"
                    FontSize="20"
-                   Margin="10"/>
-            <dxui:ModalityLayout.Behaviors>
-                <dxui:FloatingActionMenuBehaviour Size="60"
-                                                  ExpandButtonBackgroundColor="CadetBlue"
-                                                  ExpandButtonText="Open"
-                                                  ExpandButtonFontSize="12"
-                                                  ExpandButtonTextColor="Azure"
-                                                  XPosition=".9"
-                                                  YPosition=".95">
-                    <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                     Text="A"
-                                     TextColor="White"
-                                     Command="{Binding Source={x:Reference CodeBehind}, Path=SetTextCommand}"
-                                     CommandParameter="First tapped!"/>
-                    <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                     Text="A"
-                                     TextColor="White"
-                                     IsEnabled="False"
-                                     Title="Second page"
-                                     Command="{Binding Source={x:Reference CodeBehind}, Path=SetTextCommand}"
-                                     CommandParameter="Second tapped!" />
-                    <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                     Text="A"
-                                     TextColor="White"
-                                     Title="Third page"
-                                     Command="{Binding Source={x:Reference CodeBehind}, Path=SetTextCommand}"
-                                     CommandParameter="Third tapped!" />
-                    <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                     Text="A"
-                                     TextColor="White"
-                                     Title="Fourth page"
-                                     Command="{Binding Source={x:Reference CodeBehind}, Path=SetTextCommand}"
-                                     CommandParameter="Fourth tapped!" />
-                </dxui:FloatingActionMenuBehaviour>
-            </dxui:ModalityLayout.Behaviors>
-        </dxui:ModalityLayout>
-    </ContentPage.Content>
+                   Margin="10" />
+        </Grid>
+    </dxui:ModalityLayout>
 </ContentPage>

@@ -75,6 +75,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
 
         private Internal.Xaml.FloatingActionMenu? m_floatingActionMenu;
         private bool m_first = true;
+        private ModalityLayout? m_modalityLayout;
 
         /// <summary>
         ///     Add this behaviour to add a floating action menu.
@@ -181,26 +182,36 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         protected override void OnAttachedTo(ModalityLayout modalityLayout)
         {
             base.OnAttachedTo(modalityLayout);
-
+            m_modalityLayout = modalityLayout;
             m_floatingActionMenu = new Internal.Xaml.FloatingActionMenu(this);
-            modalityLayout.SizeChanged += BindableOnSizeChanged;
+            m_modalityLayout.SizeChanged += OnModalityLayoutSizeChanged;
+            m_modalityLayout.BindingContextChanged += OnModalityBindingContextChanged;
         }
 
-        private void BindableOnSizeChanged(object sender, EventArgs e)
+        private void OnModalityBindingContextChanged(object sender, EventArgs e)
         {
-            if (sender is ModalityLayout modality && m_first)
+            BindingContext = m_modalityLayout?.BindingContext;
+        }
+
+        private void OnModalityLayoutSizeChanged(object sender, EventArgs e)
+        {
+            if (m_modalityLayout == null) return;
+
+            if (m_first)
             {
                 m_first = false;
-                m_floatingActionMenu?.AddTo(modality);
+                m_floatingActionMenu?.AddTo(m_modalityLayout);
             }
         }
 
         /// <inheritdoc />
         protected override void OnDetachingFrom(ModalityLayout modalityLayout)
         {
-            base.OnDetachingFrom(modalityLayout);
+            if (m_modalityLayout == null) return;
 
-            modalityLayout.SizeChanged -= BindableOnSizeChanged;
+            base.OnDetachingFrom(m_modalityLayout);
+            m_modalityLayout.SizeChanged -= OnModalityLayoutSizeChanged;
+            m_modalityLayout.BindingContextChanged -= OnModalityBindingContextChanged;
         }
     }
 }
