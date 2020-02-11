@@ -8,7 +8,6 @@
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              mc:Ignorable="d"
              x:Name="CodeBehind"
-             BackgroundColor="Blue"
              x:Class="DIPS.Xamarin.UI.Internal.Xaml.FloatingActionMenu">
 
     <ContentView.Content>                                   

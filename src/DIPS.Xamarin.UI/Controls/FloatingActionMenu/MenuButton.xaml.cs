@@ -226,12 +226,12 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
 
         private void MenuButton_OnClicked(object sender, EventArgs e)
         {
-            if (FloatingActionMenuParent != null)
+            if (FloatingActionMenuParent != null && !IsEnabled) 
             {
                 FloatingActionMenuParent.m_behaviour.IsOpen = false;
             }
 
-            if (Command != null && IsEnabled)
+            if (IsEnabled)
             {
                 Command?.Execute(CommandParameter);
             }
