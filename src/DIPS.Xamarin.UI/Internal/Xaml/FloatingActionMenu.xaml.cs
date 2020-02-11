@@ -41,11 +41,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             if (m_animationComplete && m_isExpanded != shouldShow)
             {
-                if (m_first)
-                {
-                    AdjustXPositions();
-                }
-
+                AdjustXPositions();
                 AnimateAll();
             }
         }
@@ -97,17 +93,11 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
         private async void ExpandButton_OnClicked(object sender, EventArgs e)
         {
-            if (m_first)
-            {
-                AdjustXPositions();
-            }
+            if (!m_animationComplete) return;
+            AdjustXPositions();
+            await AnimateAll();
 
-            if (m_animationComplete)
-            {
-                await AnimateAll();
-            }
             m_behaviour.IsOpen = m_isExpanded;
-
             Children.ForEach(mb => mb.InputTransparent = !m_isExpanded);
         }
 
@@ -144,6 +134,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
         private void AdjustXPositions()
         {
+            if (!m_first) return;
+
             foreach (var child in Children)
             {
                 RelativeLayout.SetXConstraint(child, Constraint.Constant(ExpandButton.X + m_behaviour.Size - child.Width));
