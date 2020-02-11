@@ -18,6 +18,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             typeof(bool),
             typeof(Internal.Xaml.FloatingActionMenu),
             false,
+            BindingMode.TwoWay,
             propertyChanged: IsOpenPropertyChanged);
 
         /// <summary>
