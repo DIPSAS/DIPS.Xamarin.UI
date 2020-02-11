@@ -17,7 +17,6 @@
                          BackgroundColor="AntiqueWhite">
         <dxui:ModalityLayout.Behaviors>
             <dxui:FloatingActionMenuBehaviour Size="60"
-                                              IsOpen="{Binding IsOpen}"
                                               ExpandButtonBackgroundColor="CadetBlue"
                                               ExpandButtonText="Open"
                                               ExpandButtonFontSize="12"
@@ -50,15 +49,9 @@
                                  CommandParameter="Fourth tapped!" />
             </dxui:FloatingActionMenuBehaviour>
         </dxui:ModalityLayout.Behaviors>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Label x:Name="TextLabel"
-                   Text="{Binding Text}"
-                   FontSize="20"
-                   Margin="10" />
-        </Grid>
+        <Label x:Name="TextLabel"
+               Text="{Binding Text}"
+               FontSize="20"
+               Margin="10" />
     </dxui:ModalityLayout>
 </ContentPage>
