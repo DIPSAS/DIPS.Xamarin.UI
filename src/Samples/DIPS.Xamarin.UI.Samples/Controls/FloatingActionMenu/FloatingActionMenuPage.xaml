@@ -32,7 +32,8 @@
                                  Text="A"
                                  TextColor="White"
                                  IsEnabled="False"
-                                 Title="Second page"
+                                 TitleFontSize="14"
+                                 Title="Innstillinger"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Second tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"

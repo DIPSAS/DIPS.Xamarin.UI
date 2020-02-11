@@ -20,9 +20,9 @@
         </Grid.ColumnDefinitions>
 
         <Frame Grid.Column="0"
-               Padding="10,5,10,5"
                CornerRadius="8"
                HasShadow="False"
+               Padding="0"
                VerticalOptions="Center"
                HorizontalOptions="End">
             <Label x:Name="TitleLabel"
@@ -30,8 +30,8 @@
                    TextColor="{Binding TitleTextColor}"
                    FontSize="{Binding TitleFontSize}"
                    FontFamily="{Binding FontFamily}"
-                   VerticalOptions="Center"
-                   HorizontalOptions="End" />
+                   Margin="10,5,10,5"
+                   VerticalOptions="Center"/>
 
             <Frame.Triggers>
                 <DataTrigger TargetType="Frame"
