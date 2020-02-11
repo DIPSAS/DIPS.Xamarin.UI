@@ -84,7 +84,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             var color = GraphColor;
             if(UpperBound != null && value > UpperBound.Value || LowerBound != null && value < LowerBound.Value)
             {
-                color = ReferenceColor;
+                color = OutOfBoundsColor;
             }
 
             var itemHeight = value.CalculateRelativePosition(MinValue, MaxValue);
@@ -130,7 +130,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
         /// <summary>
         /// Color to draw the graph with if the value is outside the reference area.
         /// </summary>
-        public Color ReferenceColor { get; set; } = Color.Red;
+        public Color OutOfBoundsColor { get; set; } = Color.Red;
 
 
         /// <summary>
