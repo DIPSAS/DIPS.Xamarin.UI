@@ -39,7 +39,15 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
         internal void ShowMenu(bool shouldShow)
         {
-            if (m_animationComplete && m_isExpanded != shouldShow) AnimateAll();
+            if (m_animationComplete && m_isExpanded != shouldShow)
+            {
+                if (m_first)
+                {
+                    AdjustXPositions();
+                }
+
+                AnimateAll();
+            }
         }
 
         private void DisplayOverlay()
