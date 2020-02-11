@@ -38,6 +38,10 @@
                 Command="{Binding NavigateToCommand}"
                 CommandParameter="ContentControl"
                 Text="ContentControl" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="FloatingActionMenu"
+                Text="FloatingActionMenu" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

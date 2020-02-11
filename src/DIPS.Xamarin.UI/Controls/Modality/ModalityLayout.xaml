@@ -1,8 +1,9 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentView
-    x:Class="DIPS.Xamarin.UI.Controls.Modality.ModalityLayout"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    IsClippedToBounds="True">
-    <RelativeLayout x:Name="relativeLayout" ChildRemoved="OnChildRemoved" />
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIPS.Xamarin.UI.Controls.Modality.ModalityLayout"
+             IsClippedToBounds="True">
+    <RelativeLayout x:Name="relativeLayout"
+                    ChildRemoved="OnChildRemoved"
+                    x:FieldModifier="internal" />
 </ContentView>
