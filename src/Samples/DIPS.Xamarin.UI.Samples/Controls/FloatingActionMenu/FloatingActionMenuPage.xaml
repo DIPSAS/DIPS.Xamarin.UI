@@ -6,29 +6,49 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dxui="http://dips.xamarin.ui.com"
-             xmlns:FloatingActionMenu="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;assembly=DIPS.Xamarin.UI.Samples"
+             x:Name="CodeBehind"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu.FloatingActionMenuPage">
+
     <ContentPage.Content>
-        <dxui:ModalityLayout>
+        <dxui:ModalityLayout x:Name="modalityLayout"
+                             BackgroundColor="AntiqueWhite">
+            <Label x:Name="TextLabel"
+                   Text="Text goes here."
+                   FontSize="20"
+                   Margin="10"/>
             <dxui:ModalityLayout.Behaviors>
-                <dxui:FloatingActionMenuBehaviour Size="60">
-                    <dxui:MenuButton BackgroundColor="Aqua"
-                                     Text="A"
-                                     TextColor="White"
-                                     Title="First page" />
+                <dxui:FloatingActionMenuBehaviour Size="60"
+                                                  ExpandButtonBackgroundColor="CadetBlue"
+                                                  ExpandButtonText="Open"
+                                                  ExpandButtonFontSize="12"
+                                                  ExpandButtonTextColor="Azure"
+                                                  XPosition=".9"
+                                                  YPosition=".95">
                     <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                      Text="A"
                                      TextColor="White"
-                                     Title="Second page" />
+                                     Command="{Binding Source={x:Reference CodeBehind}, Path=SetTextCommand}"
+                                     CommandParameter="First tapped!"/>
                     <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                      Text="A"
                                      TextColor="White"
-                                     Title="Third page" />
+                                     IsEnabled="False"
+                                     Title="Second page"
+                                     Command="{Binding Source={x:Reference CodeBehind}, Path=SetTextCommand}"
+                                     CommandParameter="Second tapped!" />
                     <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                      Text="A"
                                      TextColor="White"
-                                     Title="Fourth page" />
+                                     Title="Third page"
+                                     Command="{Binding Source={x:Reference CodeBehind}, Path=SetTextCommand}"
+                                     CommandParameter="Third tapped!" />
+                    <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                     Text="A"
+                                     TextColor="White"
+                                     Title="Fourth page"
+                                     Command="{Binding Source={x:Reference CodeBehind}, Path=SetTextCommand}"
+                                     CommandParameter="Fourth tapped!" />
                 </dxui:FloatingActionMenuBehaviour>
             </dxui:ModalityLayout.Behaviors>
         </dxui:ModalityLayout>

@@ -89,9 +89,15 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
         private async void ExpandButton_OnClicked(object sender, EventArgs e)
         {
-            if (m_first) AdjustXPositions();
+            if (m_first)
+            {
+                AdjustXPositions();
+            }
 
-            if (m_animationComplete) await AnimateAll();
+            if (m_animationComplete)
+            {
+                await AnimateAll();
+            }
             m_behaviour.IsOpen = m_isExpanded;
 
             Children.ForEach(mb => mb.InputTransparent = !m_isExpanded);
@@ -119,13 +125,13 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
                 parent.Children.Add(
                     child,
                     Constraint.RelativeToParent(p => p.Width * m_behaviour.XPosition),
-                    Constraint.RelativeToParent(p => p.Height * m_behaviour.YConstraint));
+                    Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
             }
 
             parent.Children.Add(
                 ExpandButton,
-                Constraint.RelativeToParent(p => p.Width * m_behaviour.XPosition),
-                Constraint.RelativeToParent(p => p.Height * m_behaviour.YConstraint));
+                Constraint.RelativeToParent(p => (p.Width * m_behaviour.XPosition) - ExpandButton.WidthRequest),
+                Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
         }
 
         private void AdjustXPositions()

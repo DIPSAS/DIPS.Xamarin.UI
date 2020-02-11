@@ -17,7 +17,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
     public partial class ModalityLayout : ContentView
     {
         private readonly TapGestureRecognizer m_closeModalityRecognizer;
-        private readonly Lazy<Frame> m_overLay;
+        private readonly Frame m_overLay;
 
         private IModalityHandler? m_currentShowingModalityHandler;
 
@@ -48,7 +48,9 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         {
             InitializeComponent();
             m_closeModalityRecognizer = new TapGestureRecognizer { Command = new Command(HideCurrentShowingModality) };
-            m_overLay = new Lazy<Frame>(CreateOverlay);
+            //m_overLay = new Lazy<Frame>(CreateOverlay);
+            m_overLay = new Frame { BackgroundColor = OverlayColor, IsVisible = true, Opacity = 0.0 , InputTransparent = true};
+            m_overLay.GestureRecognizers.Add(m_closeModalityRecognizer);
         }
 
         /// <summary>
@@ -86,6 +88,12 @@ namespace DIPS.Xamarin.UI.Controls.Modality
                     Constraint.RelativeToParent(parent => parent.Y),
                     Constraint.RelativeToParent(parent => parent.Width),
                     Constraint.RelativeToParent(parent => parent.Height));
+                modalityLayout.relativeLayout.Children.Add(
+                    modalityLayout.m_overLay,
+                    Constraint.RelativeToParent(parent => parent.X),
+                    Constraint.RelativeToParent(parent => parent.Y),
+                    Constraint.RelativeToParent(parent => parent.Width),
+                    Constraint.RelativeToParent(parent => parent.Height));
             }
         }
 
@@ -114,13 +122,13 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             m_currentShowingModalityHandler?.Hide();
         }
 
-        private Frame CreateOverlay()
-        {
-            var overlayFrame = new Frame { BackgroundColor = OverlayColor, IsVisible = true, Opacity = 0.0 };
+        //private Frame CreateOverlay()
+        //{
+        //    var overlayFrame = new Frame { BackgroundColor = OverlayColor, IsVisible = true, Opacity = 0.0 };
 
-            overlayFrame.GestureRecognizers.Add(m_closeModalityRecognizer);
-            return overlayFrame;
-        }
+        //    overlayFrame.GestureRecognizers.Add(m_closeModalityRecognizer);
+        //    return overlayFrame;
+        //}
 
         /// <summary>
         ///     Shows a view relative to a another view inside of a modality layout
@@ -158,16 +166,8 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <param name="view">The view that's over he overlay</param>
         public void Show(IModalityHandler modalityHandler, View view)
         {
-            var indexOf = relativeLayout.Children.IndexOf(view);
             m_currentShowingModalityHandler = modalityHandler;
-            var overlay = m_overLay.Value;
-            overlay.FadeTo(0.5);
-            RelativeLayout.SetWidthConstraint(overlay, Constraint.RelativeToParent(r => r.Width));
-            RelativeLayout.SetHeightConstraint(overlay, Constraint.RelativeToParent(r => r.Height));
-            RelativeLayout.SetXConstraint(overlay, Constraint.RelativeToParent(r => 0.0));
-            RelativeLayout.SetYConstraint(overlay, Constraint.RelativeToParent(r => 0.0));
-
-            relativeLayout.Children.Insert(indexOf, m_overLay.Value);
+            ShowOverlay();
         }
 
         private void ContentSizeChanged(object sender, EventArgs e)
@@ -177,15 +177,9 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         private void ShowOverlay()
         {
-            var overlay = m_overLay.Value;
+            var overlay = m_overLay;
             overlay.FadeTo(0.5);
-
-            relativeLayout.Children.Add(
-                m_overLay.Value,
-                widthConstraint: Constraint.RelativeToParent(r => r.Width),
-                heightConstraint: Constraint.RelativeToParent(r => r.Height),
-                xConstraint: Constraint.RelativeToParent(r => 0.0),
-                yConstraint: Constraint.RelativeToParent(r => 0.0));
+            overlay.InputTransparent = false;
         }
 
         /// <summary>
@@ -209,9 +203,9 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         internal async Task HideOverlay()
         {
-            var overlay = m_overLay.Value;
+            var overlay = m_overLay;
+            m_overLay.InputTransparent = true;
             await overlay.FadeTo(0);
-            relativeLayout.Children.Remove(overlay);
         }
 
         private void OnChildRemoved(object sender, ElementEventArgs e)

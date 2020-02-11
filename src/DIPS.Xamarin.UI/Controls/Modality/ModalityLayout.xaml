@@ -2,6 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIPS.Xamarin.UI.Controls.Modality.ModalityLayout"
+<<<<<<< HEAD
              IsClippedToBounds="True"
              x:Name="modalityLayout">
     
@@ -11,4 +12,10 @@
                     HorizontalOptions="{Binding Source={x:Reference modalityLayout}, Path=HorizontalOptions}"
                     VerticalOptions="{Binding Source={x:Reference modalityLayout}, Path=VerticalOptions}"
                     />
+=======
+             IsClippedToBounds="True">
+    <RelativeLayout x:Name="relativeLayout"
+                    ChildRemoved="OnChildRemoved"
+                    x:FieldModifier="internal" />
+>>>>>>> e9e7a95f5a3c6ff28b41ec055f3f63b249d59c59
 </ContentView>

@@ -8,6 +8,7 @@
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              mc:Ignorable="d"
              x:Name="CodeBehind"
+             BackgroundColor="Blue"
              x:Class="DIPS.Xamarin.UI.Internal.Xaml.FloatingActionMenu">
 
     <ContentView.Content>                                   
@@ -19,10 +20,10 @@
                 BackgroundColor="{Binding ExpandButtonBackgroundColor}"
                 BorderColor="White"
                 BorderWidth="3"
-                FontSize="{Binding FontSize}"
+                FontSize="{Binding ExpandButtonFontSize}"
                 Text="{Binding ExpandButtonText}"
                 TextColor="{Binding ExpandButtonTextColor}"
-                FontFamily="{Binding FontFamily}"
+                FontFamily="{Binding ExpandButtonFontFamily}"
                 Clicked="ExpandButton_OnClicked" />
     </ContentView.Content>
 </ContentView>
