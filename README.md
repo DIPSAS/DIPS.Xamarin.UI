@@ -20,7 +20,7 @@ We differentiate the library in three available types of components:
 
 ### UI Components
 
-Our UI components include different visual components that are well known to people using our apps. This can be [Sheet](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Sheet), [Popup](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Popup), [Radio buttons](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/RadioButton) with more. Our UI components focuses heavily on the MVVM pattern. This means that you can find useful properties that are bindable and is easy to use with commands. Each UI component should have a well documented WIKI and a samples page that our consumers can look at.
+Our UI components include different visual components that are well known to people using our apps. This can be a [sheet](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Sheet), [popup](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Popup), [radio buttons](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/RadioButton) with more. Our UI components focuses heavily on the MVVM pattern. This means that you can find useful properties that are bindable and is easy to use with commands. Each UI component should have a well documented WIKI and a samples page that our consumers can look at.
 
 ### Resources
 
@@ -28,11 +28,13 @@ Our resources can be used in our pages and UI components. This can be [colors](h
 
 ### API
 
-Our API includes utilities that is handy when working with the MVVM pattern and XAML. This can be a [property changed api](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#propertychangedextensions|), [commands](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#asynccommand), [recursively searching the visual tree](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#getparentoftype) with more.
+Our API includes utilities that is useful when working with the MVVM pattern and XAML. This can be a [property changed api](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#propertychangedextensions|), [commands](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#asynccommand), [recursively searching the visual tree](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#getparentoftype) with more.
 
 ## Maintenance
 
 The library gets constantly updated and new features gets added once we identify the need of having components shared between our apps. New features are added as a [issue](https://github.com/DIPSAS/DIPS.Xamarin.UI/issues) and are marked as a `[Spec]`.
+
+We follow semantic versioning for our [nuget package](https://www.nuget.org/packages/DIPS.Xamarin.UI/).
 
 ## Contribution
 
