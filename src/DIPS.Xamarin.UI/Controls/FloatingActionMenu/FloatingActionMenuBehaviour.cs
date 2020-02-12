@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DIPS.Xamarin.UI.Controls.Modality;
 using Xamarin.Forms;
 
@@ -84,7 +85,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// </summary>
         public FloatingActionMenuBehaviour()
         {
-            Children = new List<MenuButton>();
+            MenuButtons = new List<MenuButton>();
         }
 
         /// <summary>
@@ -100,7 +101,17 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// <summary>
         ///     List of menu button children.
         /// </summary>
-        public IEnumerable<MenuButton> Children { get; set; }
+        [Obsolete("Children is obsolete and will be removed in a later version. Please use MenuButtons instead")]
+        public List<MenuButton> Children
+        {
+            get => MenuButtons.ToList();
+            set => MenuButtons = value;
+        }
+
+        /// <summary>
+        ///     List of menu button children.
+        /// </summary>
+        public IEnumerable<MenuButton> MenuButtons { get; set; }
 
         /// <summary>
         ///     The X-position of the control. Is proportional to the Layout it's added to. Values between 0-1.
