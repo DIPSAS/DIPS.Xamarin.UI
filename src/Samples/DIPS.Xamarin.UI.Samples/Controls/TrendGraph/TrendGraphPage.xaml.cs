@@ -31,9 +31,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.TrendGraph
 
         public int MaxValue { get => maxValue; set => this.Set(ref maxValue, value, PropertyChanged); }
 
-        public List<double> TrendItems2 { get; } = new List<double> { 5, 3, 10 };
+        public List<double> TrendItems2 { get; } = new List<double> { 9, 7.1, 5 };
 
         public int[] TrendItems3 { get; } = { 3, 3, 3 };
+
+        public double UpperBound => 7;
+        public double LowerBound => 4;
 
         public List<double> TrendItems4 { get; } = new List<double> { 6, 8 };
 
