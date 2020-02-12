@@ -99,17 +99,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <summary>
-        ///     List of menu button children.
-        /// </summary>
-        [Obsolete("Children is obsolete and will be removed in a later version. Please use MenuButtons instead")]
-        public List<MenuButton> Children
-        {
-            get => MenuButtons.ToList();
-            set => MenuButtons = value;
-        }
-
-        /// <summary>
-        ///     List of menu button children.
+        ///     List of menu buttons.
         /// </summary>
         public IEnumerable<MenuButton> MenuButtons { get; set; }
 

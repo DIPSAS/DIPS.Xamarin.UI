@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.FloatingActionMenu;
 using DIPS.Xamarin.UI.Controls.Modality;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Internal.Xaml
@@ -35,7 +36,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             InitializeComponent();
         }
 
-        private new List<MenuButton> Children { get; set; }
+        private new IEnumerable<MenuButton> Children { get; set; }
 
         internal void ShowMenu(bool shouldShow)
         {
@@ -103,7 +104,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
         internal void AddTo(ModalityLayout layout)
         {
-            Children = m_behaviour.Children;
+            Children = m_behaviour.MenuButtons;
             ExpandButton.BindingContext = m_behaviour;
 
             AddButtonsToRelative(layout.relativeLayout);
