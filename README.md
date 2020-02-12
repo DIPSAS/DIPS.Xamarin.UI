@@ -6,18 +6,34 @@
 # DIPS.Xamarin.UI
 ![DIPS.Xamarin.UI_icon](https://raw.githubusercontent.com/DIPSAS/DIPS.Xamarin.UI/master/assets/DIPS_Xamarin_UI_128x128@slimmed.png)
 
-A shared UI library that DIPS use and maintain for their mobile applications. This library will contain different UI controls, behaviors, converters, colors and other UI specific code that can be used by any app. The library will be maintained by DIPS AS, but the public is always welcome to contribute. <3 
+## [Installation](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Getting-Started)
 
-## Installation
+## [Documentation](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki)
 
-### By using DotNet:
+## Description
 
-`dotnet add package DIPS.Xamarin.UI`
+A shared UI library that DIPS use and maintain for their mobile applications. The library contains different components that can be used by any [Xamarin.Forms](https://github.com/xamarin/Xamarin.Forms) app.
 
-### or NuGet
+The library focuses heavily on enabling the consumers to use the [MVVM design pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel).
 
-`Install-Package DIPS.Xamarin.UI`
+We differentiate the library in three available types of components:
 
-## Documentation
+### UI Components
 
-We do all of our documentation in the [wiki section](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki).
+Our UI components include different visual components that are well known to people using our apps. This can be [Sheet](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Sheet), [Popup](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Popup), [Radio buttons](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/RadioButton) with more. Our UI components focuses heavily on the MVVM pattern. This means that you can find useful properties that are bindable and is easy to use with commands. Each UI component should have a well documented WIKI and a samples page that our consumers can look at.
+
+### Resources
+
+Our resources can be used in our pages and UI components. This can be [colors](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Colors), icons and [converters](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Converters) with more.
+
+### API
+
+Our API includes utilities that is handy when working with the MVVM pattern and XAML. This can be a [property changed api](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#propertychangedextensions|), [commands](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#asynccommand), [recursively searching the visual tree](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#getparentoftype) with more.
+
+## Maintenance
+
+The library gets constantly updated and new features gets added once we identify the need of having components shared between our apps. New features are added as a [issue](https://github.com/DIPSAS/DIPS.Xamarin.UI/issues) and are marked as a `[Spec]`.
+
+## Contribution
+
+The library will be maintained by DIPS AS, but the public is always welcome to contribute. Please see our [developer guidelines](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Developer-guidelines) to get familiar with how to contribute.
