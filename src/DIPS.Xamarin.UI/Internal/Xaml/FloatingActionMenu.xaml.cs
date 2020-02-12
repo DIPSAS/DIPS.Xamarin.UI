@@ -42,7 +42,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             if (m_animationComplete && m_isExpanded != shouldShow)
             {
-                //AdjustXPositions();
                 AnimateAll();
             }
         }
@@ -95,7 +94,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         private async void ExpandButton_OnClicked(object sender, EventArgs e)
         {
             if (!m_animationComplete) return;
-            AdjustXPositions();
             await AnimateAll();
 
             m_behaviour.IsOpen = m_isExpanded;
@@ -123,26 +121,20 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
                 child.button.CornerRadius = (int)m_behaviour.Size / 2;
                 parent.Children.Add(
                     child,
-                    Constraint.RelativeToParent(p => p.Width * m_behaviour.XPosition),
-                    Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
+                    Constraint.RelativeToParent(p => (p.Width * m_behaviour.XPosition) - m_behaviour.Size),
+                    Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - m_behaviour.Size));
             }
 
             parent.Children.Add(
                 ExpandButton,
-                Constraint.RelativeToParent(p => (p.Width * m_behaviour.XPosition) - ExpandButton.WidthRequest),
-                Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
-        }
+                Constraint.RelativeToParent(p => (p.Width * m_behaviour.XPosition) - m_behaviour.Size),
+                Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - m_behaviour.Size));
 
-        private void AdjustXPositions()
-        {
-            if (!m_first) return;
-
+            //Adjust width after expand button has been added
             foreach (var child in Children)
             {
                 RelativeLayout.SetXConstraint(child, Constraint.Constant(ExpandButton.X + m_behaviour.Size - child.Width));
             }
-
-            m_first = false;
         }
 
         /// <inheritdoc />
