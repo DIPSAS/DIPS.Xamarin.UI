@@ -12,15 +12,13 @@
 
 ## Description
 
-A shared UI library that DIPS use and maintain for their mobile applications. The library contains different components that can be used by any [Xamarin.Forms](https://github.com/xamarin/Xamarin.Forms) app.
+A shared UI library that DIPS use and maintain for their mobile applications. The library contains different components that can be used by any [Xamarin.Forms](https://github.com/xamarin/Xamarin.Forms) app. The visual parts of the library is created in collaboration with our internal UX team.
 
-The library focuses heavily on enabling the consumers to use the [MVVM design pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel).
-
-We differentiate the library in three available types of components:
+The library differentiate its components in three types:
 
 ### UI Components
 
-Our UI components include different visual components that are well known to people using our apps. This can be a [sheet](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Sheet), [popup](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Popup), [radio buttons](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/RadioButton) with more. Our UI components focuses heavily on the MVVM pattern. This means that you can find useful properties that are bindable and is easy to use with commands. Each UI component should have a well documented WIKI and a samples page that our consumers can look at.
+Our UI components include different visual components that are well known to people using our apps. This can be a [sheet](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Sheet), [popup](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Popup), [radio buttons](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/RadioButton) with more. Our UI components focuses heavily on the [MVVM design pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel). This means that you can find useful properties that are bindable and is easy to use with commands. Each UI component should have a well documented WIKI and a samples page that our consumers can look at.
 
 ### Resources
 
