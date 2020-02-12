@@ -78,15 +78,6 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MenuButton));
 
         /// <summary>
-        ///     <see cref="IsEnabled" />
-        /// </summary>
-        public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(
-            nameof(IsEnabled),
-            typeof(bool),
-            typeof(MenuButton),
-            true);
-
-        /// <summary>
         ///     <see cref="TitleFontSize" />
         /// </summary>
         public static readonly BindableProperty TitleFontSizeProperty = BindableProperty.Create(
@@ -133,16 +124,6 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         internal Internal.Xaml.FloatingActionMenu? FloatingActionMenuParent { get; set; }
-
-        /// <summary>
-        ///     Disables the button command.
-        ///     This is a bindable property.
-        /// </summary>
-        public new bool IsEnabled
-        {
-            get => (bool)GetValue(IsEnabledProperty);
-            set => SetValue(IsEnabledProperty, value);
-        }
 
         /// <summary>
         ///     The font family of the text in the button and the title.
@@ -231,10 +212,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                 FloatingActionMenuParent.m_behaviour.IsOpen = false;
             }
 
-            if (IsEnabled)
-            {
-                Command?.Execute(CommandParameter);
-            }
+            Command?.Execute(CommandParameter);
         }
     }
 }

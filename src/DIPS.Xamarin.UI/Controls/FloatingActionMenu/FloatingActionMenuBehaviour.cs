@@ -9,7 +9,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
     /// <summary>
     /// A behaviour that can be added to <see cref="ModalityLayout"/> to enable a floating action menu. 
     /// </summary>
-    [ContentProperty(nameof(Children))]
+    [ContentProperty(nameof(MenuButtons))]
     public class FloatingActionMenuBehaviour : Behavior<ModalityLayout>
     {
         /// <summary>
