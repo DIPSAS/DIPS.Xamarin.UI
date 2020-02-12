@@ -100,7 +100,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// <summary>
         ///     List of menu button children.
         /// </summary>
-        public List<MenuButton> Children { get; set; }
+        public IEnumerable<MenuButton> Children { get; set; }
 
         /// <summary>
         ///     The X-position of the control. Is proportional to the Layout it's added to. Values between 0-1.
