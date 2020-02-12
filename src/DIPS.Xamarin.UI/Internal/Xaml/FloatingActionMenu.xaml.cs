@@ -42,7 +42,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             if (m_animationComplete && m_isExpanded != shouldShow)
             {
-                AdjustXPositions();
+                //AdjustXPositions();
                 AnimateAll();
             }
         }
