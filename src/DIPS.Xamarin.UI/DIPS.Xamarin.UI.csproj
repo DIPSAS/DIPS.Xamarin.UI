@@ -65,6 +65,15 @@
       <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Controls\Tag\Tag.Properties.cs">
+      <DependentUpon>Tag.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Tag\Tag.BindableProperties.cs">
+      <DependentUpon>Tag.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controls\TrendGraph\" />
