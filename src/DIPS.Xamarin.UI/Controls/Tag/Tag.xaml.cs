@@ -110,7 +110,7 @@ namespace DIPS.Xamarin.UI.Controls.Tag
 
         /// <summary>
         ///     Gets or sets the text for the Tag. This is a bindable property.
-        ///     Setting Text to a non-null value will set the FormattedText property to null.
+        ///     <remarks>Setting Text to a non-null value will set the FormattedText property to null.</remarks>
         /// </summary>
         public string Text
         {
@@ -175,7 +175,7 @@ namespace DIPS.Xamarin.UI.Controls.Tag
 
         /// <summary>
         ///     Gets or sets the formatted text for the Tag. This is a bindable property.
-        ///     Setting FormattedText to a non-null value will set the Text property to null.
+        ///     <remarks>Setting FormattedText to a non-null value will set the Text property to null.</remarks>
         /// </summary>
         public FormattedString FormattedText
         {
@@ -247,7 +247,7 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         ///     Bindable property for <see cref="Padding" />
         /// </summary>
         public new static readonly BindableProperty PaddingProperty =
-            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Tag), new Thickness(5,5,5,5));
+            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Tag), new Thickness(5, 5, 5, 5));
 
         /// <summary>
         ///     Gets or sets the color which will fill the background of a Tag. This is a bindable property.
@@ -287,8 +287,10 @@ namespace DIPS.Xamarin.UI.Controls.Tag
 
         /// <summary>
         ///     Gets or sets the inner padding of the Tag text.
-        ///     The padding is the space between the bounds of a Tag and the bounding region into which its Text property should be
-        ///     arranged into.
+        ///     <remarks>
+        ///         The padding is the space between the bounds of a Tag and the bounding region into which its Text property
+        ///         should be arranged into.
+        ///     </remarks>
         /// </summary>
         public new Thickness Padding
         {
