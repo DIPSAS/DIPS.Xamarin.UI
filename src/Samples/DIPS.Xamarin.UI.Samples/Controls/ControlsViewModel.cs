@@ -5,6 +5,7 @@ using DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;
 using DIPS.Xamarin.UI.Samples.Controls.Popup;
 using DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;
 using DIPS.Xamarin.UI.Samples.Controls.Sheet;
+using DIPS.Xamarin.UI.Samples.Controls.Tag;
 using DIPS.Xamarin.UI.Samples.Controls.TimePicker;
 using DIPS.Xamarin.UI.Samples.Controls.TrendGraph;
 using Xamarin.Forms;
@@ -33,6 +34,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls
             if (parameter.Equals("TrendGraph")) m_navigation.PushAsync(new TrendGraphPage() { Title = parameter });
             if (parameter.Equals("ContentControl")) m_navigation.PushAsync(new ContentControlPage() { Title = parameter });
             if (parameter.Equals("FloatingActionMenu")) m_navigation.PushAsync(new FloatingActionMenuPage() { Title = parameter });
+            if (parameter.Equals("TagControl")) m_navigation.PushAsync(new TagPage() { Title = parameter });
         }
     }
 }

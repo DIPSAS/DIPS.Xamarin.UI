@@ -42,6 +42,10 @@
                 Command="{Binding NavigateToCommand}"
                 CommandParameter="FloatingActionMenu"
                 Text="FloatingActionMenu" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="TagControl"
+                Text="Tag" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

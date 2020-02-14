@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.Tag.TagPage">
+
+    <StackLayout Margin="20,30,20,30" Spacing="20">
+        <dxui:Tag VerticalOptions="Start"
+                  HorizontalOptions="Center"
+
+                  Text="Hello"
+                  TextColor="Blue"
+                  
+                  FontAttributes="Bold"
+                  FontSize="15"
+                  LineBreakMode="TailTruncation"
+                  MaxLines="1"
+                  CharacterSpacing="1"
+                  VerticalTextAlignment="Center"
+                  HorizontalTextAlignment="Center"
+
+                  
+                  BackgroundColor="AliceBlue"
+                  BorderColor="Aqua"
+                  CornerRadius="10"
+                  HasShadow="False"
+                  Padding="8,5,8,5">
+
+            <dxui:Tag.FormattedText>
+                <FormattedString>
+                    <Span Text="Beautiful" FontAttributes="Italic" />
+                    <Span Text=" World" FontAttributes="Bold" />
+                    <Span Text=" Earth" FontAttributes="None" />
+                </FormattedString>
+            </dxui:Tag.FormattedText>
+        </dxui:Tag>
+    </StackLayout>
+</ContentPage>

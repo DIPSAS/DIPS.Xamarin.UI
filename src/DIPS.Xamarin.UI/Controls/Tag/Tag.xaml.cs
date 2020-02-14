@@ -7,7 +7,7 @@ namespace DIPS.Xamarin.UI.Controls.Tag
     ///     A <c>Frame</c> wrapping a <c>Label</c> to allow setting border radius for the <c>Label</c>.
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Tag : ContentView
+    public partial class Tag
     {
         /// <inheritdoc />
         public Tag()
@@ -244,6 +244,12 @@ namespace DIPS.Xamarin.UI.Controls.Tag
             BindableProperty.Create(nameof(HasShadow), typeof(bool), typeof(Tag), false);
 
         /// <summary>
+        ///     Bindable property for <see cref="Padding" />
+        /// </summary>
+        public new static readonly BindableProperty PaddingProperty =
+            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Tag), new Thickness(5,5,5,5));
+
+        /// <summary>
         ///     Gets or sets the color which will fill the background of a Tag. This is a bindable property.
         /// </summary>
         public new Color BackgroundColor
@@ -277,6 +283,17 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         {
             get => (bool) GetValue(HasShadowProperty);
             set => SetValue(HasShadowProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the inner padding of the Tag text.
+        ///     The padding is the space between the bounds of a Tag and the bounding region into which its Text property should be
+        ///     arranged into.
+        /// </summary>
+        public new Thickness Padding
+        {
+            get => (Thickness) GetValue(PaddingProperty);
+            set => SetValue(PaddingProperty, value);
         }
 
         #endregion

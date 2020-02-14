@@ -13,7 +13,8 @@
            BackgroundColor="{Binding BackgroundColor}"
            BorderColor="{Binding BorderColor}"
            CornerRadius="{Binding CornerRadius}"
-           HasShadow="{Binding HasShadow}">
+           HasShadow="{Binding HasShadow}"
+           Padding="{Binding Padding}">
 
         <Label x:Name="tagLabel"
                BackgroundColor="Transparent"
