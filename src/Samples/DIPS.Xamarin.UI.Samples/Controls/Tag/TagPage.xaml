@@ -10,7 +10,7 @@
                   HorizontalOptions="Center"
 
                   Text="Hello"
-                  TextColor="Blue"
+                  TextColor="{x:Static dxui:ColorPalette.LightAir}"
                   
                   FontAttributes="Bold"
                   FontSize="15"
@@ -21,8 +21,8 @@
                   HorizontalTextAlignment="Center"
 
                   
-                  BackgroundColor="AliceBlue"
-                  BorderColor="Aqua"
+                  BackgroundColor="{x:Static dxui:ColorPalette.Accent}"
+                  BorderColor="{x:Static dxui:ColorPalette.Dark}"
                   CornerRadius="10"
                   HasShadow="False"
                   Padding="8,5,8,5">
