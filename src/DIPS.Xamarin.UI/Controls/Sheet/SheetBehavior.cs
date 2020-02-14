@@ -606,7 +606,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 MaxPosition = (double)MaxPositionProperty.DefaultValue;
             }
 
-
             if (newPosition < MinPosition)
             {
                 if (MinPosition > m_autoCloseThreshold) //Do not auto- close if the minimum position set by the consumer is bigger than the auto close threshold
@@ -620,9 +619,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 return; //Return when we set property because it will lead to recursively calling this method
             }
 
-            if (Position > MaxPosition)
+            if (newPosition > MaxPosition) //If the content is to big
             {
-                Position = MaxPosition;
+                if (MinPosition > (double)MinPositionProperty.DefaultValue) //Check if MinPosition has been set
+                {
+                    Position = MinPosition; //Use min position
+                }
+                else
+                {
+                    Position = MaxPosition; //Use max position
+                }
                 return; //Return when we set property because it will lead to recursively calling this method
             }
 
