@@ -8,10 +8,46 @@
     <StackLayout Margin="20,30,20,30" Spacing="20">
         <dxui:Tag VerticalOptions="Start"
                   HorizontalOptions="Center"
-
                   Text="Hello"
                   TextColor="{x:Static dxui:ColorPalette.LightAir}"
+                  FontSize="15"
+                  LineBreakMode="TailTruncation"
+                  MaxLines="1"
+                  CharacterSpacing="1"
+                  VerticalTextAlignment="Center"
+                  HorizontalTextAlignment="Center"
                   
+                  BackgroundColor="{x:Static dxui:ColorPalette.Tertiary}"
+                  CornerRadius="10"
+                  HasShadow="False"
+                  Padding="8,5,8,5">
+        </dxui:Tag>
+        
+        <dxui:Tag VerticalOptions="Start"
+                  HorizontalOptions="Center"
+                  WidthRequest="30"
+                  HeightRequest="30"
+                  Text="♬"
+                  TextColor="{x:Static dxui:ColorPalette.LightAir}"
+                  FontAttributes="Bold"
+                  FontSize="18"
+                  LineBreakMode="TailTruncation"
+                  MaxLines="1"
+                  CharacterSpacing="1"
+                  VerticalTextAlignment="Center"
+                  HorizontalTextAlignment="Center"
+                  
+                  BackgroundColor="{x:Static dxui:ColorPalette.Accent}"
+                  BorderColor="{x:Static dxui:ColorPalette.Dark}"
+                  CornerRadius="15"
+                  HasShadow="False"
+                  Padding="0,0,0,0">
+        </dxui:Tag>
+
+        <dxui:Tag VerticalOptions="Center"
+                  HorizontalOptions="FillAndExpand"
+                  Text="Human"
+                  TextColor="{x:Static dxui:ColorPalette.LightAir}"
                   FontAttributes="Bold"
                   FontSize="15"
                   LineBreakMode="TailTruncation"
@@ -19,7 +55,44 @@
                   CharacterSpacing="1"
                   VerticalTextAlignment="Center"
                   HorizontalTextAlignment="Center"
+                  
+                  BackgroundColor="{x:Static dxui:ColorPalette.Accent}"
+                  BorderColor="{x:Static dxui:ColorPalette.Dark}"
+                  CornerRadius="10"
+                  HasShadow="False"
+                  Padding="8,5,8,5">
+        </dxui:Tag>
 
+        <dxui:Tag VerticalOptions="FillAndExpand"
+                  HorizontalOptions="Center"
+                  Text="Life"
+                  TextColor="{x:Static dxui:ColorPalette.LightAir}"
+                  FontAttributes="Bold"
+                  FontSize="15"
+                  LineBreakMode="TailTruncation"
+                  MaxLines="1"
+                  CharacterSpacing="1"
+                  VerticalTextAlignment="Center"
+                  HorizontalTextAlignment="Center"
+                  
+                  BackgroundColor="{x:Static dxui:ColorPalette.Accent}"
+                  BorderColor="{x:Static dxui:ColorPalette.Dark}"
+                  CornerRadius="10"
+                  HasShadow="False"
+                  Padding="8,5,8,5">
+        </dxui:Tag>
+
+        <dxui:Tag VerticalOptions="Start"
+                  HorizontalOptions="Center"
+                  Text="Life"
+                  TextColor="{x:Static dxui:ColorPalette.LightAir}"
+                  FontAttributes="Bold"
+                  FontSize="15"
+                  LineBreakMode="TailTruncation"
+                  MaxLines="1"
+                  CharacterSpacing="1"
+                  VerticalTextAlignment="Center"
+                  HorizontalTextAlignment="Center"
                   
                   BackgroundColor="{x:Static dxui:ColorPalette.Accent}"
                   BorderColor="{x:Static dxui:ColorPalette.Dark}"
@@ -29,7 +102,8 @@
 
             <dxui:Tag.FormattedText>
                 <FormattedString>
-                    <Span Text="Beautiful" FontAttributes="Italic" />
+                    <Span Text="♨" FontAttributes="Bold" BackgroundColor="{x:Static dxui:ColorPalette.LightAir}" />
+                    <Span Text=" Beautiful" FontAttributes="Italic" />
                     <Span Text=" World" FontAttributes="Bold" />
                     <Span Text=" Earth" FontAttributes="None" />
                 </FormattedString>
