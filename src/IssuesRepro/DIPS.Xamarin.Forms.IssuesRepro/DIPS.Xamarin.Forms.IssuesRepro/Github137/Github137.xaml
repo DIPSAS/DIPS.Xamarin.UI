@@ -10,7 +10,6 @@
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
             <dxui:SheetBehavior MinPosition="0.5"
-                                MaxPosition="0.9"
                                 IsOpen="{Binding Source={x:Reference checkBox}, Path=IsChecked}">
                 <ContentView HeightRequest="1000"
                              BackgroundColor="DarkOrange" />
