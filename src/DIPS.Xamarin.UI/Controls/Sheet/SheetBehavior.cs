@@ -601,11 +601,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 MinPosition = (double)MinPositionProperty.DefaultValue;
             }
 
-            if (MaxPosition <= 0 || MaxPosition > 1) //Max position should be should be between 0-1
+            if (MaxPosition <= 0 || MaxPosition > 1) //Max position should be between 0-1
             {
                 MaxPosition = (double)MaxPositionProperty.DefaultValue;
             }
-
 
             if (newPosition < MinPosition)
             {
@@ -620,9 +619,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 return; //Return when we set property because it will lead to recursively calling this method
             }
 
-            if (Position > MaxPosition)
+            if (newPosition > MaxPosition) //If the content is to big
             {
-                Position = MaxPosition;
+                Position = MaxPosition; //Use max position
                 return; //Return when we set property because it will lead to recursively calling this method
             }
 
