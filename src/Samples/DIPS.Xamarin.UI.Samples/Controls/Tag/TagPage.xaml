@@ -10,7 +10,7 @@
                   HorizontalOptions="Center"
                   Text="Hello"
                   TextColor="{x:Static dxui:ColorPalette.LightAir}"
-                  FontSize="15"
+                  FontSize="Body"
                   LineBreakMode="TailTruncation"
                   MaxLines="1"
                   CharacterSpacing="1"

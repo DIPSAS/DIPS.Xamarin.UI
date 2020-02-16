@@ -65,28 +65,7 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         public static readonly BindableProperty FormattedTextProperty =
             BindableProperty.Create(nameof(FormattedText), typeof(FormattedString), typeof(Label),
                 default(FormattedString),
-                propertyChanging: (bindable, oldValue, newValue) =>
-                {
-                    if (oldValue != null)
-                    {
-                        var formattedString = (FormattedString) oldValue;
-                        var tag = (Tag) bindable;
-
-                        formattedString.Parent = null;
-                        tag.tagLabel.FormattedText = null;
-                    }
-                }, propertyChanged: (bindable, oldValue, newValue) =>
-                {
-                    if (newValue != null)
-                    {
-                        var tag = (Tag) bindable;
-                        var formattedString = (FormattedString) newValue;
-
-                        formattedString.Parent = tag;
-                        tag.tagLabel.FormattedText = formattedString;
-                        tag.Text = null;
-                    }
-                });
+                propertyChanging: OnFormattedTextChanging, propertyChanged: OnFormattedTextChanged);
 
         /// <summary>
         ///     Bindable property for <see cref="CharacterSpacing" />
@@ -149,6 +128,7 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         /// <summary>
         ///     Gets or sets the size of the font for the Tag. This is a bindable property.
         /// </summary>
+        [TypeConverter(typeof(FontSizeConverter))]
         public double FontSize
         {
             get => (double) GetValue(FontSizeProperty);
@@ -210,6 +190,31 @@ namespace DIPS.Xamarin.UI.Controls.Tag
             set => SetValue(HorizontalTextAlignmentProperty, value);
         }
 
+        private static void OnFormattedTextChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (newValue != null)
+            {
+                var tag = (Tag) bindable;
+                var formattedString = (FormattedString) newValue;
+
+                formattedString.Parent = tag;
+                tag.tagLabel.FormattedText = formattedString;
+                tag.Text = null;
+            }
+        }
+
+        private static void OnFormattedTextChanging(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (oldValue != null)
+            {
+                var formattedString = (FormattedString) oldValue;
+                var tag = (Tag) bindable;
+
+                formattedString.Parent = null;
+                tag.tagLabel.FormattedText = null;
+            }
+        }
+
         #endregion
 
         #region Frame Properties
@@ -231,11 +236,7 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         /// </summary>
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius),
             typeof(float), typeof(Tag), -1f,
-            validateValue: (bindable, value) =>
-            {
-                if (value is float f) return (int) f == -1 || f >= 0f;
-                return false;
-            });
+            validateValue: OnCornerRadiusValidate);
 
         /// <summary>
         ///     Bindable property for <see cref="HasShadow" />
@@ -296,6 +297,12 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         {
             get => (Thickness) GetValue(PaddingProperty);
             set => SetValue(PaddingProperty, value);
+        }
+
+        private static bool OnCornerRadiusValidate(BindableObject bindable, object value)
+        {
+            if (value is float f) return (int) f == -1 || f >= 0f;
+            return false;
         }
 
         #endregion
