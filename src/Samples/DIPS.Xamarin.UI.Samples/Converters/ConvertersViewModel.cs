@@ -41,6 +41,12 @@ namespace DIPS.Xamarin.UI.Samples.Converters
                 case "DateAndTimeConverter":
                     m_navigation.PushAsync(new DateAndTimeConverterPage() { Title = parameter });
                     break;
+                case "MultiplicationConverter":
+                    m_navigation.PushAsync(new MultiplicationConverterPage() { Title = parameter });
+                    break;
+                case "AdditionConverter":
+                    m_navigation.PushAsync(new AdditionConverterPage() { Title = parameter });
+                    break;
             }
         }
     }
