@@ -27,7 +27,7 @@
                Text="{Binding Value}"
                VerticalTextAlignment="Center" />
         <Label Grid.Column="1"
-               Text=" + "
+               Text=" X "
                VerticalTextAlignment="Center" />
         <Label Grid.Column="2"
                Text="{StaticResource FactorString}"
@@ -36,7 +36,7 @@
                Text=" = "
                VerticalTextAlignment="Center" />
         <Label Grid.Column="4"
-               Text="{Binding Value, Converter={ValueConverters:AdditionConverter Addend={StaticResource Factor}}}"
+               Text="{Binding Value, Converter={ValueConverters:MultiplicationConverter Factor={StaticResource Factor}}}"
                VerticalTextAlignment="Center" />
     </Grid>
 </ContentPage>
