@@ -29,6 +29,12 @@
             <Button Text="DateAndTimeConverter"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="DateAndTimeConverter" />
+            <Button Text="MultiplicationConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="MultiplicationConverter" />
+            <Button Text="AdditionConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="AdditionConverter" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
