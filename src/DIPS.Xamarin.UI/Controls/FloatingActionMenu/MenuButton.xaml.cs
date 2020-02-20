@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Input;
-using DIPS.Xamarin.UI.Internal.Xaml;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -23,10 +22,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// <summary>
         ///     <see cref="Command" />
         /// </summary>
-        public static readonly BindableProperty CommandProperty = BindableProperty.Create(
-            nameof(Command),
-            typeof(ICommand),
-            typeof(MenuButton));
+        public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MenuButton));
 
         /// <summary>
         ///     <see cref="CommandParameter" />
@@ -105,11 +101,29 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             12.0);
 
         /// <summary>
+        ///     <see cref="TitleFontFamily" />
+        /// </summary>
+        public static readonly BindableProperty TitleFontFamilyProperty = BindableProperty.Create(
+            nameof(TitleFontFamily),
+            typeof(string),
+            typeof(MenuButton));
+
+        /// <summary>
         ///     Buttons that can be placed in a <see cref="FloatingActionMenuBehaviour" />.
         /// </summary>
         public MenuButton()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        ///     Font family of the title.
+        ///     This is a bindable property.
+        /// </summary>
+        public string TitleFontFamily
+        {
+            get => (string)GetValue(TitleFontFamilyProperty);
+            set => SetValue(TitleFontFamilyProperty, value);
         }
 
         /// <summary>
@@ -226,15 +240,9 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
 
         private void MenuButton_OnClicked(object sender, EventArgs e)
         {
-            if (FloatingActionMenuParent != null && !IsEnabled) 
-            {
-                FloatingActionMenuParent.m_behaviour.IsOpen = false;
-            }
+            if (FloatingActionMenuParent != null && !IsEnabled) FloatingActionMenuParent.m_behaviour.IsOpen = false;
 
-            if (IsEnabled)
-            {
-                Command?.Execute(CommandParameter);
-            }
+            if (IsEnabled) Command?.Execute(CommandParameter);
         }
     }
 }
