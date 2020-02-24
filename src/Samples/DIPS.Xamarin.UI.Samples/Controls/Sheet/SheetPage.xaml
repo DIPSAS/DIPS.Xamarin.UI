@@ -14,209 +14,214 @@
     <ContentPage.BindingContext>
         <Sheet:SheetPageViewModel />
     </ContentPage.BindingContext>
-    <dxui:ModalityLayout>
-        <dxui:ModalityLayout.Behaviors>
-            <dxui:SheetBehavior IsOpen="{Binding IsSheetOpen}"
-                                OnOpenCommand="{Binding OnOpenCommand}"
-                                OnOpenCommandParameter="Opened"
-                                OnCloseCommand="{Binding OnCloseCommand}"
-                                OnCloseCommandParameter="Closed"
-                                IsDraggable="{Binding IsDraggable}"
-                                Alignment="{Binding Alignment}"
-                                VerticalContentAlignment="{Binding VerticalContentAlignment}"
-                                BackgroundColor="{Binding BackgroundColor}"
-                                HandleColor="{Binding HandleColor}"
-                                HasShadow="{Binding HasShadow}"
-                                Position="{Binding Position}"
-                                MinPosition="{Binding MinPosition}"
-                                MaxPosition="{Binding MaxPosition}"
-                                BindingContextFactory="{Binding SheetViewModelFactory}"
-                                OnPositionChanged="SheetBehavior_OnOnPositionChanged"
-                            >
-                <StackLayout>
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Entry x:Name="entry"
-                           Placeholder="TextEntry" />
-                    <Button Text="Close sheet"
-                            dxui:Modality.CloseOnClick="True" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <dxui:ModalityLayout>
+            <dxui:ModalityLayout.Behaviors>
+                <dxui:SheetBehavior IsOpen="{Binding IsSheetOpen}"
+                                    OnOpenCommand="{Binding OnOpenCommand}"
+                                    OnOpenCommandParameter="Opened"
+                                    OnCloseCommand="{Binding OnCloseCommand}"
+                                    OnCloseCommandParameter="Closed"
+                                    IsDraggable="{Binding IsDraggable}"
+                                    Alignment="{Binding Alignment}"
+                                    VerticalContentAlignment="{Binding VerticalContentAlignment}"
+                                    BackgroundColor="{Binding BackgroundColor}"
+                                    HandleColor="{Binding HandleColor}"
+                                    HasShadow="{Binding HasShadow}"
+                                    Position="{Binding Position}"
+                                    MinPosition="{Binding MinPosition}"
+                                    MaxPosition="{Binding MaxPosition}"
+                                    BindingContextFactory="{Binding SheetViewModelFactory}"
+                                    OnPositionChanged="SheetBehavior_OnOnPositionChanged">
+                    <StackLayout>
+                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                        <Entry x:Name="entry"
+                               Placeholder="TextEntry" />
+                        <Button Text="Close sheet"
+                                dxui:Modality.CloseOnClick="True" />
+                    </StackLayout>
+                </dxui:SheetBehavior>
+            </dxui:ModalityLayout.Behaviors>
+
+
+            <StackLayout Padding="5"
+                         HorizontalOptions="Fill">
+                <Label Text="Sheet properties"
+                       FontSize="Title"
+                       VerticalTextAlignment="Center" />
+
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Fill">
+                    <Label Text="IsDraggable"
+                           VerticalTextAlignment="Center" />
+                    <CheckBox IsChecked="{Binding IsDraggable}" />
                 </StackLayout>
-            </dxui:SheetBehavior>
-        </dxui:ModalityLayout.Behaviors>
+
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Fill">
+                    <Label Text="Alignment"
+                           VerticalTextAlignment="Center" />
+                    <Picker SelectedItem="{Binding Alignment}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type dxui:AlignmentOptions}">
+                                <dxui:AlignmentOptions>Bottom</dxui:AlignmentOptions>
+                                <dxui:AlignmentOptions>Top</dxui:AlignmentOptions>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
 
 
-        <StackLayout Padding="5"
-                     HorizontalOptions="Fill">
-            <Label Text="Sheet properties"
-                   FontSize="Title"
-                   VerticalTextAlignment="Center" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="VerticalContentAlignment"
+                           VerticalTextAlignment="Center" />
+                    <Picker Grid.Column="1"
+                            SelectedItem="{Binding VerticalContentAlignment}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type dxui:ContentAlignment}">
+                                <dxui:ContentAlignment>Fit</dxui:ContentAlignment>
+                                <dxui:ContentAlignment>Fill</dxui:ContentAlignment>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Grid>
 
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="Fill">
-                <Label Text="IsDraggable"
-                       VerticalTextAlignment="Center" />
-                <CheckBox IsChecked="{Binding IsDraggable}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="BackgroundColor"
+                           VerticalTextAlignment="Center" />
+                    <Entry Grid.Column="1"
+                           TextColor="{Binding BackgroundColor}"
+                           Text="{Binding BackgroundColor}" />
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="HandleColor"
+                           VerticalTextAlignment="Center" />
+                    <Entry Grid.Column="1"
+                           TextColor="{Binding HandleColor}"
+                           Text="{Binding HandleColor}" />
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="HasShadow"
+                           VerticalTextAlignment="Center" />
+                    <CheckBox Grid.Column="1"
+                              IsChecked="{Binding HasShadow}" />
+                </Grid>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Grid.Row="0"
+                           Text="Position"
+                           VerticalTextAlignment="Center" />
+                    <Slider Grid.Column="1"
+                            Grid.Row="0"
+                            Maximum="1"
+                            Minimum="0"
+                            MaximumTrackColor="Tomato"
+                            MinimumTrackColor="Tomato"
+                            Value="{Binding Position}" />
+                    <Label Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           Grid.Row="1"
+                           Text="{Binding Position}" />
+                </Grid>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Grid.Row="0"
+                           Text="MinPosition"
+                           VerticalTextAlignment="Center" />
+                    <Slider Grid.Column="1"
+                            Grid.Row="0"
+                            Maximum="1"
+                            Minimum="0"
+                            MaximumTrackColor="Tomato"
+                            MinimumTrackColor="Tomato"
+                            Value="{Binding MinPosition}" />
+                    <Label Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           Grid.Row="1"
+                           Text="{Binding MinPosition}" />
+                </Grid>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Grid.Row="0"
+                           Text="MaxPosition"
+                           VerticalTextAlignment="Center" />
+                    <Slider Grid.Column="1"
+                            Grid.Row="0"
+                            Maximum="1"
+                            Minimum="0"
+                            MaximumTrackColor="Tomato"
+                            MinimumTrackColor="Tomato"
+                            Value="{Binding MaxPosition}" />
+                    <Label Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           Grid.Row="1"
+                           Text="{Binding MaxPosition}" />
+                </Grid>
+
+                <Label Text="{Binding StateText, StringFormat='State: {0}'}"
+                       IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}" />
+                <Button Text="Open sheet"
+                        Command="{Binding OpenSheetCommand}" />
+
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="Fill">
-                <Label Text="Alignment"
-                       VerticalTextAlignment="Center" />
-                <Picker SelectedItem="{Binding Alignment}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type dxui:AlignmentOptions}">
-                            <dxui:AlignmentOptions>Bottom</dxui:AlignmentOptions>
-                            <dxui:AlignmentOptions>Top</dxui:AlignmentOptions>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-            </StackLayout>
-
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Text="VerticalContentAlignment"
-                       VerticalTextAlignment="Center" />
-                <Picker Grid.Column="1"
-                        SelectedItem="{Binding VerticalContentAlignment}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type dxui:ContentAlignment}">
-                            <dxui:ContentAlignment>Fit</dxui:ContentAlignment>
-                            <dxui:ContentAlignment>Fill</dxui:ContentAlignment>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Text="BackgroundColor"
-                       VerticalTextAlignment="Center" />
-                <Entry Grid.Column="1"
-                       TextColor="{Binding BackgroundColor}"
-                       Text="{Binding BackgroundColor}" />
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Text="HandleColor"
-                       VerticalTextAlignment="Center" />
-                <Entry Grid.Column="1"
-                       TextColor="{Binding HandleColor}"
-                       Text="{Binding HandleColor}" />
-            </Grid>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Text="HasShadow"
-                       VerticalTextAlignment="Center" />
-                <CheckBox Grid.Column="1"
-                          IsChecked="{Binding HasShadow}" />
-            </Grid>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Grid.Row="0"
-                       Text="Position"
-                       VerticalTextAlignment="Center" />
-                <Slider Grid.Column="1"
-                        Grid.Row="0"
-                        Maximum="1"
-                        Minimum="0"
-                        MaximumTrackColor="Tomato"
-                        MinimumTrackColor="Tomato"
-                        Value="{Binding Position}" />
-                <Label Grid.Column="0"
-                       Grid.ColumnSpan="2"
-                       Grid.Row="1"
-                       Text="{Binding Position}" />
-            </Grid>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Grid.Row="0"
-                       Text="MinPosition"
-                       VerticalTextAlignment="Center" />
-                <Slider Grid.Column="1"
-                        Grid.Row="0"
-                        Maximum="1"
-                        Minimum="0"
-                        MaximumTrackColor="Tomato"
-                        MinimumTrackColor="Tomato"
-                        Value="{Binding MinPosition}" />
-                <Label Grid.Column="0"
-                       Grid.ColumnSpan="2"
-                       Grid.Row="1"
-                       Text="{Binding MinPosition}" />
-            </Grid>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Grid.Row="0"
-                       Text="MaxPosition"
-                       VerticalTextAlignment="Center" />
-                <Slider Grid.Column="1"
-                        Grid.Row="0"
-                        Maximum="1"
-                        Minimum="0"
-                        MaximumTrackColor="Tomato"
-                        MinimumTrackColor="Tomato"
-                        Value="{Binding MaxPosition}" />
-                <Label Grid.Column="0"
-                       Grid.ColumnSpan="2"
-                       Grid.Row="1"
-                       Text="{Binding MaxPosition}" />
-            </Grid>
-
-            <Label Text="{Binding StateText, StringFormat='State: {0}'}"
-                   IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}"/>
-            <Button Text="Open sheet"
-                    Command="{Binding OpenSheetCommand}" />
-
-        </StackLayout>
-
-    </dxui:ModalityLayout>
+        </dxui:ModalityLayout>
+    </Grid>
 </ContentPage>
