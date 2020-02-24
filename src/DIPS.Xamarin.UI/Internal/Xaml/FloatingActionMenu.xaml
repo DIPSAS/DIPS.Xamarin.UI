@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             mc:Ignorable="d"
+             x:Name="CodeBehind"
+             x:Class="DIPS.Xamarin.UI.Internal.Xaml.FloatingActionMenu">
+
+    <ContentView.Content>                                   
+        <Button x:Name="ExpandButton"
+                Opacity=".4"
+                WidthRequest="{Binding Size}"
+                HeightRequest="{Binding Size}"
+                CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
+                BackgroundColor="{Binding ExpandButtonBackgroundColor}"
+                BorderColor="White"
+                BorderWidth="3"
+                FontSize="{Binding ExpandButtonFontSize}"
+                Text="{Binding ExpandButtonText}"
+                TextColor="{Binding ExpandButtonTextColor}"
+                FontFamily="{Binding ExpandButtonFontFamily}"
+                Clicked="ExpandButton_OnClicked" />
+    </ContentView.Content>
+</ContentView>

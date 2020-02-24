@@ -1,0 +1,59 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             x:Name="CodeBehind"
+             mc:Ignorable="d"
+             Opacity="0"
+             InputTransparent="True"
+             x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.MenuButton">
+
+    <Grid BindingContext="{x:Reference CodeBehind}"
+          ColumnSpacing="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Frame Grid.Column="0"
+               CornerRadius="8"
+               HasShadow="False"
+               Padding="0"
+               VerticalOptions="Center"
+               HorizontalOptions="End">
+            <Label x:Name="TitleLabel"
+                   Text="{Binding Title}"
+                   TextColor="{Binding TitleTextColor}"
+                   FontSize="{Binding TitleFontSize}"
+                   FontFamily="{Binding TitleFontFamily}"
+                   Margin="10,5,10,5"
+                   VerticalOptions="Center"/>
+
+            <Frame.Triggers>
+                <DataTrigger TargetType="Frame"
+                             Binding="{Binding Source={x:Reference TitleLabel}, Path=Text.Length}"
+                             Value="0">
+                    <Setter Property="IsVisible"
+                            Value="False" />
+                </DataTrigger>
+            </Frame.Triggers>
+        </Frame>
+
+        <Button x:Name="button"
+                x:FieldModifier="internal"
+                Grid.Column="1"
+                BindingContext="{x:Reference CodeBehind}"
+                BackgroundColor="{Binding BackgroundColor}"
+                BorderColor="White"
+                BorderWidth="3"
+                FontSize="{Binding FontSize}"
+                Text="{Binding Text}"
+                TextColor="{Binding TextColor}"
+                FontFamily="{Binding FontFamily}"
+                Clicked="MenuButton_OnClicked" />
+    </Grid>
+</ContentView>

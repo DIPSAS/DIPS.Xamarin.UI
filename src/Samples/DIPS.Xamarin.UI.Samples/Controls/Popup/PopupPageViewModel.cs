@@ -8,7 +8,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Popup
 {
     public class PopupPageViewModel : INotifyPropertyChanged
     {
-        private bool m_isOpen;
+        private bool m_isOpen, m_reversed;
 
         public PopupPageViewModel()
         {
@@ -23,6 +23,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Popup
         }
 
         public bool IsOpen { get => m_isOpen; set => PropertyChanged?.RaiseWhenSet(ref m_isOpen, value); }
+
+        public bool ReversedBool { get => m_reversed = !m_reversed; }
 
         public string MyString { get; } = "Hello popupContent";
 

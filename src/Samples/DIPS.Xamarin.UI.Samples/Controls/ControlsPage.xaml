@@ -36,16 +36,17 @@
                 Text="Trend graph" />
             <Button
                 Command="{Binding NavigateToCommand}"
-                CommandParameter="Picker"
-                Text="Picker" />
-            <Button
-                Command="{Binding NavigateToCommand}"
                 CommandParameter="ContentControl"
                 Text="ContentControl" />
             <Button
                 Command="{Binding NavigateToCommand}"
                 CommandParameter="Sliding"
                 Text="Sliding" />
+
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="FloatingActionMenu"
+                Text="FloatingActionMenu" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

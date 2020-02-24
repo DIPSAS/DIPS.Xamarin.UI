@@ -4,5 +4,6 @@
              x:Class="DIPS.Xamarin.UI.Controls.Modality.ModalityLayout"
              IsClippedToBounds="True">
     <RelativeLayout x:Name="relativeLayout"
-                    ChildRemoved="OnChildRemoved"/>
+                    ChildRemoved="OnChildRemoved"
+                    x:FieldModifier="internal" />
 </ContentView>

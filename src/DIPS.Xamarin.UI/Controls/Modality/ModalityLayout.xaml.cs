@@ -131,7 +131,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         public void Show(IModalityHandler modalityHandler, View view, View relativeView) => Show(modalityHandler, view, yConstraint: Constraint.RelativeToParent(r => Y + relativeView.Height));
 
         /// <summary>
-        /// Shows a view with relative to the modality layout by constraints
+        /// Shows a view relative to the modality layout by constraints
         /// </summary>
         /// <param name="modalityHandler">The handler of a modality</param>
         /// <param name="view">The view to show</param>
@@ -148,8 +148,33 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             ShowOverlay();
 
             relativeLayout.Children.Add(view, xConstraint, yConstraint, widthConstraint, heightConstraint);
+            view.SizeChanged += ContentSizeChanged;
         }
 
+        /// <summary>
+        ///     Shows an overlay beneath the <paramref name="view"/>
+        /// /// </summary>
+        /// <param name="modalityHandler">The handler of a modality</param>
+        /// <param name="view">The view that's over he overlay</param>
+        public void Show(IModalityHandler modalityHandler, View view)
+        {
+            m_currentShowingModalityHandler = modalityHandler;
+            var overlay = m_overLay.Value;
+            var indexOf = relativeLayout.Children.IndexOf(view);
+
+            RelativeLayout.SetWidthConstraint(overlay, Constraint.RelativeToParent(r => r.Width));
+            RelativeLayout.SetHeightConstraint(overlay, Constraint.RelativeToParent(r => r.Height));
+            RelativeLayout.SetXConstraint(overlay, Constraint.RelativeToParent(r => 0.0));
+            RelativeLayout.SetYConstraint(overlay, Constraint.RelativeToParent(r => 0.0));
+
+            overlay.FadeTo(0.5);
+            relativeLayout.Children.Insert(indexOf, overlay);
+        }
+
+        private void ContentSizeChanged(object sender, EventArgs e)
+        {
+            relativeLayout.ForceLayout();
+        }
 
         private void ShowOverlay()
         {
@@ -171,6 +196,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <param name="view"></param>
         public async void Hide(View view)
         {
+            view.SizeChanged -= ContentSizeChanged;
             if (!relativeLayout.Children.Contains(view)) return;
             if (m_currentShowingModalityHandler == null) return;
 
@@ -182,7 +208,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             relativeLayout.Children.Remove(view);
         }
 
-        private async Task HideOverlay()
+        internal async Task HideOverlay()
         {
             var overlay = m_overLay.Value;
             await overlay.FadeTo(0);

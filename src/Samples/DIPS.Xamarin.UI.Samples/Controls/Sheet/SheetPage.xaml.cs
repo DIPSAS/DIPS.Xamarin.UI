@@ -34,7 +34,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private ContentAlignment m_verticalContentAlignment;
         private double m_position;
         private double m_maxPosition = 1;
-        private double m_minPosition = 0.1;
+        private double m_minPosition = 0.05;
         private string m_stateText;
 
         public SheetPageViewModel()
