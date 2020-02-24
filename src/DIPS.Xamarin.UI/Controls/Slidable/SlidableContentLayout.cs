@@ -10,7 +10,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
     [ContentProperty(nameof(ItemTemplate))]
     public class SlidableContentLayout : SlidableLayout
     {
-        private int? m_lastChanged;
         private readonly Dictionary<int, View> m_viewMapping = new Dictionary<int, View>();
         private readonly HashSet<View> m_currentChildren = new HashSet<View>();
         private readonly object m_lock = new object();

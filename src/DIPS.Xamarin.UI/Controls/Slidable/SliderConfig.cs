@@ -1,12 +1,12 @@
 ﻿namespace DIPS.Xamarin.UI.Controls.Slidable
 {
     /// <summary>
-    /// To be added
+    /// Config defining the max and min of SlideableLayout
     /// </summary>
     public class SliderConfig
     {
         /// <summary>
-        /// To be added
+        /// Creates an instance with max and min set.
         /// </summary>
         /// <param name="min"></param>
         /// <param name="max"></param>
@@ -17,7 +17,7 @@
         }
 
         /// <summary>
-        /// To be added
+        /// Empty constructor giving max and min, int.max/int.min values.
         /// </summary>
         public SliderConfig() { }
 
@@ -28,12 +28,12 @@
         public bool IsRightToLeft { get; set; } = false;
 
         /// <summary>
-        /// To be added
+        /// Inclusive max value of the SlidableLayout
         /// </summary>
         public int MaxValue { get; set; } = int.MaxValue;
 
         /// <summary>
-        /// To be added
+        /// Inclusive min value of the SlidableLayout
         /// </summary>
         public int MinValue { get; set; } = int.MinValue;
     }

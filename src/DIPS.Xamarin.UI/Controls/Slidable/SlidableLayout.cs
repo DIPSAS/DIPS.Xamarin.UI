@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
     /// <summary>
-    /// To be added
+    /// Layout used to scroll through indexes smoothly. This has enabled acceleration.
     /// </summary>
     public class SlidableLayout : ContentView
     {
@@ -21,7 +21,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         private bool disableTouchScroll;
 
         /// <summary>
-        /// To be added
+        /// <inheritdoc/>
         /// </summary>
         public SlidableLayout()
         {
@@ -47,7 +47,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         }
 
         /// <summary>
-        /// To be added
+        /// <inheritdoc/>
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
@@ -153,7 +153,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         protected double GetLeftPosition(double value, double index) => Center + GetItemWidth() * (GetIndexFromValue(value) - 0.5 - index);
 
         /// <summary>
-        /// To be added
+        /// Calculates the distance from the center
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -164,7 +164,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         }
 
         /// <summary>
-        /// To be added
+        /// Gets the width of the item, by extracting the ElementWidth and Proportional settings.
         /// </summary>
         /// <returns></returns>
         protected double GetItemWidth()
@@ -208,7 +208,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         }
 
         /// <summary>
-        /// To be added
+        /// Override this to handle the scrolling of this layout
         /// </summary>
         /// <param name="index"></param>
         protected virtual void OnScrolled(double index)
@@ -216,7 +216,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         }
 
         /// <summary>
-        /// To be added
+        /// <see cref="Config"/>
         /// </summary>
         public static readonly BindableProperty ConfigProperty = BindableProperty.Create(
             nameof(Config),
@@ -224,7 +224,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(SlidableLayout));
 
         /// <summary>
-        /// To be added
+        /// Configuration indicating max and min values of this layout. 
         /// </summary>
         public SliderConfig Config
         {
@@ -233,7 +233,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         }
 
         /// <summary>
-        /// To be added
+        /// <see cref="SlideProperties"/>
         /// </summary>
         public static readonly BindableProperty SlidePropertiesProperty = BindableProperty.Create(
             nameof(SlideProperties),
@@ -244,7 +244,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             propertyChanged: OnChanged);
 
         /// <summary>
-        /// To be added
+        /// Properties used to define where the slider is at the moment, in terms of index and some internal properties used for the scrolling.
         /// </summary>
         public SlidableProperties SlideProperties
         {
@@ -253,7 +253,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         }
 
         /// <summary>
-        /// To be added
+        /// <see cref="SelectedItemChangedCommand"/>
         /// </summary>
         public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(
             nameof(SelectedItemChangedCommand),
@@ -261,7 +261,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(SlidableLayout));
 
         /// <summary>
-        /// To be added
+        /// Command invoked every time the selection of an index changes.
         /// </summary>
         public ICommand SelectedItemChangedCommand
         {
@@ -270,7 +270,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         }
 
         /// <summary>
-        /// To be added
+        /// <see cref="ElementWidth"/>
         /// </summary>
         public static readonly BindableProperty ElementWidthProperty = BindableProperty.Create(
             nameof(ElementWidth),
@@ -279,7 +279,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             0.2);
 
         /// <summary>
-        /// To be added
+        /// Width of an Element, either proportional or exact.
         /// </summary>
         public double ElementWidth
         {
@@ -288,7 +288,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         }
 
         /// <summary>
-        /// To be added
+        /// <see cref="WidthIsProportional"/>
         /// </summary>
         public static readonly BindableProperty WidthIsProportionalProperty = BindableProperty.Create(
             nameof(WidthIsProportional),
@@ -296,16 +296,20 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(SlidableLayout),
             true);
 
-        public bool VibrateOnSelectionChanged { get; set; }
 
         /// <summary>
-        /// To be added
+        /// Default true and defines if the ElementWidth is proportional to the width of the parent or exact pixel values.
         /// </summary>
         public bool WidthIsProportional
         {
             get => (bool)GetValue(WidthIsProportionalProperty);
             set => SetValue(WidthIsProportionalProperty, value);
         }
+
+        /// <summary>
+        /// Set this to true if you want a small vibration every time the index changes.
+        /// </summary>
+        public bool VibrateOnSelectionChanged { get; set; }
 
         /// <summary>
         /// Disables the scrolling on this Layout. Use this if you layout has to be inside a ScrollView on Android.
