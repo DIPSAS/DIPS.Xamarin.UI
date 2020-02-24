@@ -3,6 +3,8 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Collections.Generic;
 using DIPS.Xamarin.UI.Util;
+using Xamarin.Essentials;
+using System.Threading.Tasks;
 
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
@@ -28,7 +30,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             HorizontalOptions = LayoutOptions.FillAndExpand;
             VerticalOptions = LayoutOptions.FillAndExpand;
             Config = new SliderConfig(int.MinValue, int.MaxValue);
-            SlideProperties = new SlidableProperties(0, -1, false);
             m_rec = new PanGestureRecognizer();
             GestureRecognizers.Add(m_rec);
             m_rec.PanUpdated += Rec_PanUpdated;
@@ -53,7 +54,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
-            OnScrolledInternal();
+            OnScrolledInternal(true);
         }
 
         private void Rec_PanUpdated(object sender, PanUpdatedEventArgs e)
@@ -82,9 +83,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
                 index = SlideProperties.Position;
-                //TODO: Verify short time and set tap instead of drag.
-                //TODO: Check if a tap is even recognized as a 
-                //currentPos = CalculateDist(Math.Round(SlideProperties.Position));
+                m_accelerator.OnDrag(index);
                 SlideProperties = new SlidableProperties(index, m_lastId, e.StatusType != GestureStatus.Completed && e.StatusType != GestureStatus.Canceled);
             }
             else
@@ -96,8 +95,9 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
                 m_accelerator.EndDrag();
-                Device.StartTimer(TimeSpan.FromMilliseconds(32), () => // ~30 fps
+                Device.StartTimer(TimeSpan.FromMilliseconds(20), () => // ~40 fps
                 {
+                    if (currentId != SlideProperties.HoldId) return false;
                     m_accelerator.Min = Config.MinValue - 0.45;
                     m_accelerator.Max = Config.MaxValue + 0.45;
                     var next = m_accelerator.GetValue(out bool isDone);
@@ -173,16 +173,38 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             return Width * ElementWidth;
         }
 
-        private void OnScrolledInternal()
+        private void OnScrolledInternal(bool initial = false)
         {
             var index = (int)Math.Round(SlideProperties.Position);
             if (index != m_lastIndex && SelectedItemChangedCommand != null)
             {
+                if (!initial)
+                {
+                    Vibrate();
+                }
+
                 SelectedItemChangedCommand?.Execute(index);
                 m_lastIndex = index;
             }
-            if (Width < 0.1) return;
+
             OnScrolled(SlideProperties.Position);
+        }
+
+        private async void Vibrate()
+        {
+            if (!VibrateOnSelectionChanged) return;
+            try
+            {
+                var duration = TimeSpan.FromSeconds(0.01);
+                await Task.Run(() =>
+                {
+                    Vibration.Vibrate(duration);
+                });
+            }
+            catch
+            {
+                VibrateOnSelectionChanged = false;
+            }
         }
 
         /// <summary>
@@ -191,15 +213,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         /// <param name="index"></param>
         protected virtual void OnScrolled(double index)
         {
-        }
-
-        /// <summary>
-        /// To be added
-        /// </summary>
-        /// <param name="item"></param>
-        protected virtual void OnClick(int item)
-        {
-            // On click is only for when a tap gesture is done and we enble tap. 
         }
 
         /// <summary>
@@ -227,6 +240,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(SlidableProperties),
             typeof(SlidableLayout),
             defaultBindingMode: BindingMode.TwoWay,
+            defaultValue: new SlidableProperties(0, -1, false),
             propertyChanged: OnChanged);
 
         /// <summary>
@@ -281,6 +295,8 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(bool),
             typeof(SlidableLayout),
             true);
+
+        public bool VibrateOnSelectionChanged { get; set; }
 
         /// <summary>
         /// To be added

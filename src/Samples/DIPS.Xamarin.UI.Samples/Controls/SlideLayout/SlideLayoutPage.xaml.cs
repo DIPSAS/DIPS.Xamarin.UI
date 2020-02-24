@@ -10,8 +10,14 @@ namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
         public SlideLayoutPage()
         {
             BindingContext = new SlideLayoutViewModel();
+
             InitializeComponent();
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ((SlideLayoutViewModel)BindingContext).Initialize();
+        }
     }
 }

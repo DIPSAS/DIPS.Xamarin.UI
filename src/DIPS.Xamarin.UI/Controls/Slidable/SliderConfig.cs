@@ -22,6 +22,12 @@
         public SliderConfig() { }
 
         /// <summary>
+        /// Indicates if the children of this component should get a positive value going downwards.
+        /// Setting this to true will swap the Max and Min Order
+        /// </summary>
+        public bool IsRightToLeft { get; set; } = false;
+
+        /// <summary>
         /// To be added
         /// </summary>
         public int MaxValue { get; set; } = int.MaxValue;

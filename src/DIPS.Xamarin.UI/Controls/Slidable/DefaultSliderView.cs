@@ -2,14 +2,8 @@
 using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
-    /// <summary>
-    /// To be added
-    /// </summary>
-    public class DefaultSliderView : BoxView, ISliderSelectable
+    internal class DefaultSliderView : BoxView, ISliderSelectable
     {
-        /// <summary>
-        /// To be added
-        /// </summary>
         public DefaultSliderView()
         {
             Margin = 0;
@@ -21,10 +15,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             Scale = 0.8;
         }
 
-        /// <summary>
-        /// To be added
-        /// </summary>
-        /// <param name="selected"></param>
         public async void OnSelectionChanged(bool selected)
         {
             if (selected)
@@ -34,7 +24,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             else
             {
                 await this.FadeTo(0.25, 100);
-                //Opacity = 0.25;
             }
         }
     }

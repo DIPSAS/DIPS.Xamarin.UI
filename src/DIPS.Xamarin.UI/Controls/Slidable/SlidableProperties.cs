@@ -11,7 +11,7 @@
         /// <param name="position"></param>
         /// <param name="holdId"></param>
         /// <param name="isHeld"></param>
-        public SlidableProperties(double position, int holdId, bool isHeld)
+        internal SlidableProperties(double position, int holdId, bool isHeld)
         {
             Position = position;
             HoldId = holdId;
@@ -27,6 +27,8 @@
         {
         }
 
+        public static explicit operator SlidableProperties(double value) => new SlidableProperties(value);
+
         /// <summary>
         /// To be added
         /// </summary>
@@ -35,11 +37,11 @@
         /// <summary>
         /// To be added
         /// </summary>
-        public int HoldId { get; }
+        internal int HoldId { get; }
 
         /// <summary>
         /// To be added
         /// </summary>
-        public bool IsHeld { get; }
+        internal bool IsHeld { get; }
     }
 }
