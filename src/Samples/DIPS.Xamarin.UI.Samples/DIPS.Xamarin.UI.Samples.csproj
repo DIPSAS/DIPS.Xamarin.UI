@@ -95,6 +95,7 @@
   <ItemGroup>
     <Folder Include="Controls\Popup\" />
     <Folder Include="Controls\TrendGraph\" />
+    <Folder Include="Controls\SlideLayout\" />
     <Folder Include="Controls\Content\" />
   </ItemGroup>
   <ItemGroup>
