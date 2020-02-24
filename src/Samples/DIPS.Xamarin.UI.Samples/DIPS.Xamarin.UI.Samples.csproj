@@ -49,6 +49,9 @@
     <EmbeddedResource Update="Converters\ConvertersPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Converters\ValueConverters\AdditionConverterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Converters\ValueConverters\BoolToObjectConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -62,6 +65,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Converters\ValueConverters\IsEmptyToObjectConverterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Converters\ValueConverters\MultiplicationConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Converters\ValueConverters\TimeConverterPage.xaml">
@@ -89,6 +95,7 @@
   <ItemGroup>
     <Folder Include="Controls\Popup\" />
     <Folder Include="Controls\TrendGraph\" />
+    <Folder Include="Controls\SlideLayout\" />
     <Folder Include="Controls\Content\" />
   </ItemGroup>
   <ItemGroup>

@@ -29,7 +29,7 @@
                    Text="{Binding Title}"
                    TextColor="{Binding TitleTextColor}"
                    FontSize="{Binding TitleFontSize}"
-                   FontFamily="{Binding FontFamily}"
+                   FontFamily="{Binding TitleFontFamily}"
                    Margin="10,5,10,5"
                    VerticalOptions="Center"/>
 
