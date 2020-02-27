@@ -1,0 +1,43 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
+             xmlns:ValueConverters1="http://dips.xamarin.ui.com"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.AdditionConverterPage">
+    <ContentPage.BindingContext>
+        <ValueConverters:AdditionConverterPageViewModel />
+    </ContentPage.BindingContext>
+    <Grid HorizontalOptions="Center"
+          VerticalOptions="Center">
+        <Grid.Resources>
+            <x:Double x:Key="Addend">5</x:Double>
+            <x:String x:Key="AddendString">5</x:String>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Entry Grid.Column="0"
+               Text="{Binding Value}"
+               VerticalTextAlignment="Center" />
+        <Label Grid.Column="1"
+               Text=" + "
+               VerticalTextAlignment="Center" />
+        <Label Grid.Column="2"
+               Text="{StaticResource AddendString}"
+               VerticalTextAlignment="Center" />
+        <Label Grid.Column="3"
+               Text=" = "
+               VerticalTextAlignment="Center" />
+        <Label Grid.Column="4"
+               Text="{Binding Value, Converter={ValueConverters1:AdditionConverter Addend={StaticResource Addend}}}"
+               VerticalTextAlignment="Center" />
+    </Grid>
+</ContentPage>

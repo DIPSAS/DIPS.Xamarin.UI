@@ -19,7 +19,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         private readonly TapGestureRecognizer m_closeModalityRecognizer;
         private readonly Lazy<Frame> m_overLay;
 
-        private IModalityHandler? m_currentShowingModalityHandler;
+        internal IModalityHandler? CurrentShowingModalityLayout { get; private set; }
 
         /// <summary>
         ///     <see cref="MainContent" />
@@ -111,7 +111,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         private void HideCurrentShowingModality()
         {
-            m_currentShowingModalityHandler?.Hide();
+            CurrentShowingModalityLayout?.Hide();
         }
 
         private Frame CreateOverlay()
@@ -142,7 +142,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <remarks>Using relative to parent with the constraints will give you the <see cref="ModalityLayout"/></remarks>
         public void Show(IModalityHandler modalityHandler, View view, Constraint? xConstraint = null, Constraint? yConstraint = null, Constraint? widthConstraint = null, Constraint? heightConstraint = null)
         {
-            m_currentShowingModalityHandler = modalityHandler;
+            CurrentShowingModalityLayout = modalityHandler;
             m_currentView = view;
 
             ShowOverlay();
@@ -158,7 +158,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <param name="view">The view that's over he overlay</param>
         public void Show(IModalityHandler modalityHandler, View view)
         {
-            m_currentShowingModalityHandler = modalityHandler;
+            CurrentShowingModalityLayout = modalityHandler;
             var overlay = m_overLay.Value;
             var indexOf = relativeLayout.Children.IndexOf(view);
 
@@ -198,11 +198,11 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         {
             view.SizeChanged -= ContentSizeChanged;
             if (!relativeLayout.Children.Contains(view)) return;
-            if (m_currentShowingModalityHandler == null) return;
+            if (CurrentShowingModalityLayout == null) return;
 
             var hideOverLayTask = HideOverlay();
 
-            await m_currentShowingModalityHandler.BeforeRemoval();
+            await CurrentShowingModalityLayout.BeforeRemoval();
             await hideOverLayTask;
 
             relativeLayout.Children.Remove(view);
@@ -217,12 +217,12 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         private void OnChildRemoved(object sender, ElementEventArgs e)
         {
-            if (m_currentShowingModalityHandler == null) return;
+            if (CurrentShowingModalityLayout == null) return;
             if (m_currentView == null) return;
 
             if (!relativeLayout.Children.Contains(m_currentView))
             {
-                m_currentShowingModalityHandler.AfterRemoval();
+                CurrentShowingModalityLayout.AfterRemoval();
                 m_currentView = null;
             }
         }

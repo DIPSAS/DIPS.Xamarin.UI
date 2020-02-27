@@ -40,6 +40,11 @@
                 Text="ContentControl" />
             <Button
                 Command="{Binding NavigateToCommand}"
+                CommandParameter="Sliding"
+                Text="Sliding" />
+
+            <Button
+                Command="{Binding NavigateToCommand}"
                 CommandParameter="FloatingActionMenu"
                 Text="FloatingActionMenu" />
             <Button

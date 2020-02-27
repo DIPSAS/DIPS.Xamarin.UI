@@ -500,6 +500,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private void OnModalityLayoutSizeChanged(object sender, EventArgs e)
         {
+            if (m_modalityLayout?.CurrentShowingModalityLayout == this)
+                return; //Jump out of the size changed event if the modality layout size changes and the sheet is currently visible
             ToggleSheetVisibility();
         }
 
@@ -509,6 +511,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             base.OnDetachingFrom(bindable);
             if (m_modalityLayout == null) return;
             m_modalityLayout.BindingContextChanged -= OnBindingContextChanged;
+            ToggleSheetVisibility();
         }
 
         private void OnBindingContextChanged(object sender, EventArgs e)
