@@ -6,6 +6,8 @@
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Tag.TagPage">
 
     <StackLayout Margin="20,30,20,30" Spacing="20">
+        <dxui:Tag Text="Default" />
+
         <dxui:Tag VerticalOptions="Start"
                   HorizontalOptions="Center"
                   Text="Hello"
@@ -20,9 +22,9 @@
                   BackgroundColor="{x:Static dxui:ColorPalette.Tertiary}"
                   CornerRadius="10"
                   HasShadow="False"
-                  Padding="8,5,8,5">
-        </dxui:Tag>
-        
+                  Padding="8,5,8,5" />
+
+
         <dxui:Tag VerticalOptions="Start"
                   HorizontalOptions="Center"
                   WidthRequest="30"
@@ -41,8 +43,8 @@
                   BorderColor="{x:Static dxui:ColorPalette.Dark}"
                   CornerRadius="15"
                   HasShadow="False"
-                  Padding="0,0,0,0">
-        </dxui:Tag>
+                  Padding="0,0,0,0" />
+
 
         <dxui:Tag VerticalOptions="Center"
                   HorizontalOptions="FillAndExpand"
@@ -60,8 +62,8 @@
                   BorderColor="{x:Static dxui:ColorPalette.Dark}"
                   CornerRadius="10"
                   HasShadow="False"
-                  Padding="8,5,8,5">
-        </dxui:Tag>
+                  Padding="8,5,8,5" />
+
 
         <dxui:Tag VerticalOptions="FillAndExpand"
                   HorizontalOptions="Center"
@@ -79,8 +81,8 @@
                   BorderColor="{x:Static dxui:ColorPalette.Dark}"
                   CornerRadius="10"
                   HasShadow="False"
-                  Padding="8,5,8,5">
-        </dxui:Tag>
+                  Padding="8,5,8,5" />
+
 
         <dxui:Tag VerticalOptions="Start"
                   HorizontalOptions="Center"

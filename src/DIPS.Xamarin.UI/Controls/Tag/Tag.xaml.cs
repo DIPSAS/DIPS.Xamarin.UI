@@ -21,57 +21,57 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         ///     Bindable property for <see cref="Text" />
         /// </summary>
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(Tag), default(string));
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(Tag), Label.TextProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="TextColor" />
         /// </summary>
         public static readonly BindableProperty TextColorProperty =
-            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Tag), Color.Default);
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Tag), Label.TextColorProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="FontFamily" />
         /// </summary>
         public static readonly BindableProperty FontFamilyProperty =
-            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Tag), default(string));
+            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Tag), Label.FontFamilyProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="FontAttributes" />
         /// </summary>
         public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(nameof(FontAttributes),
-            typeof(FontAttributes), typeof(Tag), FontAttributes.None);
+            typeof(FontAttributes), typeof(Tag), Label.FontAttributesProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="FontSize" />
         /// </summary>
         public static readonly BindableProperty FontSizeProperty =
-            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Tag), -1d);
+            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Tag), Label.FontSizeProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="LineBreakMode" />
         /// </summary>
         public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode),
-            typeof(LineBreakMode), typeof(Tag), LineBreakMode.WordWrap);
+            typeof(LineBreakMode), typeof(Tag), Label.LineBreakModeProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="MaxLines" />
         /// </summary>
         public static readonly BindableProperty MaxLinesProperty =
-            BindableProperty.Create(nameof(MaxLines), typeof(int), typeof(Label), -1);
+            BindableProperty.Create(nameof(MaxLines), typeof(int), typeof(Label), Label.MaxLinesProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="FormattedText" />
         /// </summary>
         public static readonly BindableProperty FormattedTextProperty =
             BindableProperty.Create(nameof(FormattedText), typeof(FormattedString), typeof(Label),
-                default(FormattedString),
+                Label.FormattedTextProperty.DefaultValue,
                 propertyChanging: OnFormattedTextChanging, propertyChanged: OnFormattedTextChanged);
 
         /// <summary>
         ///     Bindable property for <see cref="CharacterSpacing" />
         /// </summary>
         public static readonly BindableProperty CharacterSpacingProperty =
-            BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(Tag), 0d);
+            BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(Tag), Label.CharacterSpacingProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="VerticalTextAlignment" />
