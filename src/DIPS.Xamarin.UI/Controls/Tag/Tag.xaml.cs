@@ -27,13 +27,15 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         ///     Bindable property for <see cref="TextColor" />
         /// </summary>
         public static readonly BindableProperty TextColorProperty =
-            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Tag), Label.TextColorProperty.DefaultValue);
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Tag),
+                Label.TextColorProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="FontFamily" />
         /// </summary>
         public static readonly BindableProperty FontFamilyProperty =
-            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Tag), Label.FontFamilyProperty.DefaultValue);
+            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Tag),
+                Label.FontFamilyProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="FontAttributes" />
@@ -45,7 +47,8 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         ///     Bindable property for <see cref="FontSize" />
         /// </summary>
         public static readonly BindableProperty FontSizeProperty =
-            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Tag), Label.FontSizeProperty.DefaultValue);
+            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Tag), Label.FontSizeProperty.DefaultValue,
+                defaultValueCreator: FontSizeDefaultValueCreator);
 
         /// <summary>
         ///     Bindable property for <see cref="LineBreakMode" />
@@ -71,7 +74,8 @@ namespace DIPS.Xamarin.UI.Controls.Tag
         ///     Bindable property for <see cref="CharacterSpacing" />
         /// </summary>
         public static readonly BindableProperty CharacterSpacingProperty =
-            BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(Tag), Label.CharacterSpacingProperty.DefaultValue);
+            BindableProperty.Create(nameof(CharacterSpacing), typeof(double), typeof(Tag),
+                Label.CharacterSpacingProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="VerticalTextAlignment" />
@@ -213,6 +217,11 @@ namespace DIPS.Xamarin.UI.Controls.Tag
                 formattedString.Parent = null;
                 tag.tagLabel.FormattedText = null;
             }
+        }
+
+        private static object FontSizeDefaultValueCreator(BindableObject bindable)
+        {
+            return Device.GetNamedSize(NamedSize.Default, ((Tag) bindable).tagLabel);
         }
 
         #endregion
