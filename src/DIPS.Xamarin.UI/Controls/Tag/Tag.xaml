@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.Tag;assembly=DIPS.Xamarin.UI"
+             x:Class="DIPS.Xamarin.UI.Controls.Tag.Tag" >
+
+    <Frame VerticalOptions="FillAndExpand"
+           HorizontalOptions="FillAndExpand"
+           x:DataType="{x:Type Local:Tag}"
+           BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:Tag}}}"
+
+           BackgroundColor="{Binding BackgroundColor}"
+           BorderColor="{Binding BorderColor}"
+           CornerRadius="{Binding CornerRadius}"
+           HasShadow="{Binding HasShadow}"
+           Padding="{Binding Padding}">
+
+        <Label x:Name="tagLabel"
+               BackgroundColor="Transparent"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+
+               Text="{Binding Text}"
+               TextColor="{Binding TextColor}"
+               FontFamily="{Binding FontFamily}"
+               FontAttributes="{Binding FontAttributes}"
+               FontSize="{Binding FontSize}"
+               LineBreakMode="{Binding LineBreakMode}"
+               MaxLines="{Binding MaxLines}"
+               FormattedText="{Binding FormattedText}"
+               CharacterSpacing="{Binding CharacterSpacing}"
+               VerticalTextAlignment="{Binding VerticalTextAlignment}"
+               HorizontalTextAlignment="{Binding HorizontalTextAlignment}" />
+    </Frame>
+</ContentView>

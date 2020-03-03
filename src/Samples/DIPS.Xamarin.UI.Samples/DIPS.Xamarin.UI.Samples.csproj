@@ -97,6 +97,7 @@
     <Folder Include="Controls\TrendGraph\" />
     <Folder Include="Controls\SlideLayout\" />
     <Folder Include="Controls\Content\" />
+    <Folder Include="Controls\Tag\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />
