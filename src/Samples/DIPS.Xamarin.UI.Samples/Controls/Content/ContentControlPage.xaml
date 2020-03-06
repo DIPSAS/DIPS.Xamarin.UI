@@ -38,6 +38,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <dxui:ContentControl BindingContext="{Binding Content}" TemplateSelector="{StaticResource templateSelector}" />
@@ -48,8 +49,14 @@
             TemplateSelector="{dxui:BooleanDataTemplateSelector TrueTemplate={StaticResource vm1Template},
                                                                 FalseTemplate={StaticResource trueTemplate}}" />
 
-        <Button
+        <dxui:ContentControl
             Grid.Row="2"
+            BindingContext="{Binding VM1}"
+            SelectorItem="{Binding SwapTemplate}"
+            TemplateSelector="{dxui:SingleTemplateSelector Template={StaticResource vm1Template}}"/>
+
+        <Button
+            Grid.Row="3"
             BackgroundColor="WhiteSmoke"
             BorderColor="Black"
             BorderWidth="1"
