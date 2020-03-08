@@ -19,7 +19,7 @@
                      
                      Spacing="{Binding Spacing}"
                      Orientation="{Binding Orientation}"
-                     BindableLayout.ItemsSource="{Binding Source}"
+                     BindableLayout.ItemsSource="{Binding ItemSource}"
                      BindableLayout.ItemTemplate="{Binding ItemTemplate}" />
     </ContentView.Content>
     

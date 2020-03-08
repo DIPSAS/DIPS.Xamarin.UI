@@ -16,28 +16,29 @@
             HorizontalOptions="Start"
             VerticalOptions="End"
 
-            Spacing="10"
+            Spacing="0"
             Orientation="Horizontal"
-            Source="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
+            ItemSource="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
             
             <DataTemplate x:DataType="{x:Type Local:MyClass}">
-                <Label Text="{Binding Name}" />
+                <Label Text="{Binding Name}"
+                       TextColor="{Binding Color}" />
             </DataTemplate>
             
         </IconBar:IconBar>
 
         <IconBar:IconBar
-            BackgroundColor="Green"
             Padding="5"
             HorizontalOptions="End"
             VerticalOptions="End"
 
             Spacing="10"
             Orientation="Horizontal"
-            Source="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
+            ItemSource="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
             
             <DataTemplate x:DataType="{x:Type Local:MyClass}">
-                <Label Text="{Binding Name}" />
+                <Label Text="{Binding Name}"
+                       TextColor="{Binding Color}" />
             </DataTemplate>
             
         </IconBar:IconBar>
@@ -50,10 +51,11 @@
 
             Spacing="10"
             Orientation="Vertical"
-            Source="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
+            ItemSource="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
             
             <DataTemplate x:DataType="{x:Type Local:MyClass}">
-                <Label Text="{Binding Name}" />
+                <Label Text="{Binding Name}"
+                       TextColor="{Binding Color}" />
             </DataTemplate>
             
         </IconBar:IconBar>
