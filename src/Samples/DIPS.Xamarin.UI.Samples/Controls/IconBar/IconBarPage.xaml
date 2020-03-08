@@ -2,64 +2,156 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxui="http://dips.xamarin.ui.com"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.IconBar.IconBarPage"
              x:DataType="{x:Type Local:IconBarPage}"
 
-             xmlns:IconBar="http://dips.xamarin.ui.com"
              xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.IconBar;assembly=DIPS.Xamarin.UI.Samples">
-    
-    <StackLayout Margin="20">
 
-        <IconBar:IconBar
-            BackgroundColor="Pink"
+    <Grid Margin="20">
+
+        <dxui:IconBar
             Padding="5"
             HorizontalOptions="Start"
-            VerticalOptions="End"
-
-            Spacing="0"
-            Orientation="Horizontal"
-            ItemSource="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
-            
-            <DataTemplate x:DataType="{x:Type Local:MyClass}">
-                <Label Text="{Binding Name}"
-                       TextColor="{Binding Color}" />
-            </DataTemplate>
-            
-        </IconBar:IconBar>
-
-        <IconBar:IconBar
-            Padding="5"
-            HorizontalOptions="End"
-            VerticalOptions="End"
-
-            Spacing="10"
-            Orientation="Horizontal"
-            ItemSource="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
-            
-            <DataTemplate x:DataType="{x:Type Local:MyClass}">
-                <Label Text="{Binding Name}"
-                       TextColor="{Binding Color}" />
-            </DataTemplate>
-            
-        </IconBar:IconBar>
-
-        <IconBar:IconBar
-            BackgroundColor="Green"
-            Padding="5"
-            HorizontalOptions="Center"
-            VerticalOptions="End"
+            VerticalOptions="Start"
 
             Spacing="10"
             Orientation="Vertical"
-            ItemSource="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
-            
-            <DataTemplate x:DataType="{x:Type Local:MyClass}">
-                <Label Text="{Binding Name}"
-                       TextColor="{Binding Color}" />
-            </DataTemplate>
-            
-        </IconBar:IconBar>
+            ItemSource="{Binding SampleData, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
 
-    </StackLayout>
+            <DataTemplate x:DataType="{x:Type Local:IconBarSampleModel}">
+                <Label Text="{Binding Name}"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="28"
+                       TextColor="Purple" />
+            </DataTemplate>
+
+        </dxui:IconBar>
+
+        <dxui:IconBar
+            Padding="5"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            Spacing="-3"
+
+            Orientation="Horizontal"
+            ItemSource="{Binding SampleData, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
+
+            <DataTemplate x:DataType="{x:Type Local:IconBarSampleModel}">
+                <dxui:Tag Text="{Binding Name}"
+                          FontAttributes="Bold"
+                          WidthRequest="36"
+                          HeightRequest="36"
+                          CornerRadius="18"
+                          BorderColor="Brown"
+                          FontSize="20">
+
+                    <dxui:Tag.Triggers>
+                        <DataTrigger TargetType="dxui:Tag"
+                                     Binding="{Binding Type}"
+                                     Value="Urgent">
+                            <Setter Property="TextColor" Value="Yellow" />
+                            <Setter Property="BackgroundColor" Value="Black" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="dxui:Tag"
+                                     Binding="{Binding Type}"
+                                     Value="Normal">
+                            <Setter Property="TextColor" Value="Blue" />
+                            <Setter Property="BackgroundColor" Value="LightGreen" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="dxui:Tag"
+                                     Binding="{Binding Type}"
+                                     Value="Optional">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </dxui:Tag.Triggers>
+                </dxui:Tag>
+            </DataTemplate>
+
+        </dxui:IconBar>
+
+        <dxui:IconBar
+            BackgroundColor="Green"
+            Padding="5"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+
+            Spacing="15"
+            Orientation="Horizontal"
+            ItemSource="{Binding SampleData, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
+
+            <DataTemplate x:DataType="{x:Type Local:IconBarSampleModel}">
+                <Label Text="{Binding Name}"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="28"
+                       TextColor="White" />
+            </DataTemplate>
+
+        </dxui:IconBar>
+
+        <dxui:IconBar
+            HorizontalOptions="Start"
+            VerticalOptions="End"
+
+            Orientation="Horizontal"
+            ItemSource="{Binding SampleData, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
+
+            <DataTemplate x:DataType="{x:Type Local:IconBarSampleModel}">
+                <Label Text="{Binding Name}"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="28" />
+            </DataTemplate>
+
+        </dxui:IconBar>
+
+        <dxui:IconBar
+            Padding="5"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Spacing="10"
+
+            Orientation="Vertical"
+            ItemSource="{Binding SampleData, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
+
+            <DataTemplate x:DataType="{x:Type Local:IconBarSampleModel}">
+                <dxui:Tag Text="{Binding Name}"
+                          FontAttributes="Bold"
+                          WidthRequest="36"
+                          HeightRequest="36"
+                          CornerRadius="18"
+                          BorderColor="Purple"
+                          BackgroundColor="White"
+                          FontSize="20">
+
+                    <dxui:Tag.Triggers>
+                        <DataTrigger TargetType="dxui:Tag"
+                                     Binding="{Binding Type}"
+                                     Value="Urgent">
+                            <Setter Property="TextColor" Value="Red" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="dxui:Tag"
+                                     Binding="{Binding Type}"
+                                     Value="Normal">
+                            <Setter Property="TextColor" Value="Green" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="dxui:Tag"
+                                     Binding="{Binding Type}"
+                                     Value="Optional">
+                            <Setter Property="TextColor" Value="Blue" />
+                        </DataTrigger>
+                    </dxui:Tag.Triggers>
+                </dxui:Tag>
+            </DataTemplate>
+
+        </dxui:IconBar>
+
+    </Grid>
 
 </ContentPage>

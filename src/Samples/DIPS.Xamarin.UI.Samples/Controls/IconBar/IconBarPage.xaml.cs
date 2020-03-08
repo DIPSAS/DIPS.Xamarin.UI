@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,21 +12,15 @@ namespace DIPS.Xamarin.UI.Samples.Controls.IconBar
             InitializeComponent();
         }
 
-        public List<MyClass> MyLocalList { get; set; } = new List<MyClass>
+        public List<IconBarSampleModel> SampleData { get; set; } = new List<IconBarSampleModel>
         {
-            new MyClass { Name = "߷", Color = "Red" },
-            new MyClass { Name = "☪", Color = "Green" },
-            new MyClass { Name = "♺", Color = "Blue" },
-            new MyClass { Name = "♖", Color = "Purple" },
-            new MyClass { Name = "⚒", Color = "Purple" },
-            new MyClass { Name = "☢", Color = "Gold" },
-            new MyClass { Name = "☭", Color = "Magenta" }
+            new IconBarSampleModel {Name = "߷", Type = "Urgent"},
+            new IconBarSampleModel {Name = "♔", Type = "Normal"},
+            new IconBarSampleModel {Name = "♺", Type = "Optional"},
+            new IconBarSampleModel {Name = "♖", Type = "Normal"},
+            new IconBarSampleModel {Name = "♞", Type = "Normal"},
+            new IconBarSampleModel {Name = "❀", Type = "Normal"},
+            new IconBarSampleModel {Name = "☭", Type = "Urgent"}
         };
-    }
-
-    public class MyClass
-    {
-        public string Name { get; set; }
-        public string Color { get; set; }
     }
 }

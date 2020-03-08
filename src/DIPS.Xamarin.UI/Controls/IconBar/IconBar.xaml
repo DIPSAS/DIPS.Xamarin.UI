@@ -8,19 +8,18 @@
              HorizontalOptions="Center"
 
              xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.IconBar;assembly=DIPS.Xamarin.UI">
-    
+
     <ContentView.Content>
         <StackLayout x:DataType="{x:Type Local:IconBar}"
                      BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:IconBar}}}"
                      BackgroundColor="Transparent"
                      VerticalOptions="Center"
                      HorizontalOptions="Center"
-                     Padding="0"
-                     
+
                      Spacing="{Binding Spacing}"
                      Orientation="{Binding Orientation}"
                      BindableLayout.ItemsSource="{Binding ItemSource}"
                      BindableLayout.ItemTemplate="{Binding ItemTemplate}" />
     </ContentView.Content>
-    
+
 </ContentView>
