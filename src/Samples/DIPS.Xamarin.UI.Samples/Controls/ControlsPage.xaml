@@ -42,7 +42,6 @@
                 Command="{Binding NavigateToCommand}"
                 CommandParameter="Sliding"
                 Text="Sliding" />
-
             <Button
                 Command="{Binding NavigateToCommand}"
                 CommandParameter="FloatingActionMenu"
@@ -51,6 +50,10 @@
                 Command="{Binding NavigateToCommand}"
                 CommandParameter="TagControl"
                 Text="Tag" />
+            <Button
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="IconBarControl"
+                Text="Icon Bar" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

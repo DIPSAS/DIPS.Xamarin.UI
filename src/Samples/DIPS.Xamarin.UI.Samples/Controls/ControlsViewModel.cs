@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Samples.Controls.Content;
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;
+using DIPS.Xamarin.UI.Samples.Controls.IconBar;
 using DIPS.Xamarin.UI.Samples.Controls.Popup;
 using DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;
 using DIPS.Xamarin.UI.Samples.Controls.Sheet;
@@ -46,6 +47,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                 if (parameter.Equals("FloatingActionMenu"))
                     m_navigation.PushAsync(new FloatingActionMenuPage {Title = parameter});
                 if (parameter.Equals("TagControl")) await m_navigation.PushAsync(new TagPage {Title = parameter});
+                if (parameter.Equals("IconBarControl")) await m_navigation.PushAsync(new IconBarPage {Title = parameter});
             }
             catch (Exception e)
             {
