@@ -2,25 +2,62 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:IconBar="http://dips.xamarin.ui.com"
-             xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.IconBar;assembly=DIPS.Xamarin.UI.Samples"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.IconBar.IconBarPage"
-             x:DataType="{x:Type Local:IconBarPage}">
-    <ContentPage.Content>
+             x:DataType="{x:Type Local:IconBarPage}"
 
-        <IconBar:IconBar Source="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
-            <!-- <DataTemplate> -->
-            <!--     <Label Text="{x:Static Identifiers:ResourceIdentifiers.OutOfRangeIcon}" -->
-            <!--            TextColor="Green" -->
-            <!--            BackgroundColor="Cyan" -->
-            <!--            FontFamily="{DynamicResource DIPSFontIconsFamily}" -->
-            <!--            FontSize="20" /> -->
-            <!-- </DataTemplate> -->
+             xmlns:IconBar="http://dips.xamarin.ui.com"
+             xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.IconBar;assembly=DIPS.Xamarin.UI.Samples">
+    
+    <StackLayout Margin="20">
+
+        <IconBar:IconBar
+            BackgroundColor="Pink"
+            Padding="5"
+            HorizontalOptions="Start"
+            VerticalOptions="End"
+
+            Spacing="10"
+            Orientation="Horizontal"
+            Source="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
             
-            <DataTemplate>
-                <Label Text="Hi" />
+            <DataTemplate x:DataType="{x:Type Local:MyClass}">
+                <Label Text="{Binding Name}" />
             </DataTemplate>
+            
         </IconBar:IconBar>
 
-    </ContentPage.Content>
+        <IconBar:IconBar
+            BackgroundColor="Green"
+            Padding="5"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+
+            Spacing="10"
+            Orientation="Horizontal"
+            Source="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
+            
+            <DataTemplate x:DataType="{x:Type Local:MyClass}">
+                <Label Text="{Binding Name}" />
+            </DataTemplate>
+            
+        </IconBar:IconBar>
+
+        <IconBar:IconBar
+            BackgroundColor="Green"
+            Padding="5"
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+
+            Spacing="10"
+            Orientation="Vertical"
+            Source="{Binding MyLocalList, Source={RelativeSource AncestorType={x:Type Local:IconBarPage}}}">
+            
+            <DataTemplate x:DataType="{x:Type Local:MyClass}">
+                <Label Text="{Binding Name}" />
+            </DataTemplate>
+            
+        </IconBar:IconBar>
+
+    </StackLayout>
+
 </ContentPage>

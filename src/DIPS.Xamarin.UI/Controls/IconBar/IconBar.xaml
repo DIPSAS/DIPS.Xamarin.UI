@@ -3,37 +3,24 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIPS.Xamarin.UI.Controls.IconBar.IconBar"
-             x:DataType="{x:Type Local:IconBar}"
 
-             xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.IconBar;assembly=DIPS.Xamarin.UI"
+             VerticalOptions="Center"
+             HorizontalOptions="Center"
 
-             BackgroundColor="Red">
-    <ContentView.Content>
-        <StackLayout   Spacing="20"
-                       BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:IconBar}}}"
-                       Orientation="Horizontal"
-                       BindableLayout.ItemsSource="{Binding Source}"
-                       BindableLayout.ItemTemplate="{Binding ItemTemplate}" >
-
-            <!--x:DataType="{x:Type Local:IconBarView}"
-             BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:IconBarView}}}"
-             
-             BindableLayout.ItemsSource="{Binding Source}"
-             BackgroundColor="AliceBlue"
-             
-             Orientation="Horizontal"
-             Spacing="5"-->
+             xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.IconBar;assembly=DIPS.Xamarin.UI">
     
-            <!-- <BindableLayout.ItemTemplate> -->
-            <!--     <DataTemplate> -->
-            <!--         <Label Text="{x:Static Identifiers:ResourceIdentifiers.NotSignedIcon}" -->
-            <!--            TextColor="Black" -->
-            <!--             BackgroundColor="Blue" -->
-            <!--             -->
-            <!--            FontFamily="{DynamicResource DIPSFontIconsFamily}" -->
-            <!--            FontSize="20" /> -->
-            <!--     </DataTemplate> -->
-            <!-- </BindableLayout.ItemTemplate> -->
-        </StackLayout>
+    <ContentView.Content>
+        <StackLayout x:DataType="{x:Type Local:IconBar}"
+                     BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:IconBar}}}"
+                     BackgroundColor="Transparent"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     Padding="0"
+                     
+                     Spacing="{Binding Spacing}"
+                     Orientation="{Binding Orientation}"
+                     BindableLayout.ItemsSource="{Binding Source}"
+                     BindableLayout.ItemTemplate="{Binding ItemTemplate}" />
     </ContentView.Content>
+    
 </ContentView>

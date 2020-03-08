@@ -1,10 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,6 +13,17 @@ namespace DIPS.Xamarin.UI.Samples.Controls.IconBar
             InitializeComponent();
         }
 
-        public IEnumerable MyLocalList { get; set; } = new[] { "A", "B", "C", "D" };
+        public List<MyClass> MyLocalList { get; set; } = new List<MyClass>
+        {
+            new MyClass { Name = "A" },
+            new MyClass { Name = "B" },
+            new MyClass { Name = "C" },
+            new MyClass { Name = "D" }
+        };
+    }
+
+    public class MyClass
+    {
+        public string Name { get; set; }
     }
 }
