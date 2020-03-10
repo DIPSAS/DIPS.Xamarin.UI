@@ -98,6 +98,7 @@
     <Folder Include="Controls\SlideLayout\" />
     <Folder Include="Controls\Content\" />
     <Folder Include="Controls\Tag\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DIPS.Xamarin.UI\DIPS.Xamarin.UI.csproj" />

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIPS.Xamarin.UI.Samples.View.SamplesButton"
+             HorizontalOptions="FillAndExpand"
+             VerticalOptions="Center"
+             Margin="20,5"
+             Padding="0"
+             x:Name="codebehind"
+             Opacity="0.9">
+    <Grid>
+
+        <Button x:Name="btn"
+                VerticalOptions="Center"
+                HorizontalOptions="FillAndExpand"
+                CornerRadius="2"
+                TextColor="{x:Static dxui:ColorPalette.DarkAir}"
+                BackgroundColor="{x:Static dxui:Theme.TealSecondaryLight}"
+                FontSize="Default"
+                Command="{Binding Source={x:Reference codebehind}, Path=Command}"
+                FontAttributes="Bold">
+        </Button>
+                <Image x:Name="img"
+                       InputTransparent="True"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       Margin="10"
+                       HeightRequest="25"
+                       WidthRequest="25"
+               />
+    </Grid>
+</ContentView>

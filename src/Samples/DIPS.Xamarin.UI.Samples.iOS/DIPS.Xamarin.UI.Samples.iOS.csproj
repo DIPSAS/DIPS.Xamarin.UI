@@ -143,4 +143,8 @@
       <Name>DIPS.Xamarin.UI.Samples</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\dxuilogo.png" />
+    <BundleResource Include="Resources\githublogo.png" />
+  </ItemGroup>
 </Project>
