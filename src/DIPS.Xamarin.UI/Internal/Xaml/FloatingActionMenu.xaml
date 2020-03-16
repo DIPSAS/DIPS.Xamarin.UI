@@ -23,6 +23,7 @@
                 Text="{Binding ExpandButtonText}"
                 TextColor="{Binding ExpandButtonTextColor}"
                 FontFamily="{Binding ExpandButtonFontFamily}"
-                Clicked="ExpandButton_OnClicked" />
+                Clicked="ExpandButton_OnClicked"
+                IsVisible="{Binding IsVisible}"/>
     </ContentView.Content>
 </ContentView>
