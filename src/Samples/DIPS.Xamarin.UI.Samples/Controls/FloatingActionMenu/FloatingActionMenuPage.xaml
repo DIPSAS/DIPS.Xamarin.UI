@@ -22,7 +22,8 @@
                                               ExpandButtonFontSize="12"
                                               ExpandButtonTextColor="Azure"
                                               XPosition=".9"
-                                              YPosition=".95">
+                                              YPosition=".95"
+                                              IsVisible="{Binding Source={x:Reference toggleVisibilityCheckbox}, Path=IsChecked}">
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="A"
                                  TextColor="White"
@@ -50,9 +51,16 @@
                                  CommandParameter="Fourth tapped!" />
             </dxui:FloatingActionMenuBehaviour>
         </dxui:ModalityLayout.Behaviors>
-        <Label x:Name="TextLabel"
-               Text="{Binding Text}"
-               FontSize="20"
-               Margin="10" />
+        <StackLayout>
+            <Label x:Name="TextLabel"
+                   Text="{Binding Text}"
+                   FontSize="20"
+                   Margin="10" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Toggle visibility" VerticalTextAlignment="Center"/>
+                <CheckBox x:Name="toggleVisibilityCheckbox"
+                          IsChecked="True" />
+            </StackLayout>
+        </StackLayout>
     </dxui:ModalityLayout>
 </ContentPage>

@@ -75,6 +75,25 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             typeof(Internal.Xaml.FloatingActionMenu),
             Color.White);
 
+        /// <summary>
+        ///     <see cref="IsVisible" />
+        /// </summary>
+        public static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(
+            nameof(IsVisible),
+            typeof(bool),
+            typeof(FloatingActionMenuBehaviour),
+            true);
+
+        /// <summary>
+        ///     Determines the visibility of the floating action menu.
+        ///     This is a bindable property.
+        /// </summary>
+        public bool IsVisible
+        {
+            get => (bool)GetValue(IsVisibleProperty);
+            set => SetValue(IsVisibleProperty, value);
+        }
+
         private Internal.Xaml.FloatingActionMenu? m_floatingActionMenu;
         private bool m_first = true;
         private ModalityLayout? m_modalityLayout;
