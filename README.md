@@ -28,6 +28,13 @@ Our resources can be used in our pages and UI components. This can be [colors](h
 
 Our API includes utilities that is useful when working with the MVVM pattern and XAML. This can be a [property changed api](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#propertychangedextensions|), [commands](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#asynccommand), [recursively searching the visual tree](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#getparentoftype) with more.
 
+## Support platforms
+
+- [x] Android
+- [x] iOS
+
+This package do not support `UWP` or `WPF` because DIPS has a internal Windows desktop library with other components that are more suiting for desktop applications.
+
 ## Maintenance
 
 The library gets constantly updated and new features gets added once we identify the need of having components shared between our apps. New features are added as a [issue](https://github.com/DIPSAS/DIPS.Xamarin.UI/issues) and are marked as a `[Spec]`.
