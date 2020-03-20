@@ -29,7 +29,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             Margin = 0;
             HorizontalOptions = LayoutOptions.FillAndExpand;
             VerticalOptions = LayoutOptions.FillAndExpand;
-            Config = new SliderConfig(int.MinValue, int.MaxValue);
+            //Config = new SliderConfig(int.MinValue, int.MaxValue);
             m_rec = new PanGestureRecognizer();
             GestureRecognizers.Add(m_rec);
             m_rec.PanUpdated += Rec_PanUpdated;
@@ -221,7 +221,8 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         public static readonly BindableProperty ConfigProperty = BindableProperty.Create(
             nameof(Config),
             typeof(SliderConfig),
-            typeof(SlidableLayout));
+            typeof(SlidableLayout),
+            defaultValue: new SliderConfig(int.MinValue, int.MaxValue));
 
         /// <summary>
         /// Configuration indicating max and min values of this layout. 
