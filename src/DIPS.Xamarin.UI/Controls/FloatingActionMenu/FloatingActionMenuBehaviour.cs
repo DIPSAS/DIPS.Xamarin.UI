@@ -192,23 +192,23 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         }
 
         /// <summary>
-        /// <see cref="ShouldCloseOnOverlayTapped"/>
+        /// <see cref="CloseOnOverlayTapped"/>
         /// </summary>
-        public static readonly BindableProperty ShouldCloseOnOverlayTappedProperty = BindableProperty.Create(nameof(ShouldCloseOnOverlayTapped), typeof(bool), typeof(FloatingActionMenuBehaviour), true, propertyChanged: OnShouldCloseOnOverlayTappedPropertyChanged);
+        public static readonly BindableProperty CloseOnOverlayTappedProperty = BindableProperty.Create(nameof(CloseOnOverlayTapped), typeof(bool), typeof(FloatingActionMenuBehaviour), true, propertyChanged: OnCloseOnOverlayTappedPropertyChanged);
 
-        private static void OnShouldCloseOnOverlayTappedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        private static void OnCloseOnOverlayTappedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is FloatingActionMenuBehaviour floatingActionMenuBehaviour)) return;
             if (!(bool.TryParse(newvalue.ToString(), out var newBoolValue))) return;
             if (floatingActionMenuBehaviour.m_floatingActionMenu == null) return;
-            floatingActionMenuBehaviour.m_floatingActionMenu.ShouldCloseOnOverlayTapped = newBoolValue;
+            floatingActionMenuBehaviour.m_floatingActionMenu.CloseOnOverlayTapped = newBoolValue;
         }
 
-        /// <see cref="IModalityHandler.ShouldCloseOnOverlayTapped"/>
-        public bool ShouldCloseOnOverlayTapped
+        /// <see cref="IModalityHandler.CloseOnOverlayTapped"/>
+        public bool CloseOnOverlayTapped
         {
-            get => (bool)GetValue(ShouldCloseOnOverlayTappedProperty);
-            set => SetValue(ShouldCloseOnOverlayTappedProperty, value);
+            get => (bool)GetValue(CloseOnOverlayTappedProperty);
+            set => SetValue(CloseOnOverlayTappedProperty, value);
         }
 
         private static void IsOpenPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)

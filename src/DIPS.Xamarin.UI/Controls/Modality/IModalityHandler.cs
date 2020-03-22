@@ -30,6 +30,6 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <summary>
         /// Determines if the modality component should close when the overlay is tapped.
         /// </summary>
-        bool ShouldCloseOnOverlayTapped { get; set; }
+        bool CloseOnOverlayTapped { get; set; }
     }
 }

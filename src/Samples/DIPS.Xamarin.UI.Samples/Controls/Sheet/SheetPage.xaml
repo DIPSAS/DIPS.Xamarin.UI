@@ -36,7 +36,7 @@
                                     MinPosition="{Binding MinPosition}"
                                     MaxPosition="{Binding MaxPosition}"
                                     BindingContextFactory="{Binding SheetViewModelFactory}"
-                                    ShouldCloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
+                                    CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
                                     OnPositionChanged="SheetBehavior_OnOnPositionChanged">
                     <StackLayout>
                         <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />

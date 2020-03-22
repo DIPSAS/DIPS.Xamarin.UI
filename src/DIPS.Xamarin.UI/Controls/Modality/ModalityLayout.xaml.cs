@@ -72,19 +72,19 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         }
 
         /// <summary>
-        /// <see cref="ShouldCloseModalitiesOnOverlayTapped"/>
+        /// <see cref="CloseModalitiesOnOverlayTapped"/>
         /// </summary>
-        public static readonly BindableProperty ShouldCloseModalitiesOnOverlayTappedProperty = BindableProperty.Create(nameof(ShouldCloseModalitiesOnOverlayTapped), typeof(bool), typeof(ModalityLayout), true);
+        public static readonly BindableProperty CloseModalitiesOnOverlayTappedProperty = BindableProperty.Create(nameof(CloseModalitiesOnOverlayTapped), typeof(bool), typeof(ModalityLayout), true);
 
         /// <summary>
         /// Determines if modalities in this modality layout should close when the overlay is tapped.
         /// This is a bindable property.
         /// </summary>
         /// <remarks>Default is true</remarks>
-        public bool ShouldCloseModalitiesOnOverlayTapped
+        public bool CloseModalitiesOnOverlayTapped
         {
-            get => (bool)GetValue(ShouldCloseModalitiesOnOverlayTappedProperty);
-            set => SetValue(ShouldCloseModalitiesOnOverlayTappedProperty, value);
+            get => (bool)GetValue(CloseModalitiesOnOverlayTappedProperty);
+            set => SetValue(CloseModalitiesOnOverlayTappedProperty, value);
         }
 
 
@@ -138,8 +138,8 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             var overlayFrame = new Frame { BackgroundColor = OverlayColor, IsVisible = true, Opacity = 0.0 };
             var tappedCommand = new Command(
                 () => m_closeModalityRecognizer.Command.Execute(null),
-                () => CurrentShowingModalityLayout != null && CurrentShowingModalityLayout.ShouldCloseOnOverlayTapped &&
-                      ShouldCloseModalitiesOnOverlayTapped);
+                () => CurrentShowingModalityLayout != null && CurrentShowingModalityLayout.CloseOnOverlayTapped &&
+                      CloseModalitiesOnOverlayTapped);
             overlayFrame.GestureRecognizers.Add(new TapGestureRecognizer() { Command = tappedCommand });
 
             return overlayFrame;

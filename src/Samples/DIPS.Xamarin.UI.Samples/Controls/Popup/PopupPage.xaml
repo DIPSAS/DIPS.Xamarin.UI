@@ -57,7 +57,7 @@
             </Frame>
         </DataTemplate>
     </ContentPage.Resources>
-    <dxui:ModalityLayout>
+    <dxui:ModalityLayout CloseModalitiesOnOverlayTapped="False">
         <Grid BackgroundColor="WhiteSmoke">
             <Grid>
                 <Grid.RowDefinitions>
