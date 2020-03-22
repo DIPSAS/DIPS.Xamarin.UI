@@ -114,6 +114,18 @@ namespace DIPS.Xamarin.UI.Controls.Popup
         public Task AfterRemoval() => Task.CompletedTask;
 
         /// <summary>
+        /// <see cref="ShouldCloseOnOverlayTapped"/>
+        /// </summary>
+        public static readonly BindableProperty ShouldCloseOnOverlayTappedProperty = BindableProperty.Create(nameof(ShouldCloseOnOverlayTapped), typeof(bool), typeof(PopupBehavior), true);
+
+        /// <inheritdoc cref=""/>
+        public bool ShouldCloseOnOverlayTapped
+        {
+            get => (bool)GetValue(ShouldCloseOnOverlayTappedProperty);
+            set => SetValue(ShouldCloseOnOverlayTappedProperty, value);
+        }
+
+        /// <summary>
         ///     Handels attaching to item.
         /// </summary>
         /// <param name="bindable"></param>
