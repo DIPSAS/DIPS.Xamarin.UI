@@ -29,7 +29,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             Margin = 0;
             HorizontalOptions = LayoutOptions.FillAndExpand;
             VerticalOptions = LayoutOptions.FillAndExpand;
-            //Config = new SliderConfig(int.MinValue, int.MaxValue);
+            Config = new SliderConfig(int.MinValue, int.MaxValue);
             m_rec = new PanGestureRecognizer();
             GestureRecognizers.Add(m_rec);
             m_rec.PanUpdated += Rec_PanUpdated;
@@ -78,7 +78,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
             var currentPos = m_startSlideLocation - e.TotalX;
             m_lastId = currentId;
-            var index = Math.Max(Config.MinValue - 0.45, Math.Min(Config.MaxValue + 0.45, CalculateIndex(currentPos)));
+            var index = Math.Max(Config?.MinValue ?? int.MinValue - 0.45, Math.Min(Config?.MaxValue ?? int.MaxValue + 0.45, CalculateIndex(currentPos)));
 
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
@@ -98,8 +98,8 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 Device.StartTimer(TimeSpan.FromMilliseconds(20), () => // ~40 fps
                 {
                     if (currentId != SlideProperties.HoldId) return false;
-                    m_accelerator.Min = Config.MinValue - 0.45;
-                    m_accelerator.Max = Config.MaxValue + 0.45;
+                    m_accelerator.Min = Config?.MinValue - 0.45;
+                    m_accelerator.Max = Config?.MaxValue + 0.45;
                     var next = m_accelerator.GetValue(out bool isDone);
                     index = next;
                     if (SlideProperties.IsHeld) return false;
@@ -223,7 +223,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(SliderConfig),
             typeof(SlidableLayout),
             defaultValue: new SliderConfig(int.MinValue, int.MaxValue));
-
+        
         /// <summary>
         /// Configuration indicating max and min values of this layout. 
         /// </summary>

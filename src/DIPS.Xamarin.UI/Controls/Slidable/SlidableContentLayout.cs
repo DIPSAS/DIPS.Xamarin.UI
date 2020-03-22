@@ -50,11 +50,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 for (var i = index - itemCount; i <= index + itemCount; i++)
                 {
                     var iIndex = (int)Math.Floor(i);
-                    if (iIndex < Config.MinValue || iIndex > Config.MaxValue) continue;
+                    if (iIndex < Config?.MinValue || iIndex > Config?.MaxValue) continue;
                     var view = CreateItem(iIndex);
 
                     UpdateSelected(view, selectedIndex == iIndex);
-
+                    
                     if (ScaleDown)
                     {
                         var dist = (Math.Abs(index - iIndex) / itemCount);
