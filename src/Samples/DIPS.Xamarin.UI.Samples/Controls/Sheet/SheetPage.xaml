@@ -36,6 +36,7 @@
                                     MinPosition="{Binding MinPosition}"
                                     MaxPosition="{Binding MaxPosition}"
                                     BindingContextFactory="{Binding SheetViewModelFactory}"
+                                    ShouldCloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
                                     OnPositionChanged="SheetBehavior_OnOnPositionChanged">
                     <StackLayout>
                         <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
@@ -215,6 +216,10 @@
                            Text="{Binding MaxPosition}" />
                 </Grid>
 
+                <StackLayout>
+                    <Label Text="Should close on overlay tapped"/>
+                    <CheckBox x:Name="ShouldCloseOnOverlayTappedCheckbox" IsChecked="True"></CheckBox>
+                </StackLayout>
                 <Label Text="{Binding StateText, StringFormat='State: {0}'}"
                        IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}" />
                 <Button Text="Open sheet"

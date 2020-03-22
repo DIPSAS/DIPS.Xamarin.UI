@@ -130,22 +130,18 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         private void HideCurrentShowingModality()
         {
-            if(CurrentShowingModalityLayout == null) return;
-            if (CurrentShowingModalityLayout.ShouldCloseOnOverlayTapped)
-            {
-                if (ShouldCloseModalitiesOnOverlayTapped)
-                {
-                    CurrentShowingModalityLayout?.Hide();
-                }
-            }
-                
+            CurrentShowingModalityLayout?.Hide();
         }
 
         private Frame CreateOverlay()
         {
             var overlayFrame = new Frame { BackgroundColor = OverlayColor, IsVisible = true, Opacity = 0.0 };
+            var tappedCommand = new Command(
+                () => m_closeModalityRecognizer.Command.Execute(null),
+                () => CurrentShowingModalityLayout != null && CurrentShowingModalityLayout.ShouldCloseOnOverlayTapped &&
+                      ShouldCloseModalitiesOnOverlayTapped);
+            overlayFrame.GestureRecognizers.Add(new TapGestureRecognizer() { Command = tappedCommand });
 
-            overlayFrame.GestureRecognizers.Add(m_closeModalityRecognizer);
             return overlayFrame;
         }
 
