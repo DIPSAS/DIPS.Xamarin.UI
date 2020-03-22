@@ -23,6 +23,7 @@
                                               ExpandButtonTextColor="Azure"
                                               XPosition=".9"
                                               YPosition=".95"
+                                              ShouldCloseOnOverlayTapped="{Binding Source={x:Reference shouldCloseOnTappedOverlayCheckbox}, Path=IsChecked}"
                                               IsVisible="{Binding Source={x:Reference toggleVisibilityCheckbox}, Path=IsChecked}">
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="A"
@@ -59,6 +60,11 @@
             <StackLayout Orientation="Horizontal">
                 <Label Text="Toggle visibility" VerticalTextAlignment="Center"/>
                 <CheckBox x:Name="toggleVisibilityCheckbox"
+                          IsChecked="True" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Should close on tapped overlay" VerticalTextAlignment="Center"/>
+                <CheckBox x:Name="shouldCloseOnTappedOverlayCheckbox"
                           IsChecked="True" />
             </StackLayout>
         </StackLayout>
