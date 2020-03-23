@@ -64,6 +64,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 return;
             }
 
+            if (Config == null)
+            {
+                return;
+            }
+
             var currentId = e.GestureId;
             if (!(m_lastId == SlideProperties.HoldId || !SlideProperties.IsHeld || currentId == m_lastId))
             {
@@ -78,7 +83,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
             var currentPos = m_startSlideLocation - e.TotalX;
             m_lastId = currentId;
-            var index = Math.Max(Config?.MinValue ?? int.MinValue - 0.45, Math.Min(Config?.MaxValue ?? int.MaxValue + 0.45, CalculateIndex(currentPos)));
+            var index = Math.Max(Config.MinValue - 0.45, Math.Min(Config.MaxValue + 0.45, CalculateIndex(currentPos)));
 
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
@@ -98,8 +103,8 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 Device.StartTimer(TimeSpan.FromMilliseconds(20), () => // ~40 fps
                 {
                     if (currentId != SlideProperties.HoldId) return false;
-                    m_accelerator.Min = Config?.MinValue - 0.45;
-                    m_accelerator.Max = Config?.MaxValue + 0.45;
+                    m_accelerator.Min = Config.MinValue - 0.45;
+                    m_accelerator.Max = Config.MaxValue + 0.45;
                     var next = m_accelerator.GetValue(out bool isDone);
                     index = next;
                     if (SlideProperties.IsHeld) return false;
@@ -221,8 +226,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         public static readonly BindableProperty ConfigProperty = BindableProperty.Create(
             nameof(Config),
             typeof(SliderConfig),
-            typeof(SlidableLayout),
-            defaultValue: new SliderConfig(int.MinValue, int.MaxValue));
+            typeof(SlidableLayout));
         
         /// <summary>
         /// Configuration indicating max and min values of this layout. 
