@@ -191,6 +191,26 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             set => SetValue(ExpandButtonFontSizeProperty, value);
         }
 
+        /// <summary>
+        /// <see cref="CloseOnOverlayTapped"/>
+        /// </summary>
+        public static readonly BindableProperty CloseOnOverlayTappedProperty = BindableProperty.Create(nameof(CloseOnOverlayTapped), typeof(bool), typeof(FloatingActionMenuBehaviour), true, propertyChanged: OnCloseOnOverlayTappedPropertyChanged);
+
+        private static void OnCloseOnOverlayTappedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is FloatingActionMenuBehaviour floatingActionMenuBehaviour)) return;
+            if (!(bool.TryParse(newvalue.ToString(), out var newBoolValue))) return;
+            if (floatingActionMenuBehaviour.m_floatingActionMenu == null) return;
+            floatingActionMenuBehaviour.m_floatingActionMenu.CloseOnOverlayTapped = newBoolValue;
+        }
+
+        /// <see cref="IModalityHandler.CloseOnOverlayTapped"/>
+        public bool CloseOnOverlayTapped
+        {
+            get => (bool)GetValue(CloseOnOverlayTappedProperty);
+            set => SetValue(CloseOnOverlayTappedProperty, value);
+        }
+
         private static void IsOpenPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is FloatingActionMenuBehaviour menuBehaviour)

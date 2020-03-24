@@ -162,5 +162,17 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             return Task.CompletedTask;
 
         }
+
+        /// <summary>
+        /// <see cref="CloseOnOverlayTapped"/>
+        /// </summary>
+        public static readonly BindableProperty CloseOnOverlayTappedProperty = BindableProperty.Create(nameof(CloseOnOverlayTapped), typeof(bool), typeof(FloatingActionMenu), true);
+
+        /// <inheritdoc />
+        public bool CloseOnOverlayTapped
+        {
+            get => (bool)GetValue(CloseOnOverlayTappedProperty);
+            set => SetValue(CloseOnOverlayTappedProperty, value);
+        }
     }
 }
