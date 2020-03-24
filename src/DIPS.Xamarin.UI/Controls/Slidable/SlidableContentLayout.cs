@@ -35,6 +35,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         /// <param name="index"></param>
         protected override void OnScrolled(double index)
         {
+            if (Config == null)
+            {
+                return;
+            }
+            
             lock (m_lock)
             {
                 base.OnScrolled(index);
@@ -54,7 +59,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                     var view = CreateItem(iIndex);
 
                     UpdateSelected(view, selectedIndex == iIndex);
-
+                    
                     if (ScaleDown)
                     {
                         var dist = (Math.Abs(index - iIndex) / itemCount);
