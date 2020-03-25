@@ -64,6 +64,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 return;
             }
 
+            if (Config == null)
+            {
+                return;
+            }
+
             var currentId = e.GestureId;
             if (!(m_lastId == SlideProperties.HoldId || !SlideProperties.IsHeld || currentId == m_lastId))
             {
@@ -222,7 +227,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             nameof(Config),
             typeof(SliderConfig),
             typeof(SlidableLayout));
-
+        
         /// <summary>
         /// Configuration indicating max and min values of this layout. 
         /// </summary>

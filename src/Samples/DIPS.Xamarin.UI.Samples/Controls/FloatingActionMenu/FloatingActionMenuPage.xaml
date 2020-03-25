@@ -23,6 +23,7 @@
                                               ExpandButtonTextColor="Azure"
                                               XPosition=".9"
                                               YPosition=".95"
+                                              CloseOnOverlayTapped="{Binding Source={x:Reference shouldCloseOnTappedOverlayCheckbox}, Path=IsChecked}"
                                               IsVisible="{Binding Source={x:Reference toggleVisibilityCheckbox}, Path=IsChecked}">
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="HEI"
@@ -64,6 +65,11 @@
                           IsChecked="True" />
                 <Button Command="{Binding FlipBadgeCommand}"
                         Text="FlipBadge" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Should close on tapped overlay" VerticalTextAlignment="Center"/>
+                <CheckBox x:Name="shouldCloseOnTappedOverlayCheckbox"
+                          IsChecked="True" />
             </StackLayout>
         </StackLayout>
     </dxui:ModalityLayout>

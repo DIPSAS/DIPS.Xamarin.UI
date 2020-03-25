@@ -477,6 +477,20 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// <see cref="CloseOnOverlayTapped"/>
+        /// </summary>
+        public static readonly BindableProperty CloseOnOverlayTappedProperty = BindableProperty.Create(nameof(CloseOnOverlayTapped), typeof(bool), typeof(SheetBehavior), true);
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        public bool CloseOnOverlayTapped
+        {
+            get => (bool)GetValue(CloseOnOverlayTappedProperty);
+            set => SetValue(CloseOnOverlayTappedProperty, value);
+        }
+
         private static async void OnPositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is SheetBehavior sheetBehavior)) return;
