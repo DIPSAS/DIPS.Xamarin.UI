@@ -5,7 +5,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             xmlns:Utilities="clr-namespace:DIPS.Xamarin.UI.Internal.Utilities;assembly=DIPS.Xamarin.UI"
              x:Name="CodeBehind"
              mc:Ignorable="d"
              Opacity="0"
@@ -31,7 +31,7 @@
                    FontSize="{Binding TitleFontSize}"
                    FontFamily="{Binding TitleFontFamily}"
                    Margin="10,5,10,5"
-                   VerticalOptions="Center"/>
+                   VerticalOptions="Center" />
 
             <Frame.Triggers>
                 <DataTrigger TargetType="Frame"
@@ -43,17 +43,17 @@
             </Frame.Triggers>
         </Frame>
 
-        <Button x:Name="button"
-                x:FieldModifier="internal"
-                Grid.Column="1"
-                BindingContext="{x:Reference CodeBehind}"
-                BackgroundColor="{Binding BackgroundColor}"
-                BorderColor="White"
-                BorderWidth="3"
-                FontSize="{Binding FontSize}"
-                Text="{Binding Text}"
-                TextColor="{Binding TextColor}"
-                FontFamily="{Binding FontFamily}"
-                Clicked="MenuButton_OnClicked" />
+        <Utilities:LegacyButton x:Name="button"
+                                x:FieldModifier="internal"
+                                Grid.Column="1"
+                                BindingContext="{x:Reference CodeBehind}"
+                                BackgroundColor="{Binding BackgroundColor}"
+                                BorderColor="White"
+                                BorderWidth="3"
+                                FontSize="{Binding FontSize}"
+                                Text="{Binding Text}"
+                                TextColor="{Binding TextColor}"
+                                FontFamily="{Binding FontFamily}"
+                                Clicked="MenuButton_OnClicked" />
     </Grid>
 </ContentView>

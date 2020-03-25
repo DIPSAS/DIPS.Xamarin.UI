@@ -70,6 +70,12 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
                 var maxOpacity = menuButton.IsEnabled ? 1 : .5;
                 menuButton.TranslateTo(0, m_isExpanded ? 0 : -m_yTranslate * multiplier, 250, Easing.CubicInOut);
                 menuButton.FadeTo(m_isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
+
+                if (menuButton.AttachBadge)
+                {
+                    menuButton.Badge?.TranslateTo(0, m_isExpanded ? 0 : -m_yTranslate * multiplier, 250, Easing.CubicInOut);
+                }
+
                 multiplier += 1;
             }
 
@@ -124,12 +130,23 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
                     child,
                     Constraint.RelativeToParent(p => p.Width * m_behaviour.XPosition),
                     Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
+
+                child.Badge.BadgeFrame.BackgroundColor = child.BadgeColor;
+                child.Badge.BadgeLabel.Text = child.BadgeCounter.ToString();
             }
+
 
             parent.Children.Add(
                 ExpandButton,
                 Constraint.RelativeToParent(p => (p.Width * m_behaviour.XPosition) - ExpandButton.WidthRequest),
                 Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
+
+            foreach (var menuButton in Children)
+            {
+                parent.Children.Add(menuButton.Badge,
+                Constraint.RelativeToParent(p => p.Width * m_behaviour.XPosition - 22),
+                Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
+            }
         }
 
         private void AdjustXPositions()

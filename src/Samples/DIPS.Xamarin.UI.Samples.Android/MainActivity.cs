@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using DIPS.Xamarin.UI.Samples.Droid.MobileSettings;
 using Java.Security;
+using Xamarin.Forms;
 using Essentials = Xamarin.Essentials;
 using Content = Android.Content;
 using Provider = Android.Provider;
@@ -25,6 +26,7 @@ namespace DIPS.Xamarin.UI.Samples.Droid
             base.OnCreate(savedInstanceState);
 
             Essentials.Platform.Init(this, savedInstanceState); //Xamarin essentials
+
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             DIPS.Xamarin.UI.Android.Library.Initialize();
 

@@ -26,14 +26,25 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
     public class FloatingActionMenuPageViewmodel : INotifyPropertyChanged
     {
         private string m_text;
+        private bool m_attachBadge;
 
         public FloatingActionMenuPageViewmodel()
         {
             SetTextCommand = new Command<string>((text) => Text = text);
+            FlipBadgeCommand = new Command(() => AttachBadge = !AttachBadge);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand SetTextCommand { get; }
+        public ICommand FlipBadgeCommand { get; set; }
+        public ICommand ChangeBadgeColorCommand { get; set; }
+        public ICommand IncreaseCounterCommand { get; set; }
+
+        public bool AttachBadge
+        {
+            get => m_attachBadge;
+            set => PropertyChanged.RaiseWhenSet(ref m_attachBadge, value);
+        }
 
         public string Text
         {

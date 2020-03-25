@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using DIPS.Xamarin.UI.Internal.Xaml;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -108,12 +109,54 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             typeof(string),
             typeof(MenuButton));
 
+        public static readonly BindableProperty AttachBadgeProperty = BindableProperty.Create(nameof(AttachBadge), typeof(bool), typeof(MenuButton), propertyChanged:PropertyChanged);
+
+        private static void PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (bindable is MenuButton menuButton)
+            {
+                if (menuButton.Badge == null) return;
+                if (!(bool)newvalue)
+                {
+                    menuButton.Badge.IsVisible = false;
+                }
+                else
+                {
+                    menuButton.Badge.IsVisible = true;
+                }
+            }
+        }
+
+        public static readonly BindableProperty BadgeCounterProperty = BindableProperty.Create(nameof(BadgeCounter), typeof(int), typeof(MenuButton));
+
+        public static readonly BindableProperty BadgeColorProperty = BindableProperty.Create(nameof(BadgeColor), typeof(Color), typeof(MenuButton));
+
+        internal Badge Badge { get; } = new Badge();
+
         /// <summary>
         ///     Buttons that can be placed in a <see cref="FloatingActionMenuBehaviour" />.
         /// </summary>
         public MenuButton()
         {
             InitializeComponent();
+        }
+
+        public Color BadgeColor
+        {
+            get => (Color)GetValue(BadgeColorProperty);
+            set => SetValue(BadgeColorProperty, value);
+        }
+
+        public int BadgeCounter
+        {
+            get => (int)GetValue(BadgeCounterProperty);
+            set => SetValue(BadgeCounterProperty, value);
+        }
+
+        public bool AttachBadge
+        {
+            get => (bool)GetValue(AttachBadgeProperty);
+            set => SetValue(AttachBadgeProperty, value);
         }
 
         /// <summary>
@@ -240,15 +283,9 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
 
         private void MenuButton_OnClicked(object sender, EventArgs e)
         {
-            if (FloatingActionMenuParent != null && !IsEnabled)
-            {
-                FloatingActionMenuParent.m_behaviour.IsOpen = false;
-            }
+            if (FloatingActionMenuParent != null && !IsEnabled) FloatingActionMenuParent.m_behaviour.IsOpen = false;
 
-            if (IsEnabled)
-            {
-                Command?.Execute(CommandParameter);
-            }
+            if (IsEnabled) Command?.Execute(CommandParameter);
         }
     }
 }

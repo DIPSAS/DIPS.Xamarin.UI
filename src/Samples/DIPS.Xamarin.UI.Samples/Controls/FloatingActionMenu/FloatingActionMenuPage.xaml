@@ -25,14 +25,16 @@
                                               YPosition=".95"
                                               IsVisible="{Binding Source={x:Reference toggleVisibilityCheckbox}, Path=IsChecked}">
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                 Text="A"
+                                 Text="HEI"
                                  TextColor="White"
+                                 AttachBadge="{Binding AttachBadge}"
+                                 BadgeCounter="4"
+                                 BadgeColor="Red"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="First tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="A"
                                  TextColor="White"
-                                 IsEnabled="False"
                                  TitleFontSize="14"
                                  Title="Innstillinger"
                                  Command="{Binding SetTextCommand}"
@@ -57,9 +59,11 @@
                    FontSize="20"
                    Margin="10" />
             <StackLayout Orientation="Horizontal">
-                <Label Text="Toggle visibility" VerticalTextAlignment="Center"/>
+                <Label Text="Toggle visibility" VerticalTextAlignment="Center" />
                 <CheckBox x:Name="toggleVisibilityCheckbox"
                           IsChecked="True" />
+                <Button Command="{Binding FlipBadgeCommand}"
+                        Text="FlipBadge" />
             </StackLayout>
         </StackLayout>
     </dxui:ModalityLayout>

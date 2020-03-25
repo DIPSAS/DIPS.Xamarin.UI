@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             IsVisible="False"
+             x:Name="CodeBehind"
+             x:Class="DIPS.Xamarin.UI.Internal.Xaml.Badge">
+
+      <Frame x:Name="BadgeFrame"
+             x:FieldModifier="internal"
+             HeightRequest="25"
+             WidthRequest="25"
+             CornerRadius="12.5"
+             InputTransparent="True"
+             Padding="0"
+             Opacity=".85"
+             BackgroundColor="Red">
+          <Label x:Name="BadgeLabel"
+                 Text="3"
+                 x:FieldModifier="internal"
+                 TextColor="White"
+                 LineBreakMode="NoWrap"
+                 BackgroundColor="Transparent"
+                 VerticalTextAlignment="Center"
+                 HorizontalTextAlignment="Center" />
+
+      </Frame>
+</ContentView>
