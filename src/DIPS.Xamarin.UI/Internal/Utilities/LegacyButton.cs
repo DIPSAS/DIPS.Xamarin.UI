@@ -5,7 +5,9 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Internal.Utilities
 {
-    // Android button not using fast renderer.
+    /// <summary>
+    ///     Android button not using fast renderer.
+    /// </summary>
     public class LegacyButton : Button
     {
     }

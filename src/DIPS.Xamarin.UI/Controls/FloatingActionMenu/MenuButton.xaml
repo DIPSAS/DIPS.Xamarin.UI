@@ -73,7 +73,7 @@
                VerticalOptions="Start"
                HorizontalOptions="End"
                HasShadow="False"
-               Opacity=".9">
+               Opacity=".5">
             <Label TextColor="White"
                    Text="{Binding BadgeCounter}"
                    LineBreakMode="NoWrap"
