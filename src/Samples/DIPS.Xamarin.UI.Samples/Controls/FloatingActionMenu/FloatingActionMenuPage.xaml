@@ -45,19 +45,19 @@
                                               CloseOnOverlayTapped="{Binding Source={x:Reference shouldCloseOnTappedOverlayCheckbox}, Path=IsChecked}"
                                               IsVisible="{Binding Source={x:Reference toggleVisibilityCheckbox}, Path=IsChecked}">
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                 Text="HEI"
+                                 Text="Home"
                                  TextColor="White"
                                  Command="{Binding SetTextCommand}"
+                                 Title="First page"
                                  CommandParameter="First tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="A"
                                  TextColor="White"
-                                 TitleFontSize="14"
-                                 Title="Innstillinger"
+                                 Title="Second page"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Second tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                 Text="A"
+                                 Text="B"
                                  TextColor="White"
                                  IsBadgeVisible="{Binding ShowBadge}"
                                  BadgeColor="{Binding BadgeColor}"
@@ -66,7 +66,7 @@
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Third tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                 Text="A"
+                                 Text="C"
                                  TextColor="White"
                                  Title="Fourth page"
                                  Command="{Binding SetTextCommand}"
