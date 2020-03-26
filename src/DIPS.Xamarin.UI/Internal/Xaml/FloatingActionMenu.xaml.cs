@@ -41,7 +41,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             if (m_animationComplete && m_isExpanded != shouldShow)
             {
-                //AdjustXPositions();
                 AnimateAll();
             }
         }
@@ -98,7 +97,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         private async void ExpandButton_OnClicked(object sender, EventArgs e)
         {
             if (!m_animationComplete) return;
-            //AdjustXPositions();
             await AnimateAll();
 
             m_behaviour.IsOpen = m_isExpanded;
