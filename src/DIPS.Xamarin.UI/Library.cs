@@ -18,22 +18,22 @@ namespace DIPS.Xamarin.UI
         public static void Initialize(){}
 
         /// <summary>
-        /// 
+        ///     A static class used to enable features that are in preview.
         /// </summary>
         public static class PreviewFeatures
         {
 
             /// <summary>
-            /// 
+            ///     Enable a feature that's in preview.
             /// </summary>
-            /// <param name="previewFeature"></param>
+            /// <param name="previewFeature">A string specifying which preview feature you want to enable.</param>
             public static void EnableFeature(string previewFeature)
             {
                 if (previewFeature == MenuButtonBadgeAnimationString) MenuButtonBadgeAnimation = true;
             }
 
             /// <summary>
-            /// 
+            ///     Toggles animations for the badge on the <code>MenuButton</code>.
             /// </summary>
             public static bool MenuButtonBadgeAnimation { get; set; }
             
