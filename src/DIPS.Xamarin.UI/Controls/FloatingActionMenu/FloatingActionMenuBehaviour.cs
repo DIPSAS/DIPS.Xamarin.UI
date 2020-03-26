@@ -82,7 +82,16 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             nameof(IsVisible),
             typeof(bool),
             typeof(FloatingActionMenuBehaviour),
-            true);
+            true,
+            propertyChanged: IsVisiblePropertyChanged);
+
+        private static void IsVisiblePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (bindable is FloatingActionMenuBehaviour behaviour)
+            {
+                behaviour.Children.ForEach(mb => mb.IsVisible = (bool) newvalue);
+            }
+        }
 
         /// <summary>
         ///     Determines the visibility of the floating action menu.

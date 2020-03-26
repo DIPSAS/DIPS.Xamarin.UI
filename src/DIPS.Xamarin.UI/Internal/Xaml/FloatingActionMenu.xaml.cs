@@ -41,14 +41,13 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             if (m_animationComplete && m_isExpanded != shouldShow)
             {
-                AdjustXPositions();
                 AnimateAll();
             }
         }
 
         private void DisplayOverlay()
         {
-            m_parent?.Show(this, Children.First());
+            m_parent?.Show(this, ExpandButton);
         }
 
         private async Task AnimateAll()
@@ -69,7 +68,10 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             {
                 var maxOpacity = menuButton.IsEnabled ? 1 : .5;
                 menuButton.TranslateTo(0, m_isExpanded ? 0 : -m_yTranslate * multiplier, 250, Easing.CubicInOut);
-                menuButton.FadeTo(m_isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
+                menuButton.Button.FadeTo(m_isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
+                menuButton.TitleFrame.FadeTo(m_isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
+                menuButton.BadgeFrame.FadeTo(m_isExpanded ? .5 : .9, 250, Easing.CubicInOut);
+
                 multiplier += 1;
             }
 
@@ -83,6 +85,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             }
             await ExpandButton.RelRotateTo(180, 250, Easing.CubicInOut);
             m_isExpanded = !m_isExpanded;
+            Children.ForEach(mb => mb.InputTransparent = !m_isExpanded);
             m_animationComplete = true;
         }
 
@@ -94,11 +97,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         private async void ExpandButton_OnClicked(object sender, EventArgs e)
         {
             if (!m_animationComplete) return;
-            AdjustXPositions();
             await AnimateAll();
 
             m_behaviour.IsOpen = m_isExpanded;
-            Children.ForEach(mb => mb.InputTransparent = !m_isExpanded);
         }
 
         internal void AddTo(ModalityLayout layout)
@@ -114,22 +115,26 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
         private void AddButtonsToRelative(RelativeLayout parent)
         {
-            foreach (var child in Children)
+            parent.Children.Add(
+                ExpandButton,
+                Constraint.RelativeToParent(p => (p.Width * m_behaviour.XPosition) - ExpandButton.WidthRequest),
+                Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
+
+
+            for (var index = Children.Count - 1; index >= 0; index--)
             {
+                var child = Children[index];
                 child.FloatingActionMenuParent = this;
-                child.button.WidthRequest = m_behaviour.Size;
-                child.button.HeightRequest = m_behaviour.Size;
-                child.button.CornerRadius = (int)m_behaviour.Size / 2;
+                child.Button.WidthRequest = m_behaviour.Size;
+                child.Button.HeightRequest = m_behaviour.Size;
+                child.Button.CornerRadius = (int)m_behaviour.Size / 2;
                 parent.Children.Add(
                     child,
                     Constraint.RelativeToParent(p => p.Width * m_behaviour.XPosition),
                     Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
             }
 
-            parent.Children.Add(
-                ExpandButton,
-                Constraint.RelativeToParent(p => (p.Width * m_behaviour.XPosition) - ExpandButton.WidthRequest),
-                Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
+            AdjustXPositions();
         }
 
         private void AdjustXPositions()
@@ -142,7 +147,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             }
 
             m_first = false;
-        }
+        } 
 
         /// <inheritdoc />
         public void Hide()
