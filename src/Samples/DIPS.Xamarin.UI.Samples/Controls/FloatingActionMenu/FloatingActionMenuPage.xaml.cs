@@ -38,6 +38,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
             SetTextCommand = new Command<string>((text) => Text = text);
             FlipBadgeCommand = new Command(() => ShowBadge = !ShowBadge);
             IncreaseCounterCommand = new Command(() => BadgeCounter++);
+            DecreaseCounterCommand = new Command(() => BadgeCounter--);
             ChangeBadgeColorCommand = new Command(() =>
             {
                 if ( BadgeColor != Color.BlueViolet) BadgeColor = Color.BlueViolet;
@@ -50,6 +51,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
         public ICommand FlipBadgeCommand { get; set; }
         public ICommand ChangeBadgeColorCommand { get; set; }
         public ICommand IncreaseCounterCommand { get; set; }
+        public ICommand DecreaseCounterCommand { get; set; }
 
         public Color BadgeColor
         {

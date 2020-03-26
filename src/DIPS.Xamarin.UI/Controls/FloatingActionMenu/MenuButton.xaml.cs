@@ -137,17 +137,36 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// <summary>
         ///     <see cref="BadgeCount" />
         /// </summary>
-        public static readonly BindableProperty BadgeCountProperty = BindableProperty.Create(nameof(BadgeCount), typeof(int), typeof(MenuButton), propertyChanged: BadgeCountPropertyChanged);
+        public static readonly BindableProperty BadgeCountProperty = BindableProperty.Create(nameof(BadgeCount), typeof(string), typeof(MenuButton), propertyChanged: BadgeCountPropertyChanged, coerceValue: CoerceValue);
+
+        private static object CoerceValue(BindableObject bindable, object value)
+        {
+            if (bindable is MenuButton menuButton)
+            {
+                if (value is string count && int.TryParse(count, out var newCount))
+                {
+                    if (newCount > 99)
+                    {
+                        menuButton.BadgeFrame.HeightRequest = 25;
+                        menuButton.BadgeFrame.WidthRequest = 25;
+                        menuButton.BadgeFrame.CornerRadius = 12.5f;
+                        return "99+";
+                    }
+                }
+                menuButton.BadgeFrame.HeightRequest = 22;
+                menuButton.BadgeFrame.WidthRequest = 22;
+                menuButton.BadgeFrame.CornerRadius = 11;
+            }
+            return value;
+        }
 
         private static async void BadgeCountPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation) return;
+            if (!(bindable is MenuButton menuButton)) return;
 
-            if (bindable is MenuButton menuButton)
-            {
-                await menuButton.BadgeFrame.TranslateTo(0, -5, 150, Easing.CubicIn);
-                menuButton.BadgeFrame.TranslateTo(0, 0, 150, Easing.CubicInOut);
-            }
+            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation) return;
+            await menuButton.BadgeFrame.TranslateTo(0, -5, 150, Easing.CubicIn);
+            menuButton.BadgeFrame.TranslateTo(0, 0, 150, Easing.CubicInOut);
         }
 
         /// <summary>
@@ -196,9 +215,9 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         ///     Contents of badge.
         ///     This is a bindable porperty.
         /// </summary>
-        public int BadgeCount
+        public string BadgeCount
         {
-            get => (int)GetValue(BadgeCountProperty);
+            get => (string)GetValue(BadgeCountProperty);
             set => SetValue(BadgeCountProperty, value);
         }
 

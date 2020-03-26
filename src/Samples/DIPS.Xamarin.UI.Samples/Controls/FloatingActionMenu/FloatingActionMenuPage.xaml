@@ -104,14 +104,28 @@
             </StackLayout>
 
 
-            <StackLayout Orientation="Horizontal"
-                         Spacing="15"
-                         Padding="0, 10, 0,0">
+            <Grid Padding="0, 10, 0,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 <Button Command="{Binding IncreaseCounterCommand}"
-                        Text="Increase badge counter" />
-                <Button Command="{Binding ChangeBadgeColorCommand}"
+                        Text="Increase badge counter +" />  
+                <Button Grid.Row="0"
+                        Grid.Column="1"
+                        Command="{Binding DecreaseCounterCommand}"
+                        Text="Decrease badge counter -" />
+                <Button Grid.Row="1"
+                        Grid.Column="0" 
+                        Command="{Binding ChangeBadgeColorCommand}"
                         Text="Change badge color" />
-            </StackLayout>
+            </Grid>
 
 
             <Label x:Name="TextLabel"
