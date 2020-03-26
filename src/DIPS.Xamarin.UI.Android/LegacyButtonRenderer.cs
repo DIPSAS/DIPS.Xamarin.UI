@@ -20,9 +20,13 @@ using Button = Xamarin.Forms.Button;
 namespace DIPS.Xamarin.UI.Android
 {
 
-    // Remove when this closes :https://github.com/xamarin/Xamarin.Forms/issues/10067
+    /// Remove when this closes :https://github.com/xamarin/Xamarin.Forms/issues/10067
     public class LegacyButtonRenderer : global::Xamarin.Forms.Platform.Android.ButtonRenderer
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public LegacyButtonRenderer(Context context) : base(context)
         {
             

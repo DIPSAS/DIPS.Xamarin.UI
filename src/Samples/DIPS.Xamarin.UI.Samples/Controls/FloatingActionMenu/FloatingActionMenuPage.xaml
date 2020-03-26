@@ -28,9 +28,6 @@
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="HEI"
                                  TextColor="White"
-                                 AttachBadge="{Binding AttachBadge}"
-                                 BadgeCounter="4"
-                                 BadgeColor="Red"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="First tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
@@ -43,6 +40,9 @@
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="A"
                                  TextColor="White"
+                                 AttachBadge="{Binding AttachBadge}"
+                                 BadgeColor="{Binding BadgeColor}"
+                                 BadgeCounter="{Binding BadgeCounter}"
                                  Title="Third page"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Third tapped!" />
@@ -63,9 +63,14 @@
                 <Label Text="Toggle visibility" VerticalTextAlignment="Center" />
                 <CheckBox x:Name="toggleVisibilityCheckbox"
                           IsChecked="True" />
-                <Button Command="{Binding FlipBadgeCommand}"
-                        Text="FlipBadge" />
             </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Button Command="{Binding FlipBadgeCommand}"
+                            Text="FlipBadge" />
+                    <Button Command="{Binding IncreaseCounterCommand}"
+                            Text="IncreaseCounter" />
+                    <Button Command="{Binding ChangeBadgeColorCommand}"
+                            Text="FlipBadgeColor" /></StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label Text="Should close on tapped overlay" VerticalTextAlignment="Center"/>
                 <CheckBox x:Name="shouldCloseOnTappedOverlayCheckbox"
