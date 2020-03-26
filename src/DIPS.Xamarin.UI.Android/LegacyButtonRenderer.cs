@@ -20,7 +20,8 @@ using Button = Xamarin.Forms.Button;
 namespace DIPS.Xamarin.UI.Android
 {
 
-    /// Remove when this closes :https://github.com/xamarin/Xamarin.Forms/issues/10067
+    /// TODO: Remove when this closes :https://github.com/xamarin/Xamarin.Forms/issues/10067
+    /// This custom renderer uses a legacy renderer by inheriting from a <code>Xamarin.Forms.Platform.Android.ButtonRenderer</code>. A default button would use <code>Xamarin.Forms.Platform.Android.FastRenderers.ButtonRenderer</code>. A fast renderer would cause the above issue. 
     public class LegacyButtonRenderer : global::Xamarin.Forms.Platform.Android.ButtonRenderer
     {
         /// <summary>

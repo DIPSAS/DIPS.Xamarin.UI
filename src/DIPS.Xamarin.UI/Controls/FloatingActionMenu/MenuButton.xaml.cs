@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Input;
-using DIPS.Xamarin.UI.Internal.Xaml;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -110,30 +109,60 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             typeof(MenuButton));
 
         /// <summary>
-        ///     <see cref="AttachBadge"/>
+        ///     <see cref="IsBadgeVisible" />
         /// </summary>
-        public static readonly BindableProperty AttachBadgeProperty = BindableProperty.Create(
-            nameof(AttachBadge),
+        public static readonly BindableProperty IsBadgeVisibleProperty = BindableProperty.Create(
+            nameof(IsBadgeVisible),
             typeof(bool),
-            typeof(MenuButton));
+            typeof(MenuButton),
+            propertyChanged: IsBadgeVisiblePropertyChanged);
 
+        private static async void IsBadgeVisiblePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation) return;
+            
+            if (bindable is MenuButton menuButton)
+            {
+                if ((bool) newvalue)
+                {
+                    menuButton.BadgeFrame.FadeTo(menuButton.FloatingActionMenuParent.m_behaviour.IsOpen ? .9 : .5, 100);
+
+                    await menuButton.BadgeFrame.TranslateTo(0, -20, 200, Easing.CubicIn);
+                    menuButton.BadgeFrame.TranslateTo(0, 0, 200, Easing.BounceOut);
+
+                }
+            }
+        }
 
         /// <summary>
-        ///     <see cref="BadgeCounter"/>
+        ///     <see cref="BadgeCount" />
         /// </summary>
-        public static readonly BindableProperty BadgeCounterProperty = BindableProperty.Create(
-            nameof(BadgeCounter),
-            typeof(int),
-            typeof(MenuButton));
+        public static readonly BindableProperty BadgeCountProperty = BindableProperty.Create(nameof(BadgeCount), typeof(int), typeof(MenuButton), propertyChanged: BadgeCountPropertyChanged);
 
+        private static async void BadgeCountPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation) return;
+
+            if (bindable is MenuButton menuButton)
+            {
+                await menuButton.BadgeFrame.TranslateTo(0, -5, 150, Easing.CubicIn);
+                menuButton.BadgeFrame.TranslateTo(0, 0, 150, Easing.CubicInOut);
+            }
+        }
 
         /// <summary>
-        ///     <see cref="BadgeColor"/>
+        ///     <see cref="BadgeColor" />
         /// </summary>
-        public static readonly BindableProperty BadgeColorProperty = BindableProperty.Create(
-            nameof(BadgeColor),
+        public static readonly BindableProperty BadgeColorProperty = BindableProperty.Create(nameof(BadgeColor), typeof(Color), typeof(MenuButton));
+
+        /// <summary>
+        ///     <see cref="BadgeTextColor"/>s
+        /// </summary>
+        public static readonly BindableProperty BadgeTextColorProperty = BindableProperty.Create(
+            nameof(BadgeTextColor),
             typeof(Color),
-            typeof(MenuButton));
+            typeof(MenuButton),
+            Color.Black);
 
         /// <summary>
         ///     Buttons that can be placed in a <see cref="FloatingActionMenuBehaviour" />.
@@ -141,6 +170,16 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         public MenuButton()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        ///     Color of the text in the badge.
+        ///     This is a bindable property.
+        /// </summary>
+        public Color BadgeTextColor
+        {
+            get => (Color)GetValue(BadgeTextColorProperty);
+            set => SetValue(BadgeTextColorProperty, value);
         }
 
         /// <summary>
@@ -157,20 +196,20 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         ///     Contents of badge.
         ///     This is a bindable porperty.
         /// </summary>
-        public int BadgeCounter
+        public int BadgeCount
         {
-            get => (int)GetValue(BadgeCounterProperty);
-            set => SetValue(BadgeCounterProperty, value);
+            get => (int)GetValue(BadgeCountProperty);
+            set => SetValue(BadgeCountProperty, value);
         }
 
         /// <summary>
         ///     Toggles badge on button.
         ///     This is a bindable porperty.
         /// </summary>
-        public bool AttachBadge
+        public bool IsBadgeVisible
         {
-            get => (bool)GetValue(AttachBadgeProperty);
-            set => SetValue(AttachBadgeProperty, value);
+            get => (bool)GetValue(IsBadgeVisibleProperty);
+            set => SetValue(IsBadgeVisibleProperty, value);
         }
 
         /// <summary>
@@ -192,7 +231,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             get => (double)GetValue(FontSizeProperty);
             set => SetValue(FontSizeProperty, value);
         }
-        
+
         /// <summary>
         ///     The font size of the title.
         ///     This is a bindable property.

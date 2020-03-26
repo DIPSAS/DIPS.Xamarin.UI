@@ -10,11 +10,30 @@
              x:Name="CodeBehind"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu.FloatingActionMenuPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="CornerRadius"
+                        Value="10" />
+                <Setter Property="BackgroundColor"
+                        Value="CadetBlue" />
+                <Setter Property="TextColor"
+                        Value="White" />
+                <Setter Property="FontSize"
+                        Value="12" />
+                <Setter Property="HorizontalOptions"
+                        Value="Start" />
+                <Setter Property="FontAttributes"
+                        Value="Italic" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.BindingContext>
         <FloatingActionMenu:FloatingActionMenuPageViewmodel />
     </ContentPage.BindingContext>
     <dxui:ModalityLayout x:Name="modalityLayout"
-                         BackgroundColor="AntiqueWhite">
+                         BackgroundColor="WhiteSmoke">
         <dxui:ModalityLayout.Behaviors>
             <dxui:FloatingActionMenuBehaviour Size="60"
                                               ExpandButtonBackgroundColor="CadetBlue"
@@ -40,9 +59,9 @@
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="A"
                                  TextColor="White"
-                                 AttachBadge="{Binding AttachBadge}"
+                                 IsBadgeVisible="{Binding ShowBadge}"
                                  BadgeColor="{Binding BadgeColor}"
-                                 BadgeCounter="{Binding BadgeCounter}"
+                                 BadgeCount="{Binding BadgeCounter}"
                                  Title="Third page"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Third tapped!" />
@@ -54,28 +73,51 @@
                                  CommandParameter="Fourth tapped!" />
             </dxui:FloatingActionMenuBehaviour>
         </dxui:ModalityLayout.Behaviors>
-        <StackLayout>
+        <StackLayout Spacing="15"
+                     Padding="15">
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Should close on tapped overlay"
+                       VerticalTextAlignment="Center" />
+                <CheckBox x:Name="shouldCloseOnTappedOverlayCheckbox"
+                          IsChecked="True" />
+            </StackLayout>
+            <StackLayout Spacing="15">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Toggle visibility"
+                           VerticalTextAlignment="Center" />
+                    <CheckBox x:Name="toggleVisibilityCheckbox"
+                              IsChecked="True" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Toggle badge"
+                           VerticalTextAlignment="Center" />
+                    <CheckBox IsChecked="{Binding ShowBadge}" />
+                </StackLayout>
+                
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Enable badge animations"
+                           VerticalTextAlignment="Center" />
+                    <CheckBox CheckedChanged="CheckBox_OnCheckedChanged" />
+                </StackLayout>
+            </StackLayout>
+
+
+            <StackLayout Orientation="Horizontal"
+                         Spacing="15"
+                         Padding="0, 10, 0,0">
+                <Button Command="{Binding IncreaseCounterCommand}"
+                        Text="Increase badge counter" />
+                <Button Command="{Binding ChangeBadgeColorCommand}"
+                        Text="Change badge color" />
+            </StackLayout>
+
+
             <Label x:Name="TextLabel"
                    Text="{Binding Text}"
                    FontSize="20"
                    Margin="10" />
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Toggle visibility" VerticalTextAlignment="Center" />
-                <CheckBox x:Name="toggleVisibilityCheckbox"
-                          IsChecked="True" />
-            </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Button Command="{Binding FlipBadgeCommand}"
-                            Text="FlipBadge" />
-                    <Button Command="{Binding IncreaseCounterCommand}"
-                            Text="IncreaseCounter" />
-                    <Button Command="{Binding ChangeBadgeColorCommand}"
-                            Text="FlipBadgeColor" /></StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Should close on tapped overlay" VerticalTextAlignment="Center"/>
-                <CheckBox x:Name="shouldCloseOnTappedOverlayCheckbox"
-                          IsChecked="True" />
-            </StackLayout>
         </StackLayout>
     </dxui:ModalityLayout>
 </ContentPage>

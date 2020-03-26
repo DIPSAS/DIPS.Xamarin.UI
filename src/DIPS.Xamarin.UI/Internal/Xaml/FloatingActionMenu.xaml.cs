@@ -120,8 +120,10 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
                 Constraint.RelativeToParent(p => (p.Width * m_behaviour.XPosition) - ExpandButton.WidthRequest),
                 Constraint.RelativeToParent(p => (p.Height * m_behaviour.YPosition) - ExpandButton.HeightRequest));
 
-            foreach (var child in Children)
+
+            for (var index = Children.Count - 1; index >= 0; index--)
             {
+                var child = Children[index];
                 child.FloatingActionMenuParent = this;
                 child.Button.WidthRequest = m_behaviour.Size;
                 child.Button.HeightRequest = m_behaviour.Size;

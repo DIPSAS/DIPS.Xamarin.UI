@@ -16,5 +16,30 @@ namespace DIPS.Xamarin.UI
         /// </summary>
         [ExcludeFromCodeCoverage]
         public static void Initialize(){}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static class PreviewFeatures
+        {
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="previewFeature"></param>
+            public static void EnableFeature(string previewFeature)
+            {
+                if (previewFeature == MenuButtonBadgeAnimationString) MenuButtonBadgeAnimation = true;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public static bool MenuButtonBadgeAnimation { get; set; }
+            
+            
+            internal static readonly string MenuButtonBadgeAnimationString = "MenuButtonBadgeAnimation";
+        }
+
     }
 }

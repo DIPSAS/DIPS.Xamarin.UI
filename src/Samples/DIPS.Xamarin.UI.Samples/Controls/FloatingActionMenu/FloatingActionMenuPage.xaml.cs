@@ -19,24 +19,29 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
         {
             InitializeComponent();
         }
+
+        private void CheckBox_OnCheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            Library.PreviewFeatures.MenuButtonBadgeAnimation = e.Value;
+        }
     }
 
     public class FloatingActionMenuPageViewmodel : INotifyPropertyChanged
     {
         private string m_text;
-        private bool m_attachBadge;
+        private bool m_showBadge;
         private int m_badgeCounter;
         private Color m_badgeColor;
 
         public FloatingActionMenuPageViewmodel()
         {
             SetTextCommand = new Command<string>((text) => Text = text);
-            FlipBadgeCommand = new Command(() => AttachBadge = !AttachBadge);
+            FlipBadgeCommand = new Command(() => ShowBadge = !ShowBadge);
             IncreaseCounterCommand = new Command(() => BadgeCounter++);
             ChangeBadgeColorCommand = new Command(() =>
             {
-                if ( BadgeColor != Color.Aqua )BadgeColor = Color.Aqua;
-                else BadgeColor = Color.Red;
+                if ( BadgeColor != Color.BlueViolet) BadgeColor = Color.BlueViolet;
+                else BadgeColor = Color.IndianRed;
             });
         }
 
@@ -58,10 +63,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
             set => PropertyChanged.RaiseWhenSet(ref m_badgeCounter, value);
         }
 
-        public bool AttachBadge
+        public bool ShowBadge
         {
-            get => m_attachBadge;
-            set => PropertyChanged.RaiseWhenSet(ref m_attachBadge, value);
+            get => m_showBadge;
+            set => PropertyChanged.RaiseWhenSet(ref m_showBadge, value);
         }
 
         public string Text
