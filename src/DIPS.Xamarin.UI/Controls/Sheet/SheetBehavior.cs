@@ -119,6 +119,21 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
+        /// <see cref="ShouldRememberPosition"/>
+        /// </summary>
+        public static readonly BindableProperty ShouldRememberPositionProperty = BindableProperty.Create(nameof(ShouldRememberPosition), typeof(bool), typeof(SheetBehavior), false);
+
+        /// <summary>
+        /// Determines if the sheet should remember its position when it is opened and closed.
+        /// This is a bindable property.
+        /// </summary>
+        public bool ShouldRememberPosition
+        {
+            get => (bool)GetValue(ShouldRememberPositionProperty);
+            set => SetValue(ShouldRememberPositionProperty, value);
+        }
+
+        /// <summary>
         /// Event that gets raised when the sheet has changed it's position.
         /// </summary>
         public event EventHandler<PositionEventArgs>? OnPositionChanged;
@@ -482,6 +497,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public static readonly BindableProperty CloseOnOverlayTappedProperty = BindableProperty.Create(nameof(CloseOnOverlayTapped), typeof(bool), typeof(SheetBehavior), true);
 
+        private double m_originalPosition = -1;
+
         /// <summary>
         /// <inheritdoc />
         /// </summary>
@@ -549,6 +566,18 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_modalityLayout == null)
             {
                 return;
+            }
+
+            if (!ShouldRememberPosition)
+            {
+                if (m_originalPosition == -1)
+                {
+                    m_originalPosition = Position;
+                }
+                else
+                {
+                    Position = m_originalPosition;
+                }
             }
 
             if (IsOpen)

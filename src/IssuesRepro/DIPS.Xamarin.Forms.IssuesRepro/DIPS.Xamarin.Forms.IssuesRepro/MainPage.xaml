@@ -30,7 +30,10 @@
                 CommandParameter="137" />
         <Button Text="Github issue 142"
                 Command="{Binding NavigationCommand}"
-                CommandParameter="142" />
+                CommandParameter="142" />  
+        <Button Text="Github issue 150"
+                Command="{Binding NavigationCommand}"
+                CommandParameter="150" />
     </StackLayout>
 
 </ContentPage>
