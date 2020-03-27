@@ -125,10 +125,14 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             {
                 if ((bool) newvalue)
                 {
-                    menuButton.BadgeFrame.FadeTo(menuButton.FloatingActionMenuParent.m_behaviour.IsOpen ? .9 : .5, 100);
 
-                    await menuButton.BadgeFrame.TranslateTo(0, -20, 200, Easing.CubicIn);
-                    menuButton.BadgeFrame.TranslateTo(0, 0, 200, Easing.BounceOut);
+                    if (menuButton.FloatingActionMenuParent != null )
+                    {
+                        menuButton.BadgeFrame?.FadeTo(menuButton.FloatingActionMenuParent.m_behaviour.IsOpen ? .9 : .5, 100);
+
+                        await menuButton.BadgeFrame?.TranslateTo(0, -20, 200, Easing.CubicIn);
+                        menuButton.BadgeFrame?.TranslateTo(0, 0, 200, Easing.BounceOut);
+                    }
 
                 }
             }
@@ -141,7 +145,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
 
         private static object CoerceValue(BindableObject bindable, object value)
         {
-            if (bindable is MenuButton menuButton)
+            if (bindable is MenuButton menuButton && menuButton.BadgeFrame != null)
             {
                 if (value is string count && int.TryParse(count, out var newCount))
                 {
@@ -165,8 +169,8 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             if (!(bindable is MenuButton menuButton)) return;
 
             if (!Library.PreviewFeatures.MenuButtonBadgeAnimation) return;
-            await menuButton.BadgeFrame.TranslateTo(0, -5, 150, Easing.CubicIn);
-            menuButton.BadgeFrame.TranslateTo(0, 0, 150, Easing.CubicInOut);
+            await menuButton.BadgeFrame?.TranslateTo(0, -5, 150, Easing.CubicIn);
+            menuButton.BadgeFrame?.TranslateTo(0, 0, 150, Easing.CubicInOut);
         }
 
         /// <summary>
