@@ -157,9 +157,9 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                         return "99+";
                     }
                 }
-                menuButton.BadgeFrame.HeightRequest = 22;
-                menuButton.BadgeFrame.WidthRequest = 22;
-                menuButton.BadgeFrame.CornerRadius = 11;
+                menuButton.BadgeFrame.HeightRequest = 20;
+                menuButton.BadgeFrame.WidthRequest = 20;
+                menuButton.BadgeFrame.CornerRadius = 10;
             }
             return value;
         }
