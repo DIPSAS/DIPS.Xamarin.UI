@@ -67,7 +67,6 @@
                HeightRequest="20"
                WidthRequest="20"
                CornerRadius="10"
-               Margin="0,0,0,0"
                InputTransparent="True"
                Padding="0"
                VerticalOptions="Start"
