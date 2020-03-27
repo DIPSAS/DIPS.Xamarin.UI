@@ -70,7 +70,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
                 menuButton.TranslateTo(0, m_isExpanded ? 0 : -m_yTranslate * multiplier, 250, Easing.CubicInOut);
                 menuButton.Button.FadeTo(m_isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
                 menuButton.TitleFrame.FadeTo(m_isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
-                menuButton.BadgeFrame.FadeTo(m_isExpanded ? .5 : .9, 250, Easing.CubicInOut);
+                menuButton.BadgeFrame.FadeTo(m_isExpanded ? .5 : .95, 250, Easing.CubicInOut);
 
                 multiplier += 1;
             }

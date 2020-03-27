@@ -127,8 +127,8 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                 {
 
                     if (menuButton.FloatingActionMenuParent != null )
-                    {
-                        menuButton.BadgeFrame?.FadeTo(menuButton.FloatingActionMenuParent.m_behaviour.IsOpen ? .9 : .5, 100);
+                    {   
+                        menuButton.BadgeFrame?.FadeTo(menuButton.FloatingActionMenuParent.m_behaviour.IsOpen ? .95 : .5, 100);
 
                         await menuButton.BadgeFrame?.TranslateTo(0, -20, 200, Easing.CubicIn);
                         menuButton.BadgeFrame?.TranslateTo(0, 0, 200, Easing.BounceOut);
