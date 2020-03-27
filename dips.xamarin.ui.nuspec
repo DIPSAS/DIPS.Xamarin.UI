@@ -11,6 +11,8 @@
     <license type="expression">MIT</license>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <copyright>© DIPS AS. All rights reserved.</copyright>
+    <projectUrl>https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki</projectUrl>
+    <repository type="git" url="https://github.com/DIPSAS/DIPS.Xamarin.UI"/>
     <description>A shared UI library that DIPS uses and maintains for their mobile applications.</description>
     <dependencies>
         <group targetFramework="netstandard2.0">
