@@ -322,7 +322,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public object OnBeforeOpenCommandParameter
         {
-            get => (object)GetValue(OnBeforeOpenCommandParameterProperty);
+            get => GetValue(OnBeforeOpenCommandParameterProperty);
             set => SetValue(OnBeforeOpenCommandParameterProperty, value);
         }
 
@@ -372,7 +372,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public object OnBeforeCloseCommandParameter
         {
-            get => (object)GetValue(OnBeforeCloseCommandParameterProperty);
+            get => GetValue(OnBeforeCloseCommandParameterProperty);
             set => SetValue(OnBeforeCloseCommandParameterProperty, value);
         }
 
@@ -478,7 +478,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y, 250);
+            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
             await Task.Delay(250);
             await translationTask;
         }
@@ -570,7 +570,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (!ShouldRememberPosition)
             {
-                if (m_originalPosition == -1)
+                if (Math.Abs(m_originalPosition - (-1)) < 0.0000001)
                 {
                     m_originalPosition = Position;
                 }
@@ -658,7 +658,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 {
                     Position = MinPosition;
                 }
-                else //Auto close
+                else if(!m_fromIsOpenContext) //Auto close
                 {
                     IsOpen = false;
                 }
@@ -680,7 +680,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_fromIsOpenContext || !m_fromIsDraggingContext)
             {
 
-                var translationTask =  m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 250);
+                var translationTask =  m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
 
                 await Task.Delay(250);
                 await translationTask;
