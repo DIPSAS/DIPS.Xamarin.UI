@@ -19,7 +19,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
 
         private void SheetBehavior_OnOnPositionChanged(object sender, EventArgs e)
         {
-            
+            if (!(sender is SheetBehavior sheetBehavior)) return;
+            sheetBehavior.Position = 0.9;
         }
     }
 
@@ -36,6 +37,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private double m_maxPosition = 1;
         private double m_minPosition = 0.05;
         private string m_stateText;
+        private bool m_shouldRememberPosition;
 
         public SheetPageViewModel()
         {
@@ -154,6 +156,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             get => m_stateText;
             set => PropertyChanged.RaiseWhenSet(ref m_stateText, value);
+        }
+
+        public bool ShouldRememberPosition
+        {
+            get => m_shouldRememberPosition;
+            set => PropertyChanged.RaiseWhenSet(ref m_shouldRememberPosition, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

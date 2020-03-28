@@ -16,8 +16,8 @@
     </ContentPage.BindingContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <dxui:ModalityLayout>
             <dxui:ModalityLayout.Behaviors>
@@ -37,7 +37,7 @@
                                     MaxPosition="{Binding MaxPosition}"
                                     BindingContextFactory="{Binding SheetViewModelFactory}"
                                     CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
-                                    OnPositionChanged="SheetBehavior_OnOnPositionChanged">
+                                    ShouldRememberPosition="{Binding ShouldRememberPosition}">
                     <StackLayout>
                         <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
                         <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
@@ -142,26 +142,35 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
-                           Grid.Row="0"
+                           Text="Remember position when open / close" 
+                           VerticalTextAlignment="Center"/>
+                    <CheckBox Grid.Column="1"
+                              Grid.Row="0"
+                              IsChecked="{Binding ShouldRememberPosition}" />
+                    <Label Grid.Column="0"
+                           Grid.Row="1"
                            Text="Position"
                            VerticalTextAlignment="Center" />
-                    <Slider Grid.Column="1"
-                            Grid.Row="0"
+                    <Label Grid.Column="1"
+                           Grid.Row="1"
+                           Text="{Binding Position}" />
+                    <Slider Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            IsVisible="{Binding ShouldRememberPosition}"
+                            Grid.Row="2"
                             Maximum="1"
                             Minimum="0"
                             MaximumTrackColor="Tomato"
                             MinimumTrackColor="Tomato"
                             Value="{Binding Position}" />
-                    <Label Grid.Column="0"
-                           Grid.ColumnSpan="2"
-                           Grid.Row="1"
-                           Text="{Binding Position}" />
                 </Grid>
 
                 <Grid>
@@ -217,8 +226,9 @@
                 </Grid>
 
                 <StackLayout>
-                    <Label Text="Should close on overlay tapped"/>
-                    <CheckBox x:Name="ShouldCloseOnOverlayTappedCheckbox" IsChecked="True"></CheckBox>
+                    <Label Text="Should close on overlay tapped" />
+                    <CheckBox x:Name="ShouldCloseOnOverlayTappedCheckbox"
+                              IsChecked="True" />
                 </StackLayout>
                 <Label Text="{Binding StateText, StringFormat='State: {0}'}"
                        IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}" />
