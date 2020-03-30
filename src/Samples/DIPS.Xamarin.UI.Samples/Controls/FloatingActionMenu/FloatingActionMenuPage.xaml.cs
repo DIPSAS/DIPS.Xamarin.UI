@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DIPS.Xamarin.UI.Controls.FloatingActionMenu;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,6 +24,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
         private void CheckBox_OnCheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             Library.PreviewFeatures.MenuButtonBadgeAnimation = e.Value;
+        }
+
+        private void FloatingActionMenuBehaviour_OnOnBeforeAnimation(object sender, FloatingMenuEvents e)
+        {
+            FirstButton.IsEnabled = !e.IsOpening;
         }
     }
 

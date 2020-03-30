@@ -35,6 +35,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             InitializeComponent();
         }
 
+        internal event EventHandler<FloatingMenuEvents> OnBeforeAnimation;
+
         private new List<MenuButton> Children { get; set; }
 
         internal void ShowMenu(bool shouldShow)
@@ -53,6 +55,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         private async Task AnimateAll()
         {
             m_animationComplete = false;
+
+            OnBeforeAnimation?.Invoke(this, new FloatingMenuEvents(){IsOpening = !m_isExpanded});
 
             if (!m_isExpanded)
             {

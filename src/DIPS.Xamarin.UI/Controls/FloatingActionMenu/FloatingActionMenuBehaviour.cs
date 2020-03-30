@@ -108,6 +108,11 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         private ModalityLayout? m_modalityLayout;
 
         /// <summary>
+        ///     Called right before animation starts.
+        /// </summary>
+        public event EventHandler<FloatingMenuEvents> OnBeforeAnimation;
+
+        /// <summary>
         ///     Add this behaviour to add a floating action menu.
         /// </summary>
         public FloatingActionMenuBehaviour()
@@ -234,8 +239,14 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             base.OnAttachedTo(modalityLayout);
             m_modalityLayout = modalityLayout;
             m_floatingActionMenu = new Internal.Xaml.FloatingActionMenu(this);
+            m_floatingActionMenu.OnBeforeAnimation += FloatingActionMenuOnOnBeforeAnimation;
             m_modalityLayout.SizeChanged += OnModalityLayoutSizeChanged;
             m_modalityLayout.BindingContextChanged += OnModalityBindingContextChanged;
+        }
+
+        private void FloatingActionMenuOnOnBeforeAnimation(object sender, FloatingMenuEvents e)
+        {
+            OnBeforeAnimation?.Invoke(this, e);
         }
 
         private void OnModalityBindingContextChanged(object sender, EventArgs e)
@@ -260,8 +271,14 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             if (m_modalityLayout == null) return;
 
             base.OnDetachingFrom(m_modalityLayout);
+            if (m_floatingActionMenu != null) m_floatingActionMenu.OnBeforeAnimation -= FloatingActionMenuOnOnBeforeAnimation;
             m_modalityLayout.SizeChanged -= OnModalityLayoutSizeChanged;
             m_modalityLayout.BindingContextChanged -= OnModalityBindingContextChanged;
         }
+    }
+
+    public class FloatingMenuEvents : EventArgs
+    {
+        public bool IsOpening { get; set; }
     }
 }

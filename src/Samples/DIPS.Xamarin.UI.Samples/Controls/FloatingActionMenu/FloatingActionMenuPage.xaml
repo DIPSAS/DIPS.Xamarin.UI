@@ -42,10 +42,12 @@
                                               ExpandButtonTextColor="Azure"
                                               XPosition=".9"
                                               YPosition=".95"
+                                              OnBeforeAnimation="FloatingActionMenuBehaviour_OnOnBeforeAnimation"
                                               CloseOnOverlayTapped="{Binding Source={x:Reference shouldCloseOnTappedOverlayCheckbox}, Path=IsChecked}"
                                               IsVisible="{Binding Source={x:Reference toggleVisibilityCheckbox}, Path=IsChecked}">
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="Home"
+                                 x:Name="FirstButton"
                                  TextColor="White"
                                  Command="{Binding SetTextCommand}"
                                  Title="First page"
