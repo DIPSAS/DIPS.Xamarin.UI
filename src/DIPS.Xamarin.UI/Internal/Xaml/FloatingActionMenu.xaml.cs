@@ -38,22 +38,22 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         /// <summary>
         ///     Raise before opening animation starts.
         /// </summary>
-        internal event EventHandler BeforeOpen;
+        internal event EventHandler OnBeforeOpen;
 
         /// <summary>
         ///     Raised after opening animation completes.
         /// </summary>
-        internal event EventHandler AfterOpen;
+        internal event EventHandler OnAfterOpen;
 
         /// <summary>
         ///     Raised before closing animation starts.
         /// </summary>
-        internal event EventHandler BeforeClose;
+        internal event EventHandler OnBeforeClose;
 
         /// <summary>
         ///     Raised after closing animation completes.
         /// </summary>
-        internal event EventHandler AfterClose;
+        internal event EventHandler OnAfterClose;
 
         private new List<MenuButton> Children { get; set; }
 
@@ -76,13 +76,13 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
             if (m_isExpanded)
             {
-                BeforeClose?.Invoke(null, EventArgs.Empty);
-                m_behaviour.BeforeCloseCommand?.Execute(m_behaviour.BeforeCloseCommandParameter);
+                OnBeforeClose?.Invoke(null, EventArgs.Empty);
+                m_behaviour.OnBeforeCloseCommand?.Execute(m_behaviour.OnBeforeCloseCommandParameter);
             }
             else
             {
-                BeforeOpen?.Invoke(null, EventArgs.Empty);
-                m_behaviour.BeforeOpenCommand?.Execute(m_behaviour.BeforeOpenCommandParameter);
+                OnBeforeOpen?.Invoke(null, EventArgs.Empty);
+                m_behaviour.OnBeforeOpenCommand?.Execute(m_behaviour.OnBeforeOpenCommandParameter);
             }
 
             if (!m_isExpanded)
@@ -121,13 +121,13 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
             if (m_isExpanded)
             {
-                AfterClose?.Invoke(null, EventArgs.Empty);
-                m_behaviour.AfterCloseCommand?.Execute(m_behaviour.AfterCloseCommandParameter);
+                OnAfterClose?.Invoke(null, EventArgs.Empty);
+                m_behaviour.OnAfterCloseCommand?.Execute(m_behaviour.OnAfterCloseCommandParameter);
             }
             else
             {
-                AfterOpen?.Invoke(null, EventArgs.Empty);
-                m_behaviour.AfterOpenCommand?.Execute(m_behaviour.AfterOpenCommandParameter);
+                OnAfterOpen?.Invoke(null, EventArgs.Empty);
+                m_behaviour.OnAfterOpenCommand?.Execute(m_behaviour.OnAfterOpenCommandParameter);
             }
 
             m_isExpanded = !m_isExpanded;
