@@ -34,8 +34,26 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             Children = new List<MenuButton>();
             InitializeComponent();
         }
+        
+        /// <summary>
+        ///     Raise before opening animation starts.
+        /// </summary>
+        internal event EventHandler BeforeOpen;
 
-        internal event EventHandler<FloatingMenuEvents> OnBeforeAnimation;
+        /// <summary>
+        ///     Raised after opening animation completes.
+        /// </summary>
+        internal event EventHandler AfterOpen;
+
+        /// <summary>
+        ///     Raised before closing animation starts.
+        /// </summary>
+        internal event EventHandler BeforeClose;
+
+        /// <summary>
+        ///     Raised after closing animation completes.
+        /// </summary>
+        internal event EventHandler AfterClose;
 
         private new List<MenuButton> Children { get; set; }
 
@@ -56,7 +74,16 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             m_animationComplete = false;
 
-            OnBeforeAnimation?.Invoke(this, new FloatingMenuEvents(){IsOpening = !m_isExpanded});
+            if (m_isExpanded)
+            {
+                BeforeClose?.Invoke(null, EventArgs.Empty);
+                m_behaviour.BeforeCloseCommand?.Execute(m_behaviour.BeforeCloseCommandParameter);
+            }
+            else
+            {
+                BeforeOpen?.Invoke(null, EventArgs.Empty);
+                m_behaviour.BeforeOpenCommand?.Execute(m_behaviour.BeforeOpenCommandParameter);
+            }
 
             if (!m_isExpanded)
             {
@@ -87,7 +114,22 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             {
                 ExpandButton.FadeTo(1, 250, Easing.CubicInOut);
             }
-            await ExpandButton.RelRotateTo(180, 250, Easing.CubicInOut);
+
+            var rotateTask = ExpandButton.RelRotateTo(180, 250, Easing.CubicInOut);
+            await Task.Delay(250);
+            await rotateTask;
+
+            if (m_isExpanded)
+            {
+                AfterClose?.Invoke(null, EventArgs.Empty);
+                m_behaviour.AfterCloseCommand?.Execute(m_behaviour.AfterCloseCommandParameter);
+            }
+            else
+            {
+                AfterOpen?.Invoke(null, EventArgs.Empty);
+                m_behaviour.AfterOpenCommand?.Execute(m_behaviour.AfterOpenCommandParameter);
+            }
+
             m_isExpanded = !m_isExpanded;
             Children.ForEach(mb => mb.InputTransparent = !m_isExpanded);
             m_animationComplete = true;
