@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DIPS.Xamarin.UI.Controls.FloatingActionMenu;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -24,6 +25,27 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
         {
             Library.PreviewFeatures.MenuButtonBadgeAnimation = e.Value;
         }
+
+        private void FloatingActionMenuBehaviour_OnAfterClose(object sender, EventArgs e)
+        {
+            if (BindingContext is FloatingActionMenuPageViewmodel floatingActionMenuPageViewmodel) floatingActionMenuPageViewmodel.CurrentEvent = "AfterClose";
+        }
+
+        private void FloatingActionMenuBehaviour_OnAfterOpen(object sender, EventArgs e)
+        {
+            if (BindingContext is FloatingActionMenuPageViewmodel floatingActionMenuPageViewmodel) floatingActionMenuPageViewmodel.CurrentEvent = "AfterOpen";
+        }
+
+        private void FloatingActionMenuBehaviour_OnBeforeOpen(object sender, EventArgs e)
+        {
+            if (BindingContext is FloatingActionMenuPageViewmodel floatingActionMenuPageViewmodel) floatingActionMenuPageViewmodel.CurrentEvent = "BeforeOpen";
+        }
+
+        private void FloatingActionMenuBehaviour_OnBeforeClose(object sender, EventArgs e)
+        {
+            if (BindingContext is FloatingActionMenuPageViewmodel floatingActionMenuPageViewmodel) floatingActionMenuPageViewmodel.CurrentEvent = "BeforeClose";
+
+        }
     }
 
     public class FloatingActionMenuPageViewmodel : INotifyPropertyChanged
@@ -32,6 +54,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
         private bool m_showBadge;
         private int m_badgeCounter;
         private Color m_badgeColor;
+        private string m_currentEvent;
 
         public FloatingActionMenuPageViewmodel()
         {
@@ -44,6 +67,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
                 if ( BadgeColor != Color.BlueViolet) BadgeColor = Color.BlueViolet;
                 else BadgeColor = Color.IndianRed;
             });
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -76,5 +100,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
             get => m_text;
             set => PropertyChanged.RaiseWhenSet(ref m_text, value);
         }
+
+        public string CurrentEvent
+        {
+            get => m_currentEvent;
+            set => PropertyChanged.RaiseWhenSet(ref m_currentEvent, value);
+        }
+
     }
 }

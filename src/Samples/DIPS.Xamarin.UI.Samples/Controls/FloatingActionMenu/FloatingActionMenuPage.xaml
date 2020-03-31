@@ -40,12 +40,17 @@
                                               ExpandButtonText="Open"
                                               ExpandButtonFontSize="12"
                                               ExpandButtonTextColor="Azure"
+                                              OnAfterClose="FloatingActionMenuBehaviour_OnAfterClose"
+                                              OnAfterOpen="FloatingActionMenuBehaviour_OnAfterOpen"
+                                              OnBeforeOpen="FloatingActionMenuBehaviour_OnBeforeOpen"
+                                              OnBeforeClose="FloatingActionMenuBehaviour_OnBeforeClose"
                                               XPosition=".9"
                                               YPosition=".95"
                                               CloseOnOverlayTapped="{Binding Source={x:Reference shouldCloseOnTappedOverlayCheckbox}, Path=IsChecked}"
                                               IsVisible="{Binding Source={x:Reference toggleVisibilityCheckbox}, Path=IsChecked}">
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="Home"
+                                 x:Name="FirstButton"
                                  TextColor="White"
                                  Command="{Binding SetTextCommand}"
                                  Title="First page"
@@ -95,7 +100,7 @@
                            VerticalTextAlignment="Center" />
                     <CheckBox IsChecked="{Binding ShowBadge}" />
                 </StackLayout>
-                
+
                 <StackLayout Orientation="Horizontal">
                     <Label Text="Enable badge animations"
                            VerticalTextAlignment="Center" />
@@ -107,22 +112,22 @@
             <Grid Padding="0, 10, 0,0">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Button Command="{Binding IncreaseCounterCommand}"
-                        Text="Increase badge counter +" />  
+                        Text="Increase badge counter +" />
                 <Button Grid.Row="0"
                         Grid.Column="1"
                         Command="{Binding DecreaseCounterCommand}"
                         Text="Decrease badge counter -" />
                 <Button Grid.Row="1"
-                        Grid.Column="0" 
+                        Grid.Column="0"
                         Command="{Binding ChangeBadgeColorCommand}"
                         Text="Change badge color" />
             </Grid>
@@ -130,6 +135,11 @@
 
             <Label x:Name="TextLabel"
                    Text="{Binding Text}"
+                   FontSize="20"
+                   Margin="10" />
+
+            <Label x:Name="EventLabel"
+                   Text="{Binding CurrentEvent}"
                    FontSize="20"
                    Margin="10" />
         </StackLayout>
