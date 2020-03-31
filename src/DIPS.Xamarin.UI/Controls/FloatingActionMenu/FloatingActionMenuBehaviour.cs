@@ -109,7 +109,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         private ModalityLayout? m_modalityLayout;
 
         /// <summary>
-        ///     Raise before opening animation starts.
+        ///     Raised before opening animation starts.
         /// </summary>
         public event EventHandler OnBeforeOpen;
 
