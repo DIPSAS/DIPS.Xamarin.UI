@@ -26,6 +26,8 @@ namespace DIPS.Xamarin.Forms.IssuesRepro
                 Application.Current.MainPage.Navigation.PushAsync(new NewIssue.Github137());
             if (obj.Equals("142"))
                 Application.Current.MainPage.Navigation.PushAsync(new Github142.Github142());
+            if (obj.Equals("150"))
+                Application.Current.MainPage.Navigation.PushAsync(new Github150.Github150());
         }
     }
 }

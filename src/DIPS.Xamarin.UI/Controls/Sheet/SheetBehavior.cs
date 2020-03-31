@@ -119,6 +119,21 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
+        /// <see cref="ShouldRememberPosition"/>
+        /// </summary>
+        public static readonly BindableProperty ShouldRememberPositionProperty = BindableProperty.Create(nameof(ShouldRememberPosition), typeof(bool), typeof(SheetBehavior), false);
+
+        /// <summary>
+        /// Determines if the sheet should remember its position when it is opened and closed.
+        /// This is a bindable property.
+        /// </summary>
+        public bool ShouldRememberPosition
+        {
+            get => (bool)GetValue(ShouldRememberPositionProperty);
+            set => SetValue(ShouldRememberPositionProperty, value);
+        }
+
+        /// <summary>
         /// Event that gets raised when the sheet has changed it's position.
         /// </summary>
         public event EventHandler<PositionEventArgs>? OnPositionChanged;
@@ -307,7 +322,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public object OnBeforeOpenCommandParameter
         {
-            get => (object)GetValue(OnBeforeOpenCommandParameterProperty);
+            get => GetValue(OnBeforeOpenCommandParameterProperty);
             set => SetValue(OnBeforeOpenCommandParameterProperty, value);
         }
 
@@ -357,7 +372,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public object OnBeforeCloseCommandParameter
         {
-            get => (object)GetValue(OnBeforeCloseCommandParameterProperty);
+            get => GetValue(OnBeforeCloseCommandParameterProperty);
             set => SetValue(OnBeforeCloseCommandParameterProperty, value);
         }
 
@@ -463,7 +478,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y, 250);
+            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
             await Task.Delay(250);
             await translationTask;
         }
@@ -481,6 +496,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <see cref="CloseOnOverlayTapped"/>
         /// </summary>
         public static readonly BindableProperty CloseOnOverlayTappedProperty = BindableProperty.Create(nameof(CloseOnOverlayTapped), typeof(bool), typeof(SheetBehavior), true);
+
+        private double m_originalPosition = -1;
 
         /// <summary>
         /// <inheritdoc />
@@ -549,6 +566,18 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_modalityLayout == null)
             {
                 return;
+            }
+
+            if (!ShouldRememberPosition)
+            {
+                if (Math.Abs(m_originalPosition - (-1)) < 0.0000001)
+                {
+                    m_originalPosition = Position;
+                }
+                else
+                {
+                    Position = m_originalPosition;
+                }
             }
 
             if (IsOpen)
@@ -629,7 +658,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 {
                     Position = MinPosition;
                 }
-                else //Auto close
+                else if(!m_fromIsOpenContext) //Auto close
                 {
                     IsOpen = false;
                 }
@@ -651,7 +680,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_fromIsOpenContext || !m_fromIsDraggingContext)
             {
 
-                var translationTask =  m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, 250);
+                var translationTask =  m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
 
                 await Task.Delay(250);
                 await translationTask;
