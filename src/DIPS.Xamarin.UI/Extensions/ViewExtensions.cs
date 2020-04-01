@@ -19,7 +19,7 @@ namespace DIPS.Xamarin.UI.Extensions
         {
             if (Inspector.Instance == null)
             {
-                throw new Exception($"Library.Initialize needs to be called in the platform before inspecting. Please read the getting started: https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Getting-Started#initializing");
+                throw new Exception($"Library.Initialize needs to be called in the platform before inspecting. Please read the getting started: https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Inspector#getting-started");
             }
             Inspector.Instance.Inspect(view);
         }
