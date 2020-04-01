@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Util\Inspector.cs" />
     <Compile Include="LegacyButtonRenderer.cs" />
     <Compile Include="Library.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
