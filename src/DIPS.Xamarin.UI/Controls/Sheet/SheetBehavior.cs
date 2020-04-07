@@ -244,10 +244,27 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     Determines the color of the background of the sheet.
         ///     This is a bindable property.
         /// </summary>
+        [Obsolete("Please use HeaderColor and ContentColor to set the background colors of the sheet. This will be removed in future major versions greater than 3.0.0")]
         public Color BackgroundColor
         {
             get => (Color)GetValue(BackgroundColorProperty);
             set => SetValue(BackgroundColorProperty, value);
+        }
+
+        public static readonly BindableProperty HeaderColorProperty = BindableProperty.Create(nameof(HeaderColor), typeof(Color?), typeof(SheetBehavior), null);
+
+        public Color? HeaderColor
+        {
+            get => (Color?)GetValue(HeaderColorProperty);
+            set => SetValue(HeaderColorProperty, value);
+        }
+
+        public static readonly BindableProperty ContentColorProperty = BindableProperty.Create(nameof(ContentColor), typeof(Color?), typeof(SheetBehavior), null);
+
+        public Color? ContentColor
+        {
+            get => (Color?)GetValue(ContentColorProperty);
+            set => SetValue(ContentColorProperty, value);
         }
 
         /// <summary>

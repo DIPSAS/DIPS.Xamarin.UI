@@ -81,7 +81,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         internal void Initialize()
         {
             m_newY = 0;
-            //Flp the grid if alignment is set to top
+            //Flip the grid if alignment is set to top
             if (m_sheetBehaviour.Alignment == AlignmentOptions.Top)
             {
                 SheetGrid.RowDefinitions[0].Height = GridLength.Star;

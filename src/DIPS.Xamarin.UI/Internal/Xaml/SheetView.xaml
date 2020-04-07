@@ -9,6 +9,7 @@
              x:Class="DIPS.Xamarin.UI.Internal.xaml.SheetView"
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxui="http://dips.xamarin.ui.com"
              dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}"
              >
     <Frame x:Name="OuterSheetFrame"
@@ -16,6 +17,14 @@
            CornerRadius="8"
            Padding="0,5,0,5"
            BackgroundColor="{Binding BackgroundColor}">
+        <Frame.Triggers>
+            <DataTrigger TargetType="Frame" Binding="{Binding ContentColor, Converter={dxui:IsEmptyConverter}}" Value="True">
+                <Setter  Property="Frame.BackgroundColor" Value="{Binding BackgroundColor}"/>
+            </DataTrigger>
+            <DataTrigger TargetType="Frame" Binding="{Binding ContentColor, Converter={dxui:IsEmptyConverter}}" Value="False">
+                <Setter Property="Frame.BackgroundColor" Value="{Binding ContentColor}"/>
+            </DataTrigger>
+        </Frame.Triggers>
         <Frame.GestureRecognizers>
             <PanGestureRecognizer PanUpdated="OnDrag" />
         </Frame.GestureRecognizers>
@@ -23,6 +32,14 @@
         <!-- Alignement = Bottom -->
         <!-- Alignement = Top is set from Initialize() in code behind -->
         <Grid x:Name="SheetGrid">
+            <Grid.Triggers>
+                <DataTrigger TargetType="Frame" Binding="{Binding HeaderColor, Converter={dxui:IsEmptyConverter}}" Value="True">
+                    <Setter Property="Grid.BackgroundColor" Value="{Binding BackgroundColor}"/>
+                </DataTrigger>
+                <DataTrigger TargetType="Frame" Binding="{Binding HeaderColor, Converter={dxui:IsEmptyConverter}}" Value="False">
+                    <Setter Property="Grid.BackgroundColor" Value="{Binding HeaderColor}"/>
+                </DataTrigger>
+            </Grid.Triggers>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
