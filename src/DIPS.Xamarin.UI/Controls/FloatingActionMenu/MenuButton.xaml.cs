@@ -109,11 +109,130 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             typeof(MenuButton));
 
         /// <summary>
+        ///     <see cref="IsBadgeVisible" />
+        /// </summary>
+        public static readonly BindableProperty IsBadgeVisibleProperty = BindableProperty.Create(
+            nameof(IsBadgeVisible),
+            typeof(bool),
+            typeof(MenuButton),
+            propertyChanged: IsBadgeVisiblePropertyChanged);
+
+        private static async void IsBadgeVisiblePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation) return;
+            
+            if (bindable is MenuButton menuButton)
+            {
+                if ((bool) newvalue)
+                {
+
+                    if (menuButton.FloatingActionMenuParent != null )
+                    {   
+                        menuButton.BadgeFrame?.FadeTo(menuButton.FloatingActionMenuParent.m_behaviour.IsOpen ? .95 : .5, 100);
+
+                        await menuButton.BadgeFrame?.TranslateTo(0, -20, 200, Easing.CubicIn);
+                        menuButton.BadgeFrame?.TranslateTo(0, 0, 200, Easing.BounceOut);
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>
+        ///     <see cref="BadgeCount" />
+        /// </summary>
+        public static readonly BindableProperty BadgeCountProperty = BindableProperty.Create(nameof(BadgeCount), typeof(string), typeof(MenuButton), propertyChanged: BadgeCountPropertyChanged, coerceValue: CoerceValue);
+
+        private static object CoerceValue(BindableObject bindable, object value)
+        {
+            if (bindable is MenuButton menuButton && menuButton.BadgeFrame != null)
+            {
+                if (value is string count && int.TryParse(count, out var newCount))
+                {
+                    if (newCount > 99)
+                    {
+                        menuButton.BadgeFrame.HeightRequest = 25;
+                        menuButton.BadgeFrame.WidthRequest = 25;
+                        menuButton.BadgeFrame.CornerRadius = 12.5f;
+                        return "99+";
+                    }
+                }
+                menuButton.BadgeFrame.HeightRequest = 20;
+                menuButton.BadgeFrame.WidthRequest = 20;
+                menuButton.BadgeFrame.CornerRadius = 10;
+            }
+            return value;
+        }
+
+        private static async void BadgeCountPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is MenuButton menuButton)) return;
+
+            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation) return;
+            await menuButton.BadgeFrame?.TranslateTo(0, -5, 150, Easing.CubicIn);
+            menuButton.BadgeFrame?.TranslateTo(0, 0, 150, Easing.CubicInOut);
+        }
+
+        /// <summary>
+        ///     <see cref="BadgeColor" />
+        /// </summary>
+        public static readonly BindableProperty BadgeColorProperty = BindableProperty.Create(nameof(BadgeColor), typeof(Color), typeof(MenuButton));
+
+        /// <summary>
+        ///     <see cref="BadgeTextColor"/>s
+        /// </summary>
+        public static readonly BindableProperty BadgeTextColorProperty = BindableProperty.Create(
+            nameof(BadgeTextColor),
+            typeof(Color),
+            typeof(MenuButton),
+            Color.Black);
+
+        /// <summary>
         ///     Buttons that can be placed in a <see cref="FloatingActionMenuBehaviour" />.
         /// </summary>
         public MenuButton()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        ///     Color of the text in the badge.
+        ///     This is a bindable property.
+        /// </summary>
+        public Color BadgeTextColor
+        {
+            get => (Color)GetValue(BadgeTextColorProperty);
+            set => SetValue(BadgeTextColorProperty, value);
+        }
+
+        /// <summary>
+        ///     Badge color.
+        ///     This is a bindable porperty.
+        /// </summary>
+        public Color BadgeColor
+        {
+            get => (Color)GetValue(BadgeColorProperty);
+            set => SetValue(BadgeColorProperty, value);
+        }
+
+        /// <summary>
+        ///     Contents of badge.
+        ///     This is a bindable porperty.
+        /// </summary>
+        public string BadgeCount
+        {
+            get => (string)GetValue(BadgeCountProperty);
+            set => SetValue(BadgeCountProperty, value);
+        }
+
+        /// <summary>
+        ///     Toggles badge on button.
+        ///     This is a bindable porperty.
+        /// </summary>
+        public bool IsBadgeVisible
+        {
+            get => (bool)GetValue(IsBadgeVisibleProperty);
+            set => SetValue(IsBadgeVisibleProperty, value);
         }
 
         /// <summary>

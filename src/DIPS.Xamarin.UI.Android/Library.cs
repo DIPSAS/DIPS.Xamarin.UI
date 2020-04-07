@@ -1,4 +1,5 @@
 ﻿using Android.Graphics.Pdf;
+using DIPS.Xamarin.UI.Internal.Utilities;
 
 namespace DIPS.Xamarin.UI.Android
 {
@@ -13,6 +14,7 @@ namespace DIPS.Xamarin.UI.Android
         /// </summary>
         public static void Initialize()
         {
+            Inspector.Instance = new Util.Inspector();
         }
     }
 }
