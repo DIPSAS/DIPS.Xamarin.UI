@@ -15,6 +15,7 @@
            HasShadow="{Binding HasShadow}"
            CornerRadius="8"
            Padding="0"
+           IsClippedToBounds="True"
            BackgroundColor="{Binding ContentColor}">
         <Frame.GestureRecognizers>
             <PanGestureRecognizer PanUpdated="OnDrag" />
