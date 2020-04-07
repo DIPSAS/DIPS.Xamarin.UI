@@ -9,22 +9,27 @@
              x:Class="DIPS.Xamarin.UI.Internal.xaml.SheetView"
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dxui="http://dips.xamarin.ui.com"
-             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}"
-             >
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
     <Frame x:Name="OuterSheetFrame"
            HasShadow="{Binding HasShadow}"
            CornerRadius="8"
-           Padding="0,5,0,5"
-           BackgroundColor="{Binding BackgroundColor}">
+           Padding="0">
         <Frame.Triggers>
-            <DataTrigger TargetType="Frame" Binding="{Binding ContentColor, Converter={dxui:IsEmptyConverter}}" Value="True">
-                <Setter  Property="Frame.BackgroundColor" Value="{Binding BackgroundColor}"/>
+            <DataTrigger TargetType="Frame"
+                         Binding="{Binding ContentColor, Converter={ValueConverters:IsEmptyConverter}}"
+                         Value="True">
+                <Setter Property="Frame.BackgroundColor"
+                        Value="{Binding BackgroundColor}" />
             </DataTrigger>
-            <DataTrigger TargetType="Frame" Binding="{Binding ContentColor, Converter={dxui:IsEmptyConverter}}" Value="False">
-                <Setter Property="Frame.BackgroundColor" Value="{Binding ContentColor}"/>
+            <DataTrigger TargetType="Frame"
+                         Binding="{Binding ContentColor, Converter={ValueConverters:IsEmptyConverter}}"
+                         Value="False">
+                <Setter Property="Frame.BackgroundColor"
+                        Value="{Binding ContentColor}" />
             </DataTrigger>
         </Frame.Triggers>
+
         <Frame.GestureRecognizers>
             <PanGestureRecognizer PanUpdated="OnDrag" />
         </Frame.GestureRecognizers>
@@ -32,37 +37,33 @@
         <!-- Alignement = Bottom -->
         <!-- Alignement = Top is set from Initialize() in code behind -->
         <Grid x:Name="SheetGrid">
-            <Grid.Triggers>
-                <DataTrigger TargetType="Frame" Binding="{Binding HeaderColor, Converter={dxui:IsEmptyConverter}}" Value="True">
-                    <Setter Property="Grid.BackgroundColor" Value="{Binding BackgroundColor}"/>
-                </DataTrigger>
-                <DataTrigger TargetType="Frame" Binding="{Binding HeaderColor, Converter={dxui:IsEmptyConverter}}" Value="False">
-                    <Setter Property="Grid.BackgroundColor" Value="{Binding HeaderColor}"/>
-                </DataTrigger>
-            </Grid.Triggers>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <BoxView x:Name="HandleBoxView"
-                     Grid.Row="0"
-                     HeightRequest="5"
-                     CornerRadius="2"
-                     WidthRequest="50"
-                     BackgroundColor="{Binding HandleColor}"
-                     HorizontalOptions="Center"
-                     VerticalOptions="Center"
-                     IsVisible="{Binding IsDraggable}" />
+            <Grid x:Name="HandleGrid"
+                  Grid.Row="0"
+                  Padding="0,5,0,5"
+                  BackgroundColor="{Binding HeaderColor}">
+                <BoxView HeightRequest="5"
+                         CornerRadius="2"
+                         WidthRequest="50"
+                         BackgroundColor="{Binding HandleColor}"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         IsVisible="{Binding IsDraggable}" />
+            </Grid>
 
             <!-- VerticalOptions are set in Initialize() -->
             <Grid x:Name="SheetContentGrid"
-                  Grid.Row="1">
+                  Grid.Row="1"
+                  BackgroundColor="{Binding ContentColor}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <ContentView x:Name="sheetContentView" 
-                             Content="{Binding SheetContent}"/>
+                <ContentView x:Name="sheetContentView"
+                             Content="{Binding SheetContent}" />
             </Grid>
         </Grid>
     </Frame>

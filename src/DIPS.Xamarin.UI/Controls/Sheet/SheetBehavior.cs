@@ -251,19 +251,19 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(BackgroundColorProperty, value);
         }
 
-        public static readonly BindableProperty HeaderColorProperty = BindableProperty.Create(nameof(HeaderColor), typeof(Color?), typeof(SheetBehavior), null);
+        public static readonly BindableProperty HeaderColorProperty = BindableProperty.Create(nameof(HeaderColor), typeof(Color?), typeof(SheetBehavior), Color.Transparent);
 
-        public Color? HeaderColor
+        public Color HeaderColor
         {
-            get => (Color?)GetValue(HeaderColorProperty);
+            get => (Color)GetValue(HeaderColorProperty);
             set => SetValue(HeaderColorProperty, value);
         }
 
-        public static readonly BindableProperty ContentColorProperty = BindableProperty.Create(nameof(ContentColor), typeof(Color?), typeof(SheetBehavior), null);
+        public static readonly BindableProperty ContentColorProperty = BindableProperty.Create(nameof(ContentColor), typeof(Color?), typeof(SheetBehavior), Color.Transparent);
 
-        public Color? ContentColor
+        public Color ContentColor
         {
-            get => (Color?)GetValue(ContentColorProperty);
+            get => (Color)GetValue(ContentColorProperty);
             set => SetValue(ContentColorProperty, value);
         }
 
