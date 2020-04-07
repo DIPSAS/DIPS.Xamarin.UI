@@ -14,22 +14,8 @@
     <Frame x:Name="OuterSheetFrame"
            HasShadow="{Binding HasShadow}"
            CornerRadius="8"
-           Padding="0">
-        <Frame.Triggers>
-            <DataTrigger TargetType="Frame"
-                         Binding="{Binding ContentColor, Converter={ValueConverters:IsEmptyConverter}}"
-                         Value="True">
-                <Setter Property="Frame.BackgroundColor"
-                        Value="{Binding BackgroundColor}" />
-            </DataTrigger>
-            <DataTrigger TargetType="Frame"
-                         Binding="{Binding ContentColor, Converter={ValueConverters:IsEmptyConverter}}"
-                         Value="False">
-                <Setter Property="Frame.BackgroundColor"
-                        Value="{Binding ContentColor}" />
-            </DataTrigger>
-        </Frame.Triggers>
-
+           Padding="0"
+           BackgroundColor="{Binding ContentColor}">
         <Frame.GestureRecognizers>
             <PanGestureRecognizer PanUpdated="OnDrag" />
         </Frame.GestureRecognizers>
@@ -41,7 +27,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid x:Name="HandleGrid"
+            <Grid x:Name="HeaderGrid"
                   Grid.Row="0"
                   Padding="0,5,0,5"
                   BackgroundColor="{Binding HeaderColor}">
@@ -56,8 +42,7 @@
 
             <!-- VerticalOptions are set in Initialize() -->
             <Grid x:Name="SheetContentGrid"
-                  Grid.Row="1"
-                  BackgroundColor="{Binding ContentColor}">
+                  Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>

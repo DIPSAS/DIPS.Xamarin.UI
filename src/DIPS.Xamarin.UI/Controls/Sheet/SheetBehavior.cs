@@ -160,7 +160,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(BackgroundColor),
             typeof(Color),
             typeof(SheetView),
-            Color.White);
+            Color.White, propertyChanged:PropertyChanged);
+
+        private static void PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is SheetBehavior sheetBehavior)) return;
+            sheetBehavior.ContentColor = (Color)newvalue;
+            sheetBehavior.HeaderColor = (Color)newvalue;
+        }
 
         /// <summary>
         ///     <see cref="Position" />
@@ -251,7 +258,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(BackgroundColorProperty, value);
         }
 
-        public static readonly BindableProperty HeaderColorProperty = BindableProperty.Create(nameof(HeaderColor), typeof(Color?), typeof(SheetBehavior), Color.Transparent);
+        public static readonly BindableProperty HeaderColorProperty = BindableProperty.Create(nameof(HeaderColor), typeof(Color), typeof(SheetBehavior), null);
 
         public Color HeaderColor
         {
@@ -259,7 +266,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(HeaderColorProperty, value);
         }
 
-        public static readonly BindableProperty ContentColorProperty = BindableProperty.Create(nameof(ContentColor), typeof(Color?), typeof(SheetBehavior), Color.Transparent);
+        public static readonly BindableProperty ContentColorProperty = BindableProperty.Create(nameof(ContentColor), typeof(Color), typeof(SheetBehavior), null);
 
         public Color ContentColor
         {

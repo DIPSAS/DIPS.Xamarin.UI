@@ -28,7 +28,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         /// </summary>
         internal double SheetContentHeightRequest =>
             sheetContentView.Content != null
-                ? SheetContentView.Content.Height + HandleGrid.Height + HandleGrid.Padding.Top + HandleGrid.Padding.Bottom +
+                ? SheetContentView.Content.Height + HeaderGrid.Height + HeaderGrid.Padding.Top + HeaderGrid.Padding.Bottom +
                   OuterSheetFrame.CornerRadius
                 : 0;
 
@@ -85,13 +85,13 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 SheetGrid.RowDefinitions[0].Height = GridLength.Star;
                 SheetGrid.RowDefinitions[1].Height = GridLength.Auto;
                 Grid.SetRow(SheetContentGrid, 0);
-                Grid.SetRow(HandleGrid, 1);
+                Grid.SetRow(HeaderGrid, 1);
             }
             else
             {
                 SheetGrid.RowDefinitions[0].Height = GridLength.Auto;
                 SheetGrid.RowDefinitions[1].Height = GridLength.Star;
-                Grid.SetRow(HandleGrid, 0);
+                Grid.SetRow(HeaderGrid, 0);
                 Grid.SetRow(SheetContentGrid, 1);
             }
 
