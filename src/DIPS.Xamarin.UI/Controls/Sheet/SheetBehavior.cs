@@ -167,7 +167,24 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(BackgroundColor),
             typeof(Color),
             typeof(SheetView),
-            Color.White);
+            Color.White, propertyChanged:BackgroundColorPropertyChanged);
+
+        private static void BackgroundColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is SheetBehavior sheetBehavior)) return;
+            sheetBehavior.ContentColor = (Color)newvalue;
+            sheetBehavior.HeaderColor = (Color)newvalue;
+        }
+
+        /// <summary>
+        /// <see cref="HeaderColor"/>
+        /// </summary>
+        public static readonly BindableProperty HeaderColorProperty = BindableProperty.Create(nameof(HeaderColor), typeof(Color), typeof(SheetBehavior), BackgroundColorProperty.DefaultValue);
+
+        /// <summary>
+        /// <see cref="ContentColor"/>
+        /// </summary>
+        public static readonly BindableProperty ContentColorProperty = BindableProperty.Create(nameof(ContentColor), typeof(Color), typeof(SheetBehavior), BackgroundColorProperty.DefaultValue);
 
         /// <summary>
         ///     <see cref="Position" />
@@ -251,10 +268,31 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     Determines the color of the background of the sheet.
         ///     This is a bindable property.
         /// </summary>
+        [Obsolete("Please use HeaderColor and ContentColor to set the background colors of the sheet. This will be removed in future major versions greater than 3.0.0")]
         public Color BackgroundColor
         {
             get => (Color)GetValue(BackgroundColorProperty);
             set => SetValue(BackgroundColorProperty, value);
+        }
+
+        /// <summary>
+        /// Determines the background color of the header part of the sheet.
+        /// This is a bindable property.
+        /// </summary>
+        public Color HeaderColor
+        {
+            get => (Color)GetValue(HeaderColorProperty);
+            set => SetValue(HeaderColorProperty, value);
+        }
+
+        /// <summary>
+        /// Determines the background color of the content part of the sheet.
+        /// This is a bindable property.
+        /// </summary>
+        public Color ContentColor
+        {
+            get => (Color)GetValue(ContentColorProperty);
+            set => SetValue(ContentColorProperty, value);
         }
 
         /// <summary>
