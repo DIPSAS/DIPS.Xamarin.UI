@@ -9,13 +9,14 @@
              x:Class="DIPS.Xamarin.UI.Internal.xaml.SheetView"
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
-             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}"
-             >
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
     <Frame x:Name="OuterSheetFrame"
            HasShadow="{Binding HasShadow}"
            CornerRadius="8"
-           Padding="0,5,0,5"
-           BackgroundColor="{Binding BackgroundColor}">
+           Padding="0"
+           IsClippedToBounds="True"
+           BackgroundColor="{Binding ContentColor}">
         <Frame.GestureRecognizers>
             <PanGestureRecognizer PanUpdated="OnDrag" />
         </Frame.GestureRecognizers>
@@ -27,15 +28,18 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <BoxView x:Name="HandleBoxView"
-                     Grid.Row="0"
-                     HeightRequest="5"
-                     CornerRadius="2"
-                     WidthRequest="50"
-                     BackgroundColor="{Binding HandleColor}"
-                     HorizontalOptions="Center"
-                     VerticalOptions="Center"
-                     IsVisible="{Binding IsDraggable}" />
+            <Grid x:Name="HeaderGrid"
+                  Grid.Row="0"
+                  Padding="0,5,0,5"
+                  BackgroundColor="{Binding HeaderColor}">
+                <BoxView HeightRequest="5"
+                         CornerRadius="2"
+                         WidthRequest="50"
+                         BackgroundColor="{Binding HandleColor}"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         IsVisible="{Binding IsDraggable}" />
+            </Grid>
 
             <!-- VerticalOptions are set in Initialize() -->
             <Grid x:Name="SheetContentGrid"
@@ -44,8 +48,8 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <ContentView x:Name="sheetContentView" 
-                             Content="{Binding SheetContent}"/>
+                <ContentView x:Name="sheetContentView"
+                             Content="{Binding SheetContent}" />
             </Grid>
         </Grid>
     </Frame>

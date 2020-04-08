@@ -28,11 +28,9 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         /// </summary>
         internal double SheetContentHeightRequest =>
             sheetContentView.Content != null
-                ? SheetContentView.Content.Height + HandleBoxView.Height + OuterSheetFrame.Padding.Top + OuterSheetFrame.Padding.Bottom +
+                ? SheetContentView.Content.Height + HeaderGrid.Height + HeaderGrid.Padding.Top + HeaderGrid.Padding.Bottom +
                   OuterSheetFrame.CornerRadius
                 : 0;
-
-        internal BoxView Handle => HandleBoxView;
 
         /// <summary>
         /// The internal outer sheet frame of the view
@@ -81,19 +79,19 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         internal void Initialize()
         {
             m_newY = 0;
-            //Flp the grid if alignment is set to top
+            //Flip the grid if alignment is set to top
             if (m_sheetBehaviour.Alignment == AlignmentOptions.Top)
             {
                 SheetGrid.RowDefinitions[0].Height = GridLength.Star;
                 SheetGrid.RowDefinitions[1].Height = GridLength.Auto;
                 Grid.SetRow(SheetContentGrid, 0);
-                Grid.SetRow(HandleBoxView, 1);
+                Grid.SetRow(HeaderGrid, 1);
             }
             else
             {
                 SheetGrid.RowDefinitions[0].Height = GridLength.Auto;
                 SheetGrid.RowDefinitions[1].Height = GridLength.Star;
-                Grid.SetRow(HandleBoxView, 0);
+                Grid.SetRow(HeaderGrid, 0);
                 Grid.SetRow(SheetContentGrid, 1);
             }
 

@@ -27,7 +27,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
     public class SheetPageViewModel : INotifyPropertyChanged
     {
         private AlignmentOptions m_alignment;
-        private string m_backgroundColor;
         private string m_handleColor;
         private bool m_hasShadow;
         private bool m_isDraggable;
@@ -38,6 +37,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private double m_minPosition = 0.05;
         private string m_stateText;
         private bool m_shouldRememberPosition;
+        private string m_contentColor;
+        private string m_headerColor;
 
         public SheetPageViewModel()
         {
@@ -62,24 +63,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             get => m_alignment;
             set => PropertyChanged.RaiseWhenSet(ref m_alignment, value);
-        }
-
-        public string BackgroundColor
-        {
-            get => m_backgroundColor;
-            set
-            {
-                try
-                {
-                    new ColorTypeConverter().ConvertFromInvariantString(value);
-                    m_backgroundColor = value;
-                    PropertyChanged.Raise();
-                }
-                catch (Exception e)
-                {
-                    //Swallow it.
-                }
-            }
         }
 
         public string HandleColor
@@ -162,6 +145,43 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             get => m_shouldRememberPosition;
             set => PropertyChanged.RaiseWhenSet(ref m_shouldRememberPosition, value);
+        }
+
+        public string ContentColor
+        {
+            get => m_contentColor;
+            set
+            {
+                try
+                {
+                    new ColorTypeConverter().ConvertFromInvariantString(value);
+                    m_contentColor = value;
+                    PropertyChanged.Raise();
+                }
+                catch (Exception e)
+                {
+                    //Swallow it.
+                }
+            }
+        }
+
+        public string HeaderColor
+        {
+            get => m_headerColor;
+            set
+            {
+                try
+                {
+                    new ColorTypeConverter().ConvertFromInvariantString(value);
+                    m_headerColor = value;
+                    PropertyChanged.Raise();
+                }
+                catch (Exception e)
+                {
+                    //Swallow it.
+                }
+
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

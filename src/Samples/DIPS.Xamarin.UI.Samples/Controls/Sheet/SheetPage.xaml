@@ -14,12 +14,7 @@
     <ContentPage.BindingContext>
         <Sheet:SheetPageViewModel />
     </ContentPage.BindingContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <dxui:ModalityLayout>
+    <dxui:ModalityLayout>
             <dxui:ModalityLayout.Behaviors>
                 <dxui:SheetBehavior IsOpen="{Binding IsSheetOpen}"
                                     OnOpenCommand="{Binding OnOpenCommand}"
@@ -29,7 +24,8 @@
                                     IsDraggable="{Binding IsDraggable}"
                                     Alignment="{Binding Alignment}"
                                     VerticalContentAlignment="{Binding VerticalContentAlignment}"
-                                    BackgroundColor="{Binding BackgroundColor}"
+                                    ContentColor="{Binding ContentColor}"
+                                    HeaderColor="{Binding HeaderColor}"
                                     HandleColor="{Binding HandleColor}"
                                     HasShadow="{Binding HasShadow}"
                                     Position="{Binding Position}"
@@ -106,11 +102,23 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
-                           Text="BackgroundColor"
+                           Text="HeaderColor"
                            VerticalTextAlignment="Center" />
                     <Entry Grid.Column="1"
-                           TextColor="{Binding BackgroundColor}"
-                           Text="{Binding BackgroundColor}" />
+                           TextColor="{Binding HeaderColor}"
+                           Text="{Binding HeaderColor}" />
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="ContentColor"
+                           VerticalTextAlignment="Center" />
+                    <Entry Grid.Column="1"
+                           TextColor="{Binding ContentColor}"
+                           Text="{Binding ContentColor}" />
                 </Grid>
 
                 <Grid>
@@ -238,5 +246,4 @@
             </StackLayout>
 
         </dxui:ModalityLayout>
-    </Grid>
 </ContentPage>
