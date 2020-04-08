@@ -80,7 +80,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(VerticalContentAlignment),
             typeof(ContentAlignment),
             typeof(SheetBehavior),
-            ContentAlignment.Fit);
+            ContentAlignment.Fit,
+            propertyChanged:OnVerticalContentAlignmentPropertyChanged);
+
+        private static void OnVerticalContentAlignmentPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is SheetBehavior sheetBehavior)) return;
+            sheetBehavior.m_sheetView?.ChangeVerticalContentAlignment();
+        }
 
         /// <summary>
         ///     <see cref="Alignment" />
