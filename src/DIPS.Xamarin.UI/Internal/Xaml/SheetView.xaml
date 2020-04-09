@@ -23,7 +23,8 @@
 
         <!-- Alignement = Bottom -->
         <!-- Alignement = Top is set from Initialize() in code behind -->
-        <Grid x:Name="SheetGrid">
+        <Grid x:Name="SheetGrid"
+              RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
