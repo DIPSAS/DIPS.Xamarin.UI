@@ -116,5 +116,10 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                     break;
             }
         }
+
+        private void CancelButtonClicked(object sender, EventArgs e)
+        {
+            m_sheetBehaviour.CancelClicked();
+        }
     }
 }

@@ -10,6 +10,7 @@
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             xmlns:Utilities="clr-namespace:DIPS.Xamarin.UI.Internal.Utilities;assembly=DIPS.Xamarin.UI"
              dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
     <Frame x:Name="OuterSheetFrame"
            HasShadow="{Binding HasShadow}"
@@ -31,20 +32,91 @@
             </Grid.RowDefinitions>
             <Grid x:Name="HeaderGrid"
                   Grid.Row="0"
-                  Padding="0,5,0,5"
+                  RowSpacing="0"
+                  ColumnSpacing="0"
                   BackgroundColor="{Binding HeaderColor}">
-                <BoxView HeightRequest="5"
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <BoxView Grid.ColumnSpan="3"
+                         HeightRequest="5"
+                         Margin="0,5,0,0"
                          CornerRadius="2"
                          WidthRequest="50"
                          BackgroundColor="{Binding HandleColor}"
                          HorizontalOptions="Center"
                          VerticalOptions="Center"
                          IsVisible="{Binding IsDraggable}" />
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       HorizontalOptions="Center"
+                       Text="{Binding Title}"
+                       TextColor="{Binding TitleColor}"
+                       LineBreakMode="TailTruncation"
+                       VerticalOptions="Center" />
+
+                <Button Grid.Row="1"
+                        Grid.Column="0"
+                        IsVisible="{Binding IsCancelButtonVisible}"
+                        TextColor="{Binding CancelTitleColor}"
+                        CommandParameter="{Binding CancelCommandParameter}"
+                        Command="{Binding CancelCommand}"
+                        Text="{Binding CancelTitle}"
+                        Clicked="CancelButtonClicked"
+                        BackgroundColor="{Binding HeaderColor}">
+                    <Button.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS"
+                                Value="20,0,20,0" />
+                        </OnPlatform>
+                    </Button.Padding>
+                </Button>
+
+                <Button Grid.Row="1"
+                        Grid.Column="2"
+                        BackgroundColor="{Binding HeaderColor}"
+                        Command="{Binding ActionCommand}"
+                        CommandParameter="{Binding ActionCommandParameter}"
+                        TextColor="{Binding ActionTitleColor}"
+                        Text="{Binding ActionTitle}"
+                        IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}">
+                    <Button.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS"
+                                Value="20,0,20,0" />
+                        </OnPlatform>
+                    </Button.Padding>
+                </Button>
+
+                <BoxView Grid.Row="2"
+                         Grid.Column="0"
+                         HeightRequest=".6"
+                         Grid.ColumnSpan="3"
+                         VerticalOptions="End"
+                         Color="{Binding TitleSeparatorColor}"
+                         IsVisible="{Binding IsTitleSeparatorVisible}">
+                    <BoxView.Effects>
+                        <Utilities:BoxViewShadowEffect />
+                    </BoxView.Effects>
+                </BoxView>
             </Grid>
 
             <!-- VerticalOptions are set in Initialize() -->
             <Grid x:Name="SheetContentGrid"
-                  Grid.Row="1">
+                  Grid.Row="1"
+                  RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>

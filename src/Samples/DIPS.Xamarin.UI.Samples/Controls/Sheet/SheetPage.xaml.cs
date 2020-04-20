@@ -39,12 +39,25 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private bool m_shouldRememberPosition;
         private string m_contentColor;
         private string m_headerColor;
+        private bool m_cancelCanExecute = false;
 
         public SheetPageViewModel()
         {
             OpenSheetCommand = new Command(() => IsSheetOpen = true);
             OnOpenCommand = new Command<string>(SheetOpened);
             OnCloseCommand = new Command<string>(SheetClosed);
+            CancelCommand = new CancelSheetCommand<string>(
+                str =>
+                {
+                    
+                },
+                str => m_cancelCanExecute, str => true);
+            ActionCommand = new Command<string>(
+                str =>
+                {
+                    m_cancelCanExecute = !m_cancelCanExecute;
+                    (CancelCommand as Command)?.ChangeCanExecute();
+                });
         }
 
         private void SheetClosed(string commandParameter)
@@ -183,6 +196,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
 
             }
         }
+
+        public ICommand CancelCommand { get; }
+
+        public ICommand ActionCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

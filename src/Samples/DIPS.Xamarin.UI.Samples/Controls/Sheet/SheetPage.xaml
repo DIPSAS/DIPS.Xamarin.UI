@@ -15,40 +15,47 @@
         <Sheet:SheetPageViewModel />
     </ContentPage.BindingContext>
     <dxui:ModalityLayout>
-            <dxui:ModalityLayout.Behaviors>
-                <dxui:SheetBehavior IsOpen="{Binding IsSheetOpen}"
-                                    OnOpenCommand="{Binding OnOpenCommand}"
-                                    OnOpenCommandParameter="Opened"
-                                    OnCloseCommand="{Binding OnCloseCommand}"
-                                    OnCloseCommandParameter="Closed"
-                                    IsDraggable="{Binding IsDraggable}"
-                                    Alignment="{Binding Alignment}"
-                                    VerticalContentAlignment="{Binding VerticalContentAlignment}"
-                                    ContentColor="{Binding ContentColor}"
-                                    HeaderColor="{Binding HeaderColor}"
-                                    HandleColor="{Binding HandleColor}"
-                                    HasShadow="{Binding HasShadow}"
-                                    Position="{Binding Position}"
-                                    MinPosition="{Binding MinPosition}"
-                                    MaxPosition="{Binding MaxPosition}"
-                                    BindingContextFactory="{Binding SheetViewModelFactory}"
-                                    CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
-                                    ShouldRememberPosition="{Binding ShouldRememberPosition}">
-                    <StackLayout>
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Entry x:Name="entry"
-                               Placeholder="TextEntry" />
-                        <Button Text="Close sheet"
-                                dxui:Modality.CloseOnClick="True" />
-                    </StackLayout>
-                </dxui:SheetBehavior>
-            </dxui:ModalityLayout.Behaviors>
+        <dxui:ModalityLayout.Behaviors>
+            <dxui:SheetBehavior IsOpen="{Binding IsSheetOpen}"
+                                OnOpenCommand="{Binding OnOpenCommand}"
+                                OnOpenCommandParameter="Opened"
+                                OnCloseCommand="{Binding OnCloseCommand}"
+                                OnCloseCommandParameter="Closed"
+                                IsDraggable="{Binding IsDraggable}"
+                                Alignment="{Binding Alignment}"
+                                VerticalContentAlignment="{Binding VerticalContentAlignment}"
+                                ContentColor="{Binding ContentColor}"
+                                HeaderColor="{Binding HeaderColor}"
+                                HandleColor="{Binding HandleColor}"
+                                HasShadow="{Binding HasShadow}"
+                                Position="{Binding Position}"
+                                MinPosition="{Binding MinPosition}"
+                                MaxPosition="{Binding MaxPosition}"
+                                CancelCommand="{Binding CancelCommand}"
+                                ActionCommand="{Binding ActionCommand}"
+                                ActionCommandParameter="Hei"
+                                CancelCommandParameter="Hei"
+                                IsCancelButtonVisible="True"
+                                Title="Custom title."
+                                ActionTitle="Delete"
+                                BindingContextFactory="{Binding SheetViewModelFactory}"
+                                CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
+                                ShouldRememberPosition="{Binding ShouldRememberPosition}">
+                <StackLayout>
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Entry x:Name="entry"
+                           Placeholder="TextEntry" />
+                    <Button Text="Close sheet"
+                            dxui:Modality.CloseOnClick="True" />
+                </StackLayout>
+            </dxui:SheetBehavior>
+        </dxui:ModalityLayout.Behaviors>
 
-
+        <ScrollView>
             <StackLayout Padding="5"
                          HorizontalOptions="Fill">
                 <Label Text="Sheet properties"
@@ -158,8 +165,8 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
-                           Text="Remember position when open / close" 
-                           VerticalTextAlignment="Center"/>
+                           Text="Remember position when open / close"
+                           VerticalTextAlignment="Center" />
                     <CheckBox Grid.Column="1"
                               Grid.Row="0"
                               IsChecked="{Binding ShouldRememberPosition}" />
@@ -244,6 +251,7 @@
                         Command="{Binding OpenSheetCommand}" />
 
             </StackLayout>
+        </ScrollView>
 
-        </dxui:ModalityLayout>
+    </dxui:ModalityLayout>
 </ContentPage>
