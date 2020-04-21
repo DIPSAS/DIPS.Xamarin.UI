@@ -11,9 +11,7 @@ namespace DIPS.Xamarin.UI.Tests.Commands
 {
     public class CancelSheetCommandTests
     {
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
+        [Theory, CombinatorialData]
         public void CanCloseSheet_CanCloseSheetSet_ShouldReturnCorrect(bool canClose)
         {
             var cancelSheetCommand = new CancelSheetCommand<string>(s => { }, s => true, s => canClose);

@@ -53,12 +53,20 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
                 {
                     
                 },
-                str => m_cancelCanExecute, str => true);
+                str =>
+                {
+                    return true;
+
+                }  ,str =>
+                {
+                    //Do logic to determine if the sheet should close
+                    return true;
+                });
+
             ActionCommand = new Command<string>(
                 str =>
                 {
-                    m_cancelCanExecute = !m_cancelCanExecute;
-                    (CancelCommand as Command)?.ChangeCanExecute();
+                    //Do work when action is pressed
                 });
         }
 

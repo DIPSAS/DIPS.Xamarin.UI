@@ -58,6 +58,9 @@
         <ScrollView>
             <StackLayout Padding="5"
                          HorizontalOptions="Fill">
+                <Button Text="Open sheet"
+                        Command="{Binding OpenSheetCommand}" />
+
                 <Label Text="Sheet properties"
                        FontSize="Title"
                        VerticalTextAlignment="Center" />
@@ -271,9 +274,6 @@
                 </StackLayout>
                 <Label Text="{Binding StateText, StringFormat='State: {0}'}"
                        IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}" />
-                <Button Text="Open sheet"
-                        Command="{Binding OpenSheetCommand}" />
-
             </StackLayout>
         </ScrollView>
 
