@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoxViewNoElevationEffect.cs" />
     <Compile Include="Util\Inspector.cs" />
     <Compile Include="LegacyButtonRenderer.cs" />
     <Compile Include="Library.cs" />

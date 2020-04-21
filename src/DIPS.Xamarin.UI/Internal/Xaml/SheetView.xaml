@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Controls.Sheet;assembly=DIPS.Xamarin.UI"
              mc:Ignorable="d dblend"
              x:Class="DIPS.Xamarin.UI.Internal.xaml.SheetView"
@@ -50,8 +51,8 @@
 
                 <BoxView Grid.ColumnSpan="3"
                          HeightRequest="5"
-                         Margin="0,5,0,0"
                          CornerRadius="2"
+                         Margin="0,5,0,0"
                          WidthRequest="50"
                          BackgroundColor="{Binding HandleColor}"
                          HorizontalOptions="Center"
@@ -75,14 +76,8 @@
                         Command="{Binding CancelCommand}"
                         Text="{Binding CancelTitle}"
                         Clicked="CancelButtonClicked"
-                        BackgroundColor="{Binding HeaderColor}">
-                    <Button.Padding>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS"
-                                Value="20,0,20,0" />
-                        </OnPlatform>
-                    </Button.Padding>
-                </Button>
+                        Padding="20,0"
+                        BackgroundColor="{Binding HeaderColor}" />
 
                 <Button Grid.Row="1"
                         Grid.Column="2"
@@ -91,24 +86,16 @@
                         CommandParameter="{Binding ActionCommandParameter}"
                         TextColor="{Binding ActionTitleColor}"
                         Text="{Binding ActionTitle}"
-                        IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}">
-                    <Button.Padding>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS"
-                                Value="20,0,20,0" />
-                        </OnPlatform>
-                    </Button.Padding>
-                </Button>
+                        Padding="20,0"
+                        IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}" />
 
                 <BoxView Grid.Row="2"
                          Grid.Column="0"
                          HeightRequest=".6"
                          Grid.ColumnSpan="3"
                          Color="{Binding TitleSeparatorColor}"
-                         IsVisible="{Binding IsTitleSeparatorVisible}">
-                    <BoxView.Effects>
-                        <Utilities:BoxViewNoElevationEffect />
-                    </BoxView.Effects>
+                         IsVisible="{Binding IsTitleSeparatorVisible}"
+                         android:VisualElement.Elevation="0">
                 </BoxView>
             </Grid>
 
