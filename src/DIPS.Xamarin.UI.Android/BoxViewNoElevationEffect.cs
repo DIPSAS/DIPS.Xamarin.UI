@@ -1,4 +1,6 @@
-﻿using DIPS.Xamarin.UI.Android;
+﻿using System.ComponentModel;
+using Android.Runtime;
+using DIPS.Xamarin.UI.Android;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -7,7 +9,9 @@ using Xamarin.Forms.Platform.Android;
 
 namespace DIPS.Xamarin.UI.Android
 {
-    public class BoxViewNoElevationEffect : PlatformEffect
+
+    [Preserve(AllMembers = true)]
+    internal class BoxViewNoElevationEffect : PlatformEffect
     {
         protected override void OnAttached()
         {

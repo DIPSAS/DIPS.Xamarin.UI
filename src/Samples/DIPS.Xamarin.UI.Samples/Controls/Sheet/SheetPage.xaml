@@ -37,7 +37,7 @@
                                 CancelCommandParameter="Hei"
                                 IsCancelButtonVisible="True"
                                 Title="{Binding Title}"
-                                ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=Delete}}"
+                                ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=CanExecute}}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                                 CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
                                 ShouldRememberPosition="{Binding ShouldRememberPosition}">

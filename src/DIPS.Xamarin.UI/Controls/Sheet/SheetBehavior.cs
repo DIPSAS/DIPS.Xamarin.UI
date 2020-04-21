@@ -320,6 +320,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(SheetBehavior),
             false);
 
+        /// <summary>
+        /// <see cref="CancelCommand"/>
+        /// </summary>
         public static readonly BindableProperty CancelCommandProperty = BindableProperty.Create(
             nameof(CancelCommand),
             typeof(ICancelSheetCommand),

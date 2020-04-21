@@ -14,7 +14,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     public class CancelSheetCommand<T> : CancelSheetCommand
     {
 
-        // Copied from Command<T>.
+        /// <summary>
+        /// </summary>
+        /// <param name="execute"></param>
         public CancelSheetCommand(Action<T> execute)
             : base(o =>
             {
@@ -30,6 +32,30 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             }
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="execute"></param>
+        /// <param name="canExecute"></param>
+        public CancelSheetCommand(Action<T> execute, Func<T, bool> canExecute)
+            : base(o =>
+            {
+                if (IsValidParameter(o))
+                {
+                    execute((T)o);
+                }
+            }, o => IsValidParameter(o) && canExecute((T)o))
+        {
+            if (execute == null)
+                throw new ArgumentNullException(nameof(execute));
+            if (canExecute == null)
+                throw new ArgumentNullException(nameof(canExecute));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="execute"></param>
+        /// <param name="canExecute"></param>
+        /// <param name="canCloseSheet"></param>
         public CancelSheetCommand(Action<T> execute, Func<T, bool> canExecute, Func<T, bool> canCloseSheet) 
             : base(o =>
             {
@@ -72,39 +98,62 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     /// </summary>
     public class CancelSheetCommand : Command, ICancelSheetCommand
     {
-        private readonly Func<object, bool> m_canCloseSheet;
+        private readonly Func<object, bool>? m_canCloseSheet;
 
+        /// <summary>
+        /// </summary>
         public CancelSheetCommand(Action execute) : base(execute)
         {
         }
 
+        /// <summary>
+        /// </summary>
         public CancelSheetCommand(Action<object> execute) : base(execute)
         {
 
         }
 
+        /// <summary>
+        /// </summary>
         public CancelSheetCommand(Action execute, Func<bool> canExecute) : base(execute, canExecute)
         {
         }
-            
+
+        /// <summary>
+        /// </summary>
         public CancelSheetCommand(Action<object> execute, Func<object, bool> canExecute) : base(execute, canExecute)
         {
         }
 
+        /// <summary>
+        /// </summary>
         public CancelSheetCommand(Action execute, Func<bool> canExecute, Func<bool> canCloseSheet) : this(o => execute(), o => canExecute(), o => canCloseSheet())
         {
         }
 
+        /// <summary>
+        /// </summary>
         public CancelSheetCommand(Action<object> execute, Func<object, bool> canExecute, Func<object, bool> canCloseSheet) : base(execute, canExecute)
         {
             m_canCloseSheet = canCloseSheet;
         }
 
-        public bool CanCloseSheet(object parameter) => m_canCloseSheet(parameter);
+        /// <summary>
+        /// </summary>
+        public bool CanCloseSheet(object parameter) => m_canCloseSheet == null || m_canCloseSheet(parameter);
     }
 
+    /// <summary>
+    /// <inheritdoc cref="Command"/>
+    /// Extended with a function to determine if a <see cref="SheetBehavior"/> should be closed when action is invoked.
+    /// </summary>
     public interface ICancelSheetCommand : ICommand
     {
+        /// <summary>
+        /// Determines if the sheet should be closed if cancel button is pressed.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         bool CanCloseSheet(object parameter);
     }
 }
