@@ -36,8 +36,8 @@
                                 ActionCommandParameter="Hei"
                                 CancelCommandParameter="Hei"
                                 IsCancelButtonVisible="True"
-                                Title="Custom title."
-                                ActionTitle="Delete"
+                                Title="{Binding Title}"
+                                ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=Delete}}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                                 CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
                                 ShouldRememberPosition="{Binding ShouldRememberPosition}">
@@ -139,6 +139,30 @@
                     <Entry Grid.Column="1"
                            TextColor="{Binding HandleColor}"
                            Text="{Binding HandleColor}" />
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="Title"
+                           VerticalTextAlignment="Center" />
+                    <Entry Grid.Column="1"
+                           Text="{Binding Title}" />
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="HasActionButton"
+                           VerticalTextAlignment="Center" />
+                    <CheckBox Grid.Column="1"
+                              IsChecked="{Binding HasActionButton}" />
                 </Grid>
 
                 <Grid>

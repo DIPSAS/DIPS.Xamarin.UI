@@ -40,6 +40,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private string m_contentColor;
         private string m_headerColor;
         private bool m_cancelCanExecute = false;
+        private string m_title;
+        private bool m_hasActionButton;
 
         public SheetPageViewModel()
         {
@@ -200,6 +202,18 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         public ICommand CancelCommand { get; }
 
         public ICommand ActionCommand { get; }
+
+        public string Title
+        {
+            get => m_title;
+            set => PropertyChanged.RaiseWhenSet(ref m_title, value);
+        }
+
+        public bool HasActionButton
+        {
+            get => m_hasActionButton;
+            set => PropertyChanged.RaiseWhenSet(ref m_hasActionButton, value);
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

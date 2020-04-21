@@ -104,11 +104,10 @@
                          Grid.Column="0"
                          HeightRequest=".6"
                          Grid.ColumnSpan="3"
-                         VerticalOptions="End"
                          Color="{Binding TitleSeparatorColor}"
                          IsVisible="{Binding IsTitleSeparatorVisible}">
                     <BoxView.Effects>
-                        <Utilities:BoxViewShadowEffect />
+                        <Utilities:BoxViewNoElevationEffect />
                     </BoxView.Effects>
                 </BoxView>
             </Grid>

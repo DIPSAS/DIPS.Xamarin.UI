@@ -3,11 +3,11 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ResolutionGroupName("DIPS.Xamarin.UI.Effects")]
-[assembly: ExportEffect(typeof(BoxViewShadowEffect), nameof(BoxViewShadowEffect))]
+[assembly: ExportEffect(typeof(BoxViewNoElevationEffect), nameof(BoxViewNoElevationEffect))]
 
 namespace DIPS.Xamarin.UI.Android
 {
-    public class BoxViewShadowEffect : PlatformEffect
+    public class BoxViewNoElevationEffect : PlatformEffect
     {
         protected override void OnAttached()
         {

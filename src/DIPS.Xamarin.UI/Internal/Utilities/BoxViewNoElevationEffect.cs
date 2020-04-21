@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Internal.Utilities
 {
-    public class BoxViewShadowEffect : RoutingEffect
+    public class BoxViewNoElevationEffect : RoutingEffect
     {
-        public BoxViewShadowEffect() : base($"DIPS.Xamarin.UI.Effects.{nameof(BoxViewShadowEffect)}")
+        public BoxViewNoElevationEffect() : base($"DIPS.Xamarin.UI.Effects.{nameof(BoxViewNoElevationEffect)}")
         {
         }
     }

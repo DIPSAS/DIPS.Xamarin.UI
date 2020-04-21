@@ -7,9 +7,14 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Sheet
 {
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class CancelSheetCommand<T> : CancelSheetCommand
     {
 
+        // Copied from Command<T>.
         public CancelSheetCommand(Action<T> execute)
             : base(o =>
             {
@@ -61,6 +66,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 	}
 
+    /// <summary>
+    /// <inheritdoc cref="Command"/>
+    /// Extended with a function to determine if a <see cref="SheetBehavior"/> should be closed when action is invoked.
+    /// </summary>
     public class CancelSheetCommand : Command, ICancelSheetCommand
     {
         private readonly Func<object, bool> m_canCloseSheet;
