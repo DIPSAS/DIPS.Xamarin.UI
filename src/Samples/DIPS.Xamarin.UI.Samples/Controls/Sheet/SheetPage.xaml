@@ -31,7 +31,6 @@
                                 Position="{Binding Position}"
                                 MinPosition="{Binding MinPosition}"
                                 MaxPosition="{Binding MaxPosition}"
-                                CancelCommand="{Binding CancelCommand}"
                                 ActionCommand="{Binding ActionCommand}"
                                 ActionCommandParameter="Hei"
                                 CancelCommandParameter="Hei"

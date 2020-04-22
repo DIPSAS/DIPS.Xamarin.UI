@@ -325,7 +325,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public static readonly BindableProperty CancelCommandProperty = BindableProperty.Create(
             nameof(CancelCommand),
-            typeof(ICancelSheetCommand),
+            typeof(ICommand),
             typeof(SheetBehavior),
             defaultValueCreator: DefaultValueCreator);
 
@@ -392,9 +392,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     Gets or sets the command that is invoked when the cancel button is activated.
         ///     This is a bindable property.
         /// </summary>
-        public ICancelSheetCommand CancelCommand
+        public ICommand CancelCommand
         {
-            get => (ICancelSheetCommand)GetValue(CancelCommandProperty);
+            get => (ICommand)GetValue(CancelCommandProperty);
             set => SetValue(CancelCommandProperty, value);
         }
 
@@ -793,7 +793,18 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         internal void CancelClicked()
         {
-            if (CancelCommand.CanCloseSheet(CancelCommandParameter)) IsOpen = false;
+
+            if (!(CancelCommand is CancelSheetCommand))
+            {
+                IsOpen = false;
+                return;
+            }
+
+            if (CancelCommand is CancelSheetCommand cancelSheetCommand && cancelSheetCommand.CanCloseSheet(CancelCommandParameter))
+            {
+                IsOpen = false;
+            }
+
         }
 
         private static void OnVerticalContentAlignmentPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
