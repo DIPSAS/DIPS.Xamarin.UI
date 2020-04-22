@@ -48,23 +48,23 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             OpenSheetCommand = new Command(() => IsSheetOpen = true);
             OnOpenCommand = new Command<string>(SheetOpened);
             OnCloseCommand = new Command<string>(SheetClosed);
-            CancelCommand = new CancelSheetCommand<string>(
-                str =>
+            CancelCommand = new CancelSheetCommand(
+                () =>
                 {
 
                 },
-                str =>
+                () =>
                 {
                     return true;
 
-                }, str =>
+                }, () =>
                {
                    //Do logic to determine if the sheet should close
                    return true;
                });
 
-            ActionCommand = new Command<string>(
-                str =>
+            ActionCommand = new Command(
+                () =>
                 {
                     //Do work when action is pressed
                 });

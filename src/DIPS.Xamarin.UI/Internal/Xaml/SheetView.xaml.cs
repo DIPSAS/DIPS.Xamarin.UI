@@ -88,6 +88,9 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 SheetGrid.RowDefinitions[1].Height = GridLength.Auto;
                 Grid.SetRow(SheetContentGrid, 0);
                 Grid.SetRow(HeaderGrid, 1);
+
+                Grid.SetRow(HandleBoxView, 2);
+                Grid.SetRow(SeparatorBoxView, 0);
             }
             else
             {
@@ -95,6 +98,9 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 SheetGrid.RowDefinitions[1].Height = GridLength.Star;
                 Grid.SetRow(HeaderGrid, 0);
                 Grid.SetRow(SheetContentGrid, 1);
+
+                Grid.SetRow(HandleBoxView, 0);
+                Grid.SetRow(SeparatorBoxView, 2);
             }
 
             ChangeVerticalContentAlignment();
