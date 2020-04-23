@@ -4,13 +4,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Controls.Sheet;assembly=DIPS.Xamarin.UI"
              mc:Ignorable="d dblend"
              x:Class="DIPS.Xamarin.UI.Internal.xaml.SheetView"
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             xmlns:Utilities="clr-namespace:DIPS.Xamarin.UI.Internal.Utilities;assembly=DIPS.Xamarin.UI"
              dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="HeaderButtonStyle"
+                   TargetType="Button">
+                <Style.Triggers>
+                    <Trigger TargetType="Button"
+                             Property="Opacity"
+                             Value="0">
+                        <Setter Property="InputTransparent"
+                                Value="True" />
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="Padding"
+                        Value="20,0" />
+                <Setter Property="FontSize"
+                        Value="Body" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
     <Frame x:Name="OuterSheetFrame"
            HasShadow="{Binding HasShadow}"
            CornerRadius="8"
@@ -31,20 +54,107 @@
             </Grid.RowDefinitions>
             <Grid x:Name="HeaderGrid"
                   Grid.Row="0"
-                  Padding="0,5,0,5"
+                  RowSpacing="0"
+                  ColumnSpacing="0"
                   BackgroundColor="{Binding HeaderColor}">
-                <BoxView HeightRequest="5"
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <BoxView x:Name="HandleBoxView"
+                         Grid.ColumnSpan="3"
+                         HeightRequest="5"
                          CornerRadius="2"
+                         Margin="0,5"
                          WidthRequest="50"
                          BackgroundColor="{Binding HandleColor}"
                          HorizontalOptions="Center"
                          VerticalOptions="Center"
                          IsVisible="{Binding IsDraggable}" />
+
+                <Label x:Name="TitleLabel"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       FontSize="Body"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Text="{Binding Title}"
+                       TextColor="{Binding TitleColor}"
+                       LineBreakMode="TailTruncation"
+                       VerticalOptions="Center">
+                    <Label.Triggers>
+                        <MultiTrigger TargetType="Label">
+                            <MultiTrigger.Conditions>
+                                <BindingCondition
+                                    Binding="{Binding Source={x:Reference HandleBoxView}, Path=IsVisible}" Value="True" />
+                                <BindingCondition Binding="{Binding Alignment}"
+                                                  Value="{x:Static Sheet:AlignmentOptions.Top}" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="0,0,0,-5" />
+                        </MultiTrigger>
+
+                        <MultiTrigger TargetType="Label">
+                            <MultiTrigger.Conditions>
+                                <BindingCondition Binding="{Binding Source={x:Reference HandleBoxView}, Path=IsVisible}"
+                                                  Value="True" />
+                                <BindingCondition Binding="{Binding Alignment}"
+                                                  Value="{x:Static Sheet:AlignmentOptions.Bottom}" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Margin"
+                                    Value="0,-5,0,0" />
+                        </MultiTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <!--Uses opacity to make buttons invisible to keep header size from changing.-->
+                <Button Grid.Row="1"
+                        Grid.Column="0"
+                        Opacity="{Binding IsCancelButtonVisible, Converter={ValueConverters:BoolToObjectConverter TrueObject=1.0, FalseObject=0.0}}"
+                        TextColor="{Binding CancelTitleColor}"
+                        CommandParameter="{Binding CancelCommandParameter}"
+                        Command="{Binding CancelCommand}"
+                        Text="{Binding CancelTitle}"
+                        Margin="{Binding Source={x:Reference TitleLabel}, Path=Margin}"
+                        Clicked="CancelButtonClicked"
+                        Style="{StaticResource HeaderButtonStyle}"
+                        BackgroundColor="{Binding HeaderColor}" />
+
+                <Button Grid.Row="1"
+                        Grid.Column="2"
+                        BackgroundColor="{Binding HeaderColor}"
+                        Command="{Binding ActionCommand}"
+                        CommandParameter="{Binding ActionCommandParameter}"
+                        TextColor="{Binding ActionTitleColor}"
+                        Margin="{Binding Source={x:Reference TitleLabel}, Path=Margin}"
+                        Text="{Binding ActionTitle}"
+                        Style="{StaticResource HeaderButtonStyle}"
+                        Opacity="{Binding ActionTitle, Converter={ValueConverters:IsEmptyToObjectConverter TrueObject=0.0, FalseObject=1.0}}" />
+
+                <BoxView x:Name="SeparatorBoxView"
+                         Grid.Row="2"
+                         Grid.Column="0"
+                         HeightRequest=".6"
+                         Grid.ColumnSpan="3"
+                         Color="{Binding TitleSeparatorColor}"
+                         IsVisible="{Binding IsTitleSeparatorVisible}"
+                         android:VisualElement.Elevation="0" />
             </Grid>
 
             <!-- VerticalOptions are set in Initialize() -->
             <Grid x:Name="SheetContentGrid"
-                  Grid.Row="1">
+                  Grid.Row="1"
+                  RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
