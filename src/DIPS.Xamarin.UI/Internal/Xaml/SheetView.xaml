@@ -29,7 +29,7 @@
                 <Setter Property="Padding"
                         Value="20,0" />
                 <Setter Property="FontSize"
-                        Value="Body" />
+                        Value="Medium" />
             </Style>
         </ResourceDictionary>
     </ContentView.Resources>
@@ -85,7 +85,7 @@
                        Grid.Row="1"
                        Grid.Column="0"
                        Grid.ColumnSpan="3"
-                       FontSize="Body"
+                       FontSize="Large"
                        FontAttributes="Bold"
                        HorizontalOptions="Center"
                        Text="{Binding Title}"
