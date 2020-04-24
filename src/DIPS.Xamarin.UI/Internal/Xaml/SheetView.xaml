@@ -94,7 +94,6 @@
                            LineBreakMode="TailTruncation"
                            VerticalOptions="Center" />
 
-                    <!--Uses opacity to make buttons invisible to keep header size from changing.-->
                     <Button x:Name="cancelButton"
                             Grid.Column="0"
                             FontSize="Medium"
