@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -63,7 +64,27 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 {
                     execute((T)o);
                 }
-            }, o => IsValidParameter(o) && canExecute((T)o), o => IsValidParameter(o) && canCloseSheet((T)o))
+            }, o => IsValidParameter(o) && canExecute((T)o), async o => IsValidParameter(o) && canCloseSheet((T)o))
+        {
+            if (execute == null)
+                throw new ArgumentNullException(nameof(execute));
+            if (canExecute == null)
+                throw new ArgumentNullException(nameof(canExecute));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="execute"></param>
+        /// <param name="canExecute"></param>
+        /// <param name="canCloseSheet"></param>
+        public CancelSheetCommand(Action<T> execute, Func<T, bool> canExecute, Func<T, Task<bool>> canCloseSheet)
+            : base(o =>
+            {
+                if (IsValidParameter(o))
+                {
+                    execute((T)o);
+                }
+            }, o => IsValidParameter(o) && canExecute((T)o), async o => IsValidParameter(o) && await canCloseSheet((T)o))
         {
             if (execute == null)
                 throw new ArgumentNullException(nameof(execute));
@@ -98,7 +119,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     /// </summary>
     public class CancelSheetCommand : Command, ICancelSheetCommand
     {
-        private readonly Func<object, bool>? m_canCloseSheet;
+        private readonly Func<object, Task<bool>>? m_canCloseSheet;
 
         /// <summary>
         /// </summary>
@@ -127,20 +148,30 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         /// <summary>
         /// </summary>
-        public CancelSheetCommand(Action execute, Func<bool> canExecute, Func<bool> canCloseSheet) : this(o => execute(), o => canExecute(), o => canCloseSheet())
+        public CancelSheetCommand(Action execute, Func<bool> canExecute, Func<Task<bool>> canCloseSheet) : this(o => execute(), o => canExecute(), o => canCloseSheet())
         {
         }
 
         /// <summary>
         /// </summary>
-        public CancelSheetCommand(Action<object> execute, Func<object, bool> canExecute, Func<object, bool> canCloseSheet) : base(execute, canExecute)
+        public CancelSheetCommand(Action execute, Func<bool> canExecute, Func<bool> canCloseSheet) : this(o => execute(), o => canExecute(), o => Task.FromResult(canCloseSheet()))
+        {
+        }
+        /// <summary>
+        /// </summary>
+        public CancelSheetCommand(Action<object> execute, Func<object, bool> canExecute, Func<object, bool> canCloseSheet) : this(execute, canExecute, o => Task.FromResult(canCloseSheet(o)))
+        {
+        }
+        /// <summary>
+        /// </summary>
+        public CancelSheetCommand(Action<object> execute, Func<object, bool> canExecute, Func<object, Task<bool>> canCloseSheet) : base(execute, canExecute)
         {
             m_canCloseSheet = canCloseSheet;
         }
 
         /// <summary>
         /// </summary>
-        public bool CanCloseSheet(object parameter) => m_canCloseSheet == null || m_canCloseSheet(parameter);
+        public async Task<bool> CanCloseSheet(object parameter) => m_canCloseSheet == null || await m_canCloseSheet(parameter);
     }
 
     /// <summary>
@@ -154,6 +185,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        bool CanCloseSheet(object parameter);
+        Task<bool> CanCloseSheet(object parameter);
     }
 }

@@ -791,7 +791,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             return new CancelSheetCommand(() => { });
         }
 
-        internal void CancelClicked()
+        internal async void CancelClicked()
         {
 
             if (!(CancelCommand is CancelSheetCommand))
@@ -800,7 +800,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 return;
             }
 
-            if (CancelCommand is CancelSheetCommand cancelSheetCommand && cancelSheetCommand.CanCloseSheet(CancelCommandParameter))
+            if (CancelCommand is CancelSheetCommand cancelSheetCommand && await cancelSheetCommand.CanCloseSheet(CancelCommandParameter))
             {
                 IsOpen = false;
             }
