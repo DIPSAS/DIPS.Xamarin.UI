@@ -42,6 +42,7 @@
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.pdb" target="lib\xamarinios10\DIPS.Xamarin.UI.pdb" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.xml" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" target="lib\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" />
+        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" target="lib\xamarinios10.0\no\DIPS.Xamarin.UI.resources.dll" />
         
 
 
@@ -53,5 +54,6 @@
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.pdb" target="lib\monoandroid81\DIPS.Xamarin.UI.pdb" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.xml" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" target="lib\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" />
+        <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" target="lib\monoandroid81\no\DIPS.Xamarin.UI.resources.dll" />
     </files>
 </package>
