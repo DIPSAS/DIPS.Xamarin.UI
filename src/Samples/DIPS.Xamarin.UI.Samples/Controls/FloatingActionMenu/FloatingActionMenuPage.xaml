@@ -54,7 +54,6 @@
                                  TextColor="White"
                                  Command="{Binding SetTextCommand}"
                                  Title="First page"
-                                 IsEnabled="False"
                                  CommandParameter="First tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="A"
