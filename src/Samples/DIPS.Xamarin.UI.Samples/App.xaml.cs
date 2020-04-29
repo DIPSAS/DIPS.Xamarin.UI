@@ -11,9 +11,9 @@ namespace DIPS.Xamarin.UI.Samples
             InitializeComponent();
             //This has to be called once per application in order to use Custom Namespace in XAML : https://github.com/DIPSAS/DIPS.Xamarin.UI/issues/1
             DIPS.Xamarin.UI.Library.Initialize();
-            
+
             m_mainPage = new MainPage();
-            MainPage = new NavigationPage(m_mainPage);
+            MainPage = new NavigationPage(m_mainPage); //{ Bar = Color.White };
         }
 
         protected override void OnStart()

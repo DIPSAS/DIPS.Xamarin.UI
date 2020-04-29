@@ -11,11 +11,11 @@ namespace DIPS.Xamarin.UI.Samples
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = new MainViewModel();
         }
 
         public void OnStart()
         {
-            BindingContext = new MainViewModel(Application.Current.MainPage.Navigation);
         }
     }
 }

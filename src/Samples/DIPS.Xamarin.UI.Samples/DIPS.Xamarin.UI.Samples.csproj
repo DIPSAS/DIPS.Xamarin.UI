@@ -88,9 +88,6 @@
     <None Update="Converters\InvertedBoolConverterPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <None Update="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\Popup\" />

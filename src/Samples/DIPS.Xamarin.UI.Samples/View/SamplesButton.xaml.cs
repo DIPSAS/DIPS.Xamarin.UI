@@ -18,9 +18,13 @@ namespace DIPS.Xamarin.UI.Samples.View
             btn.Text = Text;
             btn.CommandParameter = CommandParameter;
             img.Source = Image;
+            btn.CornerRadius = CornerRadius;
+            btn.BackgroundColor = ButtonBackgroundColor;
+            btn.Command = Command;
         }
 
-
+        public Color ButtonBackgroundColor { get; set; } = Color.Transparent;
+        public int CornerRadius { get; set; } = 10;
         public string Text { get; set; } = string.Empty;
         public ImageSource Image { get; set; } = string.Empty;
         public object? CommandParameter { get; set; }

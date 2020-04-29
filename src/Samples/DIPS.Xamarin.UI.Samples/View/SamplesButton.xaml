@@ -5,7 +5,7 @@
              x:Class="DIPS.Xamarin.UI.Samples.View.SamplesButton"
              HorizontalOptions="FillAndExpand"
              VerticalOptions="Center"
-             Margin="20,5"
+             Margin="20,10"
              Padding="0"
              x:Name="codebehind"
              Opacity="0.9">
@@ -14,11 +14,12 @@
         <Button x:Name="btn"
                 VerticalOptions="Center"
                 HorizontalOptions="FillAndExpand"
-                CornerRadius="2"
-                TextColor="{x:Static dxui:ColorPalette.DarkAir}"
-                BackgroundColor="{x:Static dxui:Theme.TealSecondaryLight}"
-                FontSize="Default"
-                Command="{Binding Source={x:Reference codebehind}, Path=Command}"
+                CornerRadius="10"
+                BackgroundColor="Transparent"
+                BorderColor="{x:Static dxui:Theme.TealSecondaryLight}"
+                BorderWidth="0"
+                TextColor="{x:Static dxui:Theme.TealSecondaryLight}"
+                FontSize="Medium"
                 FontAttributes="Bold">
         </Button>
                 <Image x:Name="img"
