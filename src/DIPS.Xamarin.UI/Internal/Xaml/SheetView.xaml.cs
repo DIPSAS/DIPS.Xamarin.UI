@@ -125,7 +125,12 @@ namespace DIPS.Xamarin.UI.Internal.xaml
 
         private void CancelButtonClicked(object sender, EventArgs e)
         {
-            m_sheetBehaviour.CancelClicked();
+            m_sheetBehaviour.CancelClickedInternal();
+        }
+
+        private void ActionButtonClicked(object sender, EventArgs e)
+        {
+            m_sheetBehaviour.ActionClickedInternal();
         }
     }
 }

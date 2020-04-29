@@ -791,9 +791,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             return new CancelSheetCommand(() => { });
         }
 
-        internal async void CancelClicked()
+        internal void ActionClickedInternal()
         {
+            ActionClicked?.Invoke(this, EventArgs.Empty);
+        }
 
+        internal async void CancelClickedInternal()
+        {
+            CancelClicked?.Invoke(this, EventArgs.Empty);
             if (!(CancelCommand is CancelSheetCommand))
             {
                 IsOpen = false;
@@ -850,6 +855,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     Event that gets raised when the sheet has completed it's animation and is closed.
         /// </summary>
         public event EventHandler? OnClose;
+
+        /// <summary>
+        ///     Event that gets raised when the user has clicked the action button.
+        /// </summary>
+        public event EventHandler? ActionClicked;
+
+        /// <summary>
+        ///     Event that gets raised when the user has clicked the cancel button.
+        /// </summary>
+        public event EventHandler? CancelClicked;
 
         private static async void OnPositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
