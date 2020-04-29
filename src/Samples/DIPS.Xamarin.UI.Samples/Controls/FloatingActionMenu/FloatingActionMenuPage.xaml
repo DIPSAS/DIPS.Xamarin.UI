@@ -54,6 +54,7 @@
                                  TextColor="White"
                                  Command="{Binding SetTextCommand}"
                                  Title="First page"
+                                 IsEnabled="False"
                                  CommandParameter="First tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="A"
@@ -68,6 +69,7 @@
                                  BadgeColor="{Binding BadgeColor}"
                                  BadgeCount="{Binding BadgeCounter}"
                                  Title="Third page"
+                                 IsEnabled="False"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Third tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
