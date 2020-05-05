@@ -1,4 +1,5 @@
 ﻿using System;
+using DIPS.Xamarin.UI.Resources.Colors;
 using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
@@ -8,7 +9,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         {
             Margin = 0;
             WidthRequest = 3;
-            Color = Color.DarkGreen;
+            Color = Theme.TealPrimary;
             CornerRadius = 1;
             HorizontalOptions = LayoutOptions.Center;
             VerticalOptions = LayoutOptions.Center;

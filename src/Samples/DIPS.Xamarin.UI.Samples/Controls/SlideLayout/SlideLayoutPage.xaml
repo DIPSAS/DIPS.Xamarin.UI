@@ -24,6 +24,7 @@
             x:Name="layout"
             Grid.Row="4"
             Padding="0,10"
+            SlideProperties="{Binding SlidableProperties}"
             BindingContextFactory="{Binding CreateCalendar}"
             SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}">
             <dxui:SlidableContentLayout.Config>
@@ -67,7 +68,7 @@
             BindingContextFactory="{Binding CreateCalendar}"
             ScaleDown="True"
             SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-            SlideProperties="{Binding Source={x:Reference layout}, Path=SlideProperties}">
+            SlideProperties="{Binding SlidableProperties}">
             <dxui:SlidableContentLayout.Config>
                 <dxui:SliderConfig MaxValue="5" MinValue="-5" />
             </dxui:SlidableContentLayout.Config>
@@ -110,7 +111,7 @@
             BindingContextFactory="{Binding CreateCalendar}"
             ScaleDown="False"
             SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-            SlideProperties="{Binding Source={x:Reference layout}, Path=SlideProperties}"
+            SlideProperties="{Binding SlidableProperties}"
             VibrateOnSelectionChanged="True">
             <dxui:SlidableContentLayout.Config>
                 <dxui:SliderConfig MaxValue="5" MinValue="-20" />

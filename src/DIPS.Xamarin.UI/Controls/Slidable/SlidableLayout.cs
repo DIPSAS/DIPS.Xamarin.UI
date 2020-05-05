@@ -15,7 +15,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
     {
         private readonly PanGestureRecognizer m_rec = new PanGestureRecognizer();
         private readonly AccelerationService m_accelerator = new AccelerationService(true);
-        private int m_lastId = -1;
+        private int m_lastId = -2; // Different than default of SlideProperties
         private double m_startSlideLocation;
         private int m_lastIndex = int.MinValue;
         private bool disableTouchScroll;
@@ -245,7 +245,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(SlidableProperties),
             typeof(SlidableLayout),
             defaultBindingMode: BindingMode.TwoWay,
-            defaultValue: new SlidableProperties(0, -1, false),
+            defaultValue: new SlidableProperties(0),
             propertyChanged: OnChanged);
 
         /// <summary>
