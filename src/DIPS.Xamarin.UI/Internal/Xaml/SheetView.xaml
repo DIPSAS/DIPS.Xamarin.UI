@@ -115,6 +115,7 @@
                             CommandParameter="{Binding ActionCommandParameter}"
                             TextColor="{Binding ActionTitleColor}"
                             Text="{Binding ActionTitle}"
+                            Clicked="ActionButtonClicked"
                             IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}" />
                 </Grid>
 

@@ -68,6 +68,7 @@
                                  BadgeColor="{Binding BadgeColor}"
                                  BadgeCount="{Binding BadgeCounter}"
                                  Title="Third page"
+                                 IsEnabled="False"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Third tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
