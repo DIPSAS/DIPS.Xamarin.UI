@@ -8,7 +8,7 @@ namespace DIPS.Xamarin.UI.Util
     /// </summary>
     internal class AccelerationService
     {
-        private const double DefaultFriction = 0.2, DefaultGravity = 10.0, DefaultTrackTime = 0.18, ErrorMargin = 0.01;
+        private const double DefaultFriction = 2, DefaultGravity = 10.0, DefaultTrackTime = 0.18, ErrorMargin = 0.01;
         private readonly TimeTracker m_timeTracker = new TimeTracker();
 
         private readonly Snapper? m_snapper;
@@ -125,6 +125,7 @@ namespace DIPS.Xamarin.UI.Util
                 }
 
                 if (i < 0) i = 0;
+                if (time < 0.1) time = 0.1;
                 m_speed = (m_moves[m_moves.Count - 1].Item1 - m_moves[i].Item1) / time;
             }
         }
@@ -144,7 +145,7 @@ namespace DIPS.Xamarin.UI.Util
                     return m_value;
                 }
 
-                var time = m_timeTracker.GetTimeD();
+                var time = Math.Min(m_timeTracker.GetTimeD(), 1.0);
                 if (m_snapper == null)
                 {
                     ApplyFriction(time);
@@ -196,7 +197,8 @@ namespace DIPS.Xamarin.UI.Util
 
         private void ApplyFriction(double time)
         {
-            m_speed -= m_speed * m_friction;
+            var sign = Math.Sign(m_speed);
+            m_speed -= Math.Max(-0.1 * sign, m_speed * m_friction * time * sign) * sign;
         }
 
         private void ApplyGravity(double time, double snapPoint)
