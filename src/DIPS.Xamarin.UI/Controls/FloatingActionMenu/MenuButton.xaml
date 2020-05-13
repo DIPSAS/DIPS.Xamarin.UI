@@ -78,6 +78,7 @@
                Opacity=".5">
             <Label TextColor="{Binding BadgeTextColor}"
                    Text="{Binding BadgeCount}"
+                   FontFamily="{Binding BadgeFontFamily}"
                    FontSize="12"
                    LineBreakMode="NoWrap"
                    BackgroundColor="Transparent"
