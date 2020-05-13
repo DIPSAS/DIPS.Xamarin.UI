@@ -3,29 +3,16 @@ using DIPS.Xamarin.UI.Resources.Colors;
 using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
-    internal class DefaultSliderView : BoxView, ISliderSelectable
+    internal class DefaultSliderView : BoxView
     {
         public DefaultSliderView()
         {
             Margin = 0;
-            WidthRequest = 3;
-            Color = Theme.TealPrimary;
-            CornerRadius = 1;
+            WidthRequest = 1;
+            Color = Theme.TealPrimaryAir;
+            CornerRadius = 0;
             HorizontalOptions = LayoutOptions.Center;
             VerticalOptions = LayoutOptions.Center;
-            Scale = 0.8;
-        }
-
-        public async void OnSelectionChanged(bool selected)
-        {
-            if (selected)
-            {
-                await this.FadeTo(1.0, 100);
-            }
-            else
-            {
-                await this.FadeTo(0.25, 100);
-            }
         }
     }
 }

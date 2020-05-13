@@ -1,121 +1,118 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage
-    x:Class="DIPS.Xamarin.UI.Samples.Controls.SlideLayout.SlideLayoutPage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:dxui="http://dips.xamarin.ui.com"
-    xmlns:local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.SlideLayout">
+<ContentPage x:Class="DIPS.Xamarin.UI.Samples.Controls.SlideLayout.SlideLayoutPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:local="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.SlideLayout">
     <Grid x:Name="griid">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
             <RowDefinition Height="75" />
-            <RowDefinition Height="75" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="75" />
         </Grid.RowDefinitions>
 
-        <Label
-            Grid.Row="0"
-            HorizontalOptions="Center"
-            Text="{Binding Selected}"
-            VerticalOptions="Center" />
+        <Label Grid.Row="0"
+               HorizontalOptions="Center"
+               Text="{Binding Selected}"
+               VerticalOptions="Center" />
 
-        <dxui:SlidableContentLayout
-            x:Name="layout"
-            Grid.Row="4"
-            Padding="0,10"
-            SlideProperties="{Binding SlidableProperties}"
-            BindingContextFactory="{Binding CreateCalendar}"
-            SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}">
+        <dxui:SlidableContentLayout x:Name="layout"
+                                    Grid.Row="4"
+                                    Padding="0,10"
+                                    BindingContextFactory="{Binding CreateCalendar}"
+                                    SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
+                                    SlideProperties="{Binding SlidableProperties}">
             <dxui:SlidableContentLayout.Config>
-                <dxui:SliderConfig MaxValue="5" MinValue="-5" />
+                <dxui:SliderConfig MaxValue="5"
+                                   MinValue="-5" />
             </dxui:SlidableContentLayout.Config>
             <dxui:SlidableContentLayout.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type local:CalendarViewModel}">
-                    <Frame
-                        Margin="0"
-                        Padding="0"
-                        CornerRadius="0"
-                        HasShadow="False">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            HorizontalOptions="FillAndExpand"
-                            VerticalOptions="FillAndExpand">
+                    <Frame Margin="0"
+                           Padding="0"
+                           CornerRadius="0"
+                           HasShadow="False">
+                        <Grid Margin="0"
+                              Padding="0"
+                              HorizontalOptions="FillAndExpand"
+                              VerticalOptions="FillAndExpand">
 
-                            <BoxView
-                                Margin="0"
-                                HorizontalOptions="FillAndExpand"
-                                IsVisible="{Binding Selected}"
-                                Opacity="0.5"
-                                VerticalOptions="FillAndExpand"
-                                Color="Pink" />
-                            <Label
-                                Margin="0"
-                                Padding="0"
-                                HorizontalOptions="Center"
-                                Text="{Binding Value}"
-                                VerticalOptions="Center" />
+                            <BoxView Margin="0"
+                                     HorizontalOptions="FillAndExpand"
+                                     IsVisible="{Binding Selected}"
+                                     Opacity="0.5"
+                                     VerticalOptions="FillAndExpand"
+                                     Color="Pink" />
+                            <Label Margin="0"
+                                   Padding="0"
+                                   HorizontalOptions="Center"
+                                   Text="{Binding Value}"
+                                   VerticalOptions="Center" />
                         </Grid>
                     </Frame>
                 </DataTemplate>
             </dxui:SlidableContentLayout.ItemTemplate>
         </dxui:SlidableContentLayout>
 
-        <dxui:SlidableContentLayout
-            Grid.Row="2"
-            Padding="0,10"
-            BindingContextFactory="{Binding CreateCalendar}"
-            ScaleDown="True"
-            SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-            SlideProperties="{Binding SlidableProperties}">
+        <dxui:SlidableContentLayout Grid.Row="2"
+                                    Padding="0,10"
+                                    BindingContextFactory="{Binding CreateCalendar}"
+                                    ScaleDown="True"
+                                    SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
+                                    SlideProperties="{Binding SlidableProperties}">
             <dxui:SlidableContentLayout.Config>
-                <dxui:SliderConfig MaxValue="5" MinValue="-5" />
+                <dxui:SliderConfig MaxValue="5"
+                                   MinValue="-5" />
             </dxui:SlidableContentLayout.Config>
             <dxui:SlidableContentLayout.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type local:CalendarViewModel}">
-                    <Frame
-                        Margin="3"
-                        Padding="0"
-                        BackgroundColor="WhiteSmoke"
-                        CornerRadius="0"
-                        HasShadow="False">
-                        <Grid
-                            Margin="0"
-                            Padding="0"
-                            HorizontalOptions="FillAndExpand"
-                            VerticalOptions="FillAndExpand">
+                    <Frame Margin="3"
+                           Padding="0"
+                           BackgroundColor="WhiteSmoke"
+                           CornerRadius="0"
+                           HasShadow="False">
+                        <Grid Margin="0"
+                              Padding="0"
+                              HorizontalOptions="FillAndExpand"
+                              VerticalOptions="FillAndExpand">
 
-                            <BoxView
-                                HorizontalOptions="FillAndExpand"
-                                IsVisible="{Binding Selected}"
-                                Opacity="0.5"
-                                VerticalOptions="FillAndExpand"
-                                Color="Pink" />
-                            <Label
-                                Margin="0"
-                                Padding="0"
-                                HorizontalOptions="Center"
-                                Text="{Binding Value}"
-                                VerticalOptions="Center" />
+                            <BoxView HorizontalOptions="FillAndExpand"
+                                     IsVisible="{Binding Selected}"
+                                     Opacity="0.5"
+                                     VerticalOptions="FillAndExpand"
+                                     Color="Pink" />
+                            <Label Margin="0"
+                                   Padding="0"
+                                   HorizontalOptions="Center"
+                                   Text="{Binding Value}"
+                                   VerticalOptions="Center" />
                         </Grid>
                     </Frame>
                 </DataTemplate>
             </dxui:SlidableContentLayout.ItemTemplate>
         </dxui:SlidableContentLayout>
 
-        <dxui:SlidableContentLayout
-            Grid.Row="3"
-            Padding="0,10"
-            BackgroundColor="LightGray"
-            BindingContextFactory="{Binding CreateCalendar}"
-            ScaleDown="False"
-            SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-            SlideProperties="{Binding SlidableProperties}"
-            VibrateOnSelectionChanged="True">
-            <dxui:SlidableContentLayout.Config>
-                <dxui:SliderConfig MaxValue="5" MinValue="-20" />
-            </dxui:SlidableContentLayout.Config>
-        </dxui:SlidableContentLayout>
+        <Grid Grid.Row="3">
+            <dxui:SlidableContentLayout Padding="0,15"
+                                        BackgroundColor="{x:Static dxui:ColorPalette.LightLight}"
+                                        BindingContextFactory="{Binding CreateCalendar}"
+                                        ScaleDown="False"
+                                        SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
+                                        SlideProperties="{Binding SlidableProperties}"
+                                        VibrateOnSelectionChanged="True">
+                <dxui:SlidableContentLayout.Config>
+                    <dxui:SliderConfig MaxValue="5"
+                                       MinValue="-20" />
+                </dxui:SlidableContentLayout.Config>
+            </dxui:SlidableContentLayout>
+
+            <BoxView HeightRequest="22"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     WidthRequest="2"
+                     Color="{x:Static dxui:Theme.TealPrimary}" />
+        </Grid>
     </Grid>
 </ContentPage>

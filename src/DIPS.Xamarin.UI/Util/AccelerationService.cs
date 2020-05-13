@@ -8,7 +8,7 @@ namespace DIPS.Xamarin.UI.Util
     /// </summary>
     internal class AccelerationService
     {
-        private const double DefaultFriction = 2, DefaultGravity = 10.0, DefaultTrackTime = 0.18, ErrorMargin = 0.01;
+        private const double DefaultFriction = 2, DefaultGravity = 10.0, DefaultTrackTime = 0.18, ErrorMargin = 0.05;
         private readonly TimeTracker m_timeTracker = new TimeTracker();
 
         private readonly Snapper? m_snapper;
@@ -186,7 +186,7 @@ namespace DIPS.Xamarin.UI.Util
             }
         }
 
-        private bool IsDoneWithoutSnap() => Math.Abs(m_speed) < 1;
+        private bool IsDoneWithoutSnap() => Math.Abs(m_speed) < m_gravity / 3.0;
 
         private bool IsDone(double snapPoint) => Math.Abs(snapPoint - m_value) < ErrorMargin && IsDoneWithoutSnap();
 
