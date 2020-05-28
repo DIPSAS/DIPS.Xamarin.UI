@@ -189,7 +189,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
             foreach (var child in Children)
             {
-                RelativeLayout.SetXConstraint(child, Constraint.RelativeToParent(p => (p.Width * m_behaviour.XPosition) - ExpandButton.WidthRequest + m_behaviour.Size - child.Width));
+                RelativeLayout.SetXConstraint(child, Constraint.RelativeToParent(p => ExpandButton.X + m_behaviour.Size - child.Width));
             }
 
             m_first = false;
