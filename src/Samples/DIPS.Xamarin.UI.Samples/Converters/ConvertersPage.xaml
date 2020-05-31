@@ -35,6 +35,9 @@
             <Button Text="AdditionConverter"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="AdditionConverter" />
+            <Button Text="StringCaseConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="StringCaseConverter" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -47,6 +47,9 @@ namespace DIPS.Xamarin.UI.Samples.Converters
                 case "AdditionConverter":
                     m_navigation.PushAsync(new AdditionConverterPage() { Title = parameter });
                     break;
+                case "StringCaseConverter":
+                    m_navigation.PushAsync(new StringCaseConverterPage() { Title = parameter });
+                    break;
             }
         }
     }
