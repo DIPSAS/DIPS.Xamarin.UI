@@ -25,6 +25,11 @@
     <Compile Update="Controls\RadioButtonGroup\RadioButtonGroupPage.xaml.cs">
       <DependentUpon>RadioButtonGroupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="SamplesResources\LocalizedStrings.Designer.cs">
+      <DependentUpon>LocalizedStrings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
     <ItemGroup>
@@ -70,8 +75,15 @@
     <EmbeddedResource Update="Converters\ValueConverters\MultiplicationConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Converters\ValueConverters\StringCaseConverterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Converters\ValueConverters\TimeConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="SamplesResources\LocalizedStrings.resx">
+      <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Colors\ColorsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
