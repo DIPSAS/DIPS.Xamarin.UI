@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d dblend"
+             x:Class="DIPS.Xamarin.UI.Controls.Scheduler.Scheduler"
+             xmlns:this="DIPS.Xamarin.UI.Controls.Scheduler.Scheduler"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters;assembly=DIPS.Xamarin.UI"
+             x:Name="codeBehind"
+             dblend:DataContext="{dblend:DesignInstance this:Scheduler}"
+             x:DataType="{x:Type this:Scheduler}">
+    <Grid BindingContext="{Binding Source={x:Reference codeBehind}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Text="{Binding ScheduleDate, Converter={ValueConverters:DateConverter}}"/>
+    </Grid>
+</ContentView>

@@ -5,6 +5,7 @@ using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;
 using DIPS.Xamarin.UI.Samples.Controls.Popup;
 using DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;
+using DIPS.Xamarin.UI.Samples.Controls.Scheduler;
 using DIPS.Xamarin.UI.Samples.Controls.Sheet;
 using DIPS.Xamarin.UI.Samples.Controls.SlideLayout;
 using DIPS.Xamarin.UI.Samples.Controls.Tag;
@@ -46,6 +47,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                 if (parameter.Equals("FloatingActionMenu"))
                     m_navigation.PushAsync(new FloatingActionMenuPage {Title = parameter});
                 if (parameter.Equals("TagControl")) await m_navigation.PushAsync(new TagPage {Title = parameter});
+                if (parameter.Equals("Scheduler")) await m_navigation.PushAsync(new SchedulerPage {Title = parameter});
             }
             catch (Exception e)
             {
