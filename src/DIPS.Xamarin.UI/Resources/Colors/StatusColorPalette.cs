@@ -34,4 +34,29 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color IdleAir = Color.FromHex("#D3DDDE");
 #pragma warning restore 1591
     }
+
+    public enum StatusColorPaletteEnum
+    {
+        None = 0,
+        DangerDark,
+        Danger,
+        DangerLight,
+        DangerAir,
+        WarningDark,
+        Warning,
+        WarningLight,
+        WarningAir,
+        SuccessDark,
+        Success,
+        SuccessLight,
+        SuccessAir,
+        InfoDark,
+        Info,
+        InfoLight,
+        InfoAir,
+        IdleDark,
+        Idle,
+        IdleLight,
+        IdleAir
+    }
 }

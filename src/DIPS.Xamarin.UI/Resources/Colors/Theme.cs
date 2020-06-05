@@ -17,4 +17,15 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color TealSecondaryAir = Color.FromHex("#F0F5F7");
 #pragma warning restore 1591
     }
+
+    public enum ThemeEnum
+    {
+        None = 0,
+        TealPrimary,
+        TealPrimaryLight,
+        TealPrimaryAir,
+        TealSecondary,
+        TealSecondaryLight,
+        TealSecondaryAir
+    }
 }

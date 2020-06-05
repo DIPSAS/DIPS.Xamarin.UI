@@ -33,4 +33,27 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color AccentAir = Color.FromHex("#F4DDFA");
 #pragma warning restore 1591
     }
+
+    public enum ColorPaletteEnum
+    {
+        None = 0,
+        Dark,
+        DarkLight ,
+        DarkAir,
+        Tertiary,
+        TertiaryLight,
+        TertiaryAir,
+        Quaternary,
+        QuaternaryLight,
+        QuaternaryAir,
+        Quinary,
+        QuinaryLight,
+        QuinaryAir,
+        Light,
+        LightLight,
+        LightAir,
+        Accent,
+        AccentLight,
+        AccentAir,
+    }
 }
