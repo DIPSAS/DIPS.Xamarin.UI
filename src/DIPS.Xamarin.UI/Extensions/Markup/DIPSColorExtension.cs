@@ -23,42 +23,81 @@ namespace DIPS.Xamarin.UI.Extensions.Markup
         public ColorPalette.Identifier? ColorPalette { get; set; }
 
         /// <inheritdoc/>
+        object IMarkupExtension.ProvideValue(IServiceProvider serviceProvider)
+        {
+            return ProvideValue(serviceProvider);
+        }
+
+        /// <inheritdoc/>
         public Color ProvideValue(IServiceProvider serviceProvider)
         {
             var listOfBools = new List<bool>() { Theme != null, StatusColorPalette != null, ColorPalette != null };
+            Tuple<string, string?> xamlInfo;
 
-            if(listOfBools.Count(b => b) > 1)//More than one color family is set
+            if (listOfBools.Count(b => b) > 1)//More than one color family is set
             {
-                throw new XamlParseException("You can not use more than one color.");
+                xamlInfo = GetXamlInfo(serviceProvider);
+                if (xamlInfo.Item2 != null)
+                {
+                    throw new XamlParseException($"{xamlInfo.Item1} is using more than one color as {xamlInfo.Item2}. {nameof(DIPSColorExtension)} does not accept this.");
+                }
+                else
+                {
+                    throw new XamlParseException($"{xamlInfo.Item1} is using more than one color. {nameof(DIPSColorExtension)} does not accept this.");
+                }
             }
-            else if(listOfBools.Count(b => b) == 0) //Need to set at least one color family
+            else if (listOfBools.Count(b => b) == 0) //Need to set at least one color family
             {
-                throw new XamlParseException("You need to specify at least one color");
+                xamlInfo = GetXamlInfo(serviceProvider);
+                if (xamlInfo.Item2 != null)
+                {
+                    throw new XamlParseException($"{xamlInfo.Item1} has not set any color for {xamlInfo.Item2} when using {nameof(DIPSColorExtension)}.");
+                }
+                else
+                {
+                    throw new XamlParseException($"{xamlInfo.Item1} has not set any color when using {nameof(DIPSColorExtension)}.");
+                }
             }
             else //Happy case
             {
-                if(Theme != null)
+                if (Theme != null)
                 {
                     return Theme.FromIdentifier();
                 }
 
-                if(StatusColorPalette != null)
+                if (StatusColorPalette != null)
                 {
                     return StatusColorPalette.FromIdentifier();
                 }
 
-                if(ColorPalette != null)
+                if (ColorPalette != null)
                 {
                     return ColorPalette.FromIdentifier();
                 }
             }
-            throw new XamlParseException("You need to specify at least one color");
+
+            xamlInfo = GetXamlInfo(serviceProvider);
+            if (xamlInfo.Item2 != null)
+            {
+                throw new XamlParseException($"You need to specify at least one color when using {nameof(DIPSColorExtension)}");
+            }
+            else
+            {
+                throw new XamlParseException($"{xamlInfo.Item1} has not set any color when using {nameof(DIPSColorExtension)}.");
+            }
+
         }
 
-        /// <inheritdoc/>
-        object IMarkupExtension.ProvideValue(IServiceProvider serviceProvider)
+        private Tuple<string, string?> GetXamlInfo(IServiceProvider serviceProvider)
         {
-            return ProvideValue(serviceProvider);
+            var provideValueTarget = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
+            var xamlElement = provideValueTarget.TargetObject.ToString();
+            var xamlProperty = provideValueTarget.TargetProperty;
+            if (xamlProperty is BindableProperty bp)
+            {
+                return new Tuple<string, string>(xamlElement, bp.PropertyName);
+            }
+            return new Tuple<string, string>(xamlElement, null);
         }
     }
 }
