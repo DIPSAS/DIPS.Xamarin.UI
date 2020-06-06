@@ -32,28 +32,66 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color AccentLight = Color.FromHex("#D297E3");
         public static Color AccentAir = Color.FromHex("#F4DDFA");
 #pragma warning restore 1591
-    }
 
-    public enum ColorPaletteEnum
-    {
-        None = 0,
-        Dark,
-        DarkLight ,
-        DarkAir,
-        Tertiary,
-        TertiaryLight,
-        TertiaryAir,
-        Quaternary,
-        QuaternaryLight,
-        QuaternaryAir,
-        Quinary,
-        QuinaryLight,
-        QuinaryAir,
-        Light,
-        LightLight,
-        LightAir,
-        Accent,
-        AccentLight,
-        AccentAir,
+        /// <summary>
+        /// Returns a <see cref="Theme"/> Color from it's enum
+        /// </summary>
+        /// <param name="colorPaletteEnum">The enum to get the color from<</param>
+        /// <returns>A theme color</returns>
+        /// <remarks>Returns <see cref="Color.Black"/> if input is null</remarks>
+        public static Color FromIdentifier(this Identifier? colorPaletteEnum)
+        {
+            if (colorPaletteEnum == null)
+            {
+                return Color.Black;
+            }
+
+            return colorPaletteEnum switch
+            {
+                Identifier.Dark => Dark,
+                Identifier.DarkLight => DarkLight,
+                Identifier.DarkAir => DarkAir,
+                Identifier.Tertiary => Tertiary,
+                Identifier.TertiaryLight => TertiaryLight,
+                Identifier.TertiaryAir => TertiaryAir,
+                Identifier.Quaternary => Quaternary,
+                Identifier.QuaternaryLight => QuaternaryLight,
+                Identifier.QuaternaryAir => QuaternaryAir,
+                Identifier.Quinary => Quinary,
+                Identifier.QuinaryLight => QuinaryLight,
+                Identifier.QuinaryAir => QuinaryAir,
+                Identifier.Light => Light,
+                Identifier.LightLight => LightLight,
+                Identifier.LightAir => LightAir,
+                Identifier.Accent => Accent,
+                Identifier.AccentLight => AccentLight,
+                Identifier.AccentAir => AccentAir,
+                _ => throw new System.NotImplementedException()
+            };
+        }
+        /// <summary>
+        /// Enum that can be used to identify a color
+        /// </summary>
+        public enum Identifier
+        {
+            Dark,
+            DarkLight,
+            DarkAir,
+            Tertiary,
+            TertiaryLight,
+            TertiaryAir,
+            Quaternary,
+            QuaternaryLight,
+            QuaternaryAir,
+            Quinary,
+            QuinaryLight,
+            QuinaryAir,
+            Light,
+            LightLight,
+            LightAir,
+            Accent,
+            AccentLight,
+            AccentAir,
+        }
     }
 }
