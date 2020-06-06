@@ -46,12 +46,14 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         /// </summary>
         public enum Identifier
         {
+#pragma warning disable 1591
             TealPrimary,
             TealPrimaryLight,
             TealPrimaryAir,
             TealSecondary,
             TealSecondaryLight,
             TealSecondaryAir,
+#pragma warning restore 1591
         }
     }
 }

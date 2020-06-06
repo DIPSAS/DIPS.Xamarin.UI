@@ -77,6 +77,7 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         /// </summary>
         public enum Identifier
         {
+#pragma warning disable 1591
             DangerDark,
             Danger,
             DangerLight,
@@ -97,6 +98,7 @@ namespace DIPS.Xamarin.UI.Resources.Colors
             Idle,
             IdleLight,
             IdleAir
+#pragma warning restore 1591
         }
     }
 

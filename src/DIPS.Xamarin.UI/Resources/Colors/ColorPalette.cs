@@ -74,6 +74,7 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         /// </summary>
         public enum Identifier
         {
+#pragma warning disable 1591
             Dark,
             DarkLight,
             DarkAir,
@@ -92,6 +93,7 @@ namespace DIPS.Xamarin.UI.Resources.Colors
             Accent,
             AccentLight,
             AccentAir,
+#pragma warning restore 1591
         }
     }
 }
