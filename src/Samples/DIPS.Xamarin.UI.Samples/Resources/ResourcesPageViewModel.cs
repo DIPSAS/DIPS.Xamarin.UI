@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using DIPS.Xamarin.UI.Samples.Resources.Colors;
+using DIPS.Xamarin.UI.Samples.Resources.Geometries;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples.Resources
@@ -20,6 +21,8 @@ namespace DIPS.Xamarin.UI.Samples.Resources
         {
             if (parameter.Equals("Colors"))
                 m_navigation.PushAsync(new ColorsPage());
+            if (parameter.Equals("Shapes"))
+                m_navigation.PushAsync(new GeometriesPage());
 
         }
     }

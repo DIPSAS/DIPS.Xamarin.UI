@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="DIPS.Xamarin.UI.Samples.Resources.Geometries.GeometriesPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:GeometriesPage="clr-namespace:DIPS.Xamarin.UI.Samples.Resources.Geometries;assembly=DIPS.Xamarin.UI.Samples"
+             x:Name="codeBehind"
+             mc:Ignorable="d">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Entry Keyboard="Numeric"
+               Placeholder="BPM"
+               FontSize="25"
+               HorizontalOptions="Center"
+               Text="{Binding Source={x:Reference codeBehind}, Path=BPM}" />
+        <Path Aspect="Fill"
+              Grid.Row="1"
+              Margin="20"
+              x:Name="Heart"
+              HeightRequest="100"
+              WidthRequest="100"
+              HorizontalOptions="Center"
+              VerticalOptions="Start"
+              Fill="{x:Static dxui:StatusColorPalette.Danger}"
+              StrokeThickness="1"
+              Data="{dxui:DIPSGeometry Data=Heart}" />
+    </Grid>
+    
+
+
+</ContentPage>

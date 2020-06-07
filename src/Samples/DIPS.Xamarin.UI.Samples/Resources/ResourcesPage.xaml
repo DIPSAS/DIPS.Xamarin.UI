@@ -9,5 +9,8 @@
         <Button Text="Colors"
                 Command="{Binding NavigateToCommand}"
                 CommandParameter="Colors" />
+        <Button Text="Shapes"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Shapes" />
     </StackLayout>
 </ContentPage>

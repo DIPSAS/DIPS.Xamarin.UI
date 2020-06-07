@@ -26,7 +26,7 @@ namespace DIPS.Xamarin.UI.Samples.Droid
             base.OnCreate(savedInstanceState);
 
             Essentials.Platform.Init(this, savedInstanceState); //Xamarin essentials
-
+            global::Xamarin.Forms.Forms.SetFlags("Shapes_Experimental");
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             DIPS.Xamarin.UI.Android.Library.Initialize();
 
