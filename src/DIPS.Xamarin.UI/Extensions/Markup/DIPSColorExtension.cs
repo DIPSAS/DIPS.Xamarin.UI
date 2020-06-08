@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DIPS.Xamarin.UI.Internal.Utilities;
 using DIPS.Xamarin.UI.Resources.Colors;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -70,11 +71,11 @@ namespace DIPS.Xamarin.UI.Extensions.Markup
                 xamlInfo = GetXamlInfo(serviceProvider);
                 if (xamlInfo.Item2 != null)
                 {
-                    throw new XamlParseException($"{xamlInfo.Item1} is using more than one color as {xamlInfo.Item2}. {nameof(DIPSColorExtension)} does not accept this.");
+                    throw new XamlParseException($"{xamlInfo.Item1} is using more than one color as {xamlInfo.Item2}. {nameof(DIPSColorExtension)} does not accept this.").WithXmlLineInfo(serviceProvider);
                 }
                 else
                 {
-                    throw new XamlParseException($"{xamlInfo.Item1} is using more than one color. {nameof(DIPSColorExtension)} does not accept this.");
+                    throw new XamlParseException($"{xamlInfo.Item1} is using more than one color. {nameof(DIPSColorExtension)} does not accept this.").WithXmlLineInfo(serviceProvider);
                 }
             }
             else if (numberOfSelectedColorFamilies == 0) //Need to set at least one color family
@@ -82,11 +83,11 @@ namespace DIPS.Xamarin.UI.Extensions.Markup
                 xamlInfo = GetXamlInfo(serviceProvider);
                 if (xamlInfo.Item2 != null)
                 {
-                    throw new XamlParseException($"{xamlInfo.Item1} has not set any color for {xamlInfo.Item2} when using {nameof(DIPSColorExtension)}.");
+                    throw new XamlParseException($"{xamlInfo.Item1} has not set any color for {xamlInfo.Item2} when using {nameof(DIPSColorExtension)}.").WithXmlLineInfo(serviceProvider);
                 }
                 else
                 {
-                    throw new XamlParseException($"{xamlInfo.Item1} has not set any color when using {nameof(DIPSColorExtension)}.");
+                    throw new XamlParseException($"{xamlInfo.Item1} has not set any color when using {nameof(DIPSColorExtension)}.").WithXmlLineInfo(serviceProvider);
                 }
             }
             else //Happy case
@@ -110,11 +111,11 @@ namespace DIPS.Xamarin.UI.Extensions.Markup
             xamlInfo = GetXamlInfo(serviceProvider);
             if (xamlInfo.Item2 != null)
             {
-                throw new XamlParseException($"You need to specify at least one color when using {nameof(DIPSColorExtension)}");
+                throw new XamlParseException($"You need to specify at least one color when using {nameof(DIPSColorExtension)}").WithXmlLineInfo(serviceProvider);
             }
             else
             {
-                throw new XamlParseException($"{xamlInfo.Item1} has not set any color when using {nameof(DIPSColorExtension)}.");
+                throw new XamlParseException($"{xamlInfo.Item1} has not set any color when using {nameof(DIPSColorExtension)}.").WithXmlLineInfo(serviceProvider);
             }
 
         }
