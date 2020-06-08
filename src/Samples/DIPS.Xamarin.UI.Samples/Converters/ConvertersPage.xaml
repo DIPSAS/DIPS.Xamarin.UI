@@ -38,6 +38,9 @@
             <Button Text="StringCaseConverter"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="StringCaseConverter" />
+            <Button Text="TypeToObjectConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TypeToObjectConverter" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
