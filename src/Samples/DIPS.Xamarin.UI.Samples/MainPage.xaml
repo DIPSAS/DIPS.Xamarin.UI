@@ -23,6 +23,9 @@
         <Button Text="Async command"
                 Command="{Binding NavigateToCommand}"
                 CommandParameter="Async command" />
+        <Button Text="Extensions"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Extensions" />
     </StackLayout>
 
 </ContentPage>
