@@ -13,14 +13,45 @@ namespace DIPS.Xamarin.UI.Extensions.Markup
     /// </summary>
     public class DIPSColorExtension : IMarkupExtension<Color>
     {
+        private Theme.Identifier m_theme;
+        private bool m_themeWasSet;
+        private StatusColorPalette.Identifier m_statusColorPalette;
+        private bool m_statusColorPaletteWasSet;
+        private ColorPalette.Identifier m_colorPalette;
+        private bool m_colorPaletteWasSet;
+
         /// <inheritdoc cref="Theme.Identifier"/>
-        public Theme.Identifier? Theme { get; set; }
+        public Theme.Identifier Theme
+        {
+            get => m_theme;
+            set
+            {
+                m_theme = value;
+                m_themeWasSet = true;
+            }
+        }
 
         /// <inheritdoc cref="StatusColorPalette.Identifier"/>
-        public StatusColorPalette.Identifier? StatusColorPalette { get; set; }
+        public StatusColorPalette.Identifier StatusColorPalette
+        {
+            get => m_statusColorPalette;
+            set
+            {
+                m_statusColorPalette = value;
+                m_statusColorPaletteWasSet = true;
+            }
+        }
 
         /// <inheritdoc cref="ColorPalette.Identifier"/>
-        public ColorPalette.Identifier? ColorPalette { get; set; }
+        public ColorPalette.Identifier ColorPalette
+        {
+            get => m_colorPalette;
+            set
+            {
+                m_colorPalette = value;
+                m_colorPaletteWasSet = true;
+            }
+        }
 
         /// <inheritdoc/>
         object IMarkupExtension.ProvideValue(IServiceProvider serviceProvider)
@@ -31,10 +62,10 @@ namespace DIPS.Xamarin.UI.Extensions.Markup
         /// <inheritdoc/>
         public Color ProvideValue(IServiceProvider serviceProvider)
         {
-            var listOfBools = new List<bool>() { Theme != null, StatusColorPalette != null, ColorPalette != null };
             Tuple<string, string?> xamlInfo;
+            var numberOfSelectedColorFamilies = new List<bool>() { m_themeWasSet, m_statusColorPaletteWasSet, m_colorPaletteWasSet }.Count(b => b);
 
-            if (listOfBools.Count(b => b) > 1)//More than one color family is set
+            if (numberOfSelectedColorFamilies > 1)//More than one color family is set
             {
                 xamlInfo = GetXamlInfo(serviceProvider);
                 if (xamlInfo.Item2 != null)
@@ -46,7 +77,7 @@ namespace DIPS.Xamarin.UI.Extensions.Markup
                     throw new XamlParseException($"{xamlInfo.Item1} is using more than one color. {nameof(DIPSColorExtension)} does not accept this.");
                 }
             }
-            else if (listOfBools.Count(b => b) == 0) //Need to set at least one color family
+            else if (numberOfSelectedColorFamilies == 0) //Need to set at least one color family
             {
                 xamlInfo = GetXamlInfo(serviceProvider);
                 if (xamlInfo.Item2 != null)
@@ -60,17 +91,17 @@ namespace DIPS.Xamarin.UI.Extensions.Markup
             }
             else //Happy case
             {
-                if (Theme != null)
+                if (m_themeWasSet)
                 {
                     return Theme.FromIdentifier();
                 }
 
-                if (StatusColorPalette != null)
+                if (m_statusColorPaletteWasSet)
                 {
                     return StatusColorPalette.FromIdentifier();
                 }
 
-                if (ColorPalette != null)
+                if (m_colorPaletteWasSet)
                 {
                     return ColorPalette.FromIdentifier();
                 }

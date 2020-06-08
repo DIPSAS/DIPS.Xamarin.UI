@@ -22,14 +22,8 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         /// </summary>
         /// <param name="themeEnum">The enum to get the color from</param>
         /// <returns>A theme color</returns>
-        /// <remarks>Returns <see cref="Color.Black"/> if input is null</remarks>
-        public static Color FromIdentifier(this Theme.Identifier? themeEnum)
+        public static Color FromIdentifier(this Theme.Identifier themeEnum)
         {
-            if (themeEnum == null)
-            {
-                return Color.Black;
-            }
-
             return themeEnum switch
             {
                 Identifier.TealPrimary => TealPrimary,

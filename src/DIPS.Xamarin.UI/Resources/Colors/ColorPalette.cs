@@ -38,14 +38,8 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         /// </summary>
         /// <param name="colorPaletteEnum">The enum to get the color from<</param>
         /// <returns>A theme color</returns>
-        /// <remarks>Returns <see cref="Color.Black"/> if input is null</remarks>
-        public static Color FromIdentifier(this Identifier? colorPaletteEnum)
+        public static Color FromIdentifier(this Identifier colorPaletteEnum)
         {
-            if (colorPaletteEnum == null)
-            {
-                return Color.Black;
-            }
-
             return colorPaletteEnum switch
             {
                 Identifier.Dark => Dark,
