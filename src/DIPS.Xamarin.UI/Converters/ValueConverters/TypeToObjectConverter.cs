@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
+using DIPS.Xamarin.UI.Internal.Utilities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,6 +14,8 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
     /// </summary>
     public class TypeToObjectConverter : IMarkupExtension, IValueConverter
     {
+        private IServiceProvider m_serviceProvider;
+
         /// <summary>
         /// The object to return when the binding and <see cref="Type"/> is the same type
         /// </summary>
@@ -31,11 +34,13 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
-                throw new ArgumentException($"value can not be null");
+                throw new XamlParseException($"value can not be null").WithXmlLineInfo(m_serviceProvider);
+            if (Type == null)
+                throw new XamlParseException($"Type to check against can not be null").WithXmlLineInfo(m_serviceProvider);
             if (TrueObject == null)
-                throw new ArgumentException($"{nameof(TrueObject)} can not be null");
+                throw new XamlParseException($"{nameof(TrueObject)} can not be null").WithXmlLineInfo(m_serviceProvider);
             if (FalseObject == null)
-                throw new ArgumentException($"{nameof(FalseObject)} can not be null");
+                throw new XamlParseException($"{nameof(FalseObject)} can not be null").WithXmlLineInfo(m_serviceProvider);
             return (value.GetType() == Type) ? TrueObject : FalseObject;
         }
         /// <inheritdoc/>
@@ -44,6 +49,10 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
 
         /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
-        public object ProvideValue(IServiceProvider serviceProvider) => this;
+        public object ProvideValue(IServiceProvider serviceProvider) 
+        {
+            m_serviceProvider = serviceProvider;
+            return this;
+        }
     }
 }
