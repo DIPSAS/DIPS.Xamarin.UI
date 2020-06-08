@@ -4,6 +4,7 @@ using System.Text;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
 using DIPS.Xamarin.UI.Tests.TestHelpers;
 using FluentAssertions;
+using Xamarin.Forms.Xaml;
 using Xunit;
 
 namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
@@ -33,19 +34,19 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         }
 
         [Fact]
-        public void Convert_ValueIsNull_ArgumentExceptionThrown()
+        public void Convert_ValueIsNull_XamlParseExceptionThrown()
         {
             Action act = () => m_additionConverter.Convert(null, null, null, null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
 
         [Fact]
-        public void Convert_AddendIsNull_ArgumentExceptionThrown()
+        public void Convert_AddendIsNull_XamlParseExceptionThrown()
         {
             Action act = () => m_additionConverter.Convert(1.0, null, null, null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
     }
 

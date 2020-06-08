@@ -6,6 +6,7 @@ using DIPS.Xamarin.UI.Internal.Utilities;
 using DIPS.Xamarin.UI.Resources.LocalizedStrings;
 using DIPS.Xamarin.UI.Tests.TestHelpers;
 using FluentAssertions;
+using Xamarin.Forms.Xaml;
 using Xunit;
 using DateAndTimeConverterFormat = DIPS.Xamarin.UI.Converters.ValueConverters.DateAndTimeConverter.DateAndTimeConverterFormat;
 
@@ -22,11 +23,11 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         [InlineData(0.0)]
         [InlineData(0.0f)]
         [InlineData("test")]
-        public void Convert_InvalidInput_ThrowsArgumentException(object invalidInput)
+        public void Convert_InvalidInput_XamlParseExceptionThrown(object invalidInput)
         {
             Action act = () => m_dateAndTimeConverter.Convert<string>(invalidInput);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
 
         [Fact]
