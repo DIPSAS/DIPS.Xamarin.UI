@@ -25,6 +25,9 @@
     <Compile Update="Controls\RadioButtonGroup\RadioButtonGroupPage.xaml.cs">
       <DependentUpon>RadioButtonGroupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Converters\ValueConverters\TypeToObjectConverterPage.xaml.cs">
+      <DependentUpon>TypeToObjectConverterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="SamplesResources\LocalizedStrings.Designer.cs">
       <DependentUpon>LocalizedStrings.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -85,6 +88,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Extensions\ExtensionsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Converters\ValueConverters\TypeToObjectConverterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="SamplesResources\LocalizedStrings.resx">

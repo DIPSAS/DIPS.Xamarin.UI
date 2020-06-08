@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
 using FluentAssertions;
+using Xamarin.Forms.Xaml;
 using Xunit;
 
 namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
@@ -30,11 +31,11 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         [InlineData(0)]
         [InlineData(0.1)]
         [InlineData(null)]
-        public void Convert_ValueIsNull_ThrowsArgumentException(object value)
+        public void Convert_ValueIsNull_XamlParseExceptionThrown(object value)
         {
             Action act = () => m_invertedBoolConverter.Convert(value, null, null, null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
 
         [Theory]

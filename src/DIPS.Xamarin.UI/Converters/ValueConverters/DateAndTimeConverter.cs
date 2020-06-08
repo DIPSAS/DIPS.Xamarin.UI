@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using DIPS.Xamarin.UI.Extensions;
+using DIPS.Xamarin.UI.Internal.Utilities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -35,14 +37,18 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         }
 
         private const string Space = " ";
+        private IServiceProvider m_serviceProvider;
+
         /// <summary>
         ///     The format to use during conversion
         /// </summary>
         public DateAndTimeConverterFormat Format { get; set; }
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider)
         {
+            m_serviceProvider = serviceProvider;
             return this;
         }
 
@@ -51,7 +57,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         {
             if (value == null) return string.Empty;
             if (!(value is DateTime dateTimeInput))
-                throw new ArgumentException("The input has to be of type DateTime");
+                throw new XamlParseException("The input has to be of type DateTime").WithXmlLineInfo(m_serviceProvider);
             return Format switch 
             {
                 DateAndTimeConverterFormat.Short => ConvertToShortFormat(dateTimeInput, culture), 
@@ -61,6 +67,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         }
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

@@ -110,7 +110,6 @@ namespace DIPS.Xamarin.UI.Util
         /// <summary>
         /// Invoke when dragging is done. If you have a value on the last drag, invoke OnDrag first.
         /// </summary>
-        /// <param name="value"></param>
         public void EndDrag()
         {
             lock (m_lock)

@@ -49,6 +49,9 @@ namespace DIPS.Xamarin.UI.Samples.Converters
                     break;
                 case "StringCaseConverter":
                     m_navigation.PushAsync(new StringCaseConverterPage() { Title = parameter });
+                break;
+                case "TypeToObjectConverter":
+                    m_navigation.PushAsync(new TypeToObjectConverterPage() { Title = parameter });
                     break;
             }
         }
