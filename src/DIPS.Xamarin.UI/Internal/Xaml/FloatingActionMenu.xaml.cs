@@ -97,13 +97,16 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             var multiplier = 1;
             foreach (var menuButton in Children)
             {
-                var maxOpacity = menuButton.IsEnabled ? 1 : .5;
-                menuButton.TranslateTo(0, m_isExpanded ? 0 : -m_yTranslate * multiplier, 250, Easing.CubicInOut);
-                menuButton.Button.FadeTo(m_isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
-                menuButton.TitleFrame.FadeTo(m_isExpanded ? 0 : 1, 250, Easing.CubicInOut);
-                menuButton.BadgeFrame.FadeTo(m_isExpanded ? .5 : .95, 250, Easing.CubicInOut);
+                if(menuButton.IsVisible)
+                {
+                    var maxOpacity = menuButton.IsEnabled ? 1 : .5;
+                    menuButton.TranslateTo(0, m_isExpanded ? 0 : -m_yTranslate * multiplier, 250, Easing.CubicInOut);
+                    menuButton.Button.FadeTo(m_isExpanded ? 0 : maxOpacity, 250, Easing.CubicInOut);
+                    menuButton.TitleFrame.FadeTo(m_isExpanded ? 0 : 1, 250, Easing.CubicInOut);
+                    menuButton.BadgeFrame.FadeTo(m_isExpanded ? .5 : .95, 250, Easing.CubicInOut);
 
-                multiplier += 1;
+                    multiplier += 1;
+                }
             }
 
             if (m_isExpanded)

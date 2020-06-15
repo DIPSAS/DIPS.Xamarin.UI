@@ -20,6 +20,9 @@
     <Compile Update="Github137\Github137.xaml.cs">
       <DependentUpon>Github137.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Github185\Github185Page.xaml.cs">
+      <DependentUpon>Github185Page.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +45,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Github137\Github137.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Github185\Github185Page.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
