@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.Forms.IssuesRepro.HideMenuButton.Github185Page">
+    <dxui:ModalityLayout>
+        <dxui:ModalityLayout.Behaviors>
+            <dxui:FloatingActionMenuBehaviour XPosition="0.9"
+                                              YPosition="0.9">
+                <dxui:MenuButton Title="1" />
+                <dxui:MenuButton Title="2"
+                                 IsVisible="{Binding Source={x:Reference checkBox}, Path=IsChecked}" />
+                <dxui:MenuButton Title="3" />
+                <dxui:MenuButton Title="4" />
+            </dxui:FloatingActionMenuBehaviour>
+        </dxui:ModalityLayout.Behaviors>
+        <CheckBox x:Name="checkBox" />
+    </dxui:ModalityLayout>
+</ContentPage>
