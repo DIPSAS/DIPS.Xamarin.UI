@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Modality;
 using Xamarin.Forms;
 
@@ -75,9 +76,180 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             typeof(Internal.Xaml.FloatingActionMenu),
             Color.White);
 
+        /// <summary>
+        ///     <see cref="IsVisible" />
+        /// </summary>
+        public static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(
+            nameof(IsVisible),
+            typeof(bool),
+            typeof(FloatingActionMenuBehaviour),
+            true,
+            propertyChanged: IsVisiblePropertyChanged);
+
+        private static void IsVisiblePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (bindable is FloatingActionMenuBehaviour behaviour)
+            {
+                behaviour.Children.ForEach(mb => mb.IsVisible = (bool) newvalue);
+            }
+        }
+
+        /// <summary>
+        ///     Determines the visibility of the floating action menu.
+        ///     This is a bindable property.
+        /// </summary>
+        public bool IsVisible
+        {
+            get => (bool)GetValue(IsVisibleProperty);
+            set => SetValue(IsVisibleProperty, value);
+        }
+
         private Internal.Xaml.FloatingActionMenu? m_floatingActionMenu;
         private bool m_first = true;
         private ModalityLayout? m_modalityLayout;
+
+        /// <summary>
+        ///     Raised before opening animation starts.
+        /// </summary>
+        public event EventHandler OnBeforeOpen;
+
+        /// <summary>
+        ///     Raised after opening animation completes.
+        /// </summary>
+        public event EventHandler OnAfterOpen;
+
+        /// <summary>
+        ///     Raised before closing animation starts.
+        /// </summary>
+        public event EventHandler OnBeforeClose;
+
+        /// <summary>
+        ///     Raised after closing animation completes.
+        /// </summary>
+        public event EventHandler OnAfterClose;
+
+        /// <summary>
+        /// <see cref="OnAfterCloseCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty OnAfterCloseCommandParameterProperty = BindableProperty.Create(nameof(OnAfterCloseCommandParameter), typeof(object), typeof(FloatingActionMenuBehaviour));
+
+        /// <summary>
+        /// Parameter passed to <see cref="OnAfterCloseCommand"/>
+        /// This is a bindable property.
+        /// </summary>
+        public object OnAfterCloseCommandParameter
+        {
+            get => (object)GetValue(OnAfterCloseCommandParameterProperty);
+            set => SetValue(OnAfterCloseCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="OnBeforeCloseCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty OnBeforeCloseCommandParameterProperty = BindableProperty.Create(nameof(OnBeforeCloseCommandParameter), typeof(object), typeof(FloatingActionMenuBehaviour));
+
+
+        /// <summary>
+        /// Parameter passed to <see cref="OnBeforeCloseCommand"/>
+        /// This is a bindable property.
+        /// </summary>
+        public object OnBeforeCloseCommandParameter
+        {
+            get => (object)GetValue(OnBeforeCloseCommandParameterProperty);
+            set => SetValue(OnBeforeCloseCommandParameterProperty, value);
+        }
+
+
+        /// <summary>
+        /// <see cref="OnAfterOpenCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty OnAfterOpenCommandParameterProperty = BindableProperty.Create(nameof(OnAfterOpenCommandParameter), typeof(object), typeof(FloatingActionMenuBehaviour));
+
+        /// <summary>
+        /// Parameter passed to <see cref="OnAfterOpenCommand"/>
+        /// This is a bindable property.
+        /// </summary>
+        public object OnAfterOpenCommandParameter
+        {
+            get => (object)GetValue(OnAfterOpenCommandParameterProperty);
+            set => SetValue(OnAfterOpenCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="OnBeforeOpenCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty OnBeforeOpenCommandParameterProperty = BindableProperty.Create(nameof(OnBeforeOpenCommandParameter), typeof(object), typeof(FloatingActionMenuBehaviour));
+
+        /// <summary>
+        /// Parameter passed to <see cref="OnBeforeOpenCommand"/>
+        /// This is a bindable property.
+        /// </summary>
+        public object OnBeforeOpenCommandParameter
+        {
+            get => (object)GetValue(OnBeforeOpenCommandParameterProperty);
+            set => SetValue(OnBeforeOpenCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="OnAfterCloseCommand"/>
+        /// </summary>
+        public static readonly BindableProperty OnAfterCloseCommandProperty = BindableProperty.Create(nameof(OnAfterCloseCommand), typeof(ICommand), typeof(FloatingActionMenuBehaviour));
+
+        /// <summary>
+        /// <see cref="OnAfterClose"/>
+        /// This is a bindable property.
+        /// </summary>
+        public ICommand OnAfterCloseCommand
+        {
+            get => (ICommand)GetValue(OnAfterCloseCommandProperty);
+            set => SetValue(OnAfterCloseCommandProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="OnBeforeCloseCommand"/>
+        /// </summary>
+        public static readonly BindableProperty OnBeforeCloseCommandProperty = BindableProperty.Create(nameof(OnBeforeCloseCommand), typeof(ICommand), typeof(FloatingActionMenuBehaviour));
+
+        /// <summary>
+        ///    <see cref="OnBeforeClose"/>
+        /// This is a bindable property.
+        /// </summary>
+        public ICommand OnBeforeCloseCommand
+        {
+            get => (ICommand)GetValue(OnBeforeCloseCommandProperty);
+            set => SetValue(OnBeforeCloseCommandProperty, value);
+        }
+
+        /// <summary>
+        ///  <see cref="OnBeforeOpenCommand"/>
+        /// </summary>
+        public static readonly BindableProperty BeforeOpenCommandProperty = BindableProperty.Create(nameof(OnBeforeOpenCommand), typeof(ICommand), typeof(FloatingActionMenuBehaviour));
+
+        /// <summary>
+        ///     <see cref="OnBeforeOpen"/>
+        /// This is a bindable property.
+        /// </summary>
+        public ICommand OnBeforeOpenCommand
+        {
+            get => (ICommand)GetValue(BeforeOpenCommandProperty);
+            set => SetValue(BeforeOpenCommandProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="OnAfterOpenCommand"/>
+        /// </summary>
+        public static readonly BindableProperty OnAfterOpenCommandProperty = BindableProperty.Create(nameof(OnAfterOpenCommand), typeof(ICommand), typeof(FloatingActionMenuBehaviour));
+
+
+        /// <summary>
+        /// <see cref="OnAfterOpen"/>
+        /// This is a bindable property.
+        /// </summary>
+        public ICommand OnAfterOpenCommand
+        {
+            get => (ICommand)GetValue(OnAfterOpenCommandProperty);
+            set => SetValue(OnAfterOpenCommandProperty, value);
+        }
 
         /// <summary>
         ///     Add this behaviour to add a floating action menu.
@@ -172,6 +344,26 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             set => SetValue(ExpandButtonFontSizeProperty, value);
         }
 
+        /// <summary>
+        /// <see cref="CloseOnOverlayTapped"/>
+        /// </summary>
+        public static readonly BindableProperty CloseOnOverlayTappedProperty = BindableProperty.Create(nameof(CloseOnOverlayTapped), typeof(bool), typeof(FloatingActionMenuBehaviour), true, propertyChanged: OnCloseOnOverlayTappedPropertyChanged);
+
+        private static void OnCloseOnOverlayTappedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is FloatingActionMenuBehaviour floatingActionMenuBehaviour)) return;
+            if (!(bool.TryParse(newvalue.ToString(), out var newBoolValue))) return;
+            if (floatingActionMenuBehaviour.m_floatingActionMenu == null) return;
+            floatingActionMenuBehaviour.m_floatingActionMenu.CloseOnOverlayTapped = newBoolValue;
+        }
+
+        /// <see cref="IModalityHandler.CloseOnOverlayTapped"/>
+        public bool CloseOnOverlayTapped
+        {
+            get => (bool)GetValue(CloseOnOverlayTappedProperty);
+            set => SetValue(CloseOnOverlayTappedProperty, value);
+        }
+
         private static void IsOpenPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is FloatingActionMenuBehaviour menuBehaviour)
@@ -186,8 +378,40 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             base.OnAttachedTo(modalityLayout);
             m_modalityLayout = modalityLayout;
             m_floatingActionMenu = new Internal.Xaml.FloatingActionMenu(this);
+            SubscribeToEvents();
             m_modalityLayout.SizeChanged += OnModalityLayoutSizeChanged;
             m_modalityLayout.BindingContextChanged += OnModalityBindingContextChanged;
+        }
+
+        private void SubscribeToEvents()
+        {
+            if (m_floatingActionMenu != null)
+            {
+                m_floatingActionMenu.OnBeforeOpen += FloatingActionMenuOnBeforeOpen;
+                m_floatingActionMenu.OnAfterOpen += FloatingActionMenuOnAfterOpen;
+                m_floatingActionMenu.OnBeforeClose += FloatingActionMenuOnBeforeClose;
+                m_floatingActionMenu.OnAfterClose += FloatingActionMenuOnAfterClose;
+            }
+        }
+
+        private void FloatingActionMenuOnAfterClose(object sender, EventArgs e)
+        {
+            OnAfterClose?.Invoke(this, EventArgs.Empty);   
+        }
+
+        private void FloatingActionMenuOnBeforeClose(object sender, EventArgs e)
+        {
+            OnBeforeClose?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void FloatingActionMenuOnAfterOpen(object sender, EventArgs e)
+        {
+            OnAfterOpen?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void FloatingActionMenuOnBeforeOpen(object sender, EventArgs e)
+        {
+            OnBeforeOpen?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnModalityBindingContextChanged(object sender, EventArgs e)
@@ -212,8 +436,20 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             if (m_modalityLayout == null) return;
 
             base.OnDetachingFrom(m_modalityLayout);
+            UnsubscribeToEvents();
             m_modalityLayout.SizeChanged -= OnModalityLayoutSizeChanged;
             m_modalityLayout.BindingContextChanged -= OnModalityBindingContextChanged;
+        }
+
+        private void UnsubscribeToEvents()
+        {
+            if (m_floatingActionMenu != null)
+            {
+                m_floatingActionMenu.OnBeforeOpen -= FloatingActionMenuOnBeforeOpen;
+                m_floatingActionMenu.OnAfterOpen -= FloatingActionMenuOnAfterOpen;
+                m_floatingActionMenu.OnBeforeClose -= FloatingActionMenuOnBeforeClose;
+                m_floatingActionMenu.OnAfterClose -= FloatingActionMenuOnAfterClose;
+            }
         }
     }
 }

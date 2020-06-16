@@ -17,11 +17,15 @@ namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
         public SlideLayoutViewModel()
         {
             OnSelectedIndexChangedCommand = new Command(o => Selected = o.ToString());
+            
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
-            SlidableProperties = new SlidableProperties(4);
+            await Task.Delay(1);
+            SlidableProperties = new SlidableProperties(1);
+            await Task.Delay(1000);
+            SlidableProperties = new SlidableProperties(-3);
         }
 
         public SliderConfig Config => new SliderConfig(-10, 0);

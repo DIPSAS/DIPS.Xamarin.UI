@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
+using DIPS.Xamarin.UI.Internal.Utilities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,9 +14,15 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
     /// </summary>
     public class InvertedBoolConverter : IMarkupExtension, IValueConverter
     {
+        private IServiceProvider m_serviceProvider;
+
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public object ProvideValue(IServiceProvider serviceProvider) => this;
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            m_serviceProvider = serviceProvider;
+            return this;
+        }
 
         /// <summary>
         /// Converts a boolean value to the inverted value of the boolean value.
@@ -29,7 +36,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         {
             if (value == null || !bool.TryParse(value.ToString(), out var booleanValue))
             {
-                throw new ArgumentException("Value has to be of type boolean");
+                throw new XamlParseException("Value has to be of type boolean").WithXmlLineInfo(m_serviceProvider);
             }
 
             return !booleanValue;

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.TypeToObjectConverterPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:valueconverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <valueconverters:TypeToObjectConverterPageViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Switch Grid.Row="0"
+                HorizontalOptions="Start"
+                IsToggled="{Binding IsToggled}" />
+        <StackLayout Grid.Row="1">
+            <Label Text="Current object type:" />
+            <Label Text="{Binding CurrentTypeClass, Converter={dxui:TypeToObjectConverter Type={x:Type valueconverters:OneTypeClass}, TrueObject=OneTypeClass, FalseObject=AnotherTypeClass}}"
+                   BackgroundColor="{Binding CurrentTypeClass, Converter={dxui:TypeToObjectConverter Type={x:Type valueconverters:OneTypeClass}, TrueObject=Red, FalseObject=Green}}" />
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

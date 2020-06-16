@@ -1,6 +1,7 @@
 ﻿using System;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
 using FluentAssertions;
+using Xamarin.Forms.Xaml;
 using Xunit;
 
 namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
@@ -37,19 +38,19 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         }
 
         [Fact]
-        public void Convert_ValueIsNull_ArgumentExceptionThrown()
+        public void Convert_ValueIsNull_XamlParseExceptionThrown()
         {
             Action act = () => m_multiplicationConverter.Convert(null, null, null, null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
 
         [Fact]
-        public void Convert_FactorIsNull_ArgumentExceptionThrown()
+        public void Convert_FactorIsNull_XamlParseExceptionThrown()
         {
             Action act = () => m_multiplicationConverter.Convert(1.0, null, null, null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
     }
 }

@@ -13,12 +13,17 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
     /// </summary>
     public class SlidableLayout : ContentView
     {
+        private static int m_tappedValue = -3;
         private readonly PanGestureRecognizer m_rec = new PanGestureRecognizer();
         private readonly AccelerationService m_accelerator = new AccelerationService(true);
-        private int m_lastId = -1;
+        private int m_lastId = -2; // Different than default of SlideProperties
         private double m_startSlideLocation;
         private int m_lastIndex = int.MinValue;
         private bool disableTouchScroll;
+        /// <summary>
+        /// Disables touch stopping of the slider.
+        /// </summary>
+        protected bool m_disableTouchStop;
 
         /// <summary>
         /// <inheritdoc/>
@@ -31,8 +36,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             VerticalOptions = LayoutOptions.FillAndExpand;
             Config = new SliderConfig(int.MinValue, int.MaxValue);
             m_rec = new PanGestureRecognizer();
+            var tapGesture = new TapGestureRecognizer();
             GestureRecognizers.Add(m_rec);
+            GestureRecognizers.Add(tapGesture);
             m_rec.PanUpdated += Rec_PanUpdated;
+            tapGesture.Tapped += OnTapped;
         }
 
         private static void OnChanged(BindableObject bindable, object oldValue, object newValue)
@@ -57,9 +65,56 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             OnScrolledInternal(true);
         }
 
+        private void OnTapped(object sender, EventArgs e)
+        {
+            if(m_disableTouchStop)
+            {
+                return;
+            }
+
+            if (DisableTouchScroll)
+            {
+                return;
+            }
+
+            if (Config == null)
+            {
+                return;
+            }
+
+            if (SlideProperties.IsHeld)
+            {
+                return;
+            }
+
+            var id = m_tappedValue--;
+            m_lastId = id;
+            var index = SlideProperties.Position;
+            SlideProperties = new SlidableProperties(index, id, false);
+            m_accelerator.StartDrag(index);
+            m_accelerator.EndDrag();
+            Device.StartTimer(TimeSpan.FromMilliseconds(20), () => // ~40 fps
+            {
+                if (id != SlideProperties.HoldId) return false;
+                m_accelerator.Min = Config.MinValue - 0.45;
+                m_accelerator.Max = Config.MaxValue + 0.45;
+                var next = m_accelerator.GetValue(out bool isDone);
+                index = next;
+                if (SlideProperties.IsHeld) return false;
+                SlideProperties = new SlidableProperties(index, id, false);
+                OnScrolledInternal();
+                return !isDone;
+            });
+        }
+
         private void Rec_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
             if (DisableTouchScroll)
+            {
+                return;
+            }
+
+            if (Config == null)
             {
                 return;
             }
@@ -222,7 +277,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             nameof(Config),
             typeof(SliderConfig),
             typeof(SlidableLayout));
-
+        
         /// <summary>
         /// Configuration indicating max and min values of this layout. 
         /// </summary>
@@ -240,7 +295,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(SlidableProperties),
             typeof(SlidableLayout),
             defaultBindingMode: BindingMode.TwoWay,
-            defaultValue: new SlidableProperties(0, -1, false),
+            defaultValue: new SlidableProperties(0),
             propertyChanged: OnChanged);
 
         /// <summary>

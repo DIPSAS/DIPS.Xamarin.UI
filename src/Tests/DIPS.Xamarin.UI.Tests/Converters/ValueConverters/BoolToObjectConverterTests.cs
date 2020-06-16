@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
 using FluentAssertions;
+using Xamarin.Forms.Xaml;
 using Xunit;
 
 namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
@@ -58,42 +59,42 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         }
 
         [Fact]
-        public void Convert_TrueFalseObjectsAreDifferent_ThrowsArgumentException()
+        public void Convert_TrueFalseObjectsAreDifferent_ThrowsXamlParseException()
         {
             m_boolToObjectConverter.TrueObject = "2.0";
             m_boolToObjectConverter.FalseObject = 2.0;
 
             Action act = () => m_boolToObjectConverter.Convert(false, null, null, null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
 
         [Fact]
-        public void Convert_InputIsNull_ThrowsArgumentException()
+        public void Convert_InputIsNull_XamlParseExceptionThrown()
         {
             Action act = () => m_boolToObjectConverter.Convert(null, null, null, null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
 
         [Fact]
-        public void Convert_TrueObjectIsNull_ThrowsArgumentException()
+        public void Convert_TrueObjectIsNull_XamlParseExceptionThrown()
         {
             m_boolToObjectConverter.TrueObject = null;
             m_boolToObjectConverter.FalseObject = "Something";
             Action act = () => m_boolToObjectConverter.Convert(true, null, null, null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
         
         [Fact]
-        public void Convert_FalseObjectIsNull_ThrowsArgumentException()
+        public void Convert_FalseObjectIsNull_XamlParseExceptionThrown()
         {
             m_boolToObjectConverter.FalseObject = null;
             m_boolToObjectConverter.TrueObject = "Something";
             Action act = () => m_boolToObjectConverter.Convert(true, null, null, null);
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<XamlParseException>();
         }
     }
 }

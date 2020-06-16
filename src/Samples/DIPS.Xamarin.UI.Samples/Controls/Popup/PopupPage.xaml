@@ -21,7 +21,7 @@
         </Style>
 
         <DataTemplate x:Key="dt1">
-            <Frame BackgroundColor="DarkGreen" CornerRadius="0">
+            <Frame HasShadow="False" BackgroundColor="DarkGreen" CornerRadius="0">
                 <StackLayout>
                     <CheckBox IsChecked="{Binding IsOpen}" />
 
@@ -39,7 +39,7 @@
             </Frame>
         </DataTemplate>
         <DataTemplate x:Key="dt2">
-            <Frame BackgroundColor="DarkBlue" CornerRadius="0">
+            <Frame HasShadow="False" BackgroundColor="DarkBlue" CornerRadius="0">
                 <StackLayout>
                     <CheckBox IsChecked="{Binding IsOpen}" />
 
@@ -78,7 +78,7 @@
                         BindingContextFactory="{Binding GetViewModel}"
                         HorizontalOptions="RightAlign"
                         VerticalOptions="Below">
-                        <Frame Margin="10" Style="{StaticResource popupContentStyle}">
+                        <Frame HasShadow="False" Margin="10" Style="{StaticResource popupContentStyle}">
                             <Label Margin="20" Text="{Binding MyString}" />
                         </Frame>
                     </dxui:PopupBehavior>
@@ -96,7 +96,7 @@
                         BindingContextFactory="{Binding FilterViewModelFactory}"
                         HorizontalOptions="Left"
                         VerticalOptions="Center">
-                        <Frame Margin="1" Style="{StaticResource popupContentStyle}">
+                        <Frame HasShadow="False" Margin="1" Style="{StaticResource popupContentStyle}">
                             <StackLayout Orientation="Vertical">
                                 <Label Margin="5" Text="This is a long header to prove the automatic X placement" />
                                 <CheckBox

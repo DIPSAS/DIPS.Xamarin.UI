@@ -96,6 +96,53 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         }
 
         [Theory]
+        [InlineData(1)]
+        [InlineData(1.0)]
+        [InlineData(1.0f)]
+        [InlineData(1, true)]
+        [InlineData(1.0, true)]
+        [InlineData(1.0f, true)]
+        public void Convert_NonEmptyNumbers_ReturnsCorrect(object number, bool inverted = false)
+        {
+            m_isEmptyConverter.Inverted = inverted;
+
+            var result = (bool)m_isEmptyConverter.Convert(number, null, null, null);
+
+            if (!inverted)
+            {
+                result.Should().BeFalse();
+            }
+            else
+            {
+                result.Should().BeTrue();
+            }
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(0.0)]
+        [InlineData(0.0f)]
+        [InlineData(0, true)]
+        [InlineData(0.0, true)]
+        [InlineData(0.0f, true)]
+        public void Convert_EmptyNumbers_ReturnsCorrect(object number, bool inverted = false)
+        {
+            m_isEmptyConverter.Inverted = inverted;
+
+            var result = (bool)m_isEmptyConverter.Convert(number, null, null, null);
+
+            if (!inverted)
+            {
+                result.Should().BeTrue();
+            }
+            else
+            {
+                result.Should().BeFalse();
+            }
+        }
+
+
+        [Theory]
         [InlineData(false)]
         [InlineData(true)]
         public void ConvertBack_NonEmptyListValue_ReturnsCorrect(bool inverted)
@@ -130,6 +177,52 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
             else
             {
                 result.Should().BeFalse();
+            }
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(1.0)]
+        [InlineData(1.0f)]
+        [InlineData(1, true)]
+        [InlineData(1.0, true)]
+        [InlineData(1.0f, true)]
+        public void ConvertBack_NonEmptyNumbers_ReturnsCorrect(object number, bool inverted = false)
+        {
+            m_isEmptyConverter.Inverted = inverted;
+
+            var result = (bool)m_isEmptyConverter.ConvertBack(number, null, null, null);
+
+            if (!inverted)
+            {
+                result.Should().BeTrue();
+            }
+            else
+            {
+                result.Should().BeFalse();
+            }
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(0.0)]
+        [InlineData(0.0f)]
+        [InlineData(0, true)]
+        [InlineData(0.0, true)]
+        [InlineData(0.0f, true)]
+        public void ConvertBack_EmptyNumbers_ReturnsCorrect(object number, bool inverted = false)
+        {
+            m_isEmptyConverter.Inverted = inverted;
+
+            var result = (bool)m_isEmptyConverter.ConvertBack(number, null, null, null);
+
+            if (!inverted)
+            {
+                result.Should().BeFalse();
+            }
+            else
+            {
+                result.Should().BeTrue();
             }
         }
     }

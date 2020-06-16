@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
+using DIPS.Xamarin.UI.Controls.FloatingActionMenu;
 
 namespace DIPS.Xamarin.UI
 {
@@ -16,5 +14,27 @@ namespace DIPS.Xamarin.UI
         /// </summary>
         [ExcludeFromCodeCoverage]
         public static void Initialize(){}
+
+        /// <summary>
+        ///     A static class used to enable features that are in preview.
+        /// </summary>
+        public static class PreviewFeatures
+        {
+
+            /// <summary>
+            ///     Enable a feature that's in preview.
+            /// </summary>
+            /// <param name="previewFeature">A string specifying which preview feature you want to enable.</param>
+            public static void EnableFeature(string previewFeature)
+            {
+                if (previewFeature == "MenuButtonBadgeAnimation") MenuButtonBadgeAnimation = true;
+            }
+
+            /// <summary>
+            ///     Toggles animations for the badge on the <see cref="MenuButton"/>
+            /// </summary>
+            public static bool MenuButtonBadgeAnimation { get; set; }
+        }
+
     }
 }

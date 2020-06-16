@@ -19,14 +19,14 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
 
         private void SheetBehavior_OnOnPositionChanged(object sender, EventArgs e)
         {
-            
+            if (!(sender is SheetBehavior sheetBehavior)) return;
+            sheetBehavior.Position = 0.9;
         }
     }
 
     public class SheetPageViewModel : INotifyPropertyChanged
     {
         private AlignmentOptions m_alignment;
-        private string m_backgroundColor;
         private string m_handleColor;
         private bool m_hasShadow;
         private bool m_isDraggable;
@@ -36,12 +36,38 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private double m_maxPosition = 1;
         private double m_minPosition = 0.05;
         private string m_stateText;
+        private bool m_shouldRememberPosition;
+        private string m_contentColor;
+        private string m_headerColor;
+        private bool m_cancelCanExecute = true;
+        private string m_title;
+        private bool m_hasActionButton;
 
         public SheetPageViewModel()
         {
             OpenSheetCommand = new Command(() => IsSheetOpen = true);
             OnOpenCommand = new Command<string>(SheetOpened);
             OnCloseCommand = new Command<string>(SheetClosed);
+            CancelCommand = new CancelSheetCommand(
+                () =>
+                {
+
+                },
+                () =>
+                {
+                    return true;
+
+                }, () =>
+               {
+                   //Do logic to determine if the sheet should close
+                   return true;
+               });
+
+            ActionCommand = new Command(
+                () =>
+                {
+                    //Do work when action is pressed
+                });
         }
 
         private void SheetClosed(string commandParameter)
@@ -60,24 +86,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             get => m_alignment;
             set => PropertyChanged.RaiseWhenSet(ref m_alignment, value);
-        }
-
-        public string BackgroundColor
-        {
-            get => m_backgroundColor;
-            set
-            {
-                try
-                {
-                    new ColorTypeConverter().ConvertFromInvariantString(value);
-                    m_backgroundColor = value;
-                    PropertyChanged.Raise();
-                }
-                catch (Exception e)
-                {
-                    //Swallow it.
-                }
-            }
         }
 
         public string HandleColor
@@ -154,6 +162,65 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             get => m_stateText;
             set => PropertyChanged.RaiseWhenSet(ref m_stateText, value);
+        }
+
+        public bool ShouldRememberPosition
+        {
+            get => m_shouldRememberPosition;
+            set => PropertyChanged.RaiseWhenSet(ref m_shouldRememberPosition, value);
+        }
+
+        public string ContentColor
+        {
+            get => m_contentColor;
+            set
+            {
+                try
+                {
+                    new ColorTypeConverter().ConvertFromInvariantString(value);
+                    m_contentColor = value;
+                    PropertyChanged.Raise();
+                }
+                catch (Exception e)
+                {
+                    //Swallow it.
+                }
+            }
+        }
+
+        public string HeaderColor
+        {
+            get => m_headerColor;
+            set
+            {
+                try
+                {
+                    new ColorTypeConverter().ConvertFromInvariantString(value);
+                    m_headerColor = value;
+                    PropertyChanged.Raise();
+                }
+                catch (Exception e)
+                {
+                    //Swallow it.
+                }
+
+            }
+        }
+
+        public ICommand CancelCommand { get; }
+
+        public ICommand ActionCommand { get; }
+
+        public string Title
+        {
+            get => m_title;
+            set => PropertyChanged.RaiseWhenSet(ref m_title, value);
+        }
+
+        public bool HasActionButton
+        {
+            get => m_hasActionButton;
+            set => PropertyChanged.RaiseWhenSet(ref m_hasActionButton, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

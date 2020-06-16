@@ -22,7 +22,8 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// <summary>
         ///     <see cref="Command" />
         /// </summary>
-        public static readonly BindableProperty CommandProperty = BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MenuButton));
+        public static readonly BindableProperty CommandProperty =
+            BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(MenuButton));
 
         /// <summary>
         ///     <see cref="CommandParameter" />
@@ -35,7 +36,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// <summary>
         ///     <see cref="BackgroundColor" />
         /// </summary>
-        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(
+        public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(
             nameof(BackgroundColor),
             typeof(Color),
             typeof(MenuButton),
@@ -71,12 +72,13 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// <summary>
         ///     <see cref="FontFamily" />
         /// </summary>
-        public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MenuButton));
+        public static readonly BindableProperty FontFamilyProperty =
+            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(MenuButton));
 
         /// <summary>
         ///     <see cref="IsEnabled" />
         /// </summary>
-        public new static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(
+        public static new readonly BindableProperty IsEnabledProperty = BindableProperty.Create(
             nameof(IsEnabled),
             typeof(bool),
             typeof(MenuButton),
@@ -109,11 +111,97 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             typeof(MenuButton));
 
         /// <summary>
+        ///     <see cref="IsBadgeVisible" />
+        /// </summary>
+        public static readonly BindableProperty IsBadgeVisibleProperty = BindableProperty.Create(
+            nameof(IsBadgeVisible),
+            typeof(bool),
+            typeof(MenuButton),
+            propertyChanged: IsBadgeVisiblePropertyChanged);
+
+        /// <summary>
+        ///     Bindable property for <see cref="BadgeFontFamily" />
+        /// </summary>
+        public static readonly BindableProperty BadgeFontFamilyProperty =
+            BindableProperty.Create(nameof(BadgeFontFamily), typeof(string), typeof(MenuButton),
+                Label.FontFamilyProperty.DefaultValue);
+
+        /// <summary>
+        ///     <see cref="BadgeCount" />
+        /// </summary>
+        public static readonly BindableProperty BadgeCountProperty = BindableProperty.Create(nameof(BadgeCount),
+            typeof(string), typeof(MenuButton), propertyChanged: BadgeCountPropertyChanged, coerceValue: CoerceValue);
+
+        /// <summary>
+        ///     <see cref="BadgeColor" />
+        /// </summary>
+        public static readonly BindableProperty BadgeColorProperty =
+            BindableProperty.Create(nameof(BadgeColor), typeof(Color), typeof(MenuButton));
+
+        /// <summary>
+        ///     <see cref="BadgeTextColor" />s
+        /// </summary>
+        public static readonly BindableProperty BadgeTextColorProperty = BindableProperty.Create(
+            nameof(BadgeTextColor),
+            typeof(Color),
+            typeof(MenuButton),
+            Color.Black);
+
+        /// <summary>
         ///     Buttons that can be placed in a <see cref="FloatingActionMenuBehaviour" />.
         /// </summary>
         public MenuButton()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        ///     Gets or sets the font family to which the font for the Badge belongs. This is a bindable property.
+        /// </summary>
+        public string BadgeFontFamily
+        {
+            get => (string)GetValue(BadgeFontFamilyProperty);
+            set => SetValue(BadgeFontFamilyProperty, value);
+        }
+
+        /// <summary>
+        ///     Color of the text in the badge.
+        ///     This is a bindable property.
+        /// </summary>
+        public Color BadgeTextColor
+        {
+            get => (Color)GetValue(BadgeTextColorProperty);
+            set => SetValue(BadgeTextColorProperty, value);
+        }
+
+        /// <summary>
+        ///     Badge color.
+        ///     This is a bindable porperty.
+        /// </summary>
+        public Color BadgeColor
+        {
+            get => (Color)GetValue(BadgeColorProperty);
+            set => SetValue(BadgeColorProperty, value);
+        }
+
+        /// <summary>
+        ///     Contents of badge.
+        ///     This is a bindable porperty.
+        /// </summary>
+        public string BadgeCount
+        {
+            get => (string)GetValue(BadgeCountProperty);
+            set => SetValue(BadgeCountProperty, value);
+        }
+
+        /// <summary>
+        ///     Toggles badge on button.
+        ///     This is a bindable porperty.
+        /// </summary>
+        public bool IsBadgeVisible
+        {
+            get => (bool)GetValue(IsBadgeVisibleProperty);
+            set => SetValue(IsBadgeVisibleProperty, value);
         }
 
         /// <summary>
@@ -236,6 +324,69 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         {
             get => (string)GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
+        }
+
+        private static async void IsBadgeVisiblePropertyChanged(BindableObject bindable, object oldvalue,
+            object newvalue)
+        {
+            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation)
+            {
+                return;
+            }
+
+            if (bindable is MenuButton menuButton)
+            {
+                if ((bool)newvalue)
+                {
+                    if (menuButton.FloatingActionMenuParent != null)
+                    {
+                        menuButton.BadgeFrame?.FadeTo(menuButton.FloatingActionMenuParent.m_behaviour.IsOpen ? .95 : .5,
+                            100);
+
+                        await menuButton.BadgeFrame?.TranslateTo(0, -20, 200, Easing.CubicIn);
+                        menuButton.BadgeFrame?.TranslateTo(0, 0, 200, Easing.BounceOut);
+                    }
+                }
+            }
+        }
+
+        private static object CoerceValue(BindableObject bindable, object value)
+        {
+            if (bindable is MenuButton menuButton && menuButton.BadgeFrame != null)
+            {
+                if (value is string count && int.TryParse(count, out var newCount))
+                {
+                    if (newCount > 99)
+                    {
+                        menuButton.BadgeFrame.HeightRequest = 25;
+                        menuButton.BadgeFrame.WidthRequest = 25;
+                        menuButton.BadgeFrame.CornerRadius = 12.5f;
+                        return "99+";
+                    }
+                }
+
+                menuButton.BadgeFrame.HeightRequest = 20;
+                menuButton.BadgeFrame.WidthRequest = 20;
+                menuButton.BadgeFrame.CornerRadius = 10;
+            }
+
+            return value;
+        }
+
+        private static async void BadgeCountPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is MenuButton menuButton))
+            {
+                return;
+            }
+
+            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation)
+            {
+                return;
+            }
+
+            await menuButton.BadgeFrame?.TranslateTo(0, -5, 150, Easing.CubicIn);
+            menuButton.BadgeFrame?.TranslateTo(0, 0, 150, Easing.CubicInOut);
         }
 
         private void MenuButton_OnClicked(object sender, EventArgs e)

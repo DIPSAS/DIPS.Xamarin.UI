@@ -14,46 +14,50 @@
     <ContentPage.BindingContext>
         <Sheet:SheetPageViewModel />
     </ContentPage.BindingContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <dxui:ModalityLayout>
-            <dxui:ModalityLayout.Behaviors>
-                <dxui:SheetBehavior IsOpen="{Binding IsSheetOpen}"
-                                    OnOpenCommand="{Binding OnOpenCommand}"
-                                    OnOpenCommandParameter="Opened"
-                                    OnCloseCommand="{Binding OnCloseCommand}"
-                                    OnCloseCommandParameter="Closed"
-                                    IsDraggable="{Binding IsDraggable}"
-                                    Alignment="{Binding Alignment}"
-                                    VerticalContentAlignment="{Binding VerticalContentAlignment}"
-                                    BackgroundColor="{Binding BackgroundColor}"
-                                    HandleColor="{Binding HandleColor}"
-                                    HasShadow="{Binding HasShadow}"
-                                    Position="{Binding Position}"
-                                    MinPosition="{Binding MinPosition}"
-                                    MaxPosition="{Binding MaxPosition}"
-                                    BindingContextFactory="{Binding SheetViewModelFactory}"
-                                    OnPositionChanged="SheetBehavior_OnOnPositionChanged">
-                    <StackLayout>
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                        <Entry x:Name="entry"
-                               Placeholder="TextEntry" />
-                        <Button Text="Close sheet"
-                                dxui:Modality.CloseOnClick="True" />
-                    </StackLayout>
-                </dxui:SheetBehavior>
-            </dxui:ModalityLayout.Behaviors>
+    <dxui:ModalityLayout>
+        <dxui:ModalityLayout.Behaviors>
+            <dxui:SheetBehavior IsOpen="{Binding IsSheetOpen}"
+                                OnOpenCommand="{Binding OnOpenCommand}"
+                                OnOpenCommandParameter="Opened"
+                                OnCloseCommand="{Binding OnCloseCommand}"
+                                OnCloseCommandParameter="Closed"
+                                IsDraggable="{Binding IsDraggable}"
+                                Alignment="{Binding Alignment}"
+                                VerticalContentAlignment="{Binding VerticalContentAlignment}"
+                                ContentColor="{Binding ContentColor}"
+                                HeaderColor="{Binding HeaderColor}"
+                                HandleColor="{Binding HandleColor}"
+                                HasShadow="{Binding HasShadow}"
+                                Position="{Binding Position}"
+                                MinPosition="{Binding MinPosition}"
+                                MaxPosition="{Binding MaxPosition}"
+                                ActionCommand="{Binding ActionCommand}"
+                                IsCancelButtonVisible="False"
+                                Title="{Binding Title}"
+                                ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=CanExecute}}"
+                                BindingContextFactory="{Binding SheetViewModelFactory}"
+                                CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
+                                ShouldRememberPosition="{Binding ShouldRememberPosition}">
+                <StackLayout>
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                    <Entry x:Name="entry"
+                           Placeholder="TextEntry" />
+                    <Button Text="Close sheet"
+                            dxui:Modality.CloseOnClick="True" />
+                </StackLayout>
+            </dxui:SheetBehavior>
+        </dxui:ModalityLayout.Behaviors>
 
-
+        <ScrollView>
             <StackLayout Padding="5"
                          HorizontalOptions="Fill">
+                <Button Text="Open sheet"
+                        Command="{Binding OpenSheetCommand}" />
+
                 <Label Text="Sheet properties"
                        FontSize="Title"
                        VerticalTextAlignment="Center" />
@@ -105,11 +109,23 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
-                           Text="BackgroundColor"
+                           Text="HeaderColor"
                            VerticalTextAlignment="Center" />
                     <Entry Grid.Column="1"
-                           TextColor="{Binding BackgroundColor}"
-                           Text="{Binding BackgroundColor}" />
+                           TextColor="{Binding HeaderColor}"
+                           Text="{Binding HeaderColor}" />
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="ContentColor"
+                           VerticalTextAlignment="Center" />
+                    <Entry Grid.Column="1"
+                           TextColor="{Binding ContentColor}"
+                           Text="{Binding ContentColor}" />
                 </Grid>
 
                 <Grid>
@@ -131,6 +147,30 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
+                           Text="Title"
+                           VerticalTextAlignment="Center" />
+                    <Entry Grid.Column="1"
+                           Text="{Binding Title}" />
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="HasActionButton"
+                           VerticalTextAlignment="Center" />
+                    <CheckBox Grid.Column="1"
+                              IsChecked="{Binding HasActionButton}" />
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
                            Text="HasShadow"
                            VerticalTextAlignment="Center" />
                     <CheckBox Grid.Column="1"
@@ -141,26 +181,35 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
-                           Grid.Row="0"
+                           Text="Remember position when open / close"
+                           VerticalTextAlignment="Center" />
+                    <CheckBox Grid.Column="1"
+                              Grid.Row="0"
+                              IsChecked="{Binding ShouldRememberPosition}" />
+                    <Label Grid.Column="0"
+                           Grid.Row="1"
                            Text="Position"
                            VerticalTextAlignment="Center" />
-                    <Slider Grid.Column="1"
-                            Grid.Row="0"
+                    <Label Grid.Column="1"
+                           Grid.Row="1"
+                           Text="{Binding Position}" />
+                    <Slider Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            IsVisible="{Binding ShouldRememberPosition}"
+                            Grid.Row="2"
                             Maximum="1"
                             Minimum="0"
                             MaximumTrackColor="Tomato"
                             MinimumTrackColor="Tomato"
                             Value="{Binding Position}" />
-                    <Label Grid.Column="0"
-                           Grid.ColumnSpan="2"
-                           Grid.Row="1"
-                           Text="{Binding Position}" />
                 </Grid>
 
                 <Grid>
@@ -215,13 +264,15 @@
                            Text="{Binding MaxPosition}" />
                 </Grid>
 
+                <StackLayout>
+                    <Label Text="Should close on overlay tapped" />
+                    <CheckBox x:Name="ShouldCloseOnOverlayTappedCheckbox"
+                              IsChecked="True" />
+                </StackLayout>
                 <Label Text="{Binding StateText, StringFormat='State: {0}'}"
                        IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}" />
-                <Button Text="Open sheet"
-                        Command="{Binding OpenSheetCommand}" />
-
             </StackLayout>
+        </ScrollView>
 
-        </dxui:ModalityLayout>
-    </Grid>
+    </dxui:ModalityLayout>
 </ContentPage>

@@ -5,10 +5,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             xmlns:Converters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters;assembly=DIPS.Xamarin.UI"
+             xmlns:Utilities="clr-namespace:DIPS.Xamarin.UI.Internal.Utilities;assembly=DIPS.Xamarin.UI"
+             xmlns:Colors="clr-namespace:DIPS.Xamarin.UI.Resources.Colors;assembly=DIPS.Xamarin.UI"
              x:Name="CodeBehind"
              mc:Ignorable="d"
-             Opacity="0"
              InputTransparent="True"
              x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.MenuButton">
 
@@ -19,7 +20,11 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Frame Grid.Column="0"
+        <Frame x:Name="TitleFrame"
+               x:FieldModifier="internal"
+               Grid.Column="0"
+               BackgroundColor="{Binding IsEnabled, Converter={Converters:BoolToObjectConverter TrueObject={x:Static Color.White}, FalseObject={x:Static Colors:ColorPalette.QuinaryAir}}}"
+               Opacity="0"
                CornerRadius="8"
                HasShadow="False"
                Padding="0"
@@ -31,7 +36,7 @@
                    FontSize="{Binding TitleFontSize}"
                    FontFamily="{Binding TitleFontFamily}"
                    Margin="10,5,10,5"
-                   VerticalOptions="Center"/>
+                   VerticalOptions="Center" />
 
             <Frame.Triggers>
                 <DataTrigger TargetType="Frame"
@@ -43,17 +48,43 @@
             </Frame.Triggers>
         </Frame>
 
-        <Button x:Name="button"
-                x:FieldModifier="internal"
-                Grid.Column="1"
-                BindingContext="{x:Reference CodeBehind}"
-                BackgroundColor="{Binding BackgroundColor}"
-                BorderColor="White"
-                BorderWidth="3"
-                FontSize="{Binding FontSize}"
-                Text="{Binding Text}"
-                TextColor="{Binding TextColor}"
-                FontFamily="{Binding FontFamily}"
-                Clicked="MenuButton_OnClicked" />
+        <Utilities:LegacyButton x:Name="Button"
+                                x:FieldModifier="internal"
+                                Opacity="0"
+                                Grid.Column="1"
+                                BindingContext="{x:Reference CodeBehind}"
+                                BackgroundColor="{Binding BackgroundColor}"
+                                BorderColor="White"
+                                BorderWidth="3"
+                                FontSize="{Binding FontSize}"
+                                Text="{Binding Text}"
+                                TextColor="{Binding TextColor}"
+                                FontFamily="{Binding FontFamily}"
+                                Clicked="MenuButton_OnClicked" />
+
+        <Frame x:Name="BadgeFrame"
+               x:FieldModifier="internal"
+               Grid.Column="1"
+               IsVisible="{Binding IsBadgeVisible}"
+               BackgroundColor="{Binding BadgeColor}"
+               HeightRequest="20"
+               WidthRequest="20"
+               CornerRadius="10"
+               InputTransparent="True"
+               Padding="0"
+               VerticalOptions="Start"
+               HorizontalOptions="End"
+               HasShadow="False"
+               Opacity=".5">
+            <Label TextColor="{Binding BadgeTextColor}"
+                   Text="{Binding BadgeCount}"
+                   FontFamily="{Binding BadgeFontFamily}"
+                   FontSize="12"
+                   LineBreakMode="NoWrap"
+                   BackgroundColor="Transparent"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center" />
+
+        </Frame>
     </Grid>
 </ContentView>

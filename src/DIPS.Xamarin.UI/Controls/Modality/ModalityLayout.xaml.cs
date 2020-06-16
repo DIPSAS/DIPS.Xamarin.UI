@@ -53,6 +53,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         /// <summary>
         ///     Main Content of the layout. This is routed from the Content property, so you don't have to use it.
+        ///     This is a bindable property.
         /// </summary>
         public View MainContent
         {
@@ -62,12 +63,30 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         /// <summary>
         ///     The color of the overlay when a modality component is showing
+        ///     This is a bindable property.
         /// </summary>
         public Color OverlayColor
         {
             get => (Color)GetValue(OverlayColorProperty);
             set => SetValue(OverlayColorProperty, value);
         }
+
+        /// <summary>
+        /// <see cref="CloseModalitiesOnOverlayTapped"/>
+        /// </summary>
+        public static readonly BindableProperty CloseModalitiesOnOverlayTappedProperty = BindableProperty.Create(nameof(CloseModalitiesOnOverlayTapped), typeof(bool), typeof(ModalityLayout), true);
+
+        /// <summary>
+        /// Determines if modalities in this modality layout should close when the overlay is tapped.
+        /// This is a bindable property.
+        /// </summary>
+        /// <remarks>Default is true</remarks>
+        public bool CloseModalitiesOnOverlayTapped
+        {
+            get => (bool)GetValue(CloseModalitiesOnOverlayTappedProperty);
+            set => SetValue(CloseModalitiesOnOverlayTappedProperty, value);
+        }
+
 
         private static void OnMainContentPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
@@ -116,9 +135,13 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         private Frame CreateOverlay()
         {
-            var overlayFrame = new Frame { BackgroundColor = OverlayColor, IsVisible = true, Opacity = 0.0 };
+            var overlayFrame = new Frame { BackgroundColor = OverlayColor, IsVisible = true, Opacity = 0.0, HasShadow = false};
+            var tappedCommand = new Command(
+                () => m_closeModalityRecognizer.Command.Execute(null),
+                () => CurrentShowingModalityLayout != null && CurrentShowingModalityLayout.CloseOnOverlayTapped &&
+                      CloseModalitiesOnOverlayTapped);
+            overlayFrame.GestureRecognizers.Add(new TapGestureRecognizer() { Command = tappedCommand });
 
-            overlayFrame.GestureRecognizers.Add(m_closeModalityRecognizer);
             return overlayFrame;
         }
 

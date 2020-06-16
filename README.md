@@ -1,7 +1,7 @@
 ![dips.com](https://img.shields.io/badge/http%3A%2F%2Fdips.com-ENABLING%20EFFICIENT%20HEALTHCARE-red)
 
 
-![PublishStage](https://vsrm.dev.azure.com/dipscloud-public/_apis/public/Release/badge/7072efb1-8a03-410f-a675-60dbf5c9303a/1/1) ![Nuget](https://img.shields.io/nuget/v/dips.xamarin.ui?color=success&logoColor=white&logo=NuGet) ![GitHub last commit](https://img.shields.io/github/last-commit/Dipsas/DIPS.Xamarin.UI)
+![Nuget](https://img.shields.io/nuget/v/dips.xamarin.ui?color=success&logoColor=white&logo=NuGet) ![GitHub last commit](https://img.shields.io/github/last-commit/Dipsas/DIPS.Xamarin.UI)
 
 # DIPS.Xamarin.UI
 ![DIPS.Xamarin.UI_icon](https://raw.githubusercontent.com/DIPSAS/DIPS.Xamarin.UI/master/assets/DIPS_Xamarin_UI_128x128@slimmed.png)
@@ -27,6 +27,13 @@ Our resources can be used in our pages and UI components. This can be [colors](h
 ### API
 
 Our API includes utilities that is useful when working with the MVVM pattern and XAML. This can be a [property changed api](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#propertychangedextensions|), [commands](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#asynccommand), [recursively searching the visual tree](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#getparentoftype) with more.
+
+## Support platforms
+
+- [x] Android
+- [x] iOS
+
+This package do not support `UWP` or `WPF` because DIPS has a internal Windows desktop library with other components that are more suiting for desktop applications.
 
 ## Maintenance
 

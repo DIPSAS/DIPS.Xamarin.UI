@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using DIPS.Xamarin.UI.Internal.Utilities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,6 +12,8 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
     /// </summary>
     public class BoolToObjectConverter : IValueConverter, IMarkupExtension
     {
+        private IServiceProvider m_serviceProvider;
+
         /// <summary>
         /// The value that will return if the boolean input is true
         /// <remarks>Will be the return value if <see cref="Inverted"/> is set to true</remarks>
@@ -29,11 +32,10 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// <inheritdoc />
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is bool inputValue)) throw new ArgumentException($"Input value has to be of type {nameof(Boolean)}");
-            if (TrueObject == null) throw new ArgumentException($"{nameof(TrueObject)} can not be null");
-            if(FalseObject == null) throw new ArgumentException($"{nameof(FalseObject)} can not be null");
-            if (TrueObject.GetType() != FalseObject.GetType())
-                throw new ArgumentException($"{nameof(TrueObject)} has to be the same type as {FalseObject}");
+            if (!(value is bool inputValue)) throw new XamlParseException($"Input value has to be of type {nameof(Boolean)}").WithXmlLineInfo(m_serviceProvider);
+            if (TrueObject == null) throw new XamlParseException($"{nameof(TrueObject)} can not be null").WithXmlLineInfo(m_serviceProvider);
+            if(FalseObject == null) throw new XamlParseException($"{nameof(FalseObject)} can not be null").WithXmlLineInfo(m_serviceProvider);
+            if (TrueObject.GetType() != FalseObject.GetType()) throw new XamlParseException($"{nameof(TrueObject)} has to be the same type as {FalseObject}").WithXmlLineInfo(m_serviceProvider);
 
             return Inverted ? (inputValue) ? FalseObject : TrueObject : (inputValue) ? TrueObject : FalseObject;
         }
@@ -49,6 +51,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider)
         {
+            m_serviceProvider = serviceProvider;
             return this;
         }
     }

@@ -6,6 +6,8 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 [assembly: Preserve]
 [assembly:InternalsVisibleTo("DIPS.Xamarin.UI.Tests")]
+[assembly: InternalsVisibleTo("DIPS.Xamarin.UI.Android")]
+[assembly: InternalsVisibleTo("DIPS.Xamarin.UI.iOS")]
 
 //Add new namespaces below to make them visible when using Custom Namespace : https://github.com/DIPSAS/DIPS.Xamarin.UI/issues/1
 [assembly:XmlnsPrefix("http://dips.xamarin.ui.com", "dxui")]
@@ -27,3 +29,4 @@ using Xamarin.Forms.Xaml;
 [assembly: XmlnsDefinition("http://dips.xamarin.ui.com", "DIPS.Xamarin.UI.Controls.FloatingActionMenu")]
 [assembly: XmlnsDefinition("http://dips.xamarin.ui.com", "DIPS.Xamarin.UI.Controls.Tag")]
 [assembly: XmlnsDefinition("http://dips.xamarin.ui.com", "DIPS.Xamarin.UI.Controls.Skeleton")]
+[assembly: XmlnsDefinition("http://dips.xamarin.ui.com", "DIPS.Xamarin.UI.Extensions.Markup")]
