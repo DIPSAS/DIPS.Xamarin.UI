@@ -9,48 +9,56 @@
     x:DataType="Controls:ControlsViewModel"
     mc:Ignorable="d">
     <ContentPage.Content>
-        <StackLayout>
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="Popup"
-                Text="Popup" />
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="Sheet"
-                Text="Sheet" />
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="DatePicker"
-                Text="DatePicker" />
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="TimePicker"
-                Text="TimePicker" />
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="RadioButtonGroup"
-                Text="RadioButtonGroup" />
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="TrendGraph"
-                Text="Trend graph" />
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="ContentControl"
-                Text="ContentControl" />
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="Sliding"
-                Text="Sliding" />
+        <ScrollView>
 
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="FloatingActionMenu"
-                Text="FloatingActionMenu" />
-            <Button
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="TagControl"
-                Text="Tag" />
-        </StackLayout>
+            <StackLayout>
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="Popup"
+                    Text="Popup" />
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="Sheet"
+                    Text="Sheet" />
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="DatePicker"
+                    Text="DatePicker" />
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TimePicker"
+                    Text="TimePicker" />
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="RadioButtonGroup"
+                    Text="RadioButtonGroup" />
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TrendGraph"
+                    Text="Trend graph" />
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="ContentControl"
+                    Text="ContentControl" />
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="Sliding"
+                    Text="Sliding" />
+
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="FloatingActionMenu"
+                    Text="FloatingActionMenu" />
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="TagControl"
+                    Text="Tag" />
+
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="Skeleton"
+                    Text="Skeleton" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

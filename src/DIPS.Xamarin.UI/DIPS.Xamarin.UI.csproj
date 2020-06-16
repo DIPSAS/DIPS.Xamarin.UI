@@ -67,4 +67,7 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controls\Skeleton\" />
+  </ItemGroup>
 </Project>

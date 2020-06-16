@@ -6,6 +6,7 @@ using DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;
 using DIPS.Xamarin.UI.Samples.Controls.Popup;
 using DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;
 using DIPS.Xamarin.UI.Samples.Controls.Sheet;
+using DIPS.Xamarin.UI.Samples.Controls.Skeleton;
 using DIPS.Xamarin.UI.Samples.Controls.SlideLayout;
 using DIPS.Xamarin.UI.Samples.Controls.Tag;
 using DIPS.Xamarin.UI.Samples.Controls.TimePicker;
@@ -34,18 +35,25 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                     await m_navigation.PushAsync(new DatePickerPage {Title = parameter});
                 if (parameter.Equals("TimePicker"))
                     await m_navigation.PushAsync(new TimePickerPage {Title = parameter});
-                if (parameter.Equals("Popup")) await m_navigation.PushAsync(new PopupPage {Title = parameter});
-                if (parameter.Equals("Sheet")) await m_navigation.PushAsync(new SheetPage {Title = parameter});
+                if (parameter.Equals("Popup"))
+                    await m_navigation.PushAsync(new PopupPage {Title = parameter});
+                if (parameter.Equals("Sheet"))
+                    await m_navigation.PushAsync(new SheetPage {Title = parameter});
                 if (parameter.Equals("RadioButtonGroup"))
                     await m_navigation.PushAsync(new RadioButtonGroupPage {Title = parameter});
                 if (parameter.Equals("TrendGraph"))
                     await m_navigation.PushAsync(new TrendGraphPage {Title = parameter});
-                if (parameter.Equals("Sliding")) await m_navigation.PushAsync(new SlideLayoutPage());
+                if (parameter.Equals("Sliding"))
+                    await m_navigation.PushAsync(new SlideLayoutPage());
                 if (parameter.Equals("ContentControl"))
                     await m_navigation.PushAsync(new ContentControlPage {Title = parameter});
                 if (parameter.Equals("FloatingActionMenu"))
-                    m_navigation.PushAsync(new FloatingActionMenuPage {Title = parameter});
-                if (parameter.Equals("TagControl")) await m_navigation.PushAsync(new TagPage {Title = parameter});
+                    await m_navigation.PushAsync(new FloatingActionMenuPage {Title = parameter});
+                if (parameter.Equals("TagControl"))
+                    await m_navigation.PushAsync(new TagPage {Title = parameter});
+                if(parameter.Equals("Skeleton"))
+                    await m_navigation.PushAsync(new SkeletonPage {Title = parameter});
+
             }
             catch (Exception e)
             {
