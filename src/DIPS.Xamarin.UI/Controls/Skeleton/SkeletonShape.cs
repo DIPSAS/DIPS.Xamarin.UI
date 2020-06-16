@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Skeleton
 {

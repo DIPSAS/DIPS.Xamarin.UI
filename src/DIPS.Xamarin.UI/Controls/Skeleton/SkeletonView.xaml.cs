@@ -13,14 +13,16 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SkeletonView : ContentView
     {
-        private Grid skeletongrid;
+        private const string m_animationName = "SkeletonBounce";
+        private Grid m_skeletongrid;
         private Grid? m_skeletonLayout;
+        private List<BoxView> m_skeletons = new List<BoxView>();
         /// <summary>
         /// Creates a new instance of skeleton view
         /// </summary>
         public SkeletonView()
         {
-            Content = skeletongrid = new Grid();
+            Content = m_skeletongrid = new Grid();
             InitializeComponent();
             BindingContextChanged += SkeletonView_BindingContextChanged;
         }
@@ -35,9 +37,9 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
         private async void OnLoadingChanged()
         {
             if (MainContent == null) throw new ArgumentException("No content of SkeletonView");
-            if (!skeletongrid.Children.Contains(MainContent))
+            if (!m_skeletongrid.Children.Contains(MainContent))
             {
-                skeletongrid.Children.Add(MainContent);
+                m_skeletongrid.Children.Add(MainContent);
                 MainContent.Opacity = 0;
             }
 
@@ -46,8 +48,9 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
                 if (m_skeletonLayout != null)
                 {
                     _ = m_skeletonLayout.FadeTo(0, FadeTime);
-                    await MainContent.FadeTo(1.0, FadeTime*2);
+                    StopAnimation();
                 }
+                await MainContent.FadeTo(1.0, FadeTime * 2);
             }
             else
             {
@@ -55,11 +58,12 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
                 {
                     m_skeletonLayout = CreateSkeleton();
                     m_skeletonLayout.Opacity = 0.0;
-                    skeletongrid.Children.Add(m_skeletonLayout);
+                    m_skeletongrid.Children.Add(m_skeletonLayout);
                 }
 
                 _ = MainContent.FadeTo(0.0, FadeTime);
                 _ = m_skeletonLayout.FadeTo(1.0, FadeTime);
+                StartAnimation();
             }
         }
 
@@ -74,7 +78,9 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
             var grid = new Grid();
             foreach(var shape in Shapes)
             {
-                grid.Children.Add(CreateBox(shape));
+                var box = CreateBox(shape);
+                grid.Children.Add(box);
+                m_skeletons.Add(box);
             }
             var maxRow = Shapes.Max(s => s.Row + s.RowSpan);
             var maxCol = Shapes.Max(s => s.Column + s.ColumnSpan);
@@ -122,18 +128,21 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
             {
                 box.WidthRequest = shape.Width;
             }
-            ScaleFunny(box);
             return box;
         }
 
-        private async void ScaleFunny(BoxView b)
+        private void StartAnimation()
         {
-            while (true)
+            StopAnimation();
+            var animation = new Animation
             {
-                await b.ScaleTo(1.01, 500, Easing.BounceOut);
-                await b.ScaleTo(0.99, 500, Easing.BounceOut);
-            }
+                {0.0, 0.5, new Animation(a => { foreach(var box in m_skeletons) box.Scale = a; }, 0.99, 1.01, Easing.BounceOut) },
+                {0.5, 1.0, new Animation(a => { foreach(var box in m_skeletons) box.Scale = a; }, 1.01, 0.99, Easing.BounceOut) },
+            };
+            animation.Commit(this, m_animationName, 16, 1000, Easing.BounceOut, (a, c) => { }, () => IsLoading);
         }
+
+        private void StopAnimation() => this.AbortAnimation(m_animationName);
 
         /// <summary>
         /// Time used to fade inn and out content

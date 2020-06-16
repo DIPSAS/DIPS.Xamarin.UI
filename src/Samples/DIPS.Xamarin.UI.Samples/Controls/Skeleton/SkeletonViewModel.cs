@@ -7,13 +7,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Skeleton
 {
     public class SkeletonViewModel : INotifyPropertyChanged
     {
-        private Random rnd = new Random();
         private bool isLoading;
         private string[] Headers = new[] { "This is a header", "Other headers might be longer", "Trying something new!" };
 
         public SkeletonViewModel()
         {
-            isLoading = true;
+            isLoading = false;
         }
 
         public string Title { get; set; } = "Initial header is here";

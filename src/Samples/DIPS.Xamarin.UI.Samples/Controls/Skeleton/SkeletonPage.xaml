@@ -1,68 +1,84 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="DIPS.Xamarin.UI.Samples.Controls.Skeleton.SkeletonPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:dxui="http://dips.xamarin.ui.com"
-             x:Class="DIPS.Xamarin.UI.Samples.Controls.Skeleton.SkeletonPage">
-    <Grid HeightRequest="200">
+             xmlns:dxui="http://dips.xamarin.ui.com">
+    <Grid HeightRequest="200"
+          HorizontalOptions="Center"
+          VerticalOptions="Center"
+          WidthRequest="400">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition  Height="auto"/>
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <dxui:SkeletonView HeightRequest="100"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"
-                           SkeletonColor="#33000000"
-                           IsLoading="{Binding IsLoading}">
+        <dxui:SkeletonView IsLoading="{Binding IsLoading}"
+                           SkeletonColor="#33000000">
             <dxui:SkeletonView.Shapes>
-                <dxui:SkeletonShape Column="0" Row="0" RowSpan="2" Width="50" Margin="5" CornerRadius="5" VerticalAlignment="Center"/>
-                <dxui:SkeletonShape Column="1" Row="0" ColumnSpan="1" RowSpan="1" Margin="20" CornerRadius="5"/>
-                <dxui:SkeletonShape Column="1" Row="1" ColumnSpan="1" RowSpan="1" Height="25" Margin="5" CornerRadius="5"/>
+                <dxui:SkeletonShape Width="50"
+                                    Margin="5"
+                                    VerticalAlignment="Center"
+                                    Column="0"
+                                    CornerRadius="5"
+                                    Row="0"
+                                    RowSpan="2" />
+                <dxui:SkeletonShape Margin="20"
+                                    Column="1"
+                                    ColumnSpan="1"
+                                    CornerRadius="5"
+                                    Row="0"
+                                    RowSpan="1" />
+                <dxui:SkeletonShape Margin="10"
+                                    Column="1"
+                                    ColumnSpan="1"
+                                    CornerRadius="5"
+                                    Row="1"
+                                    RowSpan="1" />
             </dxui:SkeletonView.Shapes>
             <dxui:SkeletonView.MainContent>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Label Text="{Binding Initials}"
+                    <Label Grid.RowSpan="2"
+                           Margin="5"
                            FontSize="Title"
-                           Margin="5"
-                           Grid.RowSpan="2"
+                           HorizontalOptions="Center"
+                           Text="{Binding Initials}"
                            TextColor="Black"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"/>
+                           VerticalOptions="Center" />
 
-                    <Label Text="{Binding Title}"
+                    <Label Grid.Row="0"
+                           Grid.Column="1"
+                           Margin="5"
                            FontSize="Header"
-                           Grid.Row="0"
+                           HorizontalOptions="Center"
+                           Text="{Binding Title}"
+                           TextColor="Black"
+                           VerticalOptions="Center" />
+
+                    <Label Grid.Row="1"
                            Grid.Column="1"
                            Margin="5"
-                           TextColor="Black"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"/>
-                
-                    <Label Text="{Binding SubTitle}"
-                           FontSize="Body"
-                           Grid.Row="1"
-                           Grid.Column="1"
-                           Margin="5"
-                           TextColor="Black"
-                           LineBreakMode="WordWrap"
                            FontAttributes="Italic"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Start"/>
+                           FontSize="Body"
+                           HorizontalOptions="Start"
+                           LineBreakMode="WordWrap"
+                           Text="{Binding SubTitle}"
+                           TextColor="Black"
+                           VerticalOptions="Center" />
                 </Grid>
             </dxui:SkeletonView.MainContent>
         </dxui:SkeletonView>
 
-        <Switch IsToggled="{Binding IsLoading}"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
+        <Switch Grid.Row="1"
                 Margin="20"
-                Grid.Row="1"/>
+                HorizontalOptions="Center"
+                IsToggled="{Binding IsLoading}"
+                VerticalOptions="Center" />
     </Grid>
 </ContentPage>
