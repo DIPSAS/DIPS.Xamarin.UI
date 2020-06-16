@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static DIPS.Xamarin.UI.Library;
 
 namespace DIPS.Xamarin.UI.Controls.Skeleton
 {
@@ -22,6 +23,10 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
         /// </summary>
         public SkeletonView()
         {
+            if (!PreviewFeatures.SkeletonView)
+            {
+                throw new Exception("Enable SkeletonView by using DIPS.Xamarin.UI.Library.PreviewFeatures.EnableFeature(\"SkeletonView\");");
+            }
             Content = m_skeletongrid = new Grid();
             InitializeComponent();
             BindingContextChanged += SkeletonView_BindingContextChanged;
@@ -29,14 +34,16 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
 
         private void SkeletonView_BindingContextChanged(object sender, EventArgs e)
         {
-            if (MainContent == null) throw new ArgumentException("No content of SkeletonView");
+            if (MainContent == null)
+                throw new ArgumentException("No content of SkeletonView");
             MainContent.BindingContext = this.BindingContext;
             OnLoadingChanged();
         }
 
         private async void OnLoadingChanged()
         {
-            if (MainContent == null) throw new ArgumentException("No content of SkeletonView");
+            if (MainContent == null)
+                throw new ArgumentException("No content of SkeletonView");
             if (!m_skeletongrid.Children.Contains(MainContent))
             {
                 m_skeletongrid.Children.Add(MainContent);
@@ -69,14 +76,15 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
 
         private Grid CreateSkeleton()
         {
-            if (m_skeletonLayout != null) return m_skeletonLayout;
-            if(Shapes == null || Shapes.Count == 0)
+            if (m_skeletonLayout != null)
+                return m_skeletonLayout;
+            if (Shapes == null || Shapes.Count == 0)
             {
                 Shapes = new List<SkeletonShape> { new SkeletonShape() };
             }
 
             var grid = new Grid();
-            foreach(var shape in Shapes)
+            foreach (var shape in Shapes)
             {
                 var box = CreateBox(shape);
                 grid.Children.Add(box);
@@ -84,10 +92,10 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
             }
             var maxRow = Shapes.Max(s => s.Row + s.RowSpan);
             var maxCol = Shapes.Max(s => s.Column + s.ColumnSpan);
-            for(var i = 0; i < maxRow; i++)
+            for (var i = 0; i < maxRow; i++)
             {
                 var shape = Shapes.FirstOrDefault(s => s.Row == i && s.Height > -1);
-                if(shape != null)
+                if (shape != null)
                     grid.RowDefinitions.Add(new RowDefinition { Height = shape.Height });
                 else
                     grid.RowDefinitions.Add(new RowDefinition());
@@ -120,11 +128,11 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
             Grid.SetColumn(box, shape.Column);
             Grid.SetRowSpan(box, shape.RowSpan);
             Grid.SetColumnSpan(box, shape.ColumnSpan);
-            if(shape.Height > -1)
+            if (shape.Height > -1)
             {
                 box.HeightRequest = shape.Height;
             }
-            if(shape.Width > -1)
+            if (shape.Width > -1)
             {
                 box.WidthRequest = shape.Width;
             }
