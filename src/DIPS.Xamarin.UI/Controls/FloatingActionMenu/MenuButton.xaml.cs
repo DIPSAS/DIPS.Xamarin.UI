@@ -326,10 +326,26 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             set => SetValue(TitleProperty, value);
         }
 
+        public new static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MenuButton), propertyChanged:OnIsVisibleChanged, defaultBindingMode: BindingMode.TwoWay);
+
+        private static void OnIsVisibleChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (bindable is MenuButton menuButton)
+            {
+                menuButton.FloatingActionMenuParent?.UpdateMenuButtonVisibility(menuButton, (bool)newvalue);
+            }
+        }
+
+        public new bool IsVisible
+        {
+            get => (bool)GetValue(IsVisibleProperty);
+            set => SetValue(IsVisibleProperty, value);
+        }
+
         private static async void IsBadgeVisiblePropertyChanged(BindableObject bindable, object oldvalue,
             object newvalue)
         {
-            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation)
+            if (!Library.PreviewFeatures.MenuButtonAnimations)
             {
                 return;
             }
@@ -380,7 +396,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                 return;
             }
 
-            if (!Library.PreviewFeatures.MenuButtonBadgeAnimation)
+            if (!Library.PreviewFeatures.MenuButtonAnimations)
             {
                 return;
             }
