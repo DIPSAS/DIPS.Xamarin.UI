@@ -326,6 +326,9 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             set => SetValue(TitleProperty, value);
         }
 
+        /// <summary>
+        /// <see cref="IsVisible"/>
+        /// </summary>
         public new static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MenuButton), propertyChanged:OnIsVisibleChanged, defaultBindingMode: BindingMode.TwoWay);
 
         private static void OnIsVisibleChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -336,6 +339,10 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             }
         }
 
+        /// <summary>
+        ///     Gets or sets a value that determines whether this elements should be part of the visual tree or not.
+        ///     This is a bindable property.
+        /// </summary>
         public new bool IsVisible
         {
             get => (bool)GetValue(IsVisibleProperty);
