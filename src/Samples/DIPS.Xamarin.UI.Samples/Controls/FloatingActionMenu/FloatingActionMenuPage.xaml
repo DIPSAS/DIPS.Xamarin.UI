@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -47,33 +48,36 @@
                                               YPosition=".95"
                                               CloseOnOverlayTapped="{Binding Source={x:Reference shouldCloseOnTappedOverlayCheckbox}, Path=IsChecked}"
                                               IsVisible="{Binding Source={x:Reference toggleVisibilityCheckbox}, Path=IsChecked}">
-                <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                 Text="Home"
-                                 x:Name="FirstButton"
-                                 TextColor="White"
-                                 Command="{Binding SetTextCommand}"
-                                 Title="First page"
-                                 CommandParameter="First tapped!" />
+
+
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
                                  Text="A"
+                                 x:Name="FirstButton"
                                  TextColor="White"
-                                 Title="Second page"
+                                 Command="{Binding ToggleButtonVisibilityCommand}"
+                                 Title="Toggle C visibility"
+                                 CommandParameter="First tapped!" />
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                 Text="B"
+                                 TextColor="White"
+                                 Title="First page"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Second tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                 Text="B"
+                                 Text="C"
                                  TextColor="White"
                                  IsBadgeVisible="{Binding ShowBadge}"
                                  BadgeColor="{Binding BadgeColor}"
                                  BadgeCount="{Binding BadgeCounter}"
-                                 Title="Third page"
-                                 IsEnabled="False"
+                                 IsVisible="{Binding IsMenuButtonVisible}"
+                                 Title="Second page"
                                  Command="{Binding SetTextCommand}"
+                                 IsEnabled="False"
                                  CommandParameter="Third tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
-                                 Text="C"
+                                 Text="D"
                                  TextColor="White"
-                                 Title="Fourth page"
+                                 Title="Third page"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Fourth tapped!" />
             </dxui:FloatingActionMenuBehaviour>
@@ -102,7 +106,7 @@
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal">
-                    <Label Text="Enable badge animations"
+                    <Label Text="Enable menu button animations"
                            VerticalTextAlignment="Center" />
                     <CheckBox CheckedChanged="CheckBox_OnCheckedChanged" />
                 </StackLayout>

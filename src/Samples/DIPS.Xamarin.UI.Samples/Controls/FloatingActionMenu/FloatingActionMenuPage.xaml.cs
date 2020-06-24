@@ -23,7 +23,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
 
         private void CheckBox_OnCheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            Library.PreviewFeatures.MenuButtonBadgeAnimation = e.Value;
+            Library.PreviewFeatures.MenuButtonAnimations = e.Value;
         }
 
         private void FloatingActionMenuBehaviour_OnAfterClose(object sender, EventArgs e)
@@ -55,6 +55,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
         private int m_badgeCounter;
         private Color m_badgeColor;
         private string m_currentEvent;
+        private bool m_isMenuButtonVisible = true;
 
         public FloatingActionMenuPageViewmodel()
         {
@@ -67,6 +68,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
                 if ( BadgeColor != Color.BlueViolet) BadgeColor = Color.BlueViolet;
                 else BadgeColor = Color.IndianRed;
             });
+            ToggleButtonVisibilityCommand = new Command(() => IsMenuButtonVisible = !IsMenuButtonVisible);
 
         }
 
@@ -76,6 +78,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
         public ICommand ChangeBadgeColorCommand { get; set; }
         public ICommand IncreaseCounterCommand { get; set; }
         public ICommand DecreaseCounterCommand { get; set; }
+        public ICommand ToggleButtonVisibilityCommand { get; set; }
 
         public Color BadgeColor
         {
@@ -107,5 +110,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
             set => PropertyChanged.RaiseWhenSet(ref m_currentEvent, value);
         }
 
+        public bool IsMenuButtonVisible
+        {
+            get => m_isMenuButtonVisible;
+            set => PropertyChanged.RaiseWhenSet(ref m_isMenuButtonVisible, value);
+        }
     }
 }
