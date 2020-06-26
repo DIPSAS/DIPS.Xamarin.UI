@@ -19,11 +19,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         
         public string Text
         {
-            get
-            {
-                var x = (string)GetValue(TextProperty);
-                return x;
-            }
+            get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
 

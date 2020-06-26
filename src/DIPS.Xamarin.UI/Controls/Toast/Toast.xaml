@@ -3,11 +3,14 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIPS.Xamarin.UI.Controls.Toast.Toast"
-             x:Name="toasterView"
+             x:Name="ToasterView"
              
-             BindingContext="{Binding Source={x:Reference toasterView}}">
+             xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.Toast;assembly=DIPS.Xamarin.UI">
     <ContentView.Content>
-        <StackLayout>
+        <StackLayout 
+            x:DataType="{x:Type Local:Toast}"
+            BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:Toast}}}">
+            
             <Label Text="{Binding Text}"
                    TextColor="{Binding TextColor}"
                    VerticalOptions="CenterAndExpand"

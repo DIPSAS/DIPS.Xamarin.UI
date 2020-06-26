@@ -41,10 +41,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         {
             var toast = new Toast();
             
-            toast.SetBinding(TextProperty, new Binding(nameof(Text), source: this));
-            toast.SetBinding(TextColorProperty, new Binding(nameof(TextColor), source: this));
-
-            toast.Text = Text;
+            toast.SetBinding(Toast.TextProperty, new Binding(nameof(Text), source: this));
+            toast.SetBinding(Toast.TextColorProperty, new Binding(nameof(TextColor), source: this));
 
             return toast;
         }
