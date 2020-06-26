@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIPS.Xamarin.UI.Controls.Toast.Toast"
+             x:Name="toasterView"
+             
+             BindingContext="{Binding Source={x:Reference toasterView}}">
+    <ContentView.Content>
+        <StackLayout>
+            <Label Text="{Binding Text}"
+                   TextColor="{Binding TextColor}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
