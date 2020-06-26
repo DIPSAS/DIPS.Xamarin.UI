@@ -10,6 +10,7 @@ using DIPS.Xamarin.UI.Samples.Controls.Skeleton;
 using DIPS.Xamarin.UI.Samples.Controls.SlideLayout;
 using DIPS.Xamarin.UI.Samples.Controls.Tag;
 using DIPS.Xamarin.UI.Samples.Controls.TimePicker;
+using DIPS.Xamarin.UI.Samples.Controls.Toast;
 using DIPS.Xamarin.UI.Samples.Controls.TrendGraph;
 using Xamarin.Forms;
 
@@ -51,6 +52,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                     await m_navigation.PushAsync(new FloatingActionMenuPage {Title = parameter});
                 if (parameter.Equals("TagControl"))
                     await m_navigation.PushAsync(new TagPage {Title = parameter});
+                if (parameter.Equals("ToastControl"))
+                    await m_navigation.PushAsync(new ToastPage {Title = parameter});
                 if(parameter.Equals("Skeleton"))
                     await m_navigation.PushAsync(new SkeletonPage {Title = parameter});
 
