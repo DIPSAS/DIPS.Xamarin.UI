@@ -33,10 +33,13 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             // toaster.ShowToast();
 
             Toaster.Current.Text = "Hello, Jupiter!";
-            Toaster.Current.TextColor = Color.Blue;
+            Toaster.Current.FontSize = 13;
+            Toaster.Current.TextColor = Color.White;
+            Toaster.Current.BackgroundColor = Color.DodgerBlue;
+            Toaster.Current.CornerRadius = 8;
+            Toaster.Current.Padding = new Thickness(20, 10);
+            
             Toaster.Current.ShowToaster();
-            Toaster.Current.Text = "Hello, Saturn!";
-            Toaster.Current.TextColor = Color.GreenYellow;
         }
 
         public ICommand ShowToastCommand { get; set; }

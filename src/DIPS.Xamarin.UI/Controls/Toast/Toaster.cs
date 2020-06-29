@@ -15,6 +15,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         // END: CURRENT
         
         // START: SHOW
+        public static Guid Id { get; set; }
+        
         public void ShowToaster(View toaster = null)
         {
             // get current page
@@ -42,7 +44,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             var toast = new Toast();
             
             toast.SetBinding(Toast.TextProperty, new Binding(nameof(Text), source: this));
+            toast.SetBinding(Toast.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+            toast.SetBinding(Toast.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
             toast.SetBinding(Toast.TextColorProperty, new Binding(nameof(TextColor), source: this));
+            toast.SetBinding(Toast.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
+            toast.SetBinding(Toast.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
+            toast.SetBinding(Toast.PaddingProperty, new Binding(nameof(Padding), source: this));
 
             return toast;
         }
@@ -51,24 +58,84 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         // START: BIND PROPERTIES
         public string Text
         {
-            get => (string) GetValue(TextProperty);
+            get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
+        }
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double FontSize
+        {
+            get => (double)GetValue(FontSizeProperty);
+            set => SetValue(FontSizeProperty, value);
+        }
+        public string FontFamily
+        {
+            get => (string)GetValue(FontFamilyProperty);
+            set => SetValue(FontFamilyProperty, value);
         }
         public Color TextColor
         {
-            get => (Color) GetValue(TextColorProperty);
+            get => (Color)GetValue(TextColorProperty);
             set => SetValue(TextColorProperty, value);
+        }
+        public new Color BackgroundColor
+        {
+            get => (Color)GetValue(BackgroundColorProperty);
+            set => SetValue(BackgroundColorProperty, value);
+        }
+        public float CornerRadius
+        {
+            get => (float)GetValue(CornerRadiusProperty);
+            set => SetValue(CornerRadiusProperty, value);
+        }
+        
+        public new Thickness Padding
+        {
+            get => (Thickness) GetValue(PaddingProperty);
+            set => SetValue(PaddingProperty, value);
         }
         
         public static readonly BindableProperty TextProperty =
             BindableProperty.Create(nameof(Text), typeof(string), typeof(Toaster), Label.TextProperty.DefaultValue);
+
+        public static readonly BindableProperty FontSizeProperty =
+            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Toaster),
+                Label.FontSizeProperty.DefaultValue,
+                defaultValueCreator: FontSizeDefaultValueCreator);
+
+        public static readonly BindableProperty FontFamilyProperty =
+            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Toaster),
+                Label.FontFamilyProperty.DefaultValue);
+
         public static readonly BindableProperty TextColorProperty =
             BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Toaster),
                 Label.TextColorProperty.DefaultValue);
+
+        public static new readonly BindableProperty BackgroundColorProperty =
+            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Toaster), Color.Default);
+
+        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius),
+            typeof(float), typeof(Toaster), -1f,
+            validateValue: OnCornerRadiusValidate);
+        
+        public new static readonly BindableProperty PaddingProperty =
+            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Toaster), new Thickness(5, 5, 5, 5));
+        
+        private static object FontSizeDefaultValueCreator(BindableObject bindable)
+        {
+            return Device.GetNamedSize(NamedSize.Default, typeof(Toast));
+        }
+        private static bool OnCornerRadiusValidate(BindableObject bindable, object value)
+        {
+            if (value is float f)
+            {
+                return (int)f == -1 || f >= 0f;
+            }
+
+            return false;
+        }
         // END: BIND PROPERTIES
         
         
-        public static Guid Id { get; set; }
 
         public void RemoveToast()
         {

@@ -5,16 +5,21 @@
              x:Class="DIPS.Xamarin.UI.Controls.Toast.Toast"
              x:Name="ToasterView"
              
-             xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.Toast;assembly=DIPS.Xamarin.UI">
+             xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.Toast;assembly=DIPS.Xamarin.UI"
+             xmlns:Tag="clr-namespace:DIPS.Xamarin.UI.Controls.Tag;assembly=DIPS.Xamarin.UI">
     <ContentView.Content>
-        <StackLayout 
-            x:DataType="{x:Type Local:Toast}"
-            BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:Toast}}}">
-            
-            <Label Text="{Binding Text}"
-                   TextColor="{Binding TextColor}"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Tag:Tag x:DataType="{x:Type Local:Toast}"
+                 BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:Toast}}}"
+                 
+                 Text="{Binding Text}"
+                 FontSize="{Binding FontSize}"
+                 FontFamily="{Binding FontFamily}"
+                 TextColor="{Binding TextColor}"
+                 BackgroundColor="{Binding BackgroundColor}"
+                 CornerRadius="{Binding CornerRadius}"
+                 Padding="{Binding Padding}"
+                 
+                 VerticalOptions="Start"
+                 HorizontalOptions="CenterAndExpand" />
     </ContentView.Content>
 </ContentView>
