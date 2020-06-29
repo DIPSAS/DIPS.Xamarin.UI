@@ -29,7 +29,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             
             // arrange view layers
             var oldContent = ((ContentPage)currentPage).Content;
-            var newContent = new Grid { BackgroundColor = Color.Red };
+            var newContent = new Grid() {BackgroundColor = Color.Transparent};
             Id = newContent.Id;
             newContent.Children.Add(oldContent);
             
@@ -41,6 +41,43 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             
             // animate toast
             await toastView.FadeTo(1, 750, Easing.Linear);
+            
+            // hide toast
+            _ = HideToasterIn();
+        }
+
+        private async Task HideToasterIn(int timeInSeconds = 5)
+        {
+            await Task.Delay(timeInSeconds * 1000);
+            
+            await HideToaster();
+        }
+        
+        public async Task HideToaster()
+        {
+            // get current page
+            var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
+            if (!(currentPage is ContentPage))
+            {
+                return;
+            }
+            
+            // get toast container grid
+            var toastContent = ((ContentPage)currentPage).Content;
+            if (toastContent.Id != Id || !(toastContent is Grid))
+            {
+                return;
+            }
+            
+            // get toast view
+            var toastGrid = (Grid)toastContent;
+            var toastView = toastGrid.Children.Last();
+            
+            // animate toast
+            await toastView.FadeTo(0, 750, Easing.Linear);
+            
+            // remove toast
+            toastGrid.Children.Remove(toastView);
         }
 
         private Toast GetToast()
