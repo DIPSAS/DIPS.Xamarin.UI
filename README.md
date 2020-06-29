@@ -28,7 +28,7 @@ Our resources can be used in our pages and UI components. This can be [colors](h
 
 Our API includes utilities that is useful when working with the MVVM pattern and XAML. This can be a [property changed api](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#propertychangedextensions|), [commands](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#asynccommand), [recursively searching the visual tree](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#getparentoftype) with more.
 
-## Support platforms
+## Supported platforms
 
 - [x] Android
 - [x] iOS
