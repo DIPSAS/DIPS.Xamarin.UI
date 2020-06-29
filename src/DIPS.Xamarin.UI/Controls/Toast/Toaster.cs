@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
@@ -17,7 +18,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         // START: SHOW
         public static Guid Id { get; set; }
         
-        public void ShowToaster(View toaster = null)
+        public async Task ShowToaster(View toaster = null)
         {
             // get current page
             var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
@@ -34,9 +35,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             
             // display toast view
             var toastView = toaster == null ? GetToast() : toaster;
+            toastView.Opacity = 0;
             newContent.Children.Add(toastView);
             ((ContentPage)currentPage).Content = newContent;
             
+            // animate toast
+            await toastView.FadeTo(1, 750, Easing.Linear);
         }
 
         private Toast GetToast()
