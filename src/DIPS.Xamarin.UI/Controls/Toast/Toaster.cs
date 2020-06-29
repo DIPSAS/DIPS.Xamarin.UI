@@ -50,6 +50,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             toast.SetBinding(Toast.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
             toast.SetBinding(Toast.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
             toast.SetBinding(Toast.PaddingProperty, new Binding(nameof(Padding), source: this));
+            toast.SetBinding(Toast.PositionYProperty, new Binding(nameof(PositionY), source: this));
 
             return toast;
         }
@@ -93,6 +94,19 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             get => (Thickness) GetValue(PaddingProperty);
             set => SetValue(PaddingProperty, value);
         }
+
+        public new double PositionY
+        {
+            get
+            {
+                var margin = (Thickness)GetValue(PositionYProperty);
+                return margin.Top;
+            }
+            set
+            {
+                SetValue(PositionYProperty, new Thickness(0, value, 0, 0));
+            }
+        }
         
         public static readonly BindableProperty TextProperty =
             BindableProperty.Create(nameof(Text), typeof(string), typeof(Toaster), Label.TextProperty.DefaultValue);
@@ -119,6 +133,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         
         public new static readonly BindableProperty PaddingProperty =
             BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Toaster), new Thickness(5, 5, 5, 5));
+        
+        public new static readonly BindableProperty PositionYProperty =
+            BindableProperty.Create(nameof(PositionY), typeof(Thickness), typeof(Toaster), new Thickness(0, 10, 0, 0));
         
         private static object FontSizeDefaultValueCreator(BindableObject bindable)
         {

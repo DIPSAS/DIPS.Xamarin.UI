@@ -18,6 +18,7 @@
                  BackgroundColor="{Binding BackgroundColor}"
                  CornerRadius="{Binding CornerRadius}"
                  Padding="{Binding Padding}"
+                 Margin="{Binding PositionY}"
                  
                  VerticalOptions="Start"
                  HorizontalOptions="CenterAndExpand" />

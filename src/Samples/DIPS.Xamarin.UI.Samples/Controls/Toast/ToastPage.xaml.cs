@@ -38,6 +38,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             Toaster.Current.BackgroundColor = Color.DodgerBlue;
             Toaster.Current.CornerRadius = 8;
             Toaster.Current.Padding = new Thickness(20, 10);
+            Toaster.Current.PositionY = 100;
             
             Toaster.Current.ShowToaster();
         }
