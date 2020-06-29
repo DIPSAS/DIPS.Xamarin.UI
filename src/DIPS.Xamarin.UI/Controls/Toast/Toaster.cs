@@ -97,15 +97,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         public new double PositionY
         {
-            get
-            {
-                var margin = (Thickness)GetValue(PositionYProperty);
-                return margin.Top;
-            }
-            set
-            {
-                SetValue(PositionYProperty, new Thickness(0, value, 0, 0));
-            }
+            get => (double) GetValue(PositionYProperty);
+            set => SetValue(PositionYProperty, value);
         }
         
         public static readonly BindableProperty TextProperty =
@@ -135,7 +128,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Toaster), new Thickness(5, 5, 5, 5));
         
         public new static readonly BindableProperty PositionYProperty =
-            BindableProperty.Create(nameof(PositionY), typeof(Thickness), typeof(Toaster), new Thickness(0, 10, 0, 0));
+            BindableProperty.Create(nameof(PositionY), typeof(double), typeof(Toaster), 10d);
         
         private static object FontSizeDefaultValueCreator(BindableObject bindable)
         {

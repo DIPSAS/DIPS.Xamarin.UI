@@ -18,7 +18,7 @@
                  BackgroundColor="{Binding BackgroundColor}"
                  CornerRadius="{Binding CornerRadius}"
                  Padding="{Binding Padding}"
-                 Margin="{Binding PositionY}"
+                 Margin="{Binding PositionY, Converter={Local:PositionToMarginConverter}}"
                  
                  VerticalOptions="Start"
                  HorizontalOptions="CenterAndExpand" />
