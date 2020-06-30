@@ -13,32 +13,68 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         #region Bindable Properties
 
+        /// <summary>
+        ///     Bindable property for <see cref="Text" />
+        /// </summary>
         public static readonly BindableProperty TextProperty =
             BindableProperty.Create(nameof(Text), typeof(string), typeof(Toast), Label.TextProperty.DefaultValue);
 
+        /// <summary>
+        ///     Bindable property for <see cref="TextColor" />
+        /// </summary>
+        public static readonly BindableProperty TextColorProperty =
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Toast),
+                Label.TextColorProperty.DefaultValue);
+
+        /// <summary>
+        ///     Bindable property for <see cref="FontFamily" />
+        /// </summary>
+        public static readonly BindableProperty FontFamilyProperty =
+            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Toast),
+                Label.FontFamilyProperty.DefaultValue);
+
+        /// <summary>
+        ///     Bindable property for <see cref="FontSize" />
+        /// </summary>
         public static readonly BindableProperty FontSizeProperty =
             BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Toast),
                 Label.FontSizeProperty.DefaultValue,
                 defaultValueCreator: FontSizeDefaultValueCreator);
 
-        public static readonly BindableProperty FontFamilyProperty =
-            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Toast),
-                Label.FontFamilyProperty.DefaultValue);
+        /// <summary>
+        ///     Bindable property for <see cref="LineBreakMode" />
+        /// </summary>
+        public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode),
+            typeof(LineBreakMode), typeof(Toast), Label.LineBreakModeProperty.DefaultValue);
 
-        public static readonly BindableProperty TextColorProperty =
-            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Toast),
-                Label.TextColorProperty.DefaultValue);
+        /// <summary>
+        ///     Bindable property for <see cref="MaxLines" />
+        /// </summary>
+        public static readonly BindableProperty MaxLinesProperty =
+            BindableProperty.Create(nameof(MaxLines), typeof(int), typeof(Toast), Label.MaxLinesProperty.DefaultValue);
 
+        /// <summary>
+        ///     Bindable property for <see cref="BackgroundColor" />
+        /// </summary>
         public static new readonly BindableProperty BackgroundColorProperty =
             BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Toast), Color.Default);
 
+        /// <summary>
+        ///     Bindable property for <see cref="CornerRadius" />
+        /// </summary>
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius),
             typeof(float), typeof(Toast), -1f,
             validateValue: OnCornerRadiusValidate);
 
+        /// <summary>
+        ///     Bindable property for <see cref="Padding" />
+        /// </summary>
         public static new readonly BindableProperty PaddingProperty =
             BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Toast), new Thickness(5, 5, 5, 5));
 
+        /// <summary>
+        ///     Bindable property for <see cref="PositionY" />
+        /// </summary>
         public static readonly BindableProperty PositionYProperty =
             BindableProperty.Create(nameof(PositionY), typeof(double), typeof(Toast), 10d);
 
@@ -46,12 +82,18 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         #region Public Properties
 
+        /// <summary>
+        ///     Gets or sets the text for the Toast. This is a bindable property.
+        /// </summary>
         public string Text
         {
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the size of the font for the Toast. This is a bindable property.
+        /// </summary>
         [TypeConverter(typeof(FontSizeConverter))]
         public double FontSize
         {
@@ -59,36 +101,77 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             set => SetValue(FontSizeProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the maximum number of lines allowed in the Toast. This is a bindable property.
+        /// </summary>
+        public int MaxLines
+        {
+            get => (int)GetValue(MaxLinesProperty);
+            set => SetValue(MaxLinesProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the LineBreakMode for the Toast. This is a bindable property.
+        /// </summary>
+        public LineBreakMode LineBreakMode
+        {
+            get => (LineBreakMode)GetValue(LineBreakModeProperty);
+            set => SetValue(LineBreakModeProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the font family to which the font for the Toast belongs. This is a bindable property.
+        /// </summary>
         public string FontFamily
         {
             get => (string)GetValue(FontFamilyProperty);
             set => SetValue(FontFamilyProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the Color for the text of this Toast. This is a bindable property.
+        /// </summary>
         public Color TextColor
         {
             get => (Color)GetValue(TextColorProperty);
             set => SetValue(TextColorProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the color which will fill the background of the Toast. This is a bindable property.
+        /// </summary>
         public new Color BackgroundColor
         {
             get => (Color)GetValue(BackgroundColorProperty);
             set => SetValue(BackgroundColorProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the corner radius of the Toast. This is a bindable property.
+        /// </summary>
         public float CornerRadius
         {
             get => (float)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the inner padding of the Toast text.
+        ///     <remarks>
+        ///         The padding is the space between the bounds of a Toast and the bounding region into which its Text property
+        ///         should be arranged into.
+        ///     </remarks>
+        /// </summary>
         public new Thickness Padding
         {
             get => (Thickness)GetValue(PaddingProperty);
             set => SetValue(PaddingProperty, value);
         }
 
+        /// <summary>
+        ///     The vertical positioning of the toaster in a percentage of the Main Page relative to the top margin of the Main
+        ///     page. This is a bindable property.
+        /// </summary>
         public double PositionY
         {
             get => (double)GetValue(PositionYProperty);

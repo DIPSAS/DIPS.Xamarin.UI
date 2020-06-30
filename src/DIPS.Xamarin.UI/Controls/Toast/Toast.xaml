@@ -20,6 +20,8 @@
                  Text="{Binding Text}"
                  FontSize="{Binding FontSize}"
                  FontFamily="{Binding FontFamily}"
+                 LineBreakMode="{Binding LineBreakMode}"
+                 MaxLines="{Binding MaxLines}"
                  TextColor="{Binding TextColor}"
                  BackgroundColor="{Binding BackgroundColor}"
                  CornerRadius="{Binding CornerRadius}"

@@ -21,10 +21,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 var ratio = positionY < 0 ? 0 : positionY > 100 ? 100 : positionY;
                 var size = (ratio * (Application.Current.MainPage.Height - 60)) / 100;
-                return new Thickness(0, size, 0, 0);
+                return new Thickness(5, size, 5, 0);
             }
 
-            return new Thickness(0, 10, 0, 0);
+            return new Thickness(5, 10, 5, 0);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

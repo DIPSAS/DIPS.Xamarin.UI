@@ -71,6 +71,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             Toaster.Current.PositionY = 30;
             Toaster.Current.AnimateFor = 500;
             Toaster.Current.HideToastIn = 5;
+            Toaster.Current.LineBreakMode = LineBreakMode.TailTruncation;
+            Toaster.Current.MaxLines = 1;
         }
     }
 }
