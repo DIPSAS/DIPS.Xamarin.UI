@@ -6,7 +6,12 @@
              x:Name="ToasterView"
              
              xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.Toast;assembly=DIPS.Xamarin.UI"
-             xmlns:Tag="clr-namespace:DIPS.Xamarin.UI.Controls.Tag;assembly=DIPS.Xamarin.UI">
+             xmlns:Tag="clr-namespace:DIPS.Xamarin.UI.Controls.Tag;assembly=DIPS.Xamarin.UI"
+             
+             Margin="{Binding PositionY, Source={x:Reference ToasterView}, Converter={Local:PositionToMarginConverter}}"
+             
+             VerticalOptions="Start"
+             HorizontalOptions="CenterAndExpand">
     <ContentView.Content>
         <Tag:Tag x:DataType="{x:Type Local:Toast}"
                  BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:Toast}}}"
@@ -17,10 +22,6 @@
                  TextColor="{Binding TextColor}"
                  BackgroundColor="{Binding BackgroundColor}"
                  CornerRadius="{Binding CornerRadius}"
-                 Padding="{Binding Padding}"
-                 Margin="{Binding PositionY, Converter={Local:PositionToMarginConverter}}"
-                 
-                 VerticalOptions="Start"
-                 HorizontalOptions="CenterAndExpand" />
+                 Padding="{Binding Padding}" />
     </ContentView.Content>
 </ContentView>

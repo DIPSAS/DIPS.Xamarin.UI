@@ -22,8 +22,16 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             {
                 // var toaster = new Toaster();
                 // toaster.ShowToast();
+
+                Toaster.Current.Text = "Hello, Jupiter!";
+                Toaster.Current.FontSize = 13;
+                Toaster.Current.TextColor = Color.White;
+                Toaster.Current.BackgroundColor = Color.DodgerBlue;
+                Toaster.Current.CornerRadius = 8;
+                Toaster.Current.Padding = new Thickness(20, 10);
+                Toaster.Current.PositionY = 30;
                 
-                Toaster.Current.ShowToast();
+                Toaster.Current.ShowToaster();
             });
         }
         
@@ -43,6 +51,21 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             Toaster.Current.ShowToaster();
         }
 
-        public ICommand ShowToastCommand { get; set; }
+        private ICommand _showToastCommand;
+
+        public ICommand ShowToastCommand
+        {
+            get => _showToastCommand;
+            set
+            {
+                _showToastCommand = value;
+                OnPropertyChanged(nameof(ShowToastCommand));
+            }
+        }
+
+        private void OnMyButtonClicked(object sender, EventArgs e)
+        {
+            Console.WriteLine("Hellooo...");
+        }
     }
 }

@@ -2,15 +2,22 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DIPS.Xamarin.UI.Samples.Controls.Toast.ToastPage">
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.Toast.ToastPage"
+             x:Name="toastPage">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Hello, World!"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
+            <Button Text="My Button 1"
+                    Margin="15,0,15,40"
+                    Clicked="OnMyButtonClicked"/>
             <Button Text="Show Toast"
                     Margin="15,0,15,40"
-                    Clicked="OnButtonClicked"/>
+                    Command="{Binding ShowToastCommand, Source={x:Reference toastPage}}" />
+            <Button Text="My Button 2"
+                    Margin="15,0,15,40"
+                    Clicked="OnMyButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -27,23 +27,55 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 return;
             }
             
+            
             // arrange view layers
             var oldContent = ((ContentPage)currentPage).Content;
-            var newContent = new Grid() {BackgroundColor = Color.Transparent};
+            //var newContent = new Grid { RowDefinitions = new RowDefinitionCollection {new RowDefinition { Height = GridLength.Star }} };
+            // var newContent = new ContainerGrid();
+            //var newContent = new StackLayout();
+            // var newContent = new AbsoluteLayout {BackgroundColor = Color.Coral};
+            // var newContent = new Grid
+            // {
+            //     Children = { contentPage.Content }
+            // };
+            //var newContent = new ContentView { Content = contentPage.Content };
+            var newContent = new Grid();
+            
             Id = newContent.Id;
+            // AbsoluteLayout.SetLayoutBounds (oldContent, new Rectangle (1, 1, 1, 1));
+            // AbsoluteLayout.SetLayoutFlags(oldContent, AbsoluteLayoutFlags.All);
             newContent.Children.Add(oldContent);
+            // var x = new ControlTemplate() {};
+
+            // contentPage.ControlTemplate = x;
             
             // display toast view
             var toastView = toaster == null ? GetToast() : toaster;
             toastView.Opacity = 0;
-            newContent.Children.Add(toastView);
-            ((ContentPage)currentPage).Content = newContent;
+            // toastView.BackgroundColor = Color.Aqua;
             
+            // tap command
+            var tapGesture = new TapGestureRecognizer();
+            tapGesture.Tapped += (s, e) =>
+            {
+                _ = HideToasterIn(0);
+            };
+            toastView.GestureRecognizers.Add(tapGesture);
+            
+            newContent.Children.Add(toastView);
+            
+            // var newContent = new Grid
+            // {
+            //     Children = { toastView, contentPage.Content }
+            // };
+            ((ContentPage)currentPage).Content = newContent;
+            // contentPage.ForceLayout();
+        
             // animate toast
             await toastView.FadeTo(1, 750, Easing.Linear);
-            
+        
             // hide toast
-            _ = HideToasterIn();
+            //_ = HideToasterIn();
         }
 
         private async Task HideToasterIn(int timeInSeconds = 5)
@@ -78,6 +110,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             
             // remove toast
             toastGrid.Children.Remove(toastView);
+            ((ContentPage)currentPage).Content = toastGrid.Children.First();
         }
 
         private Toast GetToast()
