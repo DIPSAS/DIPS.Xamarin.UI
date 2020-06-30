@@ -32,6 +32,7 @@ namespace DIPS.Xamarin.UI.Converters.MultiValueConverters
         /// </summary>
         public bool Inverted { get; set; }
 
+        /// <inheritdoc/>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values == null)
@@ -66,12 +67,14 @@ namespace DIPS.Xamarin.UI.Converters.MultiValueConverters
             }
         }
 
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException("LogicalExpressionConverter does not support convert back");
         }
 
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider)
         {
