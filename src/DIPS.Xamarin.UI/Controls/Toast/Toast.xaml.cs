@@ -6,6 +6,13 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Toast : ContentView
     {
+        public Toast()
+        {
+            InitializeComponent();
+        }
+
+        #region Bindable Properties
+
         public static readonly BindableProperty TextProperty =
             BindableProperty.Create(nameof(Text), typeof(string), typeof(Toast), Label.TextProperty.DefaultValue);
 
@@ -28,17 +35,16 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius),
             typeof(float), typeof(Toast), -1f,
             validateValue: OnCornerRadiusValidate);
-        
-        public new static readonly BindableProperty PaddingProperty =
+
+        public static new readonly BindableProperty PaddingProperty =
             BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Toast), new Thickness(5, 5, 5, 5));
-        
-        public new static readonly BindableProperty PositionYProperty =
+
+        public static readonly BindableProperty PositionYProperty =
             BindableProperty.Create(nameof(PositionY), typeof(double), typeof(Toast), 10d);
 
-        public Toast()
-        {
-            InitializeComponent();
-        }
+        #endregion
+
+        #region Public Properties
 
         public string Text
         {
@@ -76,16 +82,16 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             get => (float)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
         }
-        
+
         public new Thickness Padding
         {
-            get => (Thickness) GetValue(PaddingProperty);
+            get => (Thickness)GetValue(PaddingProperty);
             set => SetValue(PaddingProperty, value);
         }
 
-        public new double PositionY
+        public double PositionY
         {
-            get => (double) GetValue(PositionYProperty);
+            get => (double)GetValue(PositionYProperty);
             set => SetValue(PositionYProperty, value);
         }
 
@@ -103,5 +109,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
             return false;
         }
+
+        #endregion
     }
 }

@@ -3,19 +3,20 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIPS.Xamarin.UI.Controls.Toast.Toast"
-             x:Name="ToasterView"
-             
+             x:Name="toasterView"
+
              xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.Toast;assembly=DIPS.Xamarin.UI"
              xmlns:Tag="clr-namespace:DIPS.Xamarin.UI.Controls.Tag;assembly=DIPS.Xamarin.UI"
-             
-             Margin="{Binding PositionY, Source={x:Reference ToasterView}, Converter={Local:PositionToMarginConverter}}"
-             
+
+             Margin="{Binding PositionY, Source={x:Reference toasterView}, Converter={Local:PositionToMarginConverter}}"
+
              VerticalOptions="Start"
              HorizontalOptions="CenterAndExpand">
+
     <ContentView.Content>
         <Tag:Tag x:DataType="{x:Type Local:Toast}"
                  BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:Toast}}}"
-                 
+
                  Text="{Binding Text}"
                  FontSize="{Binding FontSize}"
                  FontFamily="{Binding FontFamily}"
@@ -24,4 +25,5 @@
                  CornerRadius="{Binding CornerRadius}"
                  Padding="{Binding Padding}" />
     </ContentView.Content>
+
 </ContentView>
