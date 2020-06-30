@@ -15,7 +15,7 @@
                 VerticalOptions="Center"
                 HorizontalOptions="FillAndExpand"
                 CornerRadius="10"
-                BackgroundColor="Transparent"
+                BackgroundColor="{x:Static dxui:Theme.TealPrimaryLight}"
                 BorderColor="{x:Static dxui:Theme.TealSecondaryLight}"
                 BorderWidth="0"
                 TextColor="{x:Static dxui:Theme.TealSecondaryLight}"

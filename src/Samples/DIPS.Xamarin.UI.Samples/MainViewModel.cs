@@ -41,7 +41,7 @@ namespace DIPS.Xamarin.UI.Samples
                     //m_navigation.PushAsync(new AsyncCommandPage());
                     break;
                 case "Extensions":
-                    m_navigation.PushAsync(new ExtensionsPage());
+                    navigation.PushAsync(new ExtensionsPage());
                     break;
             }
         }

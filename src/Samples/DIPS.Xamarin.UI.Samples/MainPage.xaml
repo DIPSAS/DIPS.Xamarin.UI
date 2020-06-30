@@ -20,7 +20,7 @@
             <RowDefinition Height="0.7*" />
             <RowDefinition Height="0.7*" />
         </Grid.RowDefinitions>
-       
+
 
         <AbsoluteLayout HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand">
@@ -36,29 +36,26 @@
         <StackLayout Grid.Row="1"
                      Margin="10,10,10,20"
                      VerticalOptions="End">
-        <View:SamplesButton Text="Controls"
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="Controls" />
-        <View:SamplesButton Text="Resources"
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="Resources" />
-        <View:SamplesButton Text="Converters"
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="Converters" />
-        <View:SamplesButton Text="Async command"
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="Async command" />
-        <View:SamplesButton Text="Extensions"
-                Command="{Binding NavigateToCommand}"
-                CommandParameter="Extensions" />
+            <View:SamplesButton Command="{Binding NavigateToCommand}"
+                                CommandParameter="Controls"
+                                Text="Controls" />
+            <View:SamplesButton Command="{Binding NavigateToCommand}"
+                                CommandParameter="Resources"
+                                Text="Resources" />
+            <View:SamplesButton Command="{Binding NavigateToCommand}"
+                                CommandParameter="Converters"
+                                Text="Converters" />
+            <View:SamplesButton Command="{Binding NavigateToCommand}"
+                                CommandParameter="Extensions"
+                                Text="Extensions" />
 
         </StackLayout>
 
-         <View:SamplesButton Command="{Binding NavigateToCommand}"
+        <View:SamplesButton ButtonBackgroundColor="Transparent"
+                            Command="{Binding NavigateToCommand}"
                             CommandParameter="GitHub"
-                            HorizontalOptions="End"
                             CornerRadius="20"
-                            ButtonBackgroundColor="Transparent"
+                            HorizontalOptions="End"
                             Image="githublogo.png"
                             VerticalOptions="Start" />
     </Grid>
