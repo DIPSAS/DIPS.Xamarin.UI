@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:multivalueconverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.MultiValueConverters"
+             mc:Ignorable="d dblend"
+             x:Class="DIPS.Xamarin.UI.Samples.Converters.MultiValueConverters.LogicalExpressionConverterPage"
+             x:DataType="{x:Type multivalueconverters:LogicalExpressionConverterPageViewModel}"
+             dblend:DataContext="{dblend:DesignInstance multivalueconverters:LogicalExpressionConverterPageViewModel}">
+    <ContentPage.BindingContext>
+        <multivalueconverters:LogicalExpressionConverterPageViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Orientation="Vertical">
+        
+        <CheckBox IsChecked="{Binding LogicalProperty}" />
+        <CheckBox IsChecked="{Binding SomeOtherLogicalProperty}" />
+        
+        <Label Text="Or">
+            <Label.IsVisible>
+                <MultiBinding Converter="{dxui:LogicalExpressionConverter
+                                    LogicalGate=Or}">
+                    <Binding Path="LogicalProperty" />
+                    <Binding Path="SomeOtherLogicalProperty" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+
+        <Label Text="Nor">
+            <Label.IsVisible>
+                <MultiBinding Converter="{dxui:LogicalExpressionConverter
+                                    LogicalGate=Nor}">
+                    <Binding Path="LogicalProperty" />
+                    <Binding Path="SomeOtherLogicalProperty" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+
+        <Label Text="And">
+            <Label.IsVisible>
+                <MultiBinding Converter="{dxui:LogicalExpressionConverter
+                                    LogicalGate=And}">
+                    <Binding Path="LogicalProperty" />
+                    <Binding Path="SomeOtherLogicalProperty" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+
+        <Label Text="Nand">
+            <Label.IsVisible>
+                <MultiBinding Converter="{dxui:LogicalExpressionConverter
+                                    LogicalGate=Nand}">
+                    <Binding Path="LogicalProperty" />
+                    <Binding Path="SomeOtherLogicalProperty" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+
+        <Label Text="Xand">
+            <Label.IsVisible>
+                <MultiBinding Converter="{dxui:LogicalExpressionConverter
+                                    LogicalGate=Xand}">
+                    <Binding Path="LogicalProperty" />
+                    <Binding Path="SomeOtherLogicalProperty" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+
+        <Label Text="Xor">
+            <Label.IsVisible>
+                <MultiBinding Converter="{dxui:LogicalExpressionConverter
+                                    LogicalGate=Xor}">
+                    <Binding Path="LogicalProperty" />
+                    <Binding Path="SomeOtherLogicalProperty" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+    </StackLayout>
+</ContentPage>
