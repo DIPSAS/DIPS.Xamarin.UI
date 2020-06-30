@@ -53,6 +53,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             // check state closed
             if (ToastState != ToastState.Closed)
             {
+                CancellationSource.Cancel();
+                CancellationSource = new CancellationTokenSource();
+                await HideToasterIn(HideToastIn);
                 return;
             }
 
