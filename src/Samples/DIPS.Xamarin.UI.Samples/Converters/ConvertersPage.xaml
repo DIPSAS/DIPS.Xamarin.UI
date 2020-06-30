@@ -41,6 +41,9 @@
             <Button Text="TypeToObjectConverter"
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="TypeToObjectConverter" />
+            <Button Text="LogicalExpressionConverter"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="LogicalExpressionConverter" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

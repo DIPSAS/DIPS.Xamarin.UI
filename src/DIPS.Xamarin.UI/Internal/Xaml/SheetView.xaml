@@ -11,6 +11,7 @@
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             xmlns:MultiValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.MultiValueConverters"
              xmlns:Utilities="clr-namespace:DIPS.Xamarin.UI.Internal.Utilities;assembly=DIPS.Xamarin.UI"
              dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
     <Frame x:Name="OuterSheetFrame"
@@ -54,28 +55,18 @@
                 <Grid x:Name="titleAndButtonsGrid"
                       Grid.Row="1"
                       ColumnSpacing="0"
-                      IsVisible="False"
                       IsClippedToBounds="True">
-                    <Grid.Triggers>
-                        <DataTrigger TargetType="Grid"
-                                     Binding="{Binding Source={x:Reference TitleLabel}, Path=IsVisible}"
-                                     Value="True">
-                            <Setter Property="Grid.IsVisible"
-                                    Value="True" />
-                        </DataTrigger>
-                        <DataTrigger TargetType="Grid"
-                                     Binding="{Binding Source={x:Reference cancelButton}, Path=IsVisible}"
-                                     Value="True">
-                            <Setter Property="Grid.IsVisible"
-                                    Value="True" />
-                        </DataTrigger>
-                        <DataTrigger TargetType="Grid"
-                                     Binding="{Binding Source={x:Reference actionButton}, Path=IsVisible}"
-                                     Value="True">
-                            <Setter Property="Grid.IsVisible"
-                                    Value="True" />
-                        </DataTrigger>
-                    </Grid.Triggers>
+                    <Grid.IsVisible>
+                        <MultiBinding Converter="{MultiValueConverters:LogicalExpressionConverter
+                                    LogicalGate=Or}">
+                            <Binding Source="{x:Reference TitleLabel}"
+                                     Path="IsVisible" />
+                            <Binding Source="{x:Reference cancelButton}"
+                                     Path="IsVisible" />
+                            <Binding Source="{x:Reference actionButton}"
+                                     Path="IsVisible" />
+                        </MultiBinding>
+                    </Grid.IsVisible>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />

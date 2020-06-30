@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using DIPS.Xamarin.UI.Samples.Converters.MultiValueConverters;
 using DIPS.Xamarin.UI.Samples.Converters.ValueConverters;
 using Xamarin.Forms;
 
@@ -52,6 +53,9 @@ namespace DIPS.Xamarin.UI.Samples.Converters
                 break;
                 case "TypeToObjectConverter":
                     m_navigation.PushAsync(new TypeToObjectConverterPage() { Title = parameter });
+                    break;
+                case "LogicalExpressionConverter":
+                    m_navigation.PushAsync(new LogicalExpressionConverterPage() { Title = parameter });
                     break;
             }
         }
