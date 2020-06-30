@@ -10,10 +10,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
     /// <summary>
     /// Converter that takes different input input types and returns a boolean value to indicate if it is empty or not.
-    /// <remarks>Input types: <see cref="string"/>, <see cref="IEnumerable"/></remarks>
     /// </summary>
     public class IsEmptyConverter : IValueConverter, IMarkupExtension
     {
+        private IServiceProvider m_serviceProvider;
+
         /// <summary>
         /// Property to set if we want to return a inverted output value from the converter.
         /// </summary>
@@ -32,6 +33,15 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             switch (value) {
                 case null:
                     result = true;
+                    break;
+                case int intValue:
+                    result = intValue == 0;
+                    break;
+                case double doubleValue:
+                    result = doubleValue == 0.0;
+                    break;
+                case float floatValue:
+                    result = floatValue == 0.0f;
                     break;
                 case string stringValue:
                     result = string.IsNullOrEmpty(stringValue);
@@ -52,6 +62,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// <param name="parameter">A parameter to use during the conversion.</param>
         /// <param name="culture">The culture to use during the conversion.</param>
         /// <returns></returns>
+        [ExcludeFromCodeCoverage]
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return !(bool)Convert(value, targetType, parameter, culture);
@@ -59,6 +70,10 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public object ProvideValue(IServiceProvider serviceProvider) => this;
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            m_serviceProvider = serviceProvider;
+            return this;
+        }
     }
 }

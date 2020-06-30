@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:valueconverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters"
+             xmlns:SamplesResources="clr-namespace:DIPS.Xamarin.UI.Samples.SamplesResources;assembly=DIPS.Xamarin.UI.Samples"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             mc:Ignorable="d"
+             x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.StringCaseConverterPage">
+    <ContentPage.BindingContext>
+        <valueconverters:StringCaseConverterViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label Text="Using LocalizedString"
+                   Grid.Column="0" />
+            <Label Text="{dxui:StringCase Input={x:Static SamplesResources:LocalizedStrings.TestString},StringCase=Upper}" />
+        </Grid>
+        <Grid  Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label Text="Using LocalizedString"
+                   Grid.Column="0" />
+            <Label Text="{Binding MyString, Converter={dxui:StringCaseConverter StringCase=Upper}}" />
+        </Grid>
+    </Grid>
+</ContentPage>

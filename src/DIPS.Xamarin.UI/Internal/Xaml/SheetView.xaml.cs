@@ -6,15 +6,18 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Internal.xaml
 {
     /// <summary>
-    /// A sheetview that is used inside of a <see cref="SheetBehavior"/>
+    ///     A sheetview that is used inside of a <see cref="SheetBehavior" />
     /// </summary>
-    /// <remarks>This is a internal Xaml control that should only be used in a <see cref="SheetBehavior"/></remarks>
+    /// <remarks>This is a internal Xaml control that should only be used in a <see cref="SheetBehavior" /></remarks>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SheetView : ContentView
     {
         private readonly SheetBehavior m_sheetBehaviour;
+
+        private double m_newY;
+
         /// <summary>
-        /// Constructs a <see cref="SheetView"/>
+        ///     Constructs a <see cref="SheetView" />
         /// </summary>
         /// <param name="sheetBehavior"></param>
         public SheetView(SheetBehavior sheetBehavior)
@@ -24,24 +27,21 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         }
 
         /// <summary>
-        /// The height that the sheet content needs if it should display all of its content
+        ///     The height that the sheet content needs if it should display all of its content
         /// </summary>
         internal double SheetContentHeightRequest =>
             sheetContentView.Content != null
-                ? SheetContentView.Content.Height + HandleBoxView.Height + OuterSheetFrame.Padding.Top + OuterSheetFrame.Padding.Bottom +
+                ? SheetContentView.Content.Height + HeaderGrid.Height + HeaderGrid.Padding.Top + HeaderGrid.Padding.Bottom +
                   OuterSheetFrame.CornerRadius
                 : 0;
 
-        internal BoxView Handle => HandleBoxView;
+        internal ContentView SheetContentView => sheetContentView;
 
         /// <summary>
-        /// The internal outer sheet frame of the view
+        ///     The internal outer sheet frame of the view
         /// </summary>
         internal Frame SheetFrame => OuterSheetFrame;
 
-        internal ContentView SheetContentView => sheetContentView;
-
-        private double m_newY;
         private void OnDrag(object sender, PanUpdatedEventArgs e)
         {
             if (!m_sheetBehaviour.IsDraggable) return;
@@ -54,7 +54,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                     break;
                 case GestureStatus.Running:
 
-                    var translationY = (Device.RuntimePlatform == Device.Android) ? OuterSheetFrame.TranslationY : m_newY;
+                    var translationY = Device.RuntimePlatform == Device.Android ? OuterSheetFrame.TranslationY : m_newY;
                     var newYTranslation = e.TotalY + translationY;
                     //Hack to remove jitter from android 
                     if (Device.RuntimePlatform == Device.Android)
@@ -81,26 +81,39 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         internal void Initialize()
         {
             m_newY = 0;
-            //Flp the grid if alignment is set to top
+            //Flip the grid if alignment is set to top
             if (m_sheetBehaviour.Alignment == AlignmentOptions.Top)
             {
                 SheetGrid.RowDefinitions[0].Height = GridLength.Star;
                 SheetGrid.RowDefinitions[1].Height = GridLength.Auto;
                 Grid.SetRow(SheetContentGrid, 0);
-                Grid.SetRow(HandleBoxView, 1);
+                Grid.SetRow(HeaderGrid, 1);
+
+                Grid.SetRow(HandleBoxView, 2);
+                Grid.SetRow(SeparatorBoxView, 0);
             }
             else
             {
                 SheetGrid.RowDefinitions[0].Height = GridLength.Auto;
                 SheetGrid.RowDefinitions[1].Height = GridLength.Star;
-                Grid.SetRow(HandleBoxView, 0);
+                Grid.SetRow(HeaderGrid, 0);
                 Grid.SetRow(SheetContentGrid, 1);
+
+                Grid.SetRow(HandleBoxView, 0);
+                Grid.SetRow(SeparatorBoxView, 2);
             }
 
+            ChangeVerticalContentAlignment();
+        }
+
+        internal void ChangeVerticalContentAlignment()
+        {
             switch (m_sheetBehaviour.VerticalContentAlignment)
             {
                 case ContentAlignment.Fit:
-                    SheetContentGrid.VerticalOptions = m_sheetBehaviour.Alignment == AlignmentOptions.Top ? LayoutOptions.EndAndExpand : LayoutOptions.StartAndExpand;
+                    SheetContentGrid.VerticalOptions = m_sheetBehaviour.Alignment == AlignmentOptions.Top
+                        ? LayoutOptions.EndAndExpand
+                        : LayoutOptions.StartAndExpand;
                     break;
                 case ContentAlignment.Fill:
                     SheetContentGrid.VerticalOptions = LayoutOptions.Fill;
@@ -108,6 +121,16 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 default:
                     break;
             }
+        }
+
+        private void CancelButtonClicked(object sender, EventArgs e)
+        {
+            m_sheetBehaviour.CancelClickedInternal();
+        }
+
+        private void ActionButtonClicked(object sender, EventArgs e)
+        {
+            m_sheetBehaviour.ActionClickedInternal();
         }
     }
 }

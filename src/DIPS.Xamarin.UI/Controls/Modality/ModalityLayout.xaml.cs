@@ -135,7 +135,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         private Frame CreateOverlay()
         {
-            var overlayFrame = new Frame { BackgroundColor = OverlayColor, IsVisible = true, Opacity = 0.0 };
+            var overlayFrame = new Frame { BackgroundColor = OverlayColor, IsVisible = true, Opacity = 0.0, HasShadow = false};
             var tappedCommand = new Command(
                 () => m_closeModalityRecognizer.Command.Execute(null),
                 () => CurrentShowingModalityLayout != null && CurrentShowingModalityLayout.CloseOnOverlayTapped &&

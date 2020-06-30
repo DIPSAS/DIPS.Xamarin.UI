@@ -16,5 +16,38 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color TealSecondaryLight = Color.FromHex("#ECF3F4");
         public static Color TealSecondaryAir = Color.FromHex("#F0F5F7");
 #pragma warning restore 1591
+
+        /// <summary>
+        /// Returns a <see cref="Theme"/> Color from it's enum
+        /// </summary>
+        /// <param name="themeEnum">The enum to get the color from</param>
+        /// <returns>A theme color</returns>
+        public static Color FromIdentifier(this Theme.Identifier themeEnum)
+        {
+            return themeEnum switch
+            {
+                Identifier.TealPrimary => TealPrimary,
+                Identifier.TealPrimaryLight => TealPrimaryLight,
+                Identifier.TealPrimaryAir => TealPrimaryAir,
+                Identifier.TealSecondary => TealSecondary,
+                Identifier.TealSecondaryLight => TealSecondaryLight,
+                Identifier.TealSecondaryAir => TealSecondaryAir,
+                _ => throw new System.NotImplementedException("The enum your are trying to get a color from have not been mapped to a corresponding color."),
+            };
+        }
+        /// <summary>
+        /// Enum representation of <see cref="Theme"/> color
+        /// </summary>
+        public enum Identifier
+        {
+#pragma warning disable 1591
+            TealPrimary,
+            TealPrimaryLight,
+            TealPrimaryAir,
+            TealSecondary,
+            TealSecondaryLight,
+            TealSecondaryAir,
+#pragma warning restore 1591
+        }
     }
 }

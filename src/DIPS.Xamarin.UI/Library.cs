@@ -28,12 +28,18 @@ namespace DIPS.Xamarin.UI
             public static void EnableFeature(string previewFeature)
             {
                 if (previewFeature == "MenuButtonBadgeAnimation") MenuButtonBadgeAnimation = true;
+                if (previewFeature == "SkeletonView") SkeletonView = true;
             }
 
             /// <summary>
             ///     Toggles animations for the badge on the <see cref="MenuButton"/>
             /// </summary>
             public static bool MenuButtonBadgeAnimation { get; set; }
+
+            /// <summary>
+            /// Toggles usage of SkeletonView <see cref="SkeletonView"/>
+            /// </summary>
+            public static bool SkeletonView { get; set; }
         }
 
     }

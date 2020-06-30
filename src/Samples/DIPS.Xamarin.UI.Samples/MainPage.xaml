@@ -36,16 +36,22 @@
         <StackLayout Grid.Row="1"
                      Margin="10,10,10,20"
                      VerticalOptions="End">
+        <View:SamplesButton Text="Controls"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Controls" />
+        <View:SamplesButton Text="Resources"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Resources" />
+        <View:SamplesButton Text="Converters"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Converters" />
+        <View:SamplesButton Text="Async command"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Async command" />
+        <View:SamplesButton Text="Extensions"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Extensions" />
 
-            <View:SamplesButton Command="{Binding NavigateToCommand}"
-                                CommandParameter="Controls"
-                                Text="Controls" />
-            <View:SamplesButton Command="{Binding NavigateToCommand}"
-                                CommandParameter="Resources"
-                                Text="Resources" />
-            <View:SamplesButton Command="{Binding NavigateToCommand}"
-                                CommandParameter="API"
-                                Text="API" />
         </StackLayout>
 
          <View:SamplesButton Command="{Binding NavigateToCommand}"

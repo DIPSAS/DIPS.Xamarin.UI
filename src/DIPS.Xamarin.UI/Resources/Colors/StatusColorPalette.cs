@@ -33,5 +33,68 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color IdleLight = Color.FromHex("#B1BEBF");
         public static Color IdleAir = Color.FromHex("#D3DDDE");
 #pragma warning restore 1591
+
+        /// <summary>
+        /// Returns a <see cref="Theme"/> Color from it's enum
+        /// </summary>
+        /// <param name="statusColorPaletteEnum">The enum to get the color from</param>
+        /// <returns>A theme color</returns>
+        public static Color FromIdentifier(this Identifier statusColorPaletteEnum)
+        {
+            return statusColorPaletteEnum switch
+            {
+                Identifier.DangerDark => DangerDark,
+                Identifier.Danger => Danger,
+                Identifier.DangerLight => DangerLight,
+                Identifier.DangerAir => DangerAir,
+                Identifier.WarningDark => WarningDark,
+                Identifier.Warning => Warning,
+                Identifier.WarningLight => WarningLight,
+                Identifier.WarningAir => WarningAir,
+                Identifier.SuccessDark => SuccessDark,
+                Identifier.Success => Success,
+                Identifier.SuccessLight => SuccessLight,
+                Identifier.SuccessAir => SuccessAir,
+                Identifier.InfoDark => InfoDark,
+                Identifier.Info => Info,
+                Identifier.InfoLight => InfoLight,
+                Identifier.InfoAir => InfoAir,
+                Identifier.IdleDark => IdleDark,
+                Identifier.Idle => Idle,
+                Identifier.IdleLight => IdleLight,
+                Identifier.IdleAir => IdleAir,
+                _ => throw new System.NotImplementedException(),
+            };
+        }
+        /// <summary>
+        /// Enum representation of <see cref="StatusColorPalette"/> color
+        /// </summary>
+        public enum Identifier
+        {
+#pragma warning disable 1591
+            DangerDark,
+            Danger,
+            DangerLight,
+            DangerAir,
+            WarningDark,
+            Warning,
+            WarningLight,
+            WarningAir,
+            SuccessDark,
+            Success,
+            SuccessLight,
+            SuccessAir,
+            InfoDark,
+            Info,
+            InfoLight,
+            InfoAir,
+            IdleDark,
+            Idle,
+            IdleLight,
+            IdleAir
+#pragma warning restore 1591
+        }
     }
+
+    
 }
