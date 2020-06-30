@@ -21,7 +21,7 @@
                     CommandParameter="Hello, Mars!" />
             <Button Text="Show Toast 3"
                     Margin="15,0,15,40"
-                    Command="{Binding ShowToastCommand, Source={x:Reference toastPage}}"
+                    Command="{Binding ShowToastCommand2, Source={x:Reference toastPage}}"
                     CommandParameter="Hello, Venus!" />
         </StackLayout>
 
