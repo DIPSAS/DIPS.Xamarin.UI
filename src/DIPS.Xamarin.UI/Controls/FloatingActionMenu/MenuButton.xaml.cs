@@ -329,7 +329,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         /// <summary>
         /// <see cref="IsVisible"/>
         /// </summary>
-        public new static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MenuButton), propertyChanged:OnIsVisibleChanged, defaultBindingMode: BindingMode.TwoWay);
+        public new static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(MenuButton), propertyChanged:OnIsVisibleChanged, defaultBindingMode: BindingMode.TwoWay, defaultValue:true);
 
         private static void OnIsVisibleChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
