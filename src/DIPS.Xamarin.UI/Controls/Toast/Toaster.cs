@@ -1,10 +1,18 @@
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
 {
+    public enum ToastState
+    {
+        Closed = 0,
+        Closing,
+        Opened
+    }
+    
     public class Toaster : BindableObject
     {
         // START: CURRENT
@@ -16,10 +24,20 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         // END: CURRENT
         
         // START: SHOW
-        public static Guid Id { get; set; }
+        private static ToastState ToastState { get; set; }
+        private static Guid? Id { get; set; }
         
         public async Task ShowToaster(View toaster = null)
         {
+            // check state closed
+            if (ToastState != ToastState.Closed)
+            {
+                return;
+            }
+            
+            ToastState = ToastState.Opened;
+            CancellationSource = new CancellationTokenSource();
+            
             // get current page
             var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
             if (!(currentPage is ContentPage))
@@ -27,32 +45,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 return;
             }
             
-            
-            // arrange view layers
+            // old content
             var oldContent = ((ContentPage)currentPage).Content;
-            //var newContent = new Grid { RowDefinitions = new RowDefinitionCollection {new RowDefinition { Height = GridLength.Star }} };
-            // var newContent = new ContainerGrid();
-            //var newContent = new StackLayout();
-            // var newContent = new AbsoluteLayout {BackgroundColor = Color.Coral};
-            // var newContent = new Grid
-            // {
-            //     Children = { contentPage.Content }
-            // };
-            //var newContent = new ContentView { Content = contentPage.Content };
-            var newContent = new Grid();
-            
-            Id = newContent.Id;
-            // AbsoluteLayout.SetLayoutBounds (oldContent, new Rectangle (1, 1, 1, 1));
-            // AbsoluteLayout.SetLayoutFlags(oldContent, AbsoluteLayoutFlags.All);
-            newContent.Children.Add(oldContent);
-            // var x = new ControlTemplate() {};
 
-            // contentPage.ControlTemplate = x;
-            
-            // display toast view
+            // arrange toast view
             var toastView = toaster == null ? GetToast() : toaster;
             toastView.Opacity = 0;
-            // toastView.BackgroundColor = Color.Aqua;
             
             // tap command
             var tapGesture = new TapGestureRecognizer();
@@ -62,31 +60,43 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             };
             toastView.GestureRecognizers.Add(tapGesture);
             
-            newContent.Children.Add(toastView);
+            // arrange new content
+            var newContent = new Grid { Children = { oldContent, toastView } };
+            Id = newContent.Id;
             
-            // var newContent = new Grid
-            // {
-            //     Children = { toastView, contentPage.Content }
-            // };
+            // set new content
             ((ContentPage)currentPage).Content = newContent;
-            // contentPage.ForceLayout();
         
             // animate toast
-            await toastView.FadeTo(1, 750, Easing.Linear);
-        
+            await toastView.FadeTo(1, (uint)AnimateFor, Easing.Linear);
+            
             // hide toast
-            //_ = HideToasterIn();
+            if (HideToastIn > 0)
+            {
+                await HideToasterIn(HideToastIn);
+            }
         }
 
-        private async Task HideToasterIn(int timeInSeconds = 5)
+        private CancellationTokenSource CancellationSource { get; set; }
+
+        private async Task HideToasterIn(int timeInSeconds)
         {
-            await Task.Delay(timeInSeconds * 1000);
+            await Task.Delay(timeInSeconds * 1000, CancellationSource.Token);
             
             await HideToaster();
         }
         
         public async Task HideToaster()
         {
+            // check state closed
+            if (ToastState != ToastState.Opened)
+            {
+                return;
+            }
+
+            ToastState = ToastState.Closing;
+            CancellationSource.Cancel();
+            
             // get current page
             var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
             if (!(currentPage is ContentPage))
@@ -106,11 +116,14 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             var toastView = toastGrid.Children.Last();
             
             // animate toast
-            await toastView.FadeTo(0, 750, Easing.Linear);
+            await toastView.FadeTo(0, (uint)AnimateFor, Easing.Linear);
             
             // remove toast
             toastGrid.Children.Remove(toastView);
             ((ContentPage)currentPage).Content = toastGrid.Children.First();
+            
+            // set toast state
+            ToastState = ToastState.Closed;
         }
 
         private Toast GetToast()
@@ -131,6 +144,17 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         // END: SHOW
         
         // START: BIND PROPERTIES
+        /// <summary>
+        /// Animate the appearing and disappearing of the toaster for the given milliseconds
+        /// </summary>
+        public int AnimateFor { get; set; } = 250;
+        
+        /// <summary>
+        /// Hide the toaster automatically after the given seconds
+        /// <remarks> If value is 0, toaster won't be hide automatically </remarks>
+        /// </summary>
+        public int HideToastIn { get; set; } = 5;
+        
         public string Text
         {
             get => (string)GetValue(TextProperty);

@@ -30,6 +30,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                 Toaster.Current.CornerRadius = 8;
                 Toaster.Current.Padding = new Thickness(20, 10);
                 Toaster.Current.PositionY = 30;
+                Toaster.Current.AnimateFor = 500;
+                Toaster.Current.HideToastIn = 5;
                 
                 Toaster.Current.ShowToaster();
             });
