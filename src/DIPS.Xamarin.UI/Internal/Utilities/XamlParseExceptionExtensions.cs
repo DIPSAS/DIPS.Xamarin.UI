@@ -10,7 +10,7 @@ namespace DIPS.Xamarin.UI.Internal.Utilities
         /// <summary>
         /// Internal XamlParseException that automatically adds xml line info when passed a service provider
         /// </summary>
-        public static XamlParseException WithXmlLineInfo(this XamlParseException xamlParseException, IServiceProvider serviceProvider)
+        public static XamlParseException WithXmlLineInfo(this XamlParseException xamlParseException, IServiceProvider? serviceProvider)
         {
             if (serviceProvider != null)
             {

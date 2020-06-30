@@ -27,7 +27,7 @@ namespace DIPS.Xamarin.UI
             /// <param name="previewFeature">A string specifying which preview feature you want to enable.</param>
             public static void EnableFeature(string previewFeature)
             {
-                if (previewFeature == "MenuButtonBadgeAnimation") MenuButtonAnimations = true;
+                if (previewFeature == "MenuButtonAnimations") MenuButtonAnimations = true;
                 if (previewFeature == "SkeletonView") SkeletonView = true;
             }
 

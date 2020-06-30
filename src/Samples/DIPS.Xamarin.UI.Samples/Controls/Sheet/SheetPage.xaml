@@ -17,27 +17,7 @@
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
             <dxui:SheetBehavior IsOpen="{Binding IsSheetOpen}"
-                                OnOpenCommand="{Binding OnOpenCommand}"
-                                OnOpenCommandParameter="Opened"
-                                OnCloseCommand="{Binding OnCloseCommand}"
-                                OnCloseCommandParameter="Closed"
-                                IsDraggable="{Binding IsDraggable}"
-                                Alignment="{Binding Alignment}"
-                                VerticalContentAlignment="{Binding VerticalContentAlignment}"
-                                ContentColor="{Binding ContentColor}"
-                                HeaderColor="{Binding HeaderColor}"
-                                HandleColor="{Binding HandleColor}"
-                                HasShadow="{Binding HasShadow}"
-                                Position="{Binding Position}"
-                                MinPosition="{Binding MinPosition}"
-                                MaxPosition="{Binding MaxPosition}"
-                                ActionCommand="{Binding ActionCommand}"
-                                IsCancelButtonVisible="False"
-                                Title="{Binding Title}"
-                                ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=CanExecute}}"
-                                BindingContextFactory="{Binding SheetViewModelFactory}"
-                                CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
-                                ShouldRememberPosition="{Binding ShouldRememberPosition}">
+                                >
                 <StackLayout>
                     <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
                     <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
