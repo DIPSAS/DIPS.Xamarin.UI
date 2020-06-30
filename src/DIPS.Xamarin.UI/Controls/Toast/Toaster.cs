@@ -80,7 +80,14 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             var tapGesture = new TapGestureRecognizer();
             tapGesture.Tapped += (s, e) =>
             {
-                _ = HideToasterIn(0);
+                if (ToastAction == null)
+                {
+                    _ = HideToasterIn(0);
+                }
+                else
+                {
+                    ToastAction();
+                }
             };
             toastView.GestureRecognizers.Add(tapGesture);
 
@@ -142,6 +149,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         }
 
         #region Public Properties
+
+        /// <summary>
+        ///     Performs action on tapping the toast
+        ///     <remarks> Will Override closing the toast on tapping </remarks>
+        /// </summary>
+        public Action? ToastAction { get; set; }
 
         /// <summary>
         ///     Animate the appearing and disappearing of the toaster for the given milliseconds

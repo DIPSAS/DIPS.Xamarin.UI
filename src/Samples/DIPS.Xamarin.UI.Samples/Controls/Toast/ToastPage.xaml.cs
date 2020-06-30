@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Toast;
 using Xamarin.Forms;
@@ -45,6 +47,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             Toaster.Current.PositionY = 30;
             Toaster.Current.AnimateFor = 500;
             Toaster.Current.HideToastIn = 5;
+            Toaster.Current.ToastAction = async () =>
+            {
+                await Task.Delay(2000);
+                Console.WriteLine("Hello, Jupiter!");
+            };
         }
     }
 }
