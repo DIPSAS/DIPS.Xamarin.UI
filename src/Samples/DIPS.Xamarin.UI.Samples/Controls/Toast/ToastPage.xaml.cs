@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Toast;
@@ -11,6 +10,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ToastPage : ContentPage
     {
+        private string m_pageTitle;
         private ICommand m_showToastCommand;
         private ICommand m_showToastCommand2;
         private ICommand m_showToastCommand3;
@@ -21,12 +21,15 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
 
             ConfigureToast();
 
+            PageTitle = "Hello, World!";
+
             ShowToastCommand = new Command(parameter =>
             {
                 Toaster.Current.ToastAction = async () =>
                 {
-                    await Task.Delay(2000);
-                    Console.WriteLine("Hello, Jupiter!");
+                    PageTitle = "Hello, Mercury!";
+                    await Task.Delay(1500);
+                    PageTitle = "Hello, World!";
                 };
                 Toaster.Current.Text = parameter.ToString();
 
@@ -51,6 +54,16 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
 
                 Toaster.Current.ShowToaster();
             });
+        }
+
+        public string PageTitle
+        {
+            get => m_pageTitle;
+            set
+            {
+                m_pageTitle = value;
+                OnPropertyChanged(nameof(PageTitle));
+            }
         }
 
         public ICommand ShowToastCommand

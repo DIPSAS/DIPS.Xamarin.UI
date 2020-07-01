@@ -8,7 +8,7 @@
     <ContentPage.Content>
 
         <StackLayout>
-            <Label Text="Hello, World!"
+            <Label Text="{Binding PageTitle, Source={x:Reference toastPage}}"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
             <Button Text="Show Toast Moon"
