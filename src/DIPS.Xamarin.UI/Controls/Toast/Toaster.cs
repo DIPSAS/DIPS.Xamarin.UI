@@ -26,6 +26,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         private static Guid? Id { get; set; }
         private CancellationTokenSource CancellationSource { get; set; } = new CancellationTokenSource();
 
+        /// <summary>
+        /// Get the current instance of the Toaster control
+        /// </summary>
         public static Toaster Current { get; } = new Toaster();
 
         private Toast GetToast()
@@ -53,6 +56,11 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             await HideToaster();
         }
 
+        /// <summary>
+        /// Show the Toaster control
+        /// </summary>
+        /// <param name="toaster">The Toaster view to display</param>
+        /// <returns>A void <c>Task</c></returns>
         public async Task ShowToaster(View toaster = null)
         {
             // check state closed
@@ -113,6 +121,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             }
         }
 
+        /// <summary>
+        /// Hide the Toaster control
+        /// </summary>
+        /// <returns>A void <c>Task</c></returns>
         public async Task HideToaster()
         {
             // check state closed
