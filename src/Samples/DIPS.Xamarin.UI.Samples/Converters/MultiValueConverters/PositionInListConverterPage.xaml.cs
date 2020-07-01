@@ -32,7 +32,10 @@ namespace DIPS.Xamarin.UI.Samples.Converters.MultiValueConverters
 
         private void RemoveItem()
         {
-            Items.Remove(Items.Last());
+            var newList = new ObservableCollection<string>(Items);
+            newList.Remove(newList.Last());
+            Items = newList;
+
             ((Command)RemoveItemCommand).ChangeCanExecute();
         }
 
