@@ -69,8 +69,9 @@ namespace DIPS.Xamarin.UI.Converters.MultiValueConverters
                         _ => throw new XamlParseException("Position attribute has to be a valid integer or string: First, Middle, Last").WithXmlLineInfo(m_serviceProvider)
                     };
                 };
-
-                return list.IndexOf(item) == indexToCompare ? (Inverted ? FalseObject : TrueObject) : (Inverted ? TrueObject : FalseObject);
+                if (indexToCompare >= list.Count || indexToCompare < 0)
+                    return FalseObject;
+                return item.Equals(list[indexToCompare]) ? (Inverted ? FalseObject : TrueObject) : (Inverted ? TrueObject : FalseObject);
             }
             catch (Exception e)
             {
