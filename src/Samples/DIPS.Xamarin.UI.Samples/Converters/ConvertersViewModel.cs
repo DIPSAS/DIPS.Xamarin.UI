@@ -57,6 +57,9 @@ namespace DIPS.Xamarin.UI.Samples.Converters
                 case "LogicalExpressionConverter":
                     m_navigation.PushAsync(new LogicalExpressionConverterPage() { Title = parameter });
                     break;
+                case "ItemIsLastConverter":
+                    m_navigation.PushAsync(new ItemIsLastConverterPage() { Title = parameter });
+                    break;
             }
         }
     }
