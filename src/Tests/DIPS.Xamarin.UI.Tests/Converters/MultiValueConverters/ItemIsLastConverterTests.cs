@@ -3,6 +3,7 @@ using DIPS.Xamarin.UI.Converters.MultiValueConverters;
 using Xunit;
 using DIPS.Xamarin.UI.Tests.TestHelpers;
 using FluentAssertions;
+using System.Collections.ObjectModel;
 
 namespace DIPS.Xamarin.UI.Tests.Converters.MultiValueConverters
 {
@@ -42,6 +43,21 @@ namespace DIPS.Xamarin.UI.Tests.Converters.MultiValueConverters
             var output = m_cut.Convert<string>(values);
 
             output.Should().Be(expected);
+        }
+
+        [Fact]
+        public void Convert_ObservableCollection_CorrectOutput()
+        {
+            var item = "a";
+            var items = new ObservableCollection<string>
+            {
+                 "abc", "de", "a"
+            };
+            var values = new object[] { item, items };
+
+            var output = m_cut.Convert<bool>(values);
+
+            output.Should().Be(true);
         }
     }
 }
