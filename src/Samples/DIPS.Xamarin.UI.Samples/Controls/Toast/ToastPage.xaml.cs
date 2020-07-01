@@ -13,6 +13,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
     {
         private ICommand m_showToastCommand;
         private ICommand m_showToastCommand2;
+        private ICommand m_showToastCommand3;
 
         public ToastPage()
         {
@@ -39,6 +40,17 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
 
                 Toaster.Current.ShowToaster();
             });
+
+            ShowToastCommand3 = new Command(parameter =>
+            {
+                Toaster.Current.ToastAction = async () =>
+                {
+                    await Toaster.Current.HideToaster();
+                };
+                Toaster.Current.Text = parameter.ToString();
+
+                Toaster.Current.ShowToaster();
+            });
         }
 
         public ICommand ShowToastCommand
@@ -58,6 +70,16 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             {
                 m_showToastCommand2 = value;
                 OnPropertyChanged(nameof(ShowToastCommand2));
+            }
+        }
+
+        public ICommand ShowToastCommand3
+        {
+            get => m_showToastCommand3;
+            set
+            {
+                m_showToastCommand3 = value;
+                OnPropertyChanged(nameof(ShowToastCommand3));
             }
         }
 

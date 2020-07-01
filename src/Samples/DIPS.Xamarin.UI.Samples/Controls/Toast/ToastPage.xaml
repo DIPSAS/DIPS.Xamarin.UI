@@ -11,18 +11,22 @@
             <Label Text="Hello, World!"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
-            <Button Text="Show Toast 1"
+            <Button Text="Show Toast Moon"
                     Margin="15,0,15,40"
                     Command="{Binding ShowToastCommand, Source={x:Reference toastPage}}"
                     CommandParameter="Hello, Moon!" />
-            <Button Text="Show Toast 2"
-                    Margin="15,0,15,40"
-                    Command="{Binding ShowToastCommand, Source={x:Reference toastPage}}"
-                    CommandParameter="Hello, Mars! The fourth planet of the Milky Way! The Red planet! The planet for War!" />
-            <Button Text="Show Toast 3"
+            <Button Text="Show Toast Venus"
                     Margin="15,0,15,40"
                     Command="{Binding ShowToastCommand2, Source={x:Reference toastPage}}"
                     CommandParameter="Hello, Venus!" />
+            <Button Text="Show Toast Pluto"
+                    Margin="15,0,15,40"
+                    Command="{Binding ShowToastCommand3, Source={x:Reference toastPage}}"
+                    CommandParameter="Hello, Pluto!" />
+            <Button Text="Show Toast Mars"
+                    Margin="15,0,15,40"
+                    Command="{Binding ShowToastCommand, Source={x:Reference toastPage}}"
+                    CommandParameter="Hello, Mars! The fourth planet of the Milky Way! The Red planet! The planet for War!" />
         </StackLayout>
 
     </ContentPage.Content>
