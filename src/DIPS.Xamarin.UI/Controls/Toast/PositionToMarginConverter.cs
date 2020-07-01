@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -9,12 +10,15 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     {
         private IServiceProvider m_serviceProvider;
 
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider)
         {
             m_serviceProvider = serviceProvider;
             return this;
         }
 
+        /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is double positionY)
@@ -27,6 +31,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             return new Thickness(5, 10, 5, 0);
         }
 
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
