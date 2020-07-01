@@ -88,7 +88,7 @@
       <Name>DIPS.Xamarin.UI.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\DIPS.Xamarin.Forms.IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro.csproj">
-      <Project>{C875B3E5-F312-4FA2-988D-E3B2927744A0}</Project>
+      <Project>{14C40818-F24B-4F0E-A9D1-A9EC2AA244AE}</Project>
       <Name>DIPS.Xamarin.Forms.IssuesRepro</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,4 +1,8 @@
-﻿namespace DIPS.Xamarin.UI.Controls.Slidable
+﻿using System;
+using System.Diagnostics;
+using Xamarin.Forms;
+
+namespace DIPS.Xamarin.UI.Controls.Slidable
 {
     /// <summary>
     /// Properties used for SlideLayout
@@ -40,5 +44,46 @@
         internal int HoldId { get; }
 
         internal bool IsHeld { get; }
+
+        private static int s_scrollToId = -42;
+        public static void ScrollTo(Action<SlidableProperties> callback, Func<SlidableProperties> current, int index, int timeInMillis = 250)
+        {
+            if(current().IsHeld)
+            {
+                return;
+            }
+
+            var id = --s_scrollToId;
+            var dx = index - current().Position;
+            if(Math.Abs(dx) < 0.001 || timeInMillis < 20)
+            {
+                callback(new SlidableProperties(index));
+                return;
+            }
+
+            var start = current().Position;
+            var delta = dx / (double)timeInMillis;
+            var s = Stopwatch.StartNew();
+            callback(new SlidableProperties(start, id, false));
+            Device.StartTimer(TimeSpan.FromMilliseconds(20), () =>
+            {
+                if(s_scrollToId != id || current().HoldId != id)
+                {
+                    return false;
+                }
+
+                var time = s.ElapsedMilliseconds;
+                if(time >= timeInMillis)
+                {
+                    callback(new SlidableProperties(index, id, false));
+                    return false;
+                }
+                else
+                {
+                    callback(new SlidableProperties(start + delta * time, id, false));
+                }
+                return true;
+            });
+        }
     }
 }

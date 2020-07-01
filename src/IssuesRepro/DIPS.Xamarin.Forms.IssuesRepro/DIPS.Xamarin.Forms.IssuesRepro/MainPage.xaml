@@ -1,48 +1,50 @@
-﻿<?xml version="1.0"
-      encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="DIPS.Xamarin.Forms.IssuesRepro.MainPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:IssuesRepro="clr-namespace:DIPS.Xamarin.Forms.IssuesRepro;assembly=DIPS.Xamarin.Forms.IssuesRepro"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:IssuesRepro="clr-namespace:DIPS.Xamarin.Forms.IssuesRepro;assembly=DIPS.Xamarin.Forms.IssuesRepro"
-             mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.Forms.IssuesRepro.MainPage"
-             x:Name="codeBehind">
+             x:Name="codeBehind"
+             mc:Ignorable="d">
     <ContentPage.BindingContext>
         <IssuesRepro:MainViewModel />
     </ContentPage.BindingContext>
     <StackLayout>
-        <!-- Place new controls here -->
-        <Button Text="Github issue 64"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="64" />
-        <Button Text="Github issue 86"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="86" /> 
-        <Button Text="Github issue 112"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="112" />
-        <Button Text="Github issue 123"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="123" />
-        <Button Text="Github issue 137"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="137" />
-        <Button Text="Github issue 142"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="142" />  
-        <Button Text="Github issue 150"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="150" /> 
-        <Button Text="Github issue 159"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="159" />
-        <Button Text="Github issue 159"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="159" />
-        <Button Text="Github issue 185"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="185" />
+        <!--Place new controls here-->
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="64"
+                Text="Github issue 64" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="86"
+                Text="Github issue 86" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="112"
+                Text="Github issue 112" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="123"
+                Text="Github issue 123" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="137"
+                Text="Github issue 137" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="142"
+                Text="Github issue 142" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="150"
+                Text="Github issue 150" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="159"
+                Text="Github issue 159" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="159"
+                Text="Github issue 159" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="179"
+                Text="Github issue 179" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="185"
+                Text="Github issue 185" />
     </StackLayout>
 
 </ContentPage>

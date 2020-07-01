@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github179.Github179"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:local="clr-namespace:DIPS.Xamarin.Forms.IssuesRepro.Github179">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="150" />
+        </Grid.RowDefinitions>
+
+        <dxui:DatePicker Date="{Binding Date}"
+                         HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="CenterAndExpand" />
+
+        <dxui:SlidableContentLayout Grid.Row="1"
+                                    Padding="0,10"
+                                    BindingContextFactory="{Binding CreateCalendar}"
+                                    ScaleDown="False"
+                                    SlideProperties="{Binding SlidableProperties}">
+            <dxui:SlidableContentLayout.Config>
+                <dxui:SliderConfig MaxValue="9999999"
+                                   MinValue="-9999999" />
+            </dxui:SlidableContentLayout.Config>
+            <dxui:SlidableContentLayout.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type local:CalendarViewModel}">
+                    <Frame Margin="3"
+                           Padding="0"
+                           BackgroundColor="WhiteSmoke"
+                           CornerRadius="0"
+                           HasShadow="False">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectCommand}" />
+                        </Frame.GestureRecognizers>
+                        <Grid Margin="0"
+                              Padding="0"
+                              HorizontalOptions="FillAndExpand"
+                              VerticalOptions="FillAndExpand">
+
+                            <BoxView HorizontalOptions="FillAndExpand"
+                                     IsVisible="{Binding Selected}"
+                                     Opacity="0.5"
+                                     VerticalOptions="FillAndExpand"
+                                     Color="Pink" />
+                            <Label Margin="0"
+                                   Padding="0"
+                                   HorizontalOptions="Center"
+                                   Text="{Binding Value}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </dxui:SlidableContentLayout.ItemTemplate>
+        </dxui:SlidableContentLayout>
+    </Grid>
+</ContentPage>
