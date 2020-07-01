@@ -6,6 +6,9 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
 {
+    /// <summary>
+    ///     Toaster opened or closed states
+    /// </summary>
     public enum ToastState
     {
         Closed = 0,

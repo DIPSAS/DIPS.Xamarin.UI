@@ -6,6 +6,10 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
 {
+    /// <summary>
+    ///     Converter to convert the Y position of an element relative to the Main page given in percentage to the Margin of
+    ///     the element.
+    /// </summary>
     public class PositionToMarginConverter : IMarkupExtension, IValueConverter
     {
         private IServiceProvider m_serviceProvider;

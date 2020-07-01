@@ -3,9 +3,13 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
 {
+    /// <summary>
+    ///     Toaster control that would appear on top of the presented view
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Toast : ContentView
     {
+        /// <inheritdoc />
         public Toast()
         {
             InitializeComponent();
