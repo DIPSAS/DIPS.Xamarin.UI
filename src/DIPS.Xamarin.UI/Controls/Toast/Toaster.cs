@@ -6,16 +6,16 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
 {
-    /// <summary>
-    ///     Toaster opened or closed states
-    /// </summary>
-    public enum ToastState
+    internal enum ToastState
     {
         Closed = 0,
         Closing,
         Opened
     }
 
+    /// <summary>
+    ///     Toaster control that would appear on top of the presented view
+    /// </summary>
     public class Toaster : BindableObject
     {
         private Toaster()
