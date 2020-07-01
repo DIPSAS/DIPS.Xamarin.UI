@@ -187,6 +187,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Droid
 			global::DIPS.Xamarin.UI.Android.Resource.Attribute.collapsedTitleGravity = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Attribute.collapsedTitleGravity;
 			global::DIPS.Xamarin.UI.Android.Resource.Attribute.collapsedTitleTextAppearance = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Attribute.collapsedTitleTextAppearance;
 			global::DIPS.Xamarin.UI.Android.Resource.Attribute.collapseIcon = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Attribute.collapseIcon;
+			global::DIPS.Xamarin.UI.Android.Resource.Attribute.collectionViewStyle = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Attribute.collectionViewStyle;
 			global::DIPS.Xamarin.UI.Android.Resource.Attribute.color = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Attribute.color;
 			global::DIPS.Xamarin.UI.Android.Resource.Attribute.colorAccent = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Attribute.colorAccent;
 			global::DIPS.Xamarin.UI.Android.Resource.Attribute.colorBackgroundFloating = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Attribute.colorBackgroundFloating;
@@ -1357,6 +1358,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Droid
 			global::DIPS.Xamarin.UI.Android.Resource.Style.Animation_AppCompat_DropDownUp = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.Animation_AppCompat_DropDownUp;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.Animation_AppCompat_Tooltip = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.Animation_AppCompat_Tooltip;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.Animation_Design_BottomSheetDialog = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.Animation_Design_BottomSheetDialog;
+			global::DIPS.Xamarin.UI.Android.Resource.Style.AppCompatDialogStyle = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.AppCompatDialogStyle;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.Base_AlertDialog_AppCompat = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.Base_AlertDialog_AppCompat;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.Base_AlertDialog_AppCompat_Light = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.Base_AlertDialog_AppCompat_Light;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.Base_Animation_AppCompat_Dialog = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.Base_Animation_AppCompat_Dialog;
@@ -1548,6 +1550,10 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Droid
 			global::DIPS.Xamarin.UI.Android.Resource.Style.CardView = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.CardView;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.CardView_Dark = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.CardView_Dark;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.CardView_Light = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.CardView_Light;
+			global::DIPS.Xamarin.UI.Android.Resource.Style.collectionViewScrollBars = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.collectionViewScrollBars;
+			global::DIPS.Xamarin.UI.Android.Resource.Style.collectionViewTheme = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.collectionViewTheme;
+			global::DIPS.Xamarin.UI.Android.Resource.Style.MainTheme = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.MainTheme;
+			global::DIPS.Xamarin.UI.Android.Resource.Style.MainTheme_Base = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.MainTheme_Base;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.Platform_AppCompat = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.Platform_AppCompat;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.Platform_AppCompat_Light = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.Platform_AppCompat_Light;
 			global::DIPS.Xamarin.UI.Android.Resource.Style.Platform_MaterialComponents = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Style.Platform_MaterialComponents;
@@ -2276,6 +2282,8 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Droid
 			global::DIPS.Xamarin.UI.Android.Resource.Styleable.GradientColor_android_startY = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Styleable.GradientColor_android_startY;
 			global::DIPS.Xamarin.UI.Android.Resource.Styleable.GradientColor_android_tileMode = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Styleable.GradientColor_android_tileMode;
 			global::DIPS.Xamarin.UI.Android.Resource.Styleable.GradientColor_android_type = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Styleable.GradientColor_android_type;
+			global::DIPS.Xamarin.UI.Android.Resource.Styleable.ItemsViewRendererTheme = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Styleable.ItemsViewRendererTheme;
+			global::DIPS.Xamarin.UI.Android.Resource.Styleable.ItemsViewRendererTheme_collectionViewStyle = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Styleable.ItemsViewRendererTheme_collectionViewStyle;
 			global::DIPS.Xamarin.UI.Android.Resource.Styleable.LinearLayoutCompat = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Styleable.LinearLayoutCompat;
 			global::DIPS.Xamarin.UI.Android.Resource.Styleable.LinearLayoutCompat_android_baselineAligned = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAligned;
 			global::DIPS.Xamarin.UI.Android.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex;
