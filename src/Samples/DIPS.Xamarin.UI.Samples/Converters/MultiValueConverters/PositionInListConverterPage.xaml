@@ -10,8 +10,8 @@
              x:Name="root"
              mc:Ignorable="d dblend"
              Padding="25"
-             dblend:DataContext="{dblend:DesignInstance multivalueconverters:ItemIsPositionInListConverterPageViewModel}"
-             x:DataType="{x:Type multivalueconverters:ItemIsPositionInListConverterPageViewModel}">
+             dblend:DataContext="{dblend:DesignInstance multivalueconverters:PositionInListConverterPageViewModel}"
+             x:DataType="{x:Type multivalueconverters:PositionInListConverterPageViewModel}">
     <ContentPage.BindingContext>
         <multivalueconverters:PositionInListConverterPageViewModel />
     </ContentPage.BindingContext>
