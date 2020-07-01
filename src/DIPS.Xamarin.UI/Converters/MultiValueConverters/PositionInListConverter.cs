@@ -10,10 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Converters.MultiValueConverters
 {
     /// <summary>
-    /// A converter to check if an item is the last in a provided list/array/observablecollection.
-    /// This converter will not check if the list gets more items added. For this to work, you will need to provide an IsLast property for your viewmodel and binding to this instead.
+    /// A converter that takes a item and a list as bindings and compare the index of the item with a <see cref="Position"/>
     /// </summary>
-    public class ItemIsLastConverter : IMarkupExtension, IMultiValueConverter
+    public class PositionInListConverter : IMarkupExtension, IMultiValueConverter
     {
         private IServiceProvider? m_serviceProvider;
 
@@ -31,6 +30,13 @@ namespace DIPS.Xamarin.UI.Converters.MultiValueConverters
         /// A boolean value to tell the converter to invert the output
         /// </summary>
         public bool Inverted { get; set; }
+
+        /// <summary>
+        /// The position to compare with.
+        /// Default value is last
+        /// </summary>
+        /// <remarks>This can be a index (0, 1, 2 ...) or the strings (First, Last)</remarks>
+        public string Position { get; set; } = "last";
 
         /// <inheritdoc/>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -54,9 +60,19 @@ namespace DIPS.Xamarin.UI.Converters.MultiValueConverters
                     return FalseObject;
                 }
 
-                return item.Equals(list[list.Count - 1]) ? (Inverted ? FalseObject : TrueObject) : (Inverted ? TrueObject : FalseObject);
+                if (!int.TryParse(Position, out var indexToCompare))
+                {
+                    indexToCompare = (Position.ToLower()) switch
+                    {
+                        "first" => 0,
+                        "last" => list.Count - 1,
+                        _ => throw new XamlParseException("Position attribute has to be a valid integer or string: First, Middle, Last").WithXmlLineInfo(m_serviceProvider)
+                    };
+                };
+
+                return list.IndexOf(item) == indexToCompare ? (Inverted ? FalseObject : TrueObject) : (Inverted ? TrueObject : FalseObject);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new XamlParseException($"ItemIsListConverter : Something went wrong while converting: {e.Message}").WithXmlLineInfo(m_serviceProvider);
             }
@@ -66,7 +82,7 @@ namespace DIPS.Xamarin.UI.Converters.MultiValueConverters
         [ExcludeFromCodeCoverage]
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException("LogicalExpressionConverter does not support convert back");
+            throw new NotImplementedException($"{nameof(PositionInListConverter)} does not support convert back");
         }
 
         /// <inheritdoc/>
@@ -77,4 +93,5 @@ namespace DIPS.Xamarin.UI.Converters.MultiValueConverters
             return this;
         }
     }
+
 }
