@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="DIPS.Xamarin.UI.Samples.Converters.MultiValueConverters.PositionInListConverterPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:multivalueconverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.MultiValueConverters"
+             x:Name="root"
+             mc:Ignorable="d dblend"
+             Padding="25"
+             dblend:DataContext="{dblend:DesignInstance multivalueconverters:PositionInListConverterPageViewModel}"
+             x:DataType="{x:Type multivalueconverters:PositionInListConverterPageViewModel}">
+    <ContentPage.BindingContext>
+        <multivalueconverters:PositionInListConverterPageViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout>
+        <Button Text="Add"
+                Command="{Binding AddItemCommand}" />
+        <Button Text="Remove"
+                Command="{Binding RemoveItemCommand}" />
+        <StackLayout BindableLayout.ItemsSource="{Binding Items}"
+                 Orientation="Vertical">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type x:String}">
+                    <StackLayout Margin="15,0,0,0">
+                        <Label Text="{Binding .}"/>
+                        <BoxView HeightRequest="1"
+                                 Color="Black">
+                            <BoxView.IsVisible>
+                                <MultiBinding Converter="{dxui:PositionInListConverter Position=Last, Inverted=True}">
+                                    <Binding />
+                                    <Binding Path="BindingContext.Items"
+                                             Source="{x:Reference root}"/>
+                                </MultiBinding>
+                            </BoxView.IsVisible>
+                        </BoxView>
+                    </StackLayout>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

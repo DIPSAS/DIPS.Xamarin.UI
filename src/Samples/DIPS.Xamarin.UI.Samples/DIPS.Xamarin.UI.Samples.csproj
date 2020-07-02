@@ -25,6 +25,9 @@
     <Compile Update="Controls\RadioButtonGroup\RadioButtonGroupPage.xaml.cs">
       <DependentUpon>RadioButtonGroupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Converters\MultiValueConverters\PositionInListConverterPage.xaml.cs">
+      <DependentUpon>PositionInListConverterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Converters\ValueConverters\TypeToObjectConverterPage.xaml.cs">
       <DependentUpon>TypeToObjectConverterPage.xaml</DependentUpon>
     </Compile>
