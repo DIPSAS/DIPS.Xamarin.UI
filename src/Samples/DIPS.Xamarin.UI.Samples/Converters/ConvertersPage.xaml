@@ -45,8 +45,8 @@
                     CommandParameter="LogicalExpressionConverter"
                     Text="LogicalExpressionConverter" />
             <Button Command="{Binding NavigateToCommand}"
-                    CommandParameter="ItemIsLastConverter"
-                    Text="ItemIsLastConverter" />
+                    CommandParameter="PositionInListConverter"
+                    Text="PositionInListConverter" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
