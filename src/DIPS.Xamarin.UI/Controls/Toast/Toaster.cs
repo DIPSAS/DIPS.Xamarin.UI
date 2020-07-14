@@ -27,7 +27,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         private CancellationTokenSource CancellationSource { get; set; } = new CancellationTokenSource();
 
         /// <summary>
-        /// Get the current instance of the Toaster control
+        ///     Get the current instance of the Toaster control
         /// </summary>
         public static Toaster Current { get; } = new Toaster();
 
@@ -57,7 +57,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         }
 
         /// <summary>
-        /// Show the Toaster control
+        ///     Show the Toaster control
         /// </summary>
         /// <param name="toaster">The Toaster view to display</param>
         /// <returns>A void <c>Task</c></returns>
@@ -105,11 +105,15 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             toastView.GestureRecognizers.Add(tapGesture);
 
             // arrange new content
-            var newContent = new Grid {Children = {oldContent, toastView}};
+            var newContent = new Grid();
             Id = newContent.Id;
 
             // set new content
             ((ContentPage)currentPage).Content = newContent;
+
+            // add child elements
+            newContent.Children.Add(oldContent);
+            newContent.Children.Add(toastView);
 
             // animate toast
             await toastView.FadeTo(1, (uint)AnimateFor, Easing.Linear);
@@ -122,7 +126,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         }
 
         /// <summary>
-        /// Hide the Toaster control
+        ///     Hide the Toaster control
         /// </summary>
         /// <returns>A void <c>Task</c></returns>
         public async Task HideToaster()
