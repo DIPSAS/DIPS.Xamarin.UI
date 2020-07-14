@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dxui="http://dips.xamarin.ui.com"
              mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.Forms.IssuesRepro.HideMenuButton.Github185Page">
+             x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github185.Github185Page">
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
             <dxui:FloatingActionMenuBehaviour XPosition="0.9"

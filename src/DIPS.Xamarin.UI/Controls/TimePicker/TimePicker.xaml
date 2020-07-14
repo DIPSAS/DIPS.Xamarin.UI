@@ -12,6 +12,7 @@
         <TimePicker x:Name="FormsTimePicker"
                     Time="{Binding Source={x:Reference codeBehind}, Path=Time}"
                     Margin="{Binding Source={x:Reference TimeLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
+                    BackgroundColor="{Binding Source={x:Reference codeBehind}, Path=BackgroundColor}"
                     TextColor="Transparent"
                     HeightRequest="{Binding Source={x:Reference TimeLabel}, Path=Height}"
                     WidthRequest="{Binding Source={x:Reference TimeLabel}, Path=Width}" />
@@ -19,6 +20,7 @@
                Text="{Binding Source={x:Reference codeBehind}, Path=Time}"
                TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
                InputTransparent="True"
+               BackgroundColor="{Binding Source={x:Reference codeBehind}, Path=BackgroundColor}"
                HorizontalOptions="{Binding Source={x:Reference codeBehind}, Path=HorizontalOptions}"
                VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}" />
     </Grid>
