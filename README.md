@@ -6,7 +6,7 @@
 # DIPS.Xamarin.UI
 ![DIPS.Xamarin.UI_icon](https://raw.githubusercontent.com/DIPSAS/DIPS.Xamarin.UI/master/assets/DIPS_Xamarin_UI_128x128@slimmed.png)
 
-## [Installation](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Getting-Started)
+## [Getting started](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Getting-Started)
 
 ## [Documentation](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki)
 
