@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,14 +23,106 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         {
         }
 
-        private static ToastState ToastState { get; set; }
-        private static Guid? Id { get; set; }
-        private CancellationTokenSource CancellationSource { get; set; } = new CancellationTokenSource();
-
         /// <summary>
         ///     Get the current instance of the Toaster control
         /// </summary>
         public static Toaster Current { get; } = new Toaster();
+
+        private CancellationTokenSource CancellationSource { get; set; } = new CancellationTokenSource();
+        private Dictionary<string, Grid> ToastContainers { get; } = new Dictionary<string, Grid>();
+
+        /// <summary>
+        ///     Displays the Toast control
+        /// </summary>
+        /// <returns>A void <c>Task</c></returns>
+        public async Task DisplayToast()
+        {
+            // get current page
+            var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
+            if (!(currentPage is ContentPage))
+            {
+                return;
+            }
+
+            // try get toast container
+            var toastContainer = FindByName(currentPage.Id.ToString());
+            if (toastContainer != null) // found toast container
+            {
+                // check opened toasts
+                var oldToast =
+                    toastContainer.Children.FirstOrDefault(w =>
+                        w.GetType() == typeof(Toast)); // can be only one or null
+                if (oldToast != null) // swap toast content
+                {
+                    CancellationSource.Cancel();
+                    CancellationSource = new CancellationTokenSource();
+                    if (HideToastIn > 0)
+                    {
+                        await HideToasterIn(HideToastIn);
+                    }
+
+                    return;
+                }
+            }
+            else // no toast container
+            {
+                // create and register toast container
+                toastContainer = new Grid();
+                RegisterName(currentPage.Id.ToString(), toastContainer);
+
+                // old content
+                var oldContent = ((ContentPage)currentPage).Content;
+
+                // set new content
+                ((ContentPage)currentPage).Content = toastContainer;
+                toastContainer.Children.Add(oldContent);
+            }
+
+            // toast view
+            var toastView = GetToast();
+            toastView.Opacity = 0;
+            toastContainer.Children.Add(toastView);
+
+            // animate toast
+            await toastView.FadeTo(1, (uint)AnimateFor, Easing.Linear);
+
+            // hide toast
+            if (HideToastIn > 0)
+            {
+                CancellationSource.Cancel();
+                CancellationSource = new CancellationTokenSource();
+                await HideToasterIn(HideToastIn);
+            }
+        }
+
+        /// <summary>
+        ///     Cancels the displaying Toast control
+        /// </summary>
+        /// <returns>A void <c>Task</c></returns>
+        public async Task CancelToast()
+        {
+            // get current page
+            var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
+            if (!(currentPage is ContentPage))
+            {
+                return;
+            }
+
+            // get toast view
+            var toastContainer = FindByName(currentPage.Id.ToString());
+            var toastView =
+                toastContainer?.Children.FirstOrDefault(w => w.GetType() == typeof(Toast)); // can be only one or null
+            if (toastView == null)
+            {
+                return;
+            }
+
+            // animate toast
+            await toastView.FadeTo(0, (uint)AnimateFor, Easing.Linear);
+
+            // remove toast
+            toastContainer.Children.Remove(toastView);
+        }
 
         private Toast GetToast()
         {
@@ -46,55 +139,13 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             toast.SetBinding(Toast.LineBreakModeProperty, new Binding(nameof(LineBreakMode), source: this));
             toast.SetBinding(Toast.MaxLinesProperty, new Binding(nameof(MaxLines), source: this));
 
-            return toast;
-        }
-
-        private async Task HideToasterIn(int timeInSeconds)
-        {
-            await Task.Delay(timeInSeconds * 1000, CancellationSource.Token);
-
-            await HideToaster();
-        }
-
-        /// <summary>
-        ///     Show the Toaster control
-        /// </summary>
-        /// <param name="toaster">The Toaster view to display</param>
-        /// <returns>A void <c>Task</c></returns>
-        public async Task ShowToaster(View toaster = null)
-        {
-            // check state closed
-            if (ToastState != ToastState.Closed)
-            {
-                CancellationSource.Cancel();
-                CancellationSource = new CancellationTokenSource();
-                await HideToasterIn(HideToastIn);
-                return;
-            }
-
-            ToastState = ToastState.Opened;
-            CancellationSource = new CancellationTokenSource();
-
-            // get current page
-            var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
-            if (!(currentPage is ContentPage))
-            {
-                return;
-            }
-
-            // old content
-            var oldContent = ((ContentPage)currentPage).Content;
-
-            // arrange toast view
-            var toastView = toaster == null ? GetToast() : toaster;
-            toastView.Opacity = 0;
-
-            // tap command
             var tapGesture = new TapGestureRecognizer();
             tapGesture.Tapped += (s, e) =>
             {
                 if (ToastAction == null)
                 {
+                    CancellationSource.Cancel();
+                    CancellationSource = new CancellationTokenSource();
                     _ = HideToasterIn(0);
                 }
                 else
@@ -102,71 +153,29 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                     ToastAction();
                 }
             };
-            toastView.GestureRecognizers.Add(tapGesture);
+            toast.GestureRecognizers.Add(tapGesture);
 
-            // arrange new content
-            var newContent = new Grid();
-            Id = newContent.Id;
+            return toast;
+        }
 
-            // set new content
-            ((ContentPage)currentPage).Content = newContent;
+        private async Task HideToasterIn(int timeInSeconds)
+        {
+            await Task.Delay(timeInSeconds * 1000, CancellationSource.Token);
 
-            // add child elements
-            newContent.Children.Add(oldContent);
-            newContent.Children.Add(toastView);
+            await CancelToast();
+        }
 
-            // animate toast
-            await toastView.FadeTo(1, (uint)AnimateFor, Easing.Linear);
-
-            // hide toast
-            if (HideToastIn > 0)
+        private void RegisterName(string name, Grid container)
+        {
+            if (!ToastContainers.ContainsKey(name))
             {
-                await HideToasterIn(HideToastIn);
+                ToastContainers[name] = container;
             }
         }
 
-        /// <summary>
-        ///     Hide the Toaster control
-        /// </summary>
-        /// <returns>A void <c>Task</c></returns>
-        public async Task HideToaster()
+        private Grid? FindByName(string name)
         {
-            // check state closed
-            if (ToastState != ToastState.Opened)
-            {
-                return;
-            }
-
-            ToastState = ToastState.Closing;
-            CancellationSource.Cancel();
-
-            // get current page
-            var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
-            if (!(currentPage is ContentPage))
-            {
-                return;
-            }
-
-            // get toast container grid
-            var toastContent = ((ContentPage)currentPage).Content;
-            if (toastContent.Id != Id || !(toastContent is Grid))
-            {
-                return;
-            }
-
-            // get toast view
-            var toastGrid = (Grid)toastContent;
-            var toastView = toastGrid.Children.Last();
-
-            // animate toast
-            await toastView.FadeTo(0, (uint)AnimateFor, Easing.Linear);
-
-            // remove toast
-            toastGrid.Children.Remove(toastView);
-            ((ContentPage)currentPage).Content = toastGrid.Children.First();
-
-            // set toast state
-            ToastState = ToastState.Closed;
+            return ToastContainers.ContainsKey(name) ? ToastContainers[name] : null;
         }
 
         #region Bindable Properties

@@ -25,6 +25,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
 
             ShowToastCommand = new Command(parameter =>
             {
+                Toaster.Current.HideToastIn = 5;
                 Toaster.Current.ToastAction = async () =>
                 {
                     PageTitle = "Hello, Mercury!";
@@ -33,26 +34,28 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                 };
                 Toaster.Current.Text = parameter.ToString();
 
-                Toaster.Current.ShowToaster();
+                Toaster.Current.DisplayToast();
             });
 
             ShowToastCommand2 = new Command(parameter =>
             {
+                Toaster.Current.HideToastIn = 0;
                 Toaster.Current.ToastAction = null;
                 Toaster.Current.Text = parameter.ToString();
 
-                Toaster.Current.ShowToaster();
+                Toaster.Current.DisplayToast();
             });
 
             ShowToastCommand3 = new Command(parameter =>
             {
+                Toaster.Current.HideToastIn = 5;
                 Toaster.Current.ToastAction = async () =>
                 {
-                    await Toaster.Current.HideToaster();
+                    await Toaster.Current.CancelToast();
                 };
                 Toaster.Current.Text = parameter.ToString();
 
-                Toaster.Current.ShowToaster();
+                Toaster.Current.DisplayToast();
             });
         }
 
