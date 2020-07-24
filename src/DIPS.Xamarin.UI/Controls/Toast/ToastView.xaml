@@ -2,20 +2,20 @@
 
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DIPS.Xamarin.UI.Controls.Toast.Toast"
-             x:Name="toasterView"
+             x:Class="DIPS.Xamarin.UI.Controls.Toast.ToastView"
+             x:Name="toastView"
 
              xmlns:Local="clr-namespace:DIPS.Xamarin.UI.Controls.Toast;assembly=DIPS.Xamarin.UI"
              xmlns:Tag="clr-namespace:DIPS.Xamarin.UI.Controls.Tag;assembly=DIPS.Xamarin.UI"
 
-             Margin="{Binding PositionY, Source={x:Reference toasterView}, Converter={Local:PositionToMarginConverter}}"
+             Margin="{Binding PositionY, Source={x:Reference toastView}, Converter={Local:PositionToMarginConverter}}"
 
              VerticalOptions="Start"
              HorizontalOptions="CenterAndExpand">
 
     <ContentView.Content>
-        <Tag:Tag x:DataType="{x:Type Local:Toast}"
-                 BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:Toast}}}"
+        <Tag:Tag x:DataType="{x:Type Local:ToastView}"
+                 BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Local:ToastView}}}"
 
                  Text="{Binding Text}"
                  FontSize="{Binding FontSize}"

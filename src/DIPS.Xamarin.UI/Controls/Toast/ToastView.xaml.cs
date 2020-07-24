@@ -7,10 +7,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     ///     Toaster control that would appear on top of the presented view
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Toast : ContentView
+    public partial class ToastView : ContentView
     {
         /// <inheritdoc />
-        public Toast()
+        public ToastView()
         {
             InitializeComponent();
         }
@@ -21,27 +21,27 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     Bindable property for <see cref="Text" />
         /// </summary>
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(Toast), Label.TextProperty.DefaultValue);
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(ToastView), Label.TextProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="TextColor" />
         /// </summary>
         public static readonly BindableProperty TextColorProperty =
-            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Toast),
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(ToastView),
                 Label.TextColorProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="FontFamily" />
         /// </summary>
         public static readonly BindableProperty FontFamilyProperty =
-            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Toast),
+            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(ToastView),
                 Label.FontFamilyProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="FontSize" />
         /// </summary>
         public static readonly BindableProperty FontSizeProperty =
-            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Toast),
+            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(ToastView),
                 Label.FontSizeProperty.DefaultValue,
                 defaultValueCreator: FontSizeDefaultValueCreator);
 
@@ -49,38 +49,39 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     Bindable property for <see cref="LineBreakMode" />
         /// </summary>
         public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode),
-            typeof(LineBreakMode), typeof(Toast), Label.LineBreakModeProperty.DefaultValue);
+            typeof(LineBreakMode), typeof(ToastView), Label.LineBreakModeProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="MaxLines" />
         /// </summary>
         public static readonly BindableProperty MaxLinesProperty =
-            BindableProperty.Create(nameof(MaxLines), typeof(int), typeof(Toast), Label.MaxLinesProperty.DefaultValue);
+            BindableProperty.Create(nameof(MaxLines), typeof(int), typeof(ToastView),
+                Label.MaxLinesProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="BackgroundColor" />
         /// </summary>
         public static new readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Toast), Color.Default);
+            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(ToastView), Color.Default);
 
         /// <summary>
         ///     Bindable property for <see cref="CornerRadius" />
         /// </summary>
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius),
-            typeof(float), typeof(Toast), -1f,
+            typeof(float), typeof(ToastView), -1f,
             validateValue: OnCornerRadiusValidate);
 
         /// <summary>
         ///     Bindable property for <see cref="Padding" />
         /// </summary>
         public static new readonly BindableProperty PaddingProperty =
-            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Toast), new Thickness(5, 5, 5, 5));
+            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(ToastView), new Thickness(5, 5, 5, 5));
 
         /// <summary>
         ///     Bindable property for <see cref="PositionY" />
         /// </summary>
         public static readonly BindableProperty PositionYProperty =
-            BindableProperty.Create(nameof(PositionY), typeof(double), typeof(Toast), 10d);
+            BindableProperty.Create(nameof(PositionY), typeof(double), typeof(ToastView), 10d);
 
         #endregion
 
@@ -184,7 +185,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         private static object FontSizeDefaultValueCreator(BindableObject bindable)
         {
-            return Device.GetNamedSize(NamedSize.Default, (Toast)bindable);
+            return Device.GetNamedSize(NamedSize.Default, (ToastView)bindable);
         }
 
         private static bool OnCornerRadiusValidate(BindableObject bindable, object value)

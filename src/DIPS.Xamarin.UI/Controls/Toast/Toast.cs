@@ -7,26 +7,19 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
 {
-    internal enum ToastState
-    {
-        Closed = 0,
-        Closing,
-        Opened
-    }
-
     /// <summary>
-    ///     Toaster control that would appear on top of the presented view
+    ///     Toast control that would appear on top of the presented view
     /// </summary>
-    public class Toaster : BindableObject
+    public class Toast : BindableObject
     {
-        private Toaster()
+        private Toast()
         {
         }
 
         /// <summary>
-        ///     Get the current instance of the Toaster control
+        ///     Get the current instance of the Toast control
         /// </summary>
-        public static Toaster Current { get; } = new Toaster();
+        public static Toast Current { get; } = new Toast();
 
         private CancellationTokenSource CancellationSource { get; set; } = new CancellationTokenSource();
         private Dictionary<string, Grid> ToastContainers { get; } = new Dictionary<string, Grid>();
@@ -48,10 +41,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             var toastContainer = FindByName(currentPage.Id.ToString());
             if (toastContainer != null) // found toast container
             {
-                // check opened toasts
-                var oldToast =
-                    toastContainer.Children.FirstOrDefault(w =>
-                        w.GetType() == typeof(Toast)); // can be only one or null
+                // check opened toasts, can be only one or none
+                var oldToast = toastContainer.Children.FirstOrDefault(w => w.GetType() == typeof(ToastView));
                 if (oldToast != null) // swap toast content
                 {
                     CancellationSource.Cancel();
@@ -108,10 +99,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 return;
             }
 
-            // get toast view
+            // get toast view, can be only one or none
             var toastContainer = FindByName(currentPage.Id.ToString());
-            var toastView =
-                toastContainer?.Children.FirstOrDefault(w => w.GetType() == typeof(Toast)); // can be only one or null
+            var toastView = toastContainer?.Children.FirstOrDefault(w => w.GetType() == typeof(ToastView));
             if (toastView == null)
             {
                 return;
@@ -124,20 +114,20 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             toastContainer.Children.Remove(toastView);
         }
 
-        private Toast GetToast()
+        private ToastView GetToast()
         {
-            var toast = new Toast();
+            var toast = new ToastView();
 
-            toast.SetBinding(Toast.TextProperty, new Binding(nameof(Text), source: this));
-            toast.SetBinding(Toast.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-            toast.SetBinding(Toast.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
-            toast.SetBinding(Toast.TextColorProperty, new Binding(nameof(TextColor), source: this));
-            toast.SetBinding(Toast.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
-            toast.SetBinding(Toast.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
-            toast.SetBinding(Toast.PaddingProperty, new Binding(nameof(Padding), source: this));
-            toast.SetBinding(Toast.PositionYProperty, new Binding(nameof(PositionY), source: this));
-            toast.SetBinding(Toast.LineBreakModeProperty, new Binding(nameof(LineBreakMode), source: this));
-            toast.SetBinding(Toast.MaxLinesProperty, new Binding(nameof(MaxLines), source: this));
+            toast.SetBinding(ToastView.TextProperty, new Binding(nameof(Text), source: this));
+            toast.SetBinding(ToastView.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+            toast.SetBinding(ToastView.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+            toast.SetBinding(ToastView.TextColorProperty, new Binding(nameof(TextColor), source: this));
+            toast.SetBinding(ToastView.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
+            toast.SetBinding(ToastView.CornerRadiusProperty, new Binding(nameof(CornerRadius), source: this));
+            toast.SetBinding(ToastView.PaddingProperty, new Binding(nameof(Padding), source: this));
+            toast.SetBinding(ToastView.PositionYProperty, new Binding(nameof(PositionY), source: this));
+            toast.SetBinding(ToastView.LineBreakModeProperty, new Binding(nameof(LineBreakMode), source: this));
+            toast.SetBinding(ToastView.MaxLinesProperty, new Binding(nameof(MaxLines), source: this));
 
             var tapGesture = new TapGestureRecognizer();
             tapGesture.Tapped += (s, e) =>
@@ -184,13 +174,13 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     Bindable property for <see cref="Text" />
         /// </summary>
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(Toaster), Label.TextProperty.DefaultValue);
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(Toast), Label.TextProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="FontSize" />
         /// </summary>
         public static readonly BindableProperty FontSizeProperty =
-            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Toaster),
+            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(Toast),
                 Label.FontSizeProperty.DefaultValue,
                 defaultValueCreator: FontSizeDefaultValueCreator);
 
@@ -198,57 +188,57 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     Bindable property for <see cref="FontFamily" />
         /// </summary>
         public static readonly BindableProperty FontFamilyProperty =
-            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Toaster),
+            BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(Toast),
                 Label.FontFamilyProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="LineBreakMode" />
         /// </summary>
         public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode),
-            typeof(LineBreakMode), typeof(Toaster), Label.LineBreakModeProperty.DefaultValue);
+            typeof(LineBreakMode), typeof(Toast), Label.LineBreakModeProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="MaxLines" />
         /// </summary>
         public static readonly BindableProperty MaxLinesProperty =
-            BindableProperty.Create(nameof(MaxLines), typeof(int), typeof(Toaster),
+            BindableProperty.Create(nameof(MaxLines), typeof(int), typeof(Toast),
                 Label.MaxLinesProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="TextColor" />
         /// </summary>
         public static readonly BindableProperty TextColorProperty =
-            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Toaster),
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Toast),
                 Label.TextColorProperty.DefaultValue);
 
         /// <summary>
         ///     Bindable property for <see cref="BackgroundColor" />
         /// </summary>
         public static readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Toaster), Color.Default);
+            BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Toast), Color.Default);
 
         /// <summary>
         ///     Bindable property for <see cref="CornerRadius" />
         /// </summary>
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius),
-            typeof(float), typeof(Toaster), -1f,
+            typeof(float), typeof(Toast), -1f,
             validateValue: OnCornerRadiusValidate);
 
         /// <summary>
         ///     Bindable property for <see cref="Padding" />
         /// </summary>
         public static readonly BindableProperty PaddingProperty =
-            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Toaster), new Thickness(5, 5, 5, 5));
+            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Toast), new Thickness(5, 5, 5, 5));
 
         /// <summary>
         ///     Bindable property for <see cref="PositionY" />
         /// </summary>
         public static readonly BindableProperty PositionYProperty =
-            BindableProperty.Create(nameof(PositionY), typeof(double), typeof(Toaster), 10d);
+            BindableProperty.Create(nameof(PositionY), typeof(double), typeof(Toast), 10d);
 
         private static object FontSizeDefaultValueCreator(BindableObject bindable)
         {
-            return Device.GetNamedSize(NamedSize.Default, typeof(Toast));
+            return Device.GetNamedSize(NamedSize.Default, typeof(ToastView));
         }
 
         private static bool OnCornerRadiusValidate(BindableObject bindable, object value)
@@ -272,13 +262,13 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         public Action? ToastAction { get; set; }
 
         /// <summary>
-        ///     Animate the appearing and disappearing of the toaster for the given milliseconds
+        ///     Animate the appearing and disappearing of the toast for the given milliseconds
         /// </summary>
         public int AnimateFor { get; set; } = 250;
 
         /// <summary>
-        ///     Hide the toaster automatically after the given seconds
-        ///     <remarks> If value is 0, toaster won't be hide automatically </remarks>
+        ///     Hide the toast automatically after the given seconds
+        ///     <remarks> If value is 0, toast won't be hide automatically </remarks>
         /// </summary>
         public int HideToastIn { get; set; } = 5;
 
@@ -369,7 +359,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         }
 
         /// <summary>
-        ///     The vertical positioning of the toaster in a percentage of the Main Page relative to the top margin of the Main
+        ///     The vertical positioning of the toast in a percentage of the Main Page relative to the top margin of the Main
         ///     page. This is a bindable property.
         /// </summary>
         public double PositionY
