@@ -25,6 +25,7 @@
                  TextColor="{Binding TextColor}"
                  BackgroundColor="{Binding BackgroundColor}"
                  CornerRadius="{Binding CornerRadius}"
+                 HasShadow="{Binding HasShadow}"
                  Padding="{Binding Padding}" />
     </ContentView.Content>
 

@@ -72,6 +72,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             validateValue: OnCornerRadiusValidate);
 
         /// <summary>
+        ///     Bindable property for <see cref="HasShadow" />
+        /// </summary>
+        public static readonly BindableProperty HasShadowProperty =
+            BindableProperty.Create(nameof(HasShadow), typeof(bool), typeof(ToastView), false);
+
+        /// <summary>
         ///     Bindable property for <see cref="Padding" />
         /// </summary>
         public static new readonly BindableProperty PaddingProperty =
@@ -158,6 +164,15 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         {
             get => (float)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets a flag indicating if the Toast has a shadow displayed. This is a bindable property.
+        /// </summary>
+        public bool HasShadow
+        {
+            get => (bool)GetValue(HasShadowProperty);
+            set => SetValue(HasShadowProperty, value);
         }
 
         /// <summary>

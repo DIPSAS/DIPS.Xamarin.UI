@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DIPS.Xamarin.UI.Controls.Toast;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Color = System.Drawing.Color;
@@ -19,12 +20,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
         {
             InitializeComponent();
 
-            ConfigureToast();
-
             PageTitle = "Hello, World!";
 
             ShowToastCommand = new Command(parameter =>
             {
+                ToastControl.Current.ToastLayout = LayoutOneMoonFourMars;
                 ToastControl.Current.HideToastIn = 5;
                 ToastControl.Current.ToastAction = async () =>
                 {
@@ -39,6 +39,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
 
             ShowToastCommand2 = new Command(parameter =>
             {
+                ToastControl.Current.ToastLayout = LayoutTwoVenus;
                 ToastControl.Current.HideToastIn = 0;
                 ToastControl.Current.ToastAction = null;
                 ToastControl.Current.Text = parameter.ToString();
@@ -48,10 +49,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
 
             ShowToastCommand3 = new Command(parameter =>
             {
+                ToastControl.Current.ToastLayout = LayoutThreePluto;
                 ToastControl.Current.HideToastIn = 5;
                 ToastControl.Current.ToastAction = async () =>
                 {
-                    await ToastControl.Current.CancelToast();
+                    await ToastControl.Current.CloseToast();
                 };
                 ToastControl.Current.Text = parameter.ToString();
 
@@ -99,18 +101,42 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             }
         }
 
+        private ToastLayout LayoutOneMoonFourMars = new ToastLayout
+        {
+            BackgroundColor = Color.DodgerBlue,
+            CornerRadius = 8,
+            FontSize = 11,
+            LineBreakMode = LineBreakMode.TailTruncation,
+            MaxLines = 1,
+            TextColor = Color.White,
+            Padding = new Thickness(20, 10),
+        };
+        private ToastLayout LayoutTwoVenus = new ToastLayout
+        {
+            BackgroundColor = Color.MediumSeaGreen,
+            CornerRadius = 12,
+            FontSize = 13,
+            LineBreakMode = LineBreakMode.TailTruncation,
+            MaxLines = 2,
+            TextColor = Color.White,
+            Padding = new Thickness(20, 10),
+        };
+        private ToastLayout LayoutThreePluto = new ToastLayout
+        {
+            BackgroundColor = Color.DodgerBlue,
+            CornerRadius = 8,
+            FontSize = 15,
+            LineBreakMode = LineBreakMode.TailTruncation,
+            MaxLines = 1,
+            TextColor = Color.White,
+            Padding = new Thickness(20, 10),
+        };
+        
         private static void ConfigureToast()
         {
-            ToastControl.Current.FontSize = 13;
-            ToastControl.Current.TextColor = Color.White;
-            ToastControl.Current.BackgroundColor = Color.DodgerBlue;
-            ToastControl.Current.CornerRadius = 8;
-            ToastControl.Current.Padding = new Thickness(20, 10);
             ToastControl.Current.PositionY = 30;
             ToastControl.Current.AnimateFor = 500;
             ToastControl.Current.HideToastIn = 5;
-            ToastControl.Current.LineBreakMode = LineBreakMode.TailTruncation;
-            ToastControl.Current.MaxLines = 1;
         }
     }
 }

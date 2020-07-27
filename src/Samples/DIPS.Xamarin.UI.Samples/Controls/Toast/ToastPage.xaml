@@ -18,7 +18,7 @@
             <Button Text="Show Toast Venus"
                     Margin="15,0,15,40"
                     Command="{Binding ShowToastCommand2, Source={x:Reference toastPage}}"
-                    CommandParameter="Hello, Venus!" />
+                    CommandParameter="Hello, Venus! Second planet from the Sun! Named after the Roman goddess of love and beauty!" />
             <Button Text="Show Toast Pluto"
                     Margin="15,0,15,40"
                     Command="{Binding ShowToastCommand3, Source={x:Reference toastPage}}"
