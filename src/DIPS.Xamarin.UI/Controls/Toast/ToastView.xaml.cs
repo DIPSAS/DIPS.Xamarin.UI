@@ -10,7 +10,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     public partial class ToastView : ContentView
     {
         /// <inheritdoc />
-        public ToastView()
+        internal ToastView()
         {
             InitializeComponent();
         }

@@ -14,6 +14,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     {
         private IServiceProvider m_serviceProvider;
 
+        internal PositionToMarginConverter()
+        {
+        }
+
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider)
