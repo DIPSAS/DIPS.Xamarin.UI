@@ -31,8 +31,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         public async Task DisplayToast()
         {
             // get current page
-            var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
-            if (!(currentPage is ContentPage))
+            var currentPage = GetCurrentContentPage();
+            if (currentPage == null)
             {
                 return;
             }
@@ -56,7 +56,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 RegisterName(currentPage.Id.ToString(), toastContainer);
 
                 // old content
-                var oldContent = ((ContentPage)currentPage).Content;
+                var oldContent = currentPage.Content;
 
                 // set new content
                 ((ContentPage)currentPage).Content = toastContainer;
@@ -85,8 +85,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         public async Task CloseToast()
         {
             // get current page
-            var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
-            if (!(currentPage is ContentPage))
+            var currentPage = GetCurrentContentPage();
+            if (currentPage == null)
             {
                 return;
             }
@@ -104,6 +104,41 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
             // remove toast
             toastContainer.Children.Remove(toastView);
+        }
+
+        private static ContentPage? GetCurrentContentPage()
+        {
+            if (Application.Current.MainPage is ContentPage contentPage)
+            {
+                return contentPage;
+            }
+
+            if (Application.Current.MainPage is NavigationPage navigationPage)
+            {
+                if (navigationPage.CurrentPage.Navigation.ModalStack.Any())
+                {
+                    return navigationPage.CurrentPage.Navigation.ModalStack.Last() as ContentPage;
+                }
+
+                return navigationPage.CurrentPage as ContentPage;
+            }
+
+            if (Application.Current.MainPage is TabbedPage tabbedPage)
+            {
+                if (tabbedPage.CurrentPage is NavigationPage tabNavigationPage)
+                {
+                    if (tabNavigationPage.CurrentPage.Navigation.ModalStack.Any())
+                    {
+                        return tabNavigationPage.CurrentPage.Navigation.ModalStack.Last() as ContentPage;
+                    }
+
+                    return tabNavigationPage.CurrentPage as ContentPage;
+                }
+
+                return tabbedPage.CurrentPage as ContentPage;
+            }
+
+            return null;
         }
 
         private ToastView GetToast()
