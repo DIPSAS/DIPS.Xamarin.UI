@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using DIPS.Xamarin.Forms.IssuesRepro.HideMenuButton;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.Forms.IssuesRepro
@@ -34,7 +33,9 @@ namespace DIPS.Xamarin.Forms.IssuesRepro
             if (obj.Equals("179"))
                 Application.Current.MainPage.Navigation.PushAsync(new Github179.Github179());
             if (obj.Equals("185"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github185Page());
+                Application.Current.MainPage.Navigation.PushAsync(new Github185.Github185Page());
+            if (obj.Equals("120"))
+                Application.Current.MainPage.Navigation.PushAsync(new Github120.Github120Page());
             ;
         }
     }

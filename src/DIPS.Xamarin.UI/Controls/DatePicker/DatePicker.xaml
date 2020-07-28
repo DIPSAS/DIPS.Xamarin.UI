@@ -13,12 +13,14 @@
                     Date="{Binding Source={x:Reference codeBehind}, Path=Date}"
                     MaximumDate="{Binding Source={x:Reference codeBehind}, Path=MaximumDate}"
                     MinimumDate="{Binding Source={x:Reference codeBehind}, Path=MinimumDate}"
+                    BackgroundColor="{Binding Source={x:Reference codeBehind}, Path=BackgroundColor}"
                     Margin="{Binding Source={x:Reference DateLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
                     TextColor="Transparent"
                     HeightRequest="{Binding Source={x:Reference DateLabel}, Path=Height}"
                     WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}" />
         <Label x:Name="DateLabel"
                TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
+               BackgroundColor="{Binding Source={x:Reference codeBehind}, Path=BackgroundColor}"
                InputTransparent="True"
                HorizontalOptions="{Binding Source={x:Reference codeBehind}, Path=HorizontalOptions}"
                VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}" />
