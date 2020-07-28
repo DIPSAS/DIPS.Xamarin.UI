@@ -9,10 +9,24 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
 {
     public partial class Github179 : ContentPage
     {
+        private DateTime m_date = DateTime.Now;
+
         public Github179()
         {
             InitializeComponent();
             BindingContext = new IssueViewModel();
+            Binding
+        }
+
+        public void DateSelected(object sender, DateChangedEventArgs eventArgs)
+        {
+            var dateDiff = (int)Math.Round(((eventArgs.NewDate.Date - m_date.Date).TotalDays));
+            if (Math.Abs(slidablecontent.SlideProperties.Position - dateDiff) < 1)
+            {
+                return;
+            }
+            var time = Math.Min(1000, Math.Abs(dateDiff * 50));
+            slidablecontent.ScrollTo(dateDiff, time);
         }
     }
 
@@ -20,22 +34,19 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
     {
         private SlidableProperties m_slidableProperties;
 
-        public SlidableProperties SlidableProperties { get => m_slidableProperties; set => PropertyChanged?.RaiseWhenSet(ref m_slidableProperties, value); }
+        public SlidableProperties SlidableProperties
+        {
+            get => m_slidableProperties;
+            set
+            {
+                PropertyChanged?.RaiseWhenSet(ref m_slidableProperties, value);
+                PropertyChanged.Raise(nameof(Date));
+            }
+        }
 
         public Func<int, object> CreateCalendar => i => new CalendarViewModel(DateTime.Now.AddDays(i).ToString("dd.MM"), () => SlidableProperties.ScrollTo(s => SlidableProperties = s, () => SlidableProperties, i));
 
-        private DateTime m_date = DateTime.Now;
-
-        public DateTime Date
-        {
-            get => m_date;
-            set
-            {
-                var dateDiff = (int)Math.Round(((value.Date - m_date.Date).TotalDays));
-                SlidableProperties.ScrollTo(s => SlidableProperties = s, () => SlidableProperties, dateDiff, 5000);
-                PropertyChanged.RaiseWhenSet(ref m_date, value);
-            }
-        }
+        public DateTime Date => DateTime.Now.Date.AddDays(SlidableProperties.Position);
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
