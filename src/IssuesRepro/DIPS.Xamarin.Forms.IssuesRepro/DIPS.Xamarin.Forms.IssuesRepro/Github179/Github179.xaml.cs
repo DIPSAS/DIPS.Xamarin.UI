@@ -18,9 +18,9 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
 
     public class IssueViewModel : INotifyPropertyChanged
     {
-        private SlidableProperties slidableProperties;
+        private SlidableProperties m_slidableProperties;
 
-        public SlidableProperties SlidableProperties { get => slidableProperties; set => PropertyChanged?.RaiseWhenSet(ref slidableProperties, value); }
+        public SlidableProperties SlidableProperties { get => m_slidableProperties; set => PropertyChanged?.RaiseWhenSet(ref m_slidableProperties, value); }
 
         public Func<int, object> CreateCalendar => i => new CalendarViewModel(DateTime.Now.AddDays(i).ToString("dd.MM"), () => SlidableProperties.ScrollTo(s => SlidableProperties = s, () => SlidableProperties, i));
 
@@ -43,10 +43,10 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
     public class CalendarViewModel : ISliderSelectable, INotifyPropertyChanged
     {
         private bool m_selected;
-        public CalendarViewModel(string value, Action onSelectedCommand)
+        public CalendarViewModel(string value, Action onSelectedAction)
         {
             Value = value;
-            SelectCommand = new Command(onSelectedCommand);
+            SelectCommand = new Command(onSelectedAction);
         }
 
         public ICommand SelectCommand { get; }

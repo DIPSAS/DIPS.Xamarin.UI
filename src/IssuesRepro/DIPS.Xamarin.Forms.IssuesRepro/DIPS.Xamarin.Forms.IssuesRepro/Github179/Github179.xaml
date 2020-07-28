@@ -30,9 +30,6 @@
                            BackgroundColor="WhiteSmoke"
                            CornerRadius="0"
                            HasShadow="False">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SelectCommand}" />
-                        </Frame.GestureRecognizers>
                         <Grid Margin="0"
                               Padding="0"
                               HorizontalOptions="FillAndExpand"

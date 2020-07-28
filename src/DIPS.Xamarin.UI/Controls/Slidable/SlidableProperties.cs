@@ -46,7 +46,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         internal bool IsHeld { get; }
 
         private static int s_scrollToId = -42;
-        public static void ScrollTo(Action<SlidableProperties> callback, Func<SlidableProperties> current, int index, int timeInMillis = 250)
+        public static void ScrollTo(Action<SlidableProperties> callback, Func<SlidableProperties> current, int index, int length = 250)
         {
             if(current().IsHeld)
             {
@@ -55,14 +55,14 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
 
             var id = --s_scrollToId;
             var dx = index - current().Position;
-            if(Math.Abs(dx) < 0.001 || timeInMillis < 20)
+            if(Math.Abs(dx) < 0.001 || length < 20)
             {
                 callback(new SlidableProperties(index));
                 return;
             }
 
             var start = current().Position;
-            var delta = dx / (double)timeInMillis;
+            var delta = dx / (double)length;
             var s = Stopwatch.StartNew();
             callback(new SlidableProperties(start, id, false));
             Device.StartTimer(TimeSpan.FromMilliseconds(20), () =>
@@ -73,7 +73,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 }
 
                 var time = s.ElapsedMilliseconds;
-                if(time >= timeInMillis)
+                if(time >= length)
                 {
                     callback(new SlidableProperties(index, id, false));
                     return false;
