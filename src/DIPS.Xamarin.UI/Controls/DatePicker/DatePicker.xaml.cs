@@ -72,6 +72,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         public DatePicker()
         {
             InitializeComponent();
+            FormsDatePicker.DateSelected += (sender, eventArgs) => DateSelected?.Invoke(sender, eventArgs);
         }
 
         /// <summary>
@@ -130,6 +131,11 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             get => (DateTime)GetValue(MinimumDateProperty);
             set => SetValue(MinimumDateProperty, value);
         }
+
+        /// <summary>
+        /// Invoked on date changes
+        /// </summary>
+        public event EventHandler<DateChangedEventArgs>? DateSelected;
 
         /// <summary>
         /// Opens the date picker
