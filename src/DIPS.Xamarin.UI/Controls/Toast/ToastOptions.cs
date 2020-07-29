@@ -6,8 +6,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 {
     public class ToastOptions : BindableObject
     {
-        #region Public Properties
-
         /// <summary>
         ///     Performs action on tapping the toast
         ///     <remarks> Will Override closing the toast on tapping </remarks>
@@ -29,7 +27,5 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     <remarks> If value is 0, toast won't be hidden automatically </remarks>
         /// </summary>
         public int HideToastIn { get; set; }
-
-        #endregion
     }
 }

@@ -11,7 +11,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ToastPage : ContentPage
     {
-        private readonly ToastLayout LayoutOneMoonFourMars = new ToastLayout
+        private readonly ToastLayout LayoutOneMoon = new ToastLayout
         {
             BackgroundColor = Color.DodgerBlue,
             CornerRadius = 8,
@@ -51,6 +51,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
         private ICommand m_showToastCommand;
         private ICommand m_showToastCommand2;
         private ICommand m_showToastCommand3;
+        private ICommand m_showToastCommand4;
 
         public ToastPage()
         {
@@ -76,7 +77,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                     CloseAnimation = toastView => toastView.FadeTo(0, 500, Easing.Linear),
                     HideToastIn = 3000
                 };
-                ToastControl.Current.DisplayToast(parameter.ToString(), options, LayoutOneMoonFourMars);
+                ToastControl.Current.DisplayToast(parameter.ToString(), options, LayoutOneMoon);
             });
 
             ShowToastCommand2 = new Command(parameter =>
@@ -106,6 +107,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                     HideToastIn = 3000
                 };
                 ToastControl.Current.DisplayToast(parameter.ToString(), options, LayoutThreePluto);
+            });
+
+            ShowToastCommand4 = new Command(parameter =>
+            {
+                ToastControl.Current.DisplayToast(parameter.ToString());
             });
         }
 
@@ -146,6 +152,16 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             {
                 m_showToastCommand3 = value;
                 OnPropertyChanged(nameof(ShowToastCommand3));
+            }
+        }
+
+        public ICommand ShowToastCommand4
+        {
+            get => m_showToastCommand4;
+            set
+            {
+                m_showToastCommand4 = value;
+                OnPropertyChanged(nameof(ShowToastCommand4));
             }
         }
     }

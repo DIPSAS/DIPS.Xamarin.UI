@@ -25,7 +25,7 @@
                     CommandParameter="Hello, Pluto!" />
             <Button Text="Show Toast Mars"
                     Margin="15,0,15,40"
-                    Command="{Binding ShowToastCommand, Source={x:Reference toastPage}}"
+                    Command="{Binding ShowToastCommand4, Source={x:Reference toastPage}}"
                     CommandParameter="Hello, Mars! The fourth planet of the Milky Way! The Red planet! The planet for War!" />
         </StackLayout>
 
