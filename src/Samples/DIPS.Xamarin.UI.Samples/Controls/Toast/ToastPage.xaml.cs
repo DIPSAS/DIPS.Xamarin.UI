@@ -16,10 +16,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             BackgroundColor = Color.DodgerBlue,
             CornerRadius = 8,
             FontSize = 11,
+            HasShadow = true,
             LineBreakMode = LineBreakMode.TailTruncation,
             MaxLines = 1,
-            TextColor = Color.White,
-            Padding = new Thickness(20, 10)
+            Padding = new Thickness(20, 10),
+            TextColor = Color.White
         };
 
         private readonly ToastLayout LayoutThreePluto = new ToastLayout
@@ -29,8 +30,9 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             FontSize = 15,
             LineBreakMode = LineBreakMode.TailTruncation,
             MaxLines = 1,
-            TextColor = Color.White,
-            Padding = new Thickness(20, 10)
+            Padding = new Thickness(20, 10),
+            PositionY = 5,
+            TextColor = Color.White
         };
 
         private ToastLayout LayoutTwoVenus = new ToastLayout
@@ -40,8 +42,9 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             FontSize = 13,
             LineBreakMode = LineBreakMode.TailTruncation,
             MaxLines = 2,
-            TextColor = Color.White,
-            Padding = new Thickness(20, 10)
+            Padding = new Thickness(20, 10),
+            PositionY = 1,
+            TextColor = Color.White
         };
 
         private string m_pageTitle;
@@ -53,62 +56,56 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
         {
             InitializeComponent();
 
-            ConfigureToast();
-
             PageTitle = "Hello, World!";
 
             ShowToastCommand = new Command(parameter =>
             {
-                ToastControl.Current.DisplayAnimation = toastView =>
+                var options = new ToastOptions
                 {
-                    toastView.Opacity = 0;
-                    return toastView.FadeTo(1, 500, Easing.Linear);
+                    ToastAction = async () =>
+                    {
+                        PageTitle = "Hello, Mercury!";
+                        await Task.Delay(1500);
+                        PageTitle = "Hello, World!";
+                    },
+                    DisplayAnimation = toastView =>
+                    {
+                        toastView.Opacity = 0;
+                        return toastView.FadeTo(1, 500, Easing.Linear);
+                    },
+                    CloseAnimation = toastView => toastView.FadeTo(0, 500, Easing.Linear),
+                    HideToastIn = 3000
                 };
-                ToastControl.Current.CloseAnimation = toastView => toastView.FadeTo(0, 500, Easing.Linear);
-
-                ToastControl.Current.ToastLayout = LayoutOneMoonFourMars;
-                ToastControl.Current.ToastAction = async () =>
-                {
-                    PageTitle = "Hello, Mercury!";
-                    await Task.Delay(1500);
-                    PageTitle = "Hello, World!";
-                };
-                ToastControl.Current.Text = parameter.ToString();
-
-                ToastControl.Current.DisplayToast();
+                ToastControl.Current.DisplayToast(parameter.ToString(), options, LayoutOneMoonFourMars);
             });
 
             ShowToastCommand2 = new Command(parameter =>
             {
-                ToastControl.Current.DisplayAnimation = toastView =>
+                var options = new ToastOptions
                 {
-                    toastView.TranslationY -= 50;
-                    return toastView.TranslateTo(0, toastView.TranslationY + 50, 500, Easing.Linear);
+                    ToastAction = null,
+                    DisplayAnimation = toastView =>
+                    {
+                        toastView.TranslationY -= 50;
+                        return toastView.TranslateTo(0, toastView.TranslationY + 50, 500, Easing.Linear);
+                    },
+                    CloseAnimation = toastView => toastView.TranslateTo(0, -(toastView.TranslationY + 50), 500, Easing.Linear),
+                    HideToastIn = 0
                 };
-                ToastControl.Current.CloseAnimation = toastView =>
-                    toastView.TranslateTo(0, -(toastView.TranslationY + 50), 500, Easing.Linear);
-
-                ToastControl.Current.ToastLayout = LayoutTwoVenus;
-                ToastControl.Current.HideToastIn = 0;
-                ToastControl.Current.ToastAction = null;
-                ToastControl.Current.Text = parameter.ToString();
-
-                ToastControl.Current.DisplayToast();
+                ToastControl.Current.DisplayToast(parameter.ToString(), options, LayoutTwoVenus);
             });
 
             ShowToastCommand3 = new Command(parameter =>
             {
-                ToastControl.Current.Text = parameter.ToString();
-
-                ToastControl.Current.PositionY = 1;
-                ToastControl.Current.ToastAction = async () =>
+                var options = new ToastOptions
                 {
-                    await ToastControl.Current.CloseToast();
+                    ToastAction = async () =>
+                    {
+                        await ToastControl.Current.CloseToast();
+                    },
+                    HideToastIn = 3000
                 };
-                ToastControl.Current.ToastLayout = LayoutThreePluto;
-                ToastControl.Current.HideToastIn = 3000;
-
-                ToastControl.Current.DisplayToast();
+                ToastControl.Current.DisplayToast(parameter.ToString(), options, LayoutThreePluto);
             });
         }
 
@@ -150,12 +147,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                 m_showToastCommand3 = value;
                 OnPropertyChanged(nameof(ShowToastCommand3));
             }
-        }
-
-        private static void ConfigureToast()
-        {
-            ToastControl.Current.PositionY = 1;
-            ToastControl.Current.HideToastIn = 3000;
         }
     }
 }

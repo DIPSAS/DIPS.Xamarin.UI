@@ -87,6 +87,16 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         }
 
         /// <summary>
+        ///     The vertical positioning of the toast in a percentage of the Main Page relative to the top margin of the Main
+        ///     page. This is a bindable property.
+        /// </summary>
+        public double PositionY
+        {
+            get => (double)GetValue(PositionYProperty);
+            set => SetValue(PositionYProperty, value);
+        }
+
+        /// <summary>
         ///     Gets or sets the Color for the text of this Toast. This is a bindable property.
         /// </summary>
         public Color TextColor
@@ -151,6 +161,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// </summary>
         public static readonly BindableProperty PaddingProperty =
             BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(Toast), new Thickness(5, 5, 5, 5));
+
+        /// <summary>
+        ///     Bindable property for <see cref="PositionY" />
+        /// </summary>
+        public static readonly BindableProperty PositionYProperty =
+            BindableProperty.Create(nameof(PositionY), typeof(double), typeof(Toast), 10d);
 
         /// <summary>
         ///     Bindable property for <see cref="TextColor" />
