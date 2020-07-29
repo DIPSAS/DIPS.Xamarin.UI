@@ -1,7 +1,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace DIPS.Xamarin.UI.Controls.Toast
+namespace DIPS.Xamarin.UI.Internal.Xaml
 {
     /// <summary>
     ///     Toaster control that would appear on top of the presented view

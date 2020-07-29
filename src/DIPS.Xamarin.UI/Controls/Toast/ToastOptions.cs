@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using DIPS.Xamarin.UI.Internal.Xaml;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
