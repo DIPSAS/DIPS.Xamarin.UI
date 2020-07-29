@@ -25,42 +25,24 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         private Dictionary<string, Grid> ToastContainers { get; } = new Dictionary<string, Grid>();
 
         /// <summary>
+        ///     Initialize Toast control.
+        /// </summary>
+        public void Initialize()
+        {
+            GetToastContainerSettingUpIfNeeded();
+        }
+
+        /// <summary>
         ///     Displays the Toast control
         /// </summary>
         /// <returns>A void <c>Task</c></returns>
         public async Task DisplayToast()
         {
-            // get current page
-            var currentPage = GetCurrentContentPage();
-            if (currentPage == null)
+            // get toast container
+            var toastContainer = GetToastContainerSettingUpIfNeeded();
+            if (toastContainer == null)
             {
                 return;
-            }
-
-            // try get toast container
-            var toastContainer = FindByName(currentPage.Id.ToString());
-            if (toastContainer != null) // found toast container
-            {
-                // check opened toasts, can be only one or none
-                var oldToast = toastContainer.Children.FirstOrDefault(w => w.GetType() == typeof(ToastView));
-                if (oldToast != null) // close old toast
-                {
-                    CancellationSource.Cancel();
-                    toastContainer.Children.Remove(oldToast);
-                }
-            }
-            else // no toast container
-            {
-                // create and register toast container
-                toastContainer = new Grid();
-                RegisterName(currentPage.Id.ToString(), toastContainer);
-
-                // old content
-                var oldContent = currentPage.Content;
-
-                // set new content
-                currentPage.Content = toastContainer;
-                toastContainer.Children.Add(oldContent);
             }
 
             // toast view
@@ -109,6 +91,44 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
             // remove toast
             toastContainer.Children.Remove(toastView);
+        }
+
+        private Grid? GetToastContainerSettingUpIfNeeded()
+        {
+            // get current page
+            var currentPage = GetCurrentContentPage();
+            if (currentPage == null)
+            {
+                return null;
+            }
+
+            // try get toast container
+            var toastContainer = FindByName(currentPage.Id.ToString());
+            if (toastContainer != null) // found toast container
+            {
+                // check opened toasts, can be only one or none
+                var oldToast = toastContainer.Children.FirstOrDefault(w => w.GetType() == typeof(ToastView));
+                if (oldToast != null) // close old toast
+                {
+                    CancellationSource.Cancel();
+                    toastContainer.Children.Remove(oldToast);
+                }
+            }
+            else // no toast container
+            {
+                // create and register toast container
+                toastContainer = new Grid();
+                RegisterName(currentPage.Id.ToString(), toastContainer);
+
+                // old content
+                var oldContent = currentPage.Content;
+
+                // set new content
+                currentPage.Content = toastContainer;
+                toastContainer.Children.Add(oldContent);
+            }
+
+            return toastContainer;
         }
 
         private static ContentPage? GetCurrentContentPage()
