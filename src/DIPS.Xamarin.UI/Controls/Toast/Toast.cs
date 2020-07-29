@@ -59,17 +59,19 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 var oldContent = currentPage.Content;
 
                 // set new content
-                ((ContentPage)currentPage).Content = toastContainer;
+                currentPage.Content = toastContainer;
                 toastContainer.Children.Add(oldContent);
             }
 
             // toast view
             var toastView = GetToast();
-            toastView.Opacity = 0;
             toastContainer.Children.Add(toastView);
 
             // animate toast
-            await toastView.FadeTo(1, (uint)AnimateFor, Easing.Linear);
+            if (DisplayAnimation != null)
+            {
+                await DisplayAnimation(toastView);
+            }
 
             // hide toast
             if (HideToastIn > 0)
@@ -100,7 +102,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             }
 
             // animate toast
-            await toastView.FadeTo(0, (uint)AnimateFor, Easing.Linear);
+            if (CloseAnimation != null)
+            {
+                await CloseAnimation((ToastView)toastView);
+            }
 
             // remove toast
             toastContainer.Children.Remove(toastView);
@@ -184,12 +189,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             return toast;
         }
 
-        private async Task CloseToastIn(int timeInSeconds)
+        private async Task CloseToastIn(int timeInMilliseconds)
         {
             CancellationSource.Cancel();
             CancellationSource = new CancellationTokenSource();
 
-            await Task.Delay(timeInSeconds * 1000, CancellationSource.Token);
+            await Task.Delay(timeInMilliseconds, CancellationSource.Token);
 
             await CloseToast();
         }
@@ -207,28 +212,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             return ToastContainers.ContainsKey(name) ? ToastContainers[name] : null;
         }
 
-        #region Bindable Properties
-
-        /// <summary>
-        ///     Bindable property for <see cref="Text" />
-        /// </summary>
-        public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(Toast), Label.TextProperty.DefaultValue);
-
-        /// <summary>
-        ///     Bindable property for <see cref="ToastLayout" />
-        /// </summary>
-        public static readonly BindableProperty ToastLayoutProperty =
-            BindableProperty.Create(nameof(ToastLayout), typeof(ToastLayout), typeof(Toast), new ToastLayout());
-
-        /// <summary>
-        ///     Bindable property for <see cref="PositionY" />
-        /// </summary>
-        public static readonly BindableProperty PositionYProperty =
-            BindableProperty.Create(nameof(PositionY), typeof(double), typeof(Toast), 10d);
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -238,15 +221,20 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         public Action? ToastAction { get; set; }
 
         /// <summary>
-        ///     Animate the appearing and disappearing of the toast for the given milliseconds
+        ///     Animation on displaying the Toast
         /// </summary>
-        public int AnimateFor { get; set; } = 250;
+        public Func<ToastView, Task> DisplayAnimation { get; set; }
 
         /// <summary>
-        ///     Hide the toast automatically after the given seconds
+        ///     Animation on closing the Toast
+        /// </summary>
+        public Func<ToastView, Task> CloseAnimation { get; set; }
+
+        /// <summary>
+        ///     Hide the toast automatically after the given milliseconds
         ///     <remarks> If value is 0, toast won't be hidden automatically </remarks>
         /// </summary>
-        public int HideToastIn { get; set; } = 5;
+        public int HideToastIn { get; set; }
 
         /// <summary>
         ///     Gets or sets the text for the Toast. This is a bindable property.
@@ -275,6 +263,28 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             get => (double)GetValue(PositionYProperty);
             set => SetValue(PositionYProperty, value);
         }
+
+        #endregion
+
+        #region Bindable Properties
+
+        /// <summary>
+        ///     Bindable property for <see cref="Text" />
+        /// </summary>
+        public static readonly BindableProperty TextProperty =
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(Toast), Label.TextProperty.DefaultValue);
+
+        /// <summary>
+        ///     Bindable property for <see cref="ToastLayout" />
+        /// </summary>
+        public static readonly BindableProperty ToastLayoutProperty =
+            BindableProperty.Create(nameof(ToastLayout), typeof(ToastLayout), typeof(Toast), new ToastLayout());
+
+        /// <summary>
+        ///     Bindable property for <see cref="PositionY" />
+        /// </summary>
+        public static readonly BindableProperty PositionYProperty =
+            BindableProperty.Create(nameof(PositionY), typeof(double), typeof(Toast), 10d);
 
         #endregion
     }
