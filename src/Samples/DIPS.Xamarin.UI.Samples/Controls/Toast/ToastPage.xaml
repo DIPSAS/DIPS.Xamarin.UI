@@ -3,30 +3,36 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Toast.ToastPage"
-             x:Name="toastPage">
+             x:Name="toastPage"
+             
+             xmlns:ViewModel="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Toast;assembly=DIPS.Xamarin.UI.Samples">
+        
+        <ContentPage.BindingContext>
+                <ViewModel:ToastPageViewModel />
+        </ContentPage.BindingContext>
 
-    <ContentPage.Content>
+        <ContentPage.Content>
 
         <StackLayout>
-            <Label Text="{Binding PageTitle, Source={x:Reference toastPage}}"
+            <Label Text="{Binding PageTitle}"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
             <Button Text="Show Toast Moon"
                     Margin="15,0,15,40"
-                    Command="{Binding ShowToastCommand, Source={x:Reference toastPage}}"
+                    Command="{Binding MoonCommand}"
                     CommandParameter="Hello, Moon!" />
             <Button Text="Show Toast Venus"
                     Margin="15,0,15,40"
-                    Command="{Binding ShowToastCommand2, Source={x:Reference toastPage}}"
+                    Command="{Binding VenusCommand}"
                     CommandParameter="Hello, Venus! Second planet from the Sun! Named after the Roman goddess of love and beauty!" />
-            <Button Text="Show Toast Pluto"
-                    Margin="15,0,15,40"
-                    Command="{Binding ShowToastCommand3, Source={x:Reference toastPage}}"
-                    CommandParameter="Hello, Pluto!" />
             <Button Text="Show Toast Mars"
                     Margin="15,0,15,40"
-                    Command="{Binding ShowToastCommand4, Source={x:Reference toastPage}}"
+                    Command="{Binding MarsCommand}"
                     CommandParameter="Hello, Mars! The fourth planet of the Milky Way! The Red planet! The planet for War!" />
+            <Button Text="Show Toast Pluto"
+                    Margin="15,0,15,40"
+                    Command="{Binding PlutoCommand}"
+                    CommandParameter="Hello, Pluto!" />
         </StackLayout>
 
     </ContentPage.Content>
