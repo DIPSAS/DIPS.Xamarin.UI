@@ -14,6 +14,25 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     {
         private Toast()
         {
+            Application.Current.PageAppearing -= OnPageAppearing;
+            Application.Current.PageAppearing += OnPageAppearing;
+            
+            Application.Current.PageDisappearing -= OnPageDisappearing;
+            Application.Current.PageDisappearing += OnPageDisappearing;
+        }
+
+        private void OnPageDisappearing(object sender, Page page)
+        {
+            if (page is ContentPage contentPage)
+            {
+                CancellationSource.Cancel();
+                _ = CloseToast(contentPage);
+            }
+        }
+
+        private void OnPageAppearing(object sender, Page e)
+        {
+            Initialize();
         }
 
         /// <summary>
@@ -75,6 +94,11 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 return;
             }
 
+            await CloseToast(currentPage);
+        }
+
+        private async Task CloseToast(ContentPage currentPage)
+        {
             // get toast view, can be only one or none
             var toastContainer = FindByName(currentPage.Id.ToString());
             var toastView = toastContainer?.Children.FirstOrDefault(w => w.GetType() == typeof(ToastView));
@@ -86,7 +110,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             // animate toast
             if (CloseAnimation != null)
             {
-                await CloseAnimation((ToastView)toastView);
+                await CloseAnimation((ToastView) toastView);
             }
 
             // remove toast
@@ -95,6 +119,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         private Grid? GetToastContainerSettingUpIfNeeded()
         {
+            var x = Application.Current.MainPage;
+            
             // get current page
             var currentPage = GetCurrentContentPage();
             if (currentPage == null)
