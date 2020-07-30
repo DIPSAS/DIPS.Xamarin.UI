@@ -32,8 +32,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             LineBreakMode = LineBreakMode.TailTruncation,
             MaxLines = 1,
             Padding = new Thickness(20, 10),
-            PositionY = 5,
-            TextColor = Color.White
+            TextColor = Color.White,
+            YPosition = 50
         };
 
         private readonly ToastOptions m_plutoOptions = new ToastOptions
@@ -123,11 +123,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                 layout.BackgroundColor = Color.MediumSeaGreen;
                 layout.CornerRadius = 12;
                 layout.FontSize = 13;
+                layout.HorizontalMargin = 25;
                 layout.LineBreakMode = LineBreakMode.TailTruncation;
                 layout.MaxLines = 2;
                 layout.Padding = new Thickness(20, 10);
-                layout.PositionY = 1;
                 layout.TextColor = Color.White;
+                layout.YPosition = 30;
             };
         }
 

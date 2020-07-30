@@ -83,12 +83,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         public static new readonly BindableProperty PaddingProperty =
             BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(ToastView), new Thickness(5, 5, 5, 5));
 
-        /// <summary>
-        ///     Bindable property for <see cref="PositionY" />
-        /// </summary>
-        public static readonly BindableProperty PositionYProperty =
-            BindableProperty.Create(nameof(PositionY), typeof(double), typeof(ToastView), 10d);
-
         #endregion
 
         #region Public Properties
@@ -186,16 +180,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             get => (Thickness)GetValue(PaddingProperty);
             set => SetValue(PaddingProperty, value);
-        }
-
-        /// <summary>
-        ///     The vertical positioning of the toaster in a percentage of the Main Page relative to the top margin of the Main
-        ///     page. This is a bindable property.
-        /// </summary>
-        public double PositionY
-        {
-            get => (double)GetValue(PositionYProperty);
-            set => SetValue(PositionYProperty, value);
         }
 
         private static object FontSizeDefaultValueCreator(BindableObject bindable)
