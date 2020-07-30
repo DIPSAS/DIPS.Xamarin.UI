@@ -5,6 +5,9 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
 {
+    /// <summary>
+    ///     Options to setup in the Toast control
+    /// </summary>
     public class ToastOptions : BindableObject
     {
         /// <summary>
@@ -17,18 +20,17 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     Animation on displaying the Toast.
         ///     <remarks>Default animation is Fading-In in 250 ms</remarks>
         /// </summary>
-        public Func<ToastView, Task> DisplayAnimation { get; set; } = toastView =>
+        public Func<ToastView, Task> DisplayAnimation { get; set; } = toast =>
         {
-            toastView.Opacity = 0;
-            return toastView.FadeTo(1, 500, Easing.Linear);
+            toast.Opacity = 0;
+            return toast.FadeTo(1, 500, Easing.Linear);
         };
 
         /// <summary>
         ///     Animation on closing the Toast
         ///     <remarks>Default animation is Fading-Out in 250 ms</remarks>
         /// </summary>
-        public Func<ToastView, Task> CloseAnimation { get; set; } =
-            toastView => toastView.FadeTo(0, 500, Easing.Linear);
+        public Func<ToastView, Task> CloseAnimation { get; set; } = toast => toast.FadeTo(0, 500, Easing.Linear);
 
         /// <summary>
         ///     Hide the toast automatically after the given milliseconds

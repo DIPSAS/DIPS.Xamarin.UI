@@ -3,7 +3,7 @@ using Xamarin.Forms;
 namespace DIPS.Xamarin.UI.Controls.Toast
 {
     /// <summary>
-    ///     Toast L that would appear on top of the presented view
+    ///     Set layout options for the Toast control
     /// </summary>
     public class ToastLayout : BindableObject
     {
