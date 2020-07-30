@@ -232,7 +232,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 LineBreakMode = ToastLayout.LineBreakMode,
                 MaxLines = ToastLayout.MaxLines,
                 Padding = ToastLayout.Padding,
-                Margin = new Thickness(ToastLayout.HorizontalMargin, ToastLayout.YPosition,
+                Margin = new Thickness(ToastLayout.HorizontalMargin, ToastLayout.PositionY,
                     ToastLayout.HorizontalMargin, 0),
                 Text = text,
                 TextColor = ToastLayout.TextColor

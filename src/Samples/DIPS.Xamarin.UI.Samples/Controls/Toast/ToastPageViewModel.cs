@@ -33,7 +33,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             MaxLines = 1,
             Padding = new Thickness(20, 10),
             TextColor = Color.White,
-            YPosition = 50
+            PositionY = 50
         };
 
         private readonly ToastOptions m_plutoOptions = new ToastOptions
@@ -128,7 +128,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                 layout.MaxLines = 2;
                 layout.Padding = new Thickness(20, 10);
                 layout.TextColor = Color.White;
-                layout.YPosition = 30;
+                layout.PositionY = 30;
             };
         }
 
