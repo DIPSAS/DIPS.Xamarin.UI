@@ -60,7 +60,42 @@
                                 Text="{Binding Text}"
                                 TextColor="{Binding TextColor}"
                                 FontFamily="{Binding FontFamily}"
-                                Clicked="MenuButton_OnClicked" />
+                                Clicked="MenuButton_OnClicked">
+            <Utilities:LegacyButton.Triggers>
+                <DataTrigger TargetType="Utilities:LegacyButton"
+                             Binding="{Binding Source, Converter={Converters:IsEmptyConverter}}"
+                             Value="False">
+                    <Setter Property="IsVisible"
+                            Value="False" />
+                </DataTrigger>
+            </Utilities:LegacyButton.Triggers>
+        </Utilities:LegacyButton>
+
+        <ImageButton x:Name="imageButton"
+                     x:FieldModifier="internal"
+                     Grid.Column="1"
+                     BindingContext="{x:Reference CodeBehind}"
+                     BackgroundColor="{Binding BackgroundColor}"
+                     Source="{Binding Source}"
+                     IsVisible="False"
+                     Opacity="0"
+                     BorderColor="White"
+                     HeightRequest="60"
+                     WidthRequest="60"
+                     CornerRadius="30"
+                     BorderWidth="3"
+                     Aspect="AspectFit"
+                     Clicked="MenuButton_OnClicked">
+            <ImageButton.Triggers>
+                <DataTrigger TargetType="ImageButton"
+                             Binding="{Binding Source, Converter={Converters:IsEmptyConverter}}"
+                             Value="False">
+                    <Setter Property="IsVisible"
+                            Value="True" />
+                </DataTrigger>
+            </ImageButton.Triggers>
+        </ImageButton>
+
 
         <Frame x:Name="BadgeFrame"
                x:FieldModifier="internal"

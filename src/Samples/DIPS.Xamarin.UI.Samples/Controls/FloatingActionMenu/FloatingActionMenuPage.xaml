@@ -61,6 +61,7 @@
                                  Text="B"
                                  TextColor="White"
                                  Title="First page"
+                                 Source="https://www.pngitem.com/pimgs/m/549-5493065_xamarin-logo-png-transparent-xamarin-forms-logo-png.png"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Second tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
@@ -70,6 +71,7 @@
                                  BadgeColor="{Binding BadgeColor}"
                                  BadgeCount="{Binding BadgeCounter}"
                                  IsVisible="{Binding IsMenuButtonVisible}"
+                                 Source="https://www.pngitem.com/pimgs/m/549-5493065_xamarin-logo-png-transparent-xamarin-forms-logo-png.png"
                                  Title="Second page"
                                  Command="{Binding SetTextCommand}"
                                  IsEnabled="False"

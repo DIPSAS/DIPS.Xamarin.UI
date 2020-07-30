@@ -190,6 +190,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             var maxOpacity = menuButton.IsEnabled ? 1 : .5;
             menuButton.Button.FadeTo(hide ? 0 : maxOpacity, animationTime, Easing.CubicInOut);
+            menuButton.imageButton.FadeTo(hide ? 0 : maxOpacity, animationTime, Easing.CubicInOut);
             menuButton.TitleFrame.FadeTo(hide ? 0 : 1, animationTime, Easing.CubicInOut);
             menuButton.BadgeFrame.FadeTo(hide ? .5 : .95, animationTime, Easing.CubicInOut);
             menuButton.InputTransparent = hide;
@@ -229,10 +230,15 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             for (var index = Children.Count - 1; index >= 0; index--)
             {
                 var child = Children[index];
+
                 child.FloatingActionMenuParent = this;
                 child.Button.WidthRequest = m_behaviour.Size;
                 child.Button.HeightRequest = m_behaviour.Size;
                 child.Button.CornerRadius = (int)m_behaviour.Size / 2;
+                child.imageButton.WidthRequest = m_behaviour.Size;
+                child.imageButton.HeightRequest = m_behaviour.Size;
+                child.imageButton.CornerRadius = (int)m_behaviour.Size / 2;
+
                 parent.Children.Add(
                     child,
                     Constraint.RelativeToParent(p => p.Width * m_behaviour.XPosition),
