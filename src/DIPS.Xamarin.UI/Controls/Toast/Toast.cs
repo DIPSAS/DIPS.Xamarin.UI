@@ -127,6 +127,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         private async Task CloseToast(ContentPage currentPage)
         {
+            CancellationSource.Cancel();
+
             // get toast view, can be only one or none
             var toastContainer = FindByName(currentPage.Id.ToString());
             var toastView = toastContainer?.Children.FirstOrDefault(w => w.GetType() == typeof(ToastView));
@@ -136,7 +138,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             }
 
             // animate toast
-            if (ToastOptions?.CloseAnimation != null)
+            if (ToastOptions.CloseAnimation != null)
             {
                 await ToastOptions.CloseAnimation((ToastView)toastView);
             }
@@ -147,8 +149,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         private async Task<Grid?> GetToastContainerSettingUpIfNeededAsync()
         {
-            var x = Application.Current.MainPage;
-
             // get current page
             var currentPage = GetCurrentContentPage();
             if (currentPage == null)
@@ -241,14 +241,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             var tapGesture = new TapGestureRecognizer();
             tapGesture.Tapped += (s, e) =>
             {
-                if (ToastOptions?.ToastAction == null)
-                {
-                    _ = CloseToastIn(0);
-                }
-                else
-                {
-                    ToastOptions.ToastAction();
-                }
+                ToastOptions.ToastAction?.Invoke();
             };
             toast.GestureRecognizers.Add(tapGesture);
 

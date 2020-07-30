@@ -12,12 +12,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     {
         /// <summary>
         ///     Performs action on tapping the toast
-        ///     <remarks>Will Override closing the toast on tapping</remarks>
+        ///     <remarks>Will Override closing the toast on tapping. Default action is to close the Toast</remarks>
         /// </summary>
-        public Action? ToastAction { get; set; }
+        public Action ToastAction { get; set; } = async () => await Toast.Current.CloseToastAsync();
 
         /// <summary>
-        ///     Animation on displaying the Toast.
+        ///     Animation on displaying the Toast
         ///     <remarks>Default animation is Fading-In in 250 ms</remarks>
         /// </summary>
         public Func<ToastView, Task> DisplayAnimation { get; set; } = toast =>

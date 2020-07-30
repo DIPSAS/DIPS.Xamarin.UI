@@ -42,7 +42,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             {
                 await ToastControl.Current.CloseToastAsync();
             },
-            HideToastIn = 3000
+            HideToastIn = 0
         };
 
         private ICommand m_marsCommand;
@@ -69,7 +69,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                     return toastView.FadeTo(1, 500, Easing.Linear);
                 },
                 CloseAnimation = toastView => toastView.FadeTo(0, 500, Easing.Linear),
-                HideToastIn = 3000
+                HideToastIn = 10000
             };
 
             MoonCommand =
@@ -144,7 +144,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                 };
                 options.CloseAnimation = toastView =>
                     toastView.TranslateTo(0, -(toastView.TranslationY + 50), 500, Easing.Linear);
-                options.HideToastIn = 0;
+                options.HideToastIn = 5000;
             };
         }
     }
