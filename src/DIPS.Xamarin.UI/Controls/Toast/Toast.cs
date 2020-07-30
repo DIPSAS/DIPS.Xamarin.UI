@@ -62,14 +62,14 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// <param name="options">An <see cref="Action{ToastOptions}" /> to modify Toast options</param>
         /// <param name="layout">An <see cref="Action{ToastLayout}" /> to modify Toast layout</param>
         /// <returns>A void <c>Task</c></returns>
-        public async Task DisplayToast(string text, Action<ToastOptions> options, Action<ToastLayout> layout)
+        public async Task DisplayToastAsync(string text, Action<ToastOptions> options, Action<ToastLayout> layout)
         {
             var toastOptions = new ToastOptions();
             options(toastOptions);
             var layoutOptions = new ToastLayout();
             layout(layoutOptions);
 
-            await DisplayToast(text, toastOptions, layoutOptions);
+            await DisplayToastAsync(text, toastOptions, layoutOptions);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// <param name="options"><see cref="ToastOptions" /> to set for the Toast control</param>
         /// <param name="layout"><see cref="ToastLayout" /> to set for the Toast control</param>
         /// <returns>A void <c>Task</c></returns>
-        public async Task DisplayToast(string text, ToastOptions options = null, ToastLayout layout = null)
+        public async Task DisplayToastAsync(string text, ToastOptions options = null, ToastLayout layout = null)
         {
             // set properties
             ToastOptions = options ?? new ToastOptions();
@@ -113,7 +113,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     Closes the displaying Toast control
         /// </summary>
         /// <returns>A void <c>Task</c></returns>
-        public async Task CloseToast()
+        public async Task CloseToastAsync()
         {
             // get current page
             var currentPage = GetCurrentContentPage();
@@ -262,7 +262,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
             await Task.Delay(timeInMilliseconds, CancellationSource.Token);
 
-            await CloseToast();
+            await CloseToastAsync();
         }
 
         private void RegisterName(string name, Grid container)
