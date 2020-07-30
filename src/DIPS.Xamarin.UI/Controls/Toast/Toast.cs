@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Internal.Xaml;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
@@ -50,23 +52,41 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// </summary>
         public void Initialize()
         {
-            GetToastContainerSettingUpIfNeeded();
+            _ = GetToastContainerSettingUpIfNeededAsync();
         }
 
         /// <summary>
         ///     Displays the Toast control
         /// </summary>
+        /// <param name="text">Text to be displayed in the Toast control</param>
+        /// <param name="options">An <see cref="Action{ToastOptions}" /> to modify Toast options</param>
+        /// <param name="layout">An <see cref="Action{ToastLayout}" /> to modify Toast layout</param>
         /// <returns>A void <c>Task</c></returns>
-        public async Task
-            DisplayToast(string text, ToastOptions toastOptions = null,
-                ToastLayout toastLayout = null) // string text, ToastLayout toastLayout = null
+        public async Task DisplayToast(string text, Action<ToastOptions> options, Action<ToastLayout> layout)
+        {
+            var toastOptions = new ToastOptions();
+            options(toastOptions);
+            var layoutOptions = new ToastLayout();
+            layout(layoutOptions);
+
+            await DisplayToast(text, toastOptions, layoutOptions);
+        }
+
+        /// <summary>
+        ///     Displays the Toast control
+        /// </summary>
+        /// <param name="text">Text to be displayed in the Toast control</param>
+        /// <param name="options"><see cref="ToastOptions" /> to set for the Toast control</param>
+        /// <param name="layout"><see cref="ToastLayout" /> to set for the Toast control</param>
+        /// <returns>A void <c>Task</c></returns>
+        public async Task DisplayToast(string text, ToastOptions options = null, ToastLayout layout = null)
         {
             // set properties
-            ToastOptions = toastOptions ?? new ToastOptions();
-            ToastLayout = toastLayout ?? new ToastLayout();
+            ToastOptions = options ?? new ToastOptions();
+            ToastLayout = layout ?? new ToastLayout();
 
             // get toast container
-            var toastContainer = GetToastContainerSettingUpIfNeeded();
+            var toastContainer = await GetToastContainerSettingUpIfNeededAsync();
             if (toastContainer == null)
             {
                 return;
@@ -125,7 +145,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             toastContainer.Children.Remove(toastView);
         }
 
-        private Grid? GetToastContainerSettingUpIfNeeded()
+        private async Task<Grid?> GetToastContainerSettingUpIfNeededAsync()
         {
             var x = Application.Current.MainPage;
 
@@ -158,7 +178,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 var oldContent = currentPage.Content;
 
                 // set new content
-                currentPage.Content = toastContainer;
+                await MainThread.InvokeOnMainThreadAsync(() => { currentPage.Content = toastContainer; });
                 toastContainer.Children.Add(oldContent);
             }
 

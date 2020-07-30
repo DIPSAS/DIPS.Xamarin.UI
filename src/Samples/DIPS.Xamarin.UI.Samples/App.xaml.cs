@@ -12,6 +12,7 @@ namespace DIPS.Xamarin.UI.Samples
             //This has to be called once per application in order to use Custom Namespace in XAML : https://github.com/DIPSAS/DIPS.Xamarin.UI/issues/1
             DIPS.Xamarin.UI.Library.PreviewFeatures.EnableFeature("SkeletonView");
             DIPS.Xamarin.UI.Library.Initialize();
+            DIPS.Xamarin.UI.Controls.Toast.Toast.Current.Initialize();
             
             m_mainPage = new MainPage();
             MainPage = new NavigationPage(m_mainPage);

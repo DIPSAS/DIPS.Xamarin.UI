@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -44,30 +45,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             HideToastIn = 3000
         };
 
-        private readonly ToastLayout m_venusLayout = new ToastLayout
-        {
-            BackgroundColor = Color.MediumSeaGreen,
-            CornerRadius = 12,
-            FontSize = 13,
-            LineBreakMode = LineBreakMode.TailTruncation,
-            MaxLines = 2,
-            Padding = new Thickness(20, 10),
-            PositionY = 1,
-            TextColor = Color.White
-        };
-
-        private readonly ToastOptions m_venusOptions = new ToastOptions
-        {
-            ToastAction = null,
-            DisplayAnimation = toastView =>
-            {
-                toastView.TranslationY -= 50;
-                return toastView.TranslateTo(0, toastView.TranslationY + 50, 500, Easing.Linear);
-            },
-            CloseAnimation = toastView => toastView.TranslateTo(0, -(toastView.TranslationY + 50), 500, Easing.Linear),
-            HideToastIn = 0
-        };
-
         private ICommand m_marsCommand;
         private ICommand m_moonCommand;
         private string m_pageTitle;
@@ -100,7 +77,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                     ToastControl.Current.DisplayToast(title, moonOptions, m_moonLayout));
             VenusCommand =
                 new AsyncCommand<string>(title =>
-                    ToastControl.Current.DisplayToast(title, m_venusOptions, m_venusLayout));
+                    ToastControl.Current.DisplayToast(title, VenusOptions(), VenusLayout()));
             MarsCommand = new AsyncCommand<string>(title => ToastControl.Current.DisplayToast(title));
             PlutoCommand =
                 new AsyncCommand<string>(title =>
@@ -138,5 +115,36 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private static Action<ToastLayout> VenusLayout()
+        {
+            return layout =>
+            {
+                layout.BackgroundColor = Color.MediumSeaGreen;
+                layout.CornerRadius = 12;
+                layout.FontSize = 13;
+                layout.LineBreakMode = LineBreakMode.TailTruncation;
+                layout.MaxLines = 2;
+                layout.Padding = new Thickness(20, 10);
+                layout.PositionY = 1;
+                layout.TextColor = Color.White;
+            };
+        }
+
+        private static Action<ToastOptions> VenusOptions()
+        {
+            return options =>
+            {
+                options.ToastAction = null;
+                options.DisplayAnimation = toastView =>
+                {
+                    toastView.TranslationY -= 50;
+                    return toastView.TranslateTo(0, toastView.TranslationY + 50, 500, Easing.Linear);
+                };
+                options.CloseAnimation = toastView =>
+                    toastView.TranslateTo(0, -(toastView.TranslationY + 50), 500, Easing.Linear);
+                options.HideToastIn = 0;
+            };
+        }
     }
 }
