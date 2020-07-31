@@ -67,49 +67,15 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         }
 
         private static int s_scrollToId = -42;
+
         /// <summary>
-        /// Scrolls to the index smoothly
+        /// Scrolls to the index
         /// </summary>
-        /// <param name="index"></param>
-        /// <param name="length"></param>
+        /// <param name="index">Index to scroll to</param>
+        /// <param name="length">Time used on the scrolling</param>
         public void ScrollTo(int index, int length = 250)
         {
-            if (SlideProperties.IsHeld)
-            {
-                return;
-            }
-
-            var id = --s_scrollToId;
-            var dx = index - SlideProperties.Position;
-            if (Math.Abs(dx) < 0.001 || length < 20)
-            {
-                SlideProperties = new SlidableProperties(index);
-                return;
-            }
-
-            var start = SlideProperties.Position;
-            var delta = dx / (double)length;
-            var s = Stopwatch.StartNew();
-            SlideProperties = new SlidableProperties(start, id, false);
-            Device.StartTimer(TimeSpan.FromMilliseconds(20), () =>
-            {
-                if (s_scrollToId != id || SlideProperties.HoldId != id)
-                {
-                    return false;
-                }
-
-                var time = s.ElapsedMilliseconds;
-                if (time >= length)
-                {
-                    SlideProperties = new SlidableProperties(index, id, false);
-                    return false;
-                }
-                else
-                {
-                    SlideProperties = new SlidableProperties(start + delta * time, id, false);
-                }
-                return true;
-            });
+            SlidableProperties.ScrollTo(s => SlideProperties = s, () => SlideProperties, index, length);
         }
 
         private void OnTapped(object sender, EventArgs e)

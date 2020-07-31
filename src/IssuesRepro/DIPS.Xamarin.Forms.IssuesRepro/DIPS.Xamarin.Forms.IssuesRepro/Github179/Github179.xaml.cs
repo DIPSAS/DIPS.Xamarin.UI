@@ -14,8 +14,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
         public Github179()
         {
             InitializeComponent();
-            BindingContext = new IssueViewModel();
-            Binding
+            BindingContext = new Issue179ViewModel();
         }
 
         public void DateSelected(object sender, DateChangedEventArgs eventArgs)
@@ -30,7 +29,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
         }
     }
 
-    public class IssueViewModel : INotifyPropertyChanged
+    public class Issue179ViewModel : INotifyPropertyChanged
     {
         private SlidableProperties m_slidableProperties;
 

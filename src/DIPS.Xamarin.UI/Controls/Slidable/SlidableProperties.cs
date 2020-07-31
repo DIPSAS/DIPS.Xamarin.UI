@@ -46,6 +46,12 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         internal bool IsHeld { get; }
 
         private static int s_scrollToId = -42;
+
+        /// <summary>
+        /// Scrolls to the index
+        /// </summary>
+        /// <param name="index">Index to scroll to</param>
+        /// <param name="length">Time used on the scrolling</param>
         public static void ScrollTo(Action<SlidableProperties> callback, Func<SlidableProperties> current, int index, int length = 250)
         {
             if(current().IsHeld)
