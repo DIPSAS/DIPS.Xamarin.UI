@@ -7,9 +7,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              xmlns:Utilities="clr-namespace:DIPS.Xamarin.UI.Internal.Utilities;assembly=DIPS.Xamarin.UI"
-             xmlns:FloatingActionMenu="http://dips.xamarin.ui.com"
              mc:Ignorable="d"
-             x:Name="CodeBehind"
              x:Class="DIPS.Xamarin.UI.Internal.Xaml.FloatingActionMenu">
 
     <ContentView.Content>
