@@ -169,11 +169,13 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         private void TranslateMenuButton(MenuButton menuButton, int position, bool hide)
         {
             menuButton.TranslateTo(0, hide ? 0 : -m_yTranslate * (position + 1), 250, Easing.CubicInOut);
+            menuButton.BadgeFrame.FadeTo(hide ? .5 : .95, 250, Easing.CubicInOut);
             AnimateFade(menuButton, hide, 250);
         }
 
         private void ToggleMenuButtonVisibility(MenuButton menuButton, int position, bool hide)
         {
+            menuButton.BadgeFrame.FadeTo(hide ? 0 : .95, 150, Easing.CubicInOut);
             if (Library.PreviewFeatures.MenuButtonAnimations)
             {
                 menuButton.TranslateTo(!hide ? 0 : m_behaviour.XPosition <= .5 ? -m_parent.Width : m_parent.Width, -m_yTranslate * (position + 1), 150, Easing.CubicInOut);
@@ -192,7 +194,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             menuButton.Button.FadeTo(hide ? 0 : maxOpacity, animationTime, Easing.CubicInOut);
             menuButton.imageButton.FadeTo(hide ? 0 : maxOpacity, animationTime, Easing.CubicInOut);
             menuButton.TitleFrame.FadeTo(hide ? 0 : 1, animationTime, Easing.CubicInOut);
-            menuButton.BadgeFrame.FadeTo(hide ? .5 : .95, animationTime, Easing.CubicInOut);
             menuButton.InputTransparent = hide;
         }
 
