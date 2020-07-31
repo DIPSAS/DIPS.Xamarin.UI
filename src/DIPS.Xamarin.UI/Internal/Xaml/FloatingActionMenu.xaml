@@ -7,24 +7,56 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              xmlns:Utilities="clr-namespace:DIPS.Xamarin.UI.Internal.Utilities;assembly=DIPS.Xamarin.UI"
+             xmlns:FloatingActionMenu="http://dips.xamarin.ui.com"
              mc:Ignorable="d"
              x:Name="CodeBehind"
              x:Class="DIPS.Xamarin.UI.Internal.Xaml.FloatingActionMenu">
 
     <ContentView.Content>
-        <Utilities:LegacyButton x:Name="ExpandButton"
-                                Opacity=".4"
-                                WidthRequest="{Binding Size}"
-                                HeightRequest="{Binding Size}"
-                                CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
-                                BackgroundColor="{Binding ExpandButtonBackgroundColor}"
-                                BorderColor="White"
-                                BorderWidth="3"
-                                FontSize="{Binding ExpandButtonFontSize}"
-                                Text="{Binding ExpandButtonText}"
-                                TextColor="{Binding ExpandButtonTextColor}"
-                                FontFamily="{Binding ExpandButtonFontFamily}"
-                                Clicked="ExpandButton_OnClicked"
-                                IsVisible="{Binding IsVisible}" />
+        <Grid x:Name="ExpandButton"
+              BackgroundColor="Transparent"
+              WidthRequest="{Binding Size}"
+              HeightRequest="{Binding Size}"
+              IsVisible="{Binding IsVisible}"
+              Opacity=".4">
+
+            <Utilities:LegacyButton
+                CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
+                BackgroundColor="{Binding ExpandButtonBackgroundColor}"
+                BorderColor="White"
+                BorderWidth="3"
+                FontSize="{Binding ExpandButtonFontSize}"
+                Text="{Binding ExpandButtonText}"
+                TextColor="{Binding ExpandButtonTextColor}"
+                FontFamily="{Binding ExpandButtonFontFamily}"
+                Clicked="ExpandButton_OnClicked">
+                <Utilities:LegacyButton.Triggers>
+                    <DataTrigger TargetType="Utilities:LegacyButton"
+                                 Binding="{Binding Source, Converter={ValueConverters:IsEmptyConverter}}"
+                                 Value="False">
+                        <Setter Property="IsVisible"
+                                Value="False" />
+                    </DataTrigger>
+                </Utilities:LegacyButton.Triggers>
+            </Utilities:LegacyButton>
+
+            <ImageButton CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
+                         BackgroundColor="{Binding ExpandButtonBackgroundColor}"
+                         BorderColor="White"
+                         BorderWidth="3"
+                         Aspect="AspectFit"
+                         Source="{Binding Source}"
+                         Clicked="ExpandButton_OnClicked"
+                         IsVisible="False">
+                <ImageButton.Triggers>
+                    <DataTrigger TargetType="ImageButton"
+                                 Binding="{Binding Source, Converter={ValueConverters:IsEmptyConverter}}"
+                                 Value="False">
+                        <Setter Property="IsVisible"
+                                Value="True" />
+                    </DataTrigger>
+                </ImageButton.Triggers>
+            </ImageButton>
+        </Grid>
     </ContentView.Content>
 </ContentView>

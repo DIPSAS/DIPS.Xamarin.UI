@@ -36,7 +36,7 @@
                          BackgroundColor="WhiteSmoke">
         <dxui:ModalityLayout.Behaviors>
             <dxui:FloatingActionMenuBehaviour Size="60"
-                                              ExpandButtonBackgroundColor="CadetBlue"
+                                              ExpandButtonBackgroundColor="LightSeaGreen"
                                               ExpandButtonText="Open"
                                               ExpandButtonFontSize="12"
                                               ExpandButtonTextColor="Azure"
@@ -140,14 +140,26 @@
 
 
             <Label x:Name="TextLabel"
-                   Text="{Binding Text}"
                    FontSize="20"
-                   Margin="10" />
+                   Margin="10">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="TapCommand: " />
+                        <Span Text="{Binding Text}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
 
             <Label x:Name="EventLabel"
-                   Text="{Binding CurrentEvent}"
                    FontSize="20"
-                   Margin="10" />
+                   Margin="10">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="AnimationEvent: " />
+                        <Span Text="{Binding CurrentEvent}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
         </StackLayout>
     </dxui:ModalityLayout>
 </ContentPage>

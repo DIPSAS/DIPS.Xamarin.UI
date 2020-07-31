@@ -122,7 +122,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             var position = 0;
             foreach (var menuButton in Children.Where(menuButton => menuButton.IsVisible))
             {
-                MoveMenuButton(menuButton, position, m_isExpanded);
+                TranslateMenuButton(menuButton, position, m_isExpanded);
                 position++;
             }
 
@@ -166,7 +166,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             }
         }
 
-        private void MoveMenuButton(MenuButton menuButton, int position, bool hide)
+        private void TranslateMenuButton(MenuButton menuButton, int position, bool hide)
         {
             menuButton.TranslateTo(0, hide ? 0 : -m_yTranslate * (position + 1), 250, Easing.CubicInOut);
             AnimateFade(menuButton, hide, 250);
@@ -214,13 +214,13 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             Children = m_behaviour.Children;
             ExpandButton.BindingContext = m_behaviour;
 
-            AddButtonsToRelative(layout.relativeLayout);
+            AddButtonsToLayout(layout.relativeLayout);
 
             m_parent = layout;
             m_yTranslate = m_behaviour.Size + m_spaceBetween;
         }
 
-        private void AddButtonsToRelative(RelativeLayout parent)
+        private void AddButtonsToLayout(RelativeLayout parent)
         {
             parent.Children.Add(
                 ExpandButton,
@@ -231,13 +231,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             {
                 var child = Children[index];
 
-                child.FloatingActionMenuParent = this;
-                child.Button.WidthRequest = m_behaviour.Size;
-                child.Button.HeightRequest = m_behaviour.Size;
-                child.Button.CornerRadius = (int)m_behaviour.Size / 2;
-                child.imageButton.WidthRequest = m_behaviour.Size;
-                child.imageButton.HeightRequest = m_behaviour.Size;
-                child.imageButton.CornerRadius = (int)m_behaviour.Size / 2;
+                SetButtonSize(child);
 
                 parent.Children.Add(
                     child,
@@ -246,6 +240,19 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             }
 
             AdjustXPositions();
+        }
+
+        private void SetButtonSize(MenuButton child)
+        {
+            child.FloatingActionMenuParent = this;
+
+            child.Button.WidthRequest = m_behaviour.Size;
+            child.Button.HeightRequest = m_behaviour.Size;
+            child.Button.CornerRadius = (int)m_behaviour.Size / 2;
+
+            child.imageButton.WidthRequest = m_behaviour.Size;
+            child.imageButton.HeightRequest = m_behaviour.Size;
+            child.imageButton.CornerRadius = (int)m_behaviour.Size / 2;
         }
 
         private void AdjustXPositions()
