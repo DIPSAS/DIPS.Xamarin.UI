@@ -60,16 +60,8 @@
                                 Text="{Binding Text}"
                                 TextColor="{Binding TextColor}"
                                 FontFamily="{Binding FontFamily}"
-                                Clicked="MenuButton_OnClicked">
-            <Utilities:LegacyButton.Triggers>
-                <DataTrigger TargetType="Utilities:LegacyButton"
-                             Binding="{Binding Source, Converter={Converters:IsEmptyConverter}}"
-                             Value="False">
-                    <Setter Property="IsVisible"
-                            Value="False" />
-                </DataTrigger>
-            </Utilities:LegacyButton.Triggers>
-        </Utilities:LegacyButton>
+                                Clicked="MenuButton_OnClicked"
+                                IsVisible="{Binding Source, Converter={Converters:IsEmptyConverter}}" />
 
         <ImageButton x:Name="imageButton"
                      x:FieldModifier="internal"
@@ -77,7 +69,7 @@
                      BindingContext="{x:Reference CodeBehind}"
                      BackgroundColor="{Binding BackgroundColor}"
                      Source="{Binding Source}"
-                     IsVisible="False"
+                     IsVisible="{Binding Source={x:Reference Button}, Path=IsVisible, Converter={Converters:InvertedBoolConverter}}"
                      Opacity="0"
                      BorderColor="White"
                      HeightRequest="60"
@@ -85,16 +77,7 @@
                      CornerRadius="30"
                      BorderWidth="3"
                      Aspect="AspectFit"
-                     Clicked="MenuButton_OnClicked">
-            <ImageButton.Triggers>
-                <DataTrigger TargetType="ImageButton"
-                             Binding="{Binding Source, Converter={Converters:IsEmptyConverter}}"
-                             Value="False">
-                    <Setter Property="IsVisible"
-                            Value="True" />
-                </DataTrigger>
-            </ImageButton.Triggers>
-        </ImageButton>
+                     Clicked="MenuButton_OnClicked" />
 
 
         <Frame x:Name="BadgeFrame"

@@ -18,25 +18,17 @@
               IsVisible="{Binding IsVisible}"
               Opacity=".4">
 
-            <Utilities:LegacyButton
-                CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
-                BackgroundColor="{Binding ExpandButtonBackgroundColor}"
-                BorderColor="White"
-                BorderWidth="3"
-                FontSize="{Binding ExpandButtonFontSize}"
-                Text="{Binding ExpandButtonText}"
-                TextColor="{Binding ExpandButtonTextColor}"
-                FontFamily="{Binding ExpandButtonFontFamily}"
-                Clicked="ExpandButton_OnClicked">
-                <Utilities:LegacyButton.Triggers>
-                    <DataTrigger TargetType="Utilities:LegacyButton"
-                                 Binding="{Binding Source, Converter={ValueConverters:IsEmptyConverter}}"
-                                 Value="False">
-                        <Setter Property="IsVisible"
-                                Value="False" />
-                    </DataTrigger>
-                </Utilities:LegacyButton.Triggers>
-            </Utilities:LegacyButton>
+            <Utilities:LegacyButton x:Name="legacyButton"
+                                    CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
+                                    BackgroundColor="{Binding ExpandButtonBackgroundColor}"
+                                    BorderColor="White"
+                                    BorderWidth="3"
+                                    FontSize="{Binding ExpandButtonFontSize}"
+                                    Text="{Binding ExpandButtonText}"
+                                    TextColor="{Binding ExpandButtonTextColor}"
+                                    FontFamily="{Binding ExpandButtonFontFamily}"
+                                    IsVisible="{Binding Source, Converter={ValueConverters:IsEmptyConverter}}"
+                                    Clicked="ExpandButton_OnClicked" />
 
             <ImageButton CornerRadius="{Binding Size, Converter={ValueConverters:MultiplicationConverter Factor=.5}}"
                          BackgroundColor="{Binding ExpandButtonBackgroundColor}"
@@ -45,16 +37,7 @@
                          Aspect="AspectFit"
                          Source="{Binding Source}"
                          Clicked="ExpandButton_OnClicked"
-                         IsVisible="False">
-                <ImageButton.Triggers>
-                    <DataTrigger TargetType="ImageButton"
-                                 Binding="{Binding Source, Converter={ValueConverters:IsEmptyConverter}}"
-                                 Value="False">
-                        <Setter Property="IsVisible"
-                                Value="True" />
-                    </DataTrigger>
-                </ImageButton.Triggers>
-            </ImageButton>
+                         IsVisible="{Binding Source={x:Reference legacyButton}, Path=IsVisible, Converter={ValueConverters:InvertedBoolConverter}}"/>
         </Grid>
     </ContentView.Content>
 </ContentView>
