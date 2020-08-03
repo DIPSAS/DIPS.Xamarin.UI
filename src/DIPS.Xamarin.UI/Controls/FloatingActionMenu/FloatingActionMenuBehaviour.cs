@@ -12,6 +12,12 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
     [ContentProperty(nameof(Children))]
     public class FloatingActionMenuBehaviour : Behavior<ModalityLayout>
     {
+
+        /// <summary>
+        /// <see cref="Source"/>
+        /// </summary>
+        public static readonly BindableProperty SourceProperty = BindableProperty.Create(nameof(Source), typeof(string), typeof(FloatingActionMenuBehaviour), string.Empty);
+
         /// <summary>
         ///     <see cref="IsOpen" />
         /// </summary>
@@ -141,6 +147,15 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         {
             get => (object)GetValue(OnAfterCloseCommandParameterProperty);
             set => SetValue(OnAfterCloseCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// The source of the image in the expand button. This is a bindable property.
+        /// </summary>
+        public string Source
+        {
+            get => (string)GetValue(SourceProperty);
+            set => SetValue(SourceProperty, value);
         }
 
         /// <summary>

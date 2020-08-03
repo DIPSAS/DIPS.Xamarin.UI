@@ -60,7 +60,25 @@
                                 Text="{Binding Text}"
                                 TextColor="{Binding TextColor}"
                                 FontFamily="{Binding FontFamily}"
-                                Clicked="MenuButton_OnClicked" />
+                                Clicked="MenuButton_OnClicked"
+                                IsVisible="{Binding Source, Converter={Converters:IsEmptyConverter}}" />
+
+        <ImageButton x:Name="imageButton"
+                     x:FieldModifier="internal"
+                     Grid.Column="1"
+                     BindingContext="{x:Reference CodeBehind}"
+                     BackgroundColor="{Binding BackgroundColor}"
+                     Source="{Binding Source}"
+                     IsVisible="{Binding Source={x:Reference Button}, Path=IsVisible, Converter={Converters:InvertedBoolConverter}}"
+                     Opacity="0"
+                     BorderColor="White"
+                     HeightRequest="60"
+                     WidthRequest="60"
+                     CornerRadius="30"
+                     BorderWidth="3"
+                     Aspect="AspectFit"
+                     Clicked="MenuButton_OnClicked" />
+
 
         <Frame x:Name="BadgeFrame"
                x:FieldModifier="internal"

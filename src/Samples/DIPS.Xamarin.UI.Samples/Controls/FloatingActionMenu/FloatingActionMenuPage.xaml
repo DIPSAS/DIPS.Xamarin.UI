@@ -36,7 +36,7 @@
                          BackgroundColor="WhiteSmoke">
         <dxui:ModalityLayout.Behaviors>
             <dxui:FloatingActionMenuBehaviour Size="60"
-                                              ExpandButtonBackgroundColor="CadetBlue"
+                                              ExpandButtonBackgroundColor="LightSeaGreen"
                                               ExpandButtonText="Open"
                                               ExpandButtonFontSize="12"
                                               ExpandButtonTextColor="Azure"
@@ -61,6 +61,7 @@
                                  Text="B"
                                  TextColor="White"
                                  Title="First page"
+                                 Source="https://www.pngitem.com/pimgs/m/549-5493065_xamarin-logo-png-transparent-xamarin-forms-logo-png.png"
                                  Command="{Binding SetTextCommand}"
                                  CommandParameter="Second tapped!" />
                 <dxui:MenuButton BackgroundColor="LightSeaGreen"
@@ -70,6 +71,7 @@
                                  BadgeColor="{Binding BadgeColor}"
                                  BadgeCount="{Binding BadgeCounter}"
                                  IsVisible="{Binding IsMenuButtonVisible}"
+                                 Source="https://www.pngitem.com/pimgs/m/549-5493065_xamarin-logo-png-transparent-xamarin-forms-logo-png.png"
                                  Title="Second page"
                                  Command="{Binding SetTextCommand}"
                                  IsEnabled="False"
@@ -138,14 +140,26 @@
 
 
             <Label x:Name="TextLabel"
-                   Text="{Binding Text}"
                    FontSize="20"
-                   Margin="10" />
+                   Margin="10">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="TapCommand: " />
+                        <Span Text="{Binding Text}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
 
             <Label x:Name="EventLabel"
-                   Text="{Binding CurrentEvent}"
                    FontSize="20"
-                   Margin="10" />
+                   Margin="10">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="AnimationEvent: " />
+                        <Span Text="{Binding CurrentEvent}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
         </StackLayout>
     </dxui:ModalityLayout>
 </ContentPage>
