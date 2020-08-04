@@ -38,7 +38,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             if (page is ContentPage contentPage)
             {
                 CancellationSource.Cancel();
-                _ = CloseToast(contentPage);
+                _ = HideToast(contentPage);
             }
         }
 
@@ -103,9 +103,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             }
 
             // hide toast
-            if (ToastOptions.HideToastIn > 0)
+            if (ToastOptions.Duration > 0)
             {
-                await CloseToastIn(ToastOptions.HideToastIn);
+                await HideToastIn(ToastOptions.Duration);
             }
         }
 
@@ -113,7 +113,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     Closes the displaying Toast control
         /// </summary>
         /// <returns>A void <c>Task</c></returns>
-        public async Task CloseToast()
+        public async Task HideToast()
         {
             // get current page
             var currentPage = GetCurrentContentPage();
@@ -122,10 +122,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 return;
             }
 
-            await CloseToast(currentPage);
+            await HideToast(currentPage);
         }
 
-        private async Task CloseToast(ContentPage currentPage)
+        private async Task HideToast(ContentPage currentPage)
         {
             CancellationSource.Cancel();
 
@@ -248,14 +248,14 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             return toast;
         }
 
-        private async Task CloseToastIn(int timeInMilliseconds)
+        private async Task HideToastIn(int timeInMilliseconds)
         {
             CancellationSource.Cancel();
             CancellationSource = new CancellationTokenSource();
 
             await Task.Delay(timeInMilliseconds, CancellationSource.Token);
 
-            await CloseToast();
+            await HideToast();
         }
 
         private void RegisterName(string name, Grid container)

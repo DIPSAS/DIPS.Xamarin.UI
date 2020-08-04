@@ -11,14 +11,17 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     public class ToastOptions
     {
         /// <summary>
-        ///     Performs action on tapping the toast
-        ///     <remarks>Will Override closing the toast on tapping. Default action is to close the Toast</remarks>
+        ///     Action to be invoked when the user taps the Toast
+        ///     <remarks>Will Override closing the Toast on tapping. Default action is to close the Toast</remarks>
         /// </summary>
-        public Action ToastAction { get; set; } = async () => await Toast.Current.CloseToast();
+        public Action ToastAction { get; set; } = async () => await Toast.Current.HideToast();
 
         /// <summary>
-        ///     Animation on displaying the Toast
-        ///     <remarks>Default animation is Fading-In in 250 ms</remarks>
+        ///     Func to be invoked when the Toast is displayed
+        ///     <remarks>
+        ///         Use this if you need to animate the toast after it is added to the Page. Default animation is Fading-In in
+        ///         250 ms
+        ///     </remarks>
         /// </summary>
         public Func<ToastView, Task> DisplayAnimation { get; set; } = toast =>
         {
@@ -27,8 +30,11 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         };
 
         /// <summary>
-        ///     Animation on closing the Toast
-        ///     <remarks>Default animation is Fading-Out in 250 ms</remarks>
+        ///     Func to be invoked when the Toast is hiding.
+        ///     <remarks>
+        ///         Use this if you need to animate the toast before it is removed from the page. Default animation is
+        ///         Fading-Out in 250 ms
+        ///     </remarks>
         /// </summary>
         public Func<ToastView, Task> CloseAnimation { get; set; } = toast => toast.FadeTo(0, 500, Easing.Linear);
 
@@ -36,6 +42,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     Hide the toast automatically after the given milliseconds
         ///     <remarks>If value is 0, toast won't be hidden automatically. Default value is 3000 ms</remarks>
         /// </summary>
-        public int HideToastIn { get; set; } = 3000;
+        public int Duration { get; set; } = 3000;
     }
 }
