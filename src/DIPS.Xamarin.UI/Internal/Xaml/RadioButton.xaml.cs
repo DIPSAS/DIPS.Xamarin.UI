@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using DIPS.Xamarin.UI.Controls.RadioButtonGroup;
 using DIPS.Xamarin.UI.Controls.RadioButtonGroup.Abstractions;
 using Xamarin.Forms;
@@ -15,6 +16,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
     ///     Please use <see cref="RadioButtonGroup" /> instead of creating a group and handling multiples yourself.
     /// </remarks>
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class RadioButton : ContentView
     {
         private IHandleRadioButtons? m_radioButtonsHandler;

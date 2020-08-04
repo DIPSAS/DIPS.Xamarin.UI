@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.FloatingActionMenu;
@@ -13,6 +14,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [ContentProperty(nameof(Children))]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class FloatingActionMenu : ContentView, IModalityHandler
     {
         /// <summary>
