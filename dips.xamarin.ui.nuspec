@@ -9,9 +9,9 @@
         <projectUrl>https://github.com/DIPSAS/DIPS.Xamarin.UI</projectUrl>
         <iconUrl>https://raw.githubusercontent.com/DIPSAS/DIPS.Xamarin.UI/master/assets/DIPS_Xamarin_UI_128x128.png</iconUrl>
         <tags>xamarin forms xamarinforms xamarin.forms xamarinui xaml mvvm mvvm-ios mvvm-android dips design ui uikit ui-components loosely-coupled-design loosely-coupled mobile dotnet e-health</tags>
-        <license type="file">LICENSE.txt</license>
+        <license type="file">LICENSE</license>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
-        <copyright>© DIPS AS. All rights reserved.</copyright>
+        <copyright>2020 © DIPS AS. All rights reserved.</copyright>
         <description>A shared UI library that DIPS use and maintain for their mobile applications. The library contains different components that can be used by any Xamarin.Forms app. The visual parts of the library is created in collaboration with our internal UX team.</description>
         <dependencies>
             <group targetFramework="netstandard2.0">
@@ -30,7 +30,7 @@
     </metadata>
     <files>
         <!-- License-->
-        <file src="LICENSE.txt" target="" />
+        <file src="LICENSE" target="" />
         
         <!-- Cross-platform reference assemblies -->
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.dll" target="lib\netstandard2.0\DIPS.Xamarin.UI.dll" />
