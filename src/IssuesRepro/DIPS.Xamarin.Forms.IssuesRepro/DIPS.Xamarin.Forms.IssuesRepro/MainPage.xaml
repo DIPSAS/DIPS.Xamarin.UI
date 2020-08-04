@@ -49,6 +49,9 @@
         <Button Text="Github issue 203"
                 Command="{Binding NavigationCommand}"
                 CommandParameter="203" />
+        <Button Command="{Binding NavigationCommand}"
+                CommandParameter="179"
+                Text="Github issue 179" />
     </StackLayout>
 
 </ContentPage>
