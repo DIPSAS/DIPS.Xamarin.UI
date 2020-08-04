@@ -11,6 +11,7 @@ using TimeConverterFormat = DIPS.Xamarin.UI.Converters.ValueConverters.TimeConve
 
 namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
 {
+    [Collection("Sequential")] //This test class is using an static shared property that is used in other tests
     public class TimeConverterTests
     {
         private readonly TimeConverter m_timeConverter = new TimeConverter();
