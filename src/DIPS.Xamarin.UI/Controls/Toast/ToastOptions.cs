@@ -8,13 +8,13 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     /// <summary>
     ///     Options to setup in the Toast control
     /// </summary>
-    public class ToastOptions : BindableObject
+    public class ToastOptions
     {
         /// <summary>
         ///     Performs action on tapping the toast
         ///     <remarks>Will Override closing the toast on tapping. Default action is to close the Toast</remarks>
         /// </summary>
-        public Action ToastAction { get; set; } = async () => await Toast.Current.CloseToastAsync();
+        public Action ToastAction { get; set; } = async () => await Toast.Current.CloseToast();
 
         /// <summary>
         ///     Animation on displaying the Toast

@@ -5,7 +5,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     /// <summary>
     ///     Set layout options for the Toast control
     /// </summary>
-    public class ToastLayout : BindableObject
+    public class ToastLayout
     {
         /// <summary>
         ///     Gets or sets the color which will fill the background of the Toast
@@ -38,7 +38,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         /// <summary>
         ///     Gets or sets a flag indicating if the Toast has a shadow displayed
-        /// <remarks>Default is false</remarks>
+        ///     <remarks>Default is false</remarks>
         /// </summary>
         public bool HasShadow { get; set; }
 
