@@ -58,6 +58,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro
                     issues.Add(new IssueViewModel(issue.Id, () =>
                     {
                         var page = Activator.CreateInstance(type) as Page;
+                        page.Title = issue.Id.ToString();
                         Application.Current.MainPage.Navigation.PushAsync(page);
                     }));
                 }
