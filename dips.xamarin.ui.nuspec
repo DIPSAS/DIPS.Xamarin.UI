@@ -30,7 +30,7 @@
     </metadata>
     <files>
         <!-- License-->
-        <file src="LICENSE" target="" />
+        <file src="LICENSE" target="LICENSE " />
         
         <!-- Cross-platform reference assemblies -->
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.dll" target="lib\netstandard2.0\DIPS.Xamarin.UI.dll" />
