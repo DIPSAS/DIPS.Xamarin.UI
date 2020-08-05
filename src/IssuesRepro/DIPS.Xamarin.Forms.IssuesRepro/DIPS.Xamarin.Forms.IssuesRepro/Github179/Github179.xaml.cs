@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
 {
+    [Issue(179)]
     public partial class Github179 : ContentPage
     {
         private DateTime m_date = DateTime.Now;

@@ -1,43 +1,82 @@
-﻿<?xml version="1.0"
-      encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="DIPS.Xamarin.Forms.IssuesRepro.MainPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:IssuesRepro="clr-namespace:DIPS.Xamarin.Forms.IssuesRepro;assembly=DIPS.Xamarin.Forms.IssuesRepro"
-             mc:Ignorable="d"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:dxui="http://dips.xamarin.ui.com"
-             x:Class="DIPS.Xamarin.Forms.IssuesRepro.MainPage"
-             x:Name="codeBehind">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="codeBehind"
+
+             Title="Issues"
+             mc:Ignorable="d">
     <ContentPage.BindingContext>
         <IssuesRepro:MainViewModel />
     </ContentPage.BindingContext>
-    <CollectionView ItemsSource="{Binding Issues}" x:Name="list"
-                    SelectionMode="None">
-        <CollectionView.ItemTemplate>
-            <DataTemplate >
-                <StackLayout Margin="5,2,0,2">
-                    <Button HorizontalOptions="Center"
-                            BackgroundColor="Transparent"
-                            BorderColor="Transparent"
-                            TextColor="Black"
-                            Padding="10"
-                            Margin="0"
-                            Command="{Binding OnTapCommand}"
-                            Text="{Binding PresentedValue}"/>
-                    <BoxView HeightRequest="2"
-                             BackgroundColor="DarkGray"
-                             Margin="25, 0,0,0">
-                        <BoxView.IsVisible>
-                            <MultiBinding Converter="{dxui:PositionInListConverter Inverted=True}">
-                                <Binding Path="."/>
-                                <Binding Source="{x:Reference Name=list}"
-                                         Path="BindingContext.Issues"/>
-                            </MultiBinding>
-                        </BoxView.IsVisible>
-                    </BoxView>
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid RowDefinitions="Auto, *">
+        <SearchBar Text="{Binding SearchText}"
+                   Placeholder="Search issues"/>
+        <CollectionView x:Name="list"
+                        Grid.Row="1"
+                        ItemsSource="{Binding Issues}"
+                        SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Margin="5,2,0,2" HeightRequest="60">
+                        <Grid ColumnDefinitions="Auto, *">
+                            <BoxView Margin="5"
+                                     BackgroundColor="{Binding IsBug, Converter={dxui:BoolToObjectConverter TrueObject='#FF9658', FalseObject='#97C2A9'}}"
+                                     CornerRadius="8"
+                                     HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="FillAndExpand"
+                                     WidthRequest="70" />
+                            <Label Margin="5"
+                                   Padding="5"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   InputTransparent="True"
+                                   Text="{Binding Value, StringFormat='#{0}'}"
+                                   TextColor="White"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   FontSize="13"
+                                   HorizontalOptions="Center"
+                                   InputTransparent="True"
+                                   LineBreakMode="CharacterWrap"
+                                   MaxLines="3"
+                                   Margin="5"
+                                   Text="{Binding PresentedValue}"
+                                   VerticalOptions="Center" />
+
+                            <Button Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0"
+                                    Padding="10"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
+                                    Command="{Binding OnTapCommand}"
+                                    HorizontalOptions="FillAndExpand"
+                                    TextColor="Black"
+                                    VerticalOptions="FillAndExpand" />
+
+                        </Grid>
+
+                        <BoxView Margin="5,0,0,0"
+                                 BackgroundColor="DarkGray"
+                                 HeightRequest="2">
+                            <BoxView.IsVisible>
+                                <MultiBinding Converter="{dxui:PositionInListConverter Inverted=True}">
+                                    <Binding Path="." />
+                                    <Binding Path="BindingContext.Issues"
+                                             Source="{x:Reference Name=list}" />
+                                </MultiBinding>
+                            </BoxView.IsVisible>
+                        </BoxView>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
 </ContentPage>

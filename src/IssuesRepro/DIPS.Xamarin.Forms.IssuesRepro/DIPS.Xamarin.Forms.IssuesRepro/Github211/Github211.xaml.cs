@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.Forms.IssuesRepro.Github211
 {
+    [Issue(211)]
     public partial class Github211 : ContentPage
     {
         public Github211()
