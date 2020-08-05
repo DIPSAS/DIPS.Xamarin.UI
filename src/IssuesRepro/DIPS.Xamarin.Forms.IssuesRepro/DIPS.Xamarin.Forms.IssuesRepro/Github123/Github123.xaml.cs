@@ -11,6 +11,7 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.Forms.IssuesRepro.Github123
 {
+    [Issue(123)]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Github123 : ContentPage
     {

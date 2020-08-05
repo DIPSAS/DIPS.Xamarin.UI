@@ -9,6 +9,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro
     {
         public App()
         {
+            DIPS.Xamarin.UI.Library.PreviewFeatures.EnableFeature("SkeletonView");
             Library.Initialize();
             InitializeComponent();
 

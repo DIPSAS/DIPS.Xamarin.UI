@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.Forms.IssuesRepro.Github86
 {
+    [Issue(86)]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Github86 : ContentPage
     {
