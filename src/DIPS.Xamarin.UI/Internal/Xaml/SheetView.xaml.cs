@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using DIPS.Xamarin.UI.Controls.Sheet;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,6 +11,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
     /// </summary>
     /// <remarks>This is a internal Xaml control that should only be used in a <see cref="SheetBehavior" /></remarks>
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SheetView : ContentView
     {
         private readonly SheetBehavior m_sheetBehaviour;
