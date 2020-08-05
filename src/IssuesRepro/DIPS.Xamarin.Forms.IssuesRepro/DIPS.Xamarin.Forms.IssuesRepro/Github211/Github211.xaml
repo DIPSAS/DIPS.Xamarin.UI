@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github211.Github211"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxui="http://dips.xamarin.ui.com">
+    <dxui:SkeletonView Margin="0"
+                       Padding="0,0,5,0"
+                       FadeTime="200"
+                       IsLoading="{Binding IsLoading}"
+                       x:Name="skeleton"
+                       SkeletonColor="#33000000">
+        <dxui:SkeletonView.Shapes>
+            <dxui:SkeletonShape Width="100"
+                                Height="30"
+                                HorizontalAlignment="Start"
+                                VerticalAlignment="End"
+                                CornerRadius="10" />
+        </dxui:SkeletonView.Shapes>
+    </dxui:SkeletonView>
+</ContentPage>

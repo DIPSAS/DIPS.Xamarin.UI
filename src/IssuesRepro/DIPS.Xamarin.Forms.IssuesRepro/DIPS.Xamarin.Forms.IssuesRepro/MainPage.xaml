@@ -6,52 +6,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:IssuesRepro="clr-namespace:DIPS.Xamarin.Forms.IssuesRepro;assembly=DIPS.Xamarin.Forms.IssuesRepro"
              mc:Ignorable="d"
+             xmlns:dxui="http://dips.xamarin.ui.com"
              x:Class="DIPS.Xamarin.Forms.IssuesRepro.MainPage"
              x:Name="codeBehind">
     <ContentPage.BindingContext>
         <IssuesRepro:MainViewModel />
     </ContentPage.BindingContext>
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Button Text="Github issue 64"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="64" />
-        <Button Text="Github issue 86"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="86" /> 
-        <Button Text="Github issue 112"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="112" />
-        <Button Text="Github issue 123"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="123" />
-        <Button Text="Github issue 137"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="137" />
-        <Button Text="Github issue 142"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="142" />  
-        <Button Text="Github issue 150"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="150" /> 
-        <Button Text="Github issue 159"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="159" />
-        <Button Text="Github issue 159"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="159" />
-        <Button Text="Github issue 185"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="185" /> 
-        <Button Text="Github issue 120"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="120" />
-        <Button Text="Github issue 203"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="203" />
-        <Button Command="{Binding NavigationCommand}"
-                CommandParameter="179"
-                Text="Github issue 179" />
-    </StackLayout>
-
+    <CollectionView ItemsSource="{Binding Issues}" x:Name="list"
+                    SelectionMode="None">
+        <CollectionView.ItemTemplate>
+            <DataTemplate >
+                <StackLayout Margin="5,2,0,2">
+                    <Button HorizontalOptions="Center"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            TextColor="Black"
+                            Padding="10"
+                            Margin="0"
+                            Command="{Binding OnTapCommand}"
+                            Text="{Binding PresentedValue}"/>
+                    <BoxView HeightRequest="2"
+                             BackgroundColor="DarkGray"
+                             Margin="25, 0,0,0">
+                        <BoxView.IsVisible>
+                            <MultiBinding Converter="{dxui:PositionInListConverter Inverted=True}">
+                                <Binding Path="."/>
+                                <Binding Source="{x:Reference Name=list}"
+                                         Path="BindingContext.Issues"/>
+                            </MultiBinding>
+                        </BoxView.IsVisible>
+                    </BoxView>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentPage>

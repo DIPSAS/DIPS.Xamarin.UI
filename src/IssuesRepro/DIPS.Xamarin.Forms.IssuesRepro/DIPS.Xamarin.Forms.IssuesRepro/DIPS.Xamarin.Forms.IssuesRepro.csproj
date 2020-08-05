@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1239" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,5 +63,6 @@
   <ItemGroup>
     <Folder Include="Github179\" />
     <Folder Include="Github203\" />
+    <Folder Include="Github211\" />
   </ItemGroup>
 </Project>
