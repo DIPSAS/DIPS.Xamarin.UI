@@ -34,13 +34,15 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
             BindingContextChanged += SkeletonView_BindingContextChanged;
         }
 
-        private void SkeletonView_BindingContextChanged(object sender, EventArgs e)
+        private void OnChanged()
         {
             if (MainContent == null)
                 return;
             MainContent.BindingContext = this.BindingContext;
             OnLoadingChanged();
         }
+
+        private void SkeletonView_BindingContextChanged(object sender, EventArgs e) => OnChanged();
 
         private async void OnLoadingChanged()
         {
@@ -174,7 +176,7 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
             set
             {
                 m_mainContent = value;
-                OnLoadingChanged();
+                OnChanged();
             }
         }
 
