@@ -48,9 +48,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         }
 
         /// <summary>
-        ///     Initialize Toast control.
+        ///     Set Toast container in Page Content on Page load
         /// </summary>
-        public void Initialize()
+        internal void Initialize()
         {
             _ = GetToastContainerSettingUpIfNeededAsync();
         }

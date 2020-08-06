@@ -46,7 +46,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
                 new object[] { "en", new DateTime(1991, 12, 12,10,12,12), "12th Dec 1991 10:12 AM" },
             };
 
-        [Theory(Skip="Issue with region")]
+        [Theory]
         [MemberData(nameof(TestDataForShortFormat))]
         public void Convert_WithShortFormat_WithCulture_CorrectFormat(string cultureName, DateTime date, string expected)
         {
@@ -70,7 +70,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
                 new object[] { "no", new DateTime(1990, 12, 10, 09, 09, 00), "10. des kl 09:09" }
             };
 
-        [Theory(Skip="Issue with region")]
+        [Theory]
         [MemberData(nameof(TestDataForTextFormat))]
         public void Convert_WithTextFormat_WithDate_WithCulture_CorrectFormat(string cultureName, DateTime date, string expected)
         {
