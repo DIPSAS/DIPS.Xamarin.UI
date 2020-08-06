@@ -14,7 +14,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         ///     Action to be invoked when the user taps the Toast
         ///     <remarks>Will Override closing the Toast on tapping. Default action is to close the Toast</remarks>
         /// </summary>
-        public Action ToastAction { get; set; } = async () => await Toast.Current.HideToast();
+        public Action ToastAction { get; set; } = async () => await Toast.HideToast();
 
         /// <summary>
         ///     Func to be invoked when the Toast is displayed

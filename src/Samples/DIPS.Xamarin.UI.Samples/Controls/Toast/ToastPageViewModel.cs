@@ -40,7 +40,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
         {
             ToastAction = async () =>
             {
-                await ToastControl.Current.HideToast();
+                await ToastControl.HideToast();
             },
             Duration = 0
         };
@@ -73,15 +73,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             };
 
             MoonCommand =
-                new AsyncCommand<string>(title =>
-                    ToastControl.Current.DisplayToast(title, moonOptions, m_moonLayout));
+                new AsyncCommand<string>(title => ToastControl.DisplayToast(title, moonOptions, m_moonLayout));
             VenusCommand =
-                new AsyncCommand<string>(title =>
-                    ToastControl.Current.DisplayToast(title, VenusOptions(), VenusLayout()));
-            MarsCommand = new AsyncCommand<string>(title => ToastControl.Current.DisplayToast(title));
+                new AsyncCommand<string>(title => ToastControl.DisplayToast(title, VenusOptions(), VenusLayout()));
+            MarsCommand = new AsyncCommand<string>(title => ToastControl.DisplayToast(title));
             PlutoCommand =
-                new AsyncCommand<string>(title =>
-                    ToastControl.Current.DisplayToast(title, m_plutoOptions, m_plutoLayout));
+                new AsyncCommand<string>(title => ToastControl.DisplayToast(title, m_plutoOptions, m_plutoLayout));
         }
 
         public string PageTitle
