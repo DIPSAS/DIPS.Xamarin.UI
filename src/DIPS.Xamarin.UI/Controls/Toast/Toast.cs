@@ -97,9 +97,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             toastContainer.Children.Add(toastView);
 
             // animate toast
-            if (ToastOptions.DisplayAnimation != null)
+            if (ToastOptions.OnBeforeDisplayingToast != null)
             {
-                await ToastOptions.DisplayAnimation(toastView);
+                await ToastOptions.OnBeforeDisplayingToast(toastView);
             }
 
             // hide toast
@@ -138,9 +138,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             }
 
             // animate toast
-            if (ToastOptions.CloseAnimation != null)
+            if (ToastOptions.OnBeforeHidingToast != null)
             {
-                await ToastOptions.CloseAnimation((ToastView)toastView);
+                await ToastOptions.OnBeforeHidingToast((ToastView)toastView);
             }
 
             // remove toast

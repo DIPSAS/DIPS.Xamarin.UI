@@ -63,12 +63,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
                     await Task.Delay(1500);
                     PageTitle = "Hello, World!";
                 },
-                DisplayAnimation = toastView =>
+                OnBeforeDisplayingToast = toastView =>
                 {
                     toastView.Opacity = 0;
                     return toastView.FadeTo(1, 500, Easing.Linear);
                 },
-                CloseAnimation = toastView => toastView.FadeTo(0, 500, Easing.Linear),
+                OnBeforeHidingToast = toastView => toastView.FadeTo(0, 500, Easing.Linear),
                 Duration = 10000
             };
 
@@ -137,12 +137,12 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
             return options =>
             {
                 options.ToastAction = null;
-                options.DisplayAnimation = toastView =>
+                options.OnBeforeDisplayingToast = toastView =>
                 {
                     toastView.TranslationY -= 50;
                     return toastView.TranslateTo(0, toastView.TranslationY + 50, 500, Easing.Linear);
                 };
-                options.CloseAnimation = toastView =>
+                options.OnBeforeHidingToast = toastView =>
                     toastView.TranslateTo(0, -(toastView.TranslationY + 50), 500, Easing.Linear);
                 options.Duration = 5000;
             };

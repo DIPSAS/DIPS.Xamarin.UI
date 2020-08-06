@@ -19,11 +19,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// <summary>
         ///     Func to be invoked when the Toast is displayed
         ///     <remarks>
-        ///         Use this if you need to animate the toast after it is added to the Page. Default animation is Fading-In in
-        ///         250 ms
+        ///         Use this function to override the displaying animation of the Toast. Default animation is Fading-In in 250 ms
         ///     </remarks>
         /// </summary>
-        public Func<ToastView, Task> DisplayAnimation { get; set; } = toast =>
+        public Func<ToastView, Task> OnBeforeDisplayingToast { get; set; } = toast =>
         {
             toast.Opacity = 0;
             return toast.FadeTo(1, 500, Easing.Linear);
@@ -32,11 +31,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// <summary>
         ///     Func to be invoked when the Toast is hiding.
         ///     <remarks>
-        ///         Use this if you need to animate the toast before it is removed from the page. Default animation is
-        ///         Fading-Out in 250 ms
+        ///         Use this function to override the hiding animation of the Toast. Default animation is Fading-Out in 250 ms
         ///     </remarks>
         /// </summary>
-        public Func<ToastView, Task> CloseAnimation { get; set; } = toast => toast.FadeTo(0, 500, Easing.Linear);
+        public Func<ToastView, Task> OnBeforeHidingToast { get; set; } = toast => toast.FadeTo(0, 500, Easing.Linear);
 
         /// <summary>
         ///     Hide the toast automatically after the given milliseconds
