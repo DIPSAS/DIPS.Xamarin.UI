@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DIPS.Xamarin.UI.Util;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
@@ -63,6 +64,18 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         {
             base.OnSizeAllocated(width, height);
             OnScrolledInternal(true);
+        }
+
+        private static int s_scrollToId = -42;
+
+        /// <summary>
+        /// Scrolls to the index
+        /// </summary>
+        /// <param name="index">Index to scroll to</param>
+        /// <param name="length">Time used on the scrolling</param>
+        public void ScrollTo(int index, int length = 250)
+        {
+            SlidableProperties.ScrollTo(s => SlideProperties = s, () => SlideProperties, index, length);
         }
 
         private void OnTapped(object sender, EventArgs e)

@@ -11,6 +11,11 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
     public partial class MenuButton : ContentView
     {
         /// <summary>
+        /// <see cref="Source"/>
+        /// </summary>
+        public static readonly BindableProperty SourceProperty = BindableProperty.Create(nameof(Source), typeof(string), typeof(MenuButton), string.Empty);
+
+        /// <summary>
         ///     <see cref="Title" />
         /// </summary>
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(
@@ -153,6 +158,15 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         public MenuButton()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Source of image to display in button.
+        /// </summary>
+        public string Source
+        {
+            get => (string)GetValue(SourceProperty);
+            set => SetValue(SourceProperty, value);
         }
 
         /// <summary>

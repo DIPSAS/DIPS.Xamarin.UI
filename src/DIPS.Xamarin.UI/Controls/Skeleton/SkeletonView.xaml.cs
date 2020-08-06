@@ -14,10 +14,12 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SkeletonView : ContentView
     {
-        private const string m_animationName = "SkeletonBounce";
+        private const string AnimationName = "SkeletonBounce";
         private Grid m_skeletongrid;
         private Grid? m_skeletonLayout;
         private List<BoxView> m_skeletons = new List<BoxView>();
+        private View? m_mainContent;
+
         /// <summary>
         /// Creates a new instance of skeleton view
         /// </summary>
@@ -32,18 +34,21 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
             BindingContextChanged += SkeletonView_BindingContextChanged;
         }
 
-        private void SkeletonView_BindingContextChanged(object sender, EventArgs e)
+        private void OnChanged()
         {
             if (MainContent == null)
-                throw new ArgumentException("No content of SkeletonView");
+                return;
             MainContent.BindingContext = this.BindingContext;
             OnLoadingChanged();
         }
 
+        private void SkeletonView_BindingContextChanged(object sender, EventArgs e) => OnChanged();
+
         private async void OnLoadingChanged()
         {
             if (MainContent == null)
-                throw new ArgumentException("No content of SkeletonView");
+                return;
+
             if (!m_skeletongrid.Children.Contains(MainContent))
             {
                 m_skeletongrid.Children.Add(MainContent);
@@ -147,10 +152,10 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
                 {0.0, 0.5, new Animation(a => { foreach(var box in m_skeletons) box.Scale = a; }, 0.99, 1.01, Easing.BounceOut) },
                 {0.5, 1.0, new Animation(a => { foreach(var box in m_skeletons) box.Scale = a; }, 1.01, 0.99, Easing.BounceOut) },
             };
-            animation.Commit(this, m_animationName, 16, 1000, Easing.BounceOut, (a, c) => { }, () => IsLoading);
+            animation.Commit(this, AnimationName, 16, 1000, Easing.BounceOut, (a, c) => { }, () => IsLoading);
         }
 
-        private void StopAnimation() => this.AbortAnimation(m_animationName);
+        private void StopAnimation() => this.AbortAnimation(AnimationName);
 
         /// <summary>
         /// Time used to fade inn and out content
@@ -165,7 +170,15 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
         /// <summary>
         /// Content shown when loading is done
         /// </summary>
-        public View? MainContent { get; set; }
+        public View? MainContent
+        {
+            get => m_mainContent;
+            set
+            {
+                m_mainContent = value;
+                OnChanged();
+            }
+        }
 
         /// <summary>
         /// Shapes used when content is loading

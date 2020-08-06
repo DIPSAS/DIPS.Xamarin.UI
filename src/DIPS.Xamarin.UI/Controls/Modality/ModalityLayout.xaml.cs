@@ -176,7 +176,7 @@ namespace DIPS.Xamarin.UI.Controls.Modality
 
         /// <summary>
         ///     Shows an overlay beneath the <paramref name="view"/>
-        /// /// </summary>
+        /// </summary>
         /// <param name="modalityHandler">The handler of a modality</param>
         /// <param name="view">The view that's over he overlay</param>
         public void Show(IModalityHandler modalityHandler, View view)

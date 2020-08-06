@@ -1,54 +1,82 @@
-﻿<?xml version="1.0"
-      encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="DIPS.Xamarin.Forms.IssuesRepro.MainPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:IssuesRepro="clr-namespace:DIPS.Xamarin.Forms.IssuesRepro;assembly=DIPS.Xamarin.Forms.IssuesRepro"
-             mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.Forms.IssuesRepro.MainPage"
-             x:Name="codeBehind">
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="codeBehind"
+
+             Title="Issues"
+             mc:Ignorable="d">
     <ContentPage.BindingContext>
         <IssuesRepro:MainViewModel />
     </ContentPage.BindingContext>
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Button Text="Github issue 64"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="64" />
-        <Button Text="Github issue 86"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="86" /> 
-        <Button Text="Github issue 112"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="112" />
-        <Button Text="Github issue 123"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="123" />
-        <Button Text="Github issue 137"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="137" />
-        <Button Text="Github issue 142"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="142" />  
-        <Button Text="Github issue 150"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="150" /> 
-        <Button Text="Github issue 159"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="159" />
-        <Button Text="Github issue 159"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="159" />
-        <Button Text="Github issue 185"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="185" /> 
-        <Button Text="Github issue 120"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="120" />
-        <Button Text="Github issue 203"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="203" />
-    </StackLayout>
+    <Grid RowDefinitions="Auto, *">
+        <SearchBar Text="{Binding SearchText}"
+                   Placeholder="Search issues"/>
+        <CollectionView x:Name="list"
+                        Grid.Row="1"
+                        ItemsSource="{Binding Issues}"
+                        SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Margin="5,2,0,2" HeightRequest="60">
+                        <Grid ColumnDefinitions="Auto, *">
+                            <BoxView Margin="5"
+                                     BackgroundColor="{Binding IsBug, Converter={dxui:BoolToObjectConverter TrueObject='#FF9658', FalseObject='#97C2A9'}}"
+                                     CornerRadius="8"
+                                     HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="FillAndExpand"
+                                     WidthRequest="70" />
+                            <Label Margin="5"
+                                   Padding="5"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   InputTransparent="True"
+                                   Text="{Binding Value, StringFormat='#{0}'}"
+                                   TextColor="White"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   FontSize="13"
+                                   HorizontalOptions="Center"
+                                   InputTransparent="True"
+                                   LineBreakMode="CharacterWrap"
+                                   MaxLines="3"
+                                   Margin="5"
+                                   Text="{Binding PresentedValue}"
+                                   VerticalOptions="Center" />
+
+                            <Button Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0"
+                                    Padding="10"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
+                                    Command="{Binding OnTapCommand}"
+                                    HorizontalOptions="FillAndExpand"
+                                    TextColor="Black"
+                                    VerticalOptions="FillAndExpand" />
+
+                        </Grid>
+
+                        <BoxView Margin="5,0,0,0"
+                                 BackgroundColor="DarkGray"
+                                 HeightRequest="2">
+                            <BoxView.IsVisible>
+                                <MultiBinding Converter="{dxui:PositionInListConverter Inverted=True}">
+                                    <Binding Path="." />
+                                    <Binding Path="BindingContext.Issues"
+                                             Source="{x:Reference Name=list}" />
+                                </MultiBinding>
+                            </BoxView.IsVisible>
+                        </BoxView>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 
 </ContentPage>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.FloatingActionMenu;
@@ -13,6 +14,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [ContentProperty(nameof(Children))]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class FloatingActionMenu : ContentView, IModalityHandler
     {
         /// <summary>
@@ -122,7 +124,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             var position = 0;
             foreach (var menuButton in Children.Where(menuButton => menuButton.IsVisible))
             {
-                MoveMenuButton(menuButton, position, m_isExpanded);
+                TranslateMenuButton(menuButton, position, m_isExpanded);
                 position++;
             }
 
@@ -166,14 +168,16 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             }
         }
 
-        private void MoveMenuButton(MenuButton menuButton, int position, bool hide)
+        private void TranslateMenuButton(MenuButton menuButton, int position, bool hide)
         {
             menuButton.TranslateTo(0, hide ? 0 : -m_yTranslate * (position + 1), 250, Easing.CubicInOut);
+            menuButton.BadgeFrame.FadeTo(hide ? .5 : .95, 250, Easing.CubicInOut);
             AnimateFade(menuButton, hide, 250);
         }
 
         private void ToggleMenuButtonVisibility(MenuButton menuButton, int position, bool hide)
         {
+            menuButton.BadgeFrame.FadeTo(hide ? 0 : .95, 150, Easing.CubicInOut);
             if (Library.PreviewFeatures.MenuButtonAnimations)
             {
                 menuButton.TranslateTo(!hide ? 0 : m_behaviour.XPosition <= .5 ? -m_parent.Width : m_parent.Width, -m_yTranslate * (position + 1), 150, Easing.CubicInOut);
@@ -190,8 +194,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             var maxOpacity = menuButton.IsEnabled ? 1 : .5;
             menuButton.Button.FadeTo(hide ? 0 : maxOpacity, animationTime, Easing.CubicInOut);
+            menuButton.imageButton.FadeTo(hide ? 0 : maxOpacity, animationTime, Easing.CubicInOut);
             menuButton.TitleFrame.FadeTo(hide ? 0 : 1, animationTime, Easing.CubicInOut);
-            menuButton.BadgeFrame.FadeTo(hide ? .5 : .95, animationTime, Easing.CubicInOut);
             menuButton.InputTransparent = hide;
         }
 
@@ -213,13 +217,13 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             Children = m_behaviour.Children;
             ExpandButton.BindingContext = m_behaviour;
 
-            AddButtonsToRelative(layout.relativeLayout);
+            AddButtonsToLayout(layout.relativeLayout);
 
             m_parent = layout;
             m_yTranslate = m_behaviour.Size + m_spaceBetween;
         }
 
-        private void AddButtonsToRelative(RelativeLayout parent)
+        private void AddButtonsToLayout(RelativeLayout parent)
         {
             parent.Children.Add(
                 ExpandButton,
@@ -229,10 +233,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             for (var index = Children.Count - 1; index >= 0; index--)
             {
                 var child = Children[index];
-                child.FloatingActionMenuParent = this;
-                child.Button.WidthRequest = m_behaviour.Size;
-                child.Button.HeightRequest = m_behaviour.Size;
-                child.Button.CornerRadius = (int)m_behaviour.Size / 2;
+
+                SetButtonSize(child);
+
                 parent.Children.Add(
                     child,
                     Constraint.RelativeToParent(p => p.Width * m_behaviour.XPosition),
@@ -240,6 +243,19 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             }
 
             AdjustXPositions();
+        }
+
+        private void SetButtonSize(MenuButton child)
+        {
+            child.FloatingActionMenuParent = this;
+
+            child.Button.WidthRequest = m_behaviour.Size;
+            child.Button.HeightRequest = m_behaviour.Size;
+            child.Button.CornerRadius = (int)m_behaviour.Size / 2;
+
+            child.imageButton.WidthRequest = m_behaviour.Size;
+            child.imageButton.HeightRequest = m_behaviour.Size;
+            child.imageButton.CornerRadius = (int)m_behaviour.Size / 2;
         }
 
         private void AdjustXPositions()

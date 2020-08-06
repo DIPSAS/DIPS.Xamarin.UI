@@ -1,42 +1,108 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.Forms.IssuesRepro
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
+        private List<IssueViewModel> m_allIssues;
+        private string m_searchText;
+        private List<IssueViewModel> m_issues;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public MainViewModel()
         {
-            NavigationCommand = new Command<string>(Navigate);
+            Issues = GetIssues();
+            m_allIssues = Issues.ToList();
         }
 
-        public ICommand NavigationCommand { get; }
-
-        private void Navigate(string obj)
+        public string SearchText
         {
-            if (obj.Equals("64"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github64.Github64());
-            if (obj.Equals("86"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github86.Github86());
-            if (obj.Equals("112"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github112.Github112());
-            if (obj.Equals("123"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github123.Github123());
-            if (obj.Equals("137"))
-                Application.Current.MainPage.Navigation.PushAsync(new NewIssue.Github137());
-            if (obj.Equals("142"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github142.Github142());
-            if (obj.Equals("150"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github150.Github150());
-            if (obj.Equals("159"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github159.Github159());
-            if (obj.Equals("185"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github185.Github185Page());
-            if (obj.Equals("120"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github120.Github120Page());
-            if (obj.Equals("203"))
-                Application.Current.MainPage.Navigation.PushAsync(new Github203.Github203());
-            ;
+            get => m_searchText;
+            set
+            {
+                PropertyChanged.RaiseWhenSet(ref m_searchText, value);
+                OnSearch(value);
+            }
+        }
+
+
+        private async void OnSearch(string text)
+        {
+            await Task.Delay(300);
+            if (text != SearchText)
+            {
+                return;
+            }
+
+            Issues = m_allIssues.Where(a => a.Value.ToString().Contains(text.ToLower()) || a.PresentedValue.ToLower().Contains(text.ToLower())).ToList();
+        }
+
+        private List<IssueViewModel> GetIssues()
+        {
+            var issues = new List<IssueViewModel>();
+            var assembly = Assembly.GetExecutingAssembly();
+            foreach (var type in assembly.GetTypes())
+            {
+                if (type.GetCustomAttributes(typeof(Issue), true).Length > 0)
+                {
+                    var issue = type.GetCustomAttributes(typeof(Issue), true).First() as Issue;
+                    issues.Add(new IssueViewModel(issue.Id, () =>
+                    {
+                        var page = Activator.CreateInstance(type) as Page;
+                        page.Title = issue.Id.ToString();
+                        Application.Current.MainPage.Navigation.PushAsync(page);
+                    }));
+                }
+            }
+
+            return issues.OrderByDescending(i => i.Value).ToList();
+        }
+
+        public List<IssueViewModel> Issues { get => m_issues; private set =>  PropertyChanged.RaiseWhenSet(ref  m_issues, value); }
+
+        public class IssueViewModel : INotifyPropertyChanged
+        {
+            private IssueService m_service = new IssueService();
+            private string m_presentedValue;
+            private bool m_isBug;
+
+            public IssueViewModel(int value, Action onTap)
+            {
+                //Application.Current.MainPage.Navigation.PushAsync(s_issues[value]())
+                PresentedValue = "Github issue " + value;
+                OnTapCommand = new Command(onTap);
+                Value = value;
+                Initialize();
+            }
+
+
+            private async void Initialize()
+            {
+                try
+                {
+                    var model = await m_service.GetIssueAsync(Value);
+                    PresentedValue = model.title;
+                    IsBug = model.title.ToLower().Contains("bug");
+                }
+                catch (Exception e)
+                {
+                }
+            }
+
+            public bool IsBug { get => m_isBug; private set => PropertyChanged.RaiseWhenSet(ref m_isBug, value); }
+            public int Value { get; }
+            public ICommand OnTapCommand { get; }
+            public string PresentedValue { get => m_presentedValue; private set => PropertyChanged.RaiseWhenSet(ref m_presentedValue, value); }
+            public event PropertyChangedEventHandler PropertyChanged;
         }
     }
 }
