@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -31,11 +32,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 await ToastCore.DisplayToast(text, options, layout);
                 throw new Exception("Hello, this is a test!");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-#if DEBUG
-                throw;
-#endif
+                Trace.WriteLine(ex);
             }
         }
 
@@ -52,11 +51,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 await ToastCore.DisplayToast(text, options, layout);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-#if DEBUG
-                throw;
-#endif
+                Trace.WriteLine(ex);
             }
         }
 
@@ -70,11 +67,9 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 await ToastCore.HideToast();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-#if DEBUG
-                throw;
-#endif
+                Trace.WriteLine(ex);
             }
         }
     }
