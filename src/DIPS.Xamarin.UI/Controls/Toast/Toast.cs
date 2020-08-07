@@ -12,7 +12,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         internal static void Initialize()
         {
-            if (ToastCore == null) { } // allocate ToastCore object to ToastCore prop
+            if (ToastCore == null) { } // allocate ToastCore object to ToastCore property
         }
 
         /// <summary>

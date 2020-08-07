@@ -23,29 +23,22 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         private CancellationTokenSource CancellationSource { get; set; } = new CancellationTokenSource();
         private Dictionary<string, Grid> ToastContainers { get; } = new Dictionary<string, Grid>();
 
-        private void OnPageDisappearing(object sender, Page page)
-        {
-            if (page is ContentPage contentPage)
-            {
-                CancellationSource.Cancel();
-                _ = HideToast(contentPage);
-            }
-        }
-
         private void OnPageAppearing(object sender, Page e)
-        {
-            Initialize();
-        }
-
-        /// <summary>
-        ///     Set Toast container in Page Content on Page load
-        /// </summary>
-        private void Initialize()
         {
             _ = GetToastContainerSettingUpIfNeededAsync();
         }
 
-        private async Task HideToast(ContentPage currentPage)
+        private void OnPageDisappearing(object sender, Page page)
+        {
+            if (page is ContentPage contentPage)
+            {
+                var currentPage = GetCurrentContentPage();
+                CancellationSource.Cancel();
+                _ = HideToast(contentPage, currentPage == contentPage);
+            }
+        }
+
+        private async Task HideToast(ContentPage currentPage, bool removeContainer)
         {
             CancellationSource.Cancel();
 
@@ -53,6 +46,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             var toastContainer = FindByName(currentPage.Id.ToString());
             if (!(toastContainer?.Children.FirstOrDefault(w => w.GetType() == typeof(ToastView)) is ToastView toast))
             {
+                // remove container
+                if (removeContainer)
+                {
+                    UnregisterName(currentPage.Id.ToString());
+                }
+
                 return;
             }
 
@@ -64,6 +63,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
             // remove toast
             toastContainer.Children.Remove(toast);
+
+            // remove container
+            if (removeContainer)
+            {
+                UnregisterName(currentPage.Id.ToString());
+            }
         }
 
         private async Task<Grid?> GetToastContainerSettingUpIfNeededAsync()
@@ -188,6 +193,14 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             }
         }
 
+        private void UnregisterName(string name)
+        {
+            if (ToastContainers.ContainsKey(name))
+            {
+                ToastContainers.Remove(name);
+            }
+        }
+
         private Grid? FindByName(string name)
         {
             return ToastContainers.ContainsKey(name) ? ToastContainers[name] : null;
@@ -240,7 +253,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 return;
             }
 
-            await HideToast(currentPage);
+            await HideToast(currentPage, false);
         }
 
         #endregion

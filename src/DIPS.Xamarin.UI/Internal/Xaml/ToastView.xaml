@@ -3,7 +3,6 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIPS.Xamarin.UI.Internal.Xaml.ToastView"
-             x:Name="toastView"
 
              xmlns:Tag="clr-namespace:DIPS.Xamarin.UI.Controls.Tag;assembly=DIPS.Xamarin.UI"
              xmlns:Xaml="clr-namespace:DIPS.Xamarin.UI.Internal.Xaml;assembly=DIPS.Xamarin.UI"
