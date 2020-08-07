@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
@@ -6,6 +7,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     /// <summary>
     ///     Toast control that would appear on top of the presented view
     /// </summary>
+    [SuppressMessage("ReSharper", "RedundantCatchClause")]
     public static class Toast
     {
         private static ToastCore ToastCore { get; } = new ToastCore();
@@ -28,13 +30,11 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 await ToastCore.DisplayToast(text, options, layout);
             }
-            catch (NotSupportedException)
-            {
-                throw;
-            }
             catch (Exception)
             {
-                // swallow
+#if DEBUG
+                throw;
+#endif
             }
         }
 
@@ -51,13 +51,11 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 await ToastCore.DisplayToast(text, options, layout);
             }
-            catch (NotSupportedException)
-            {
-                throw;
-            }
             catch (Exception)
             {
-                // swallow
+#if DEBUG
+                throw;
+#endif
             }
         }
 
@@ -71,13 +69,11 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 await ToastCore.HideToast();
             }
-            catch (NotSupportedException)
-            {
-                throw;
-            }
             catch (Exception)
             {
-                // swallow
+#if DEBUG
+                throw;
+#endif
             }
         }
     }
