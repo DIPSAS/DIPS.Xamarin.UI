@@ -240,7 +240,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             }
 
             // hide toast
-            if (ToastOptions.Duration > 0)
+            if (ToastOptions.Duration >= 0)
             {
                 await HideToastIn(ToastOptions.Duration);
             }
