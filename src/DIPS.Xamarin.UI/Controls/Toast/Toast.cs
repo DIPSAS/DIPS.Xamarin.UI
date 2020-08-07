@@ -24,7 +24,18 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// <returns>A void <c>Task</c></returns>
         public static async Task DisplayToast(string text, Action<ToastOptions> options, Action<ToastLayout> layout)
         {
-            await ToastCore.DisplayToast(text, options, layout);
+            try
+            {
+                await ToastCore.DisplayToast(text, options, layout);
+            }
+            catch (NotSupportedException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                // swallow
+            }
         }
 
         /// <summary>
@@ -36,7 +47,18 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// <returns>A void <c>Task</c></returns>
         public static async Task DisplayToast(string text, ToastOptions options = null, ToastLayout layout = null)
         {
-            await ToastCore.DisplayToast(text, options, layout);
+            try
+            {
+                await ToastCore.DisplayToast(text, options, layout);
+            }
+            catch (NotSupportedException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                // swallow
+            }
         }
 
         /// <summary>
@@ -45,7 +67,18 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// <returns>A void <c>Task</c></returns>
         public static async Task HideToast()
         {
-            await ToastCore.HideToast();
+            try
+            {
+                await ToastCore.HideToast();
+            }
+            catch (NotSupportedException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                // swallow
+            }
         }
     }
 }
