@@ -29,6 +29,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             try
             {
                 await ToastCore.DisplayToast(text, options, layout);
+                throw new Exception("Hello, this is a test!");
             }
             catch (Exception)
             {
