@@ -16,15 +16,15 @@
                  BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Xaml:ToastView}}}"
 
                  Text="{Binding Text}"
-                 FontSize="{Binding FontSize}"
-                 FontFamily="{Binding FontFamily}"
-                 LineBreakMode="{Binding LineBreakMode}"
-                 MaxLines="{Binding MaxLines}"
-                 TextColor="{Binding TextColor}"
-                 BackgroundColor="{Binding BackgroundColor}"
-                 CornerRadius="{Binding CornerRadius}"
-                 HasShadow="{Binding HasShadow}"
-                 Padding="{Binding Padding}" />
+                 FontSize="{Binding ToastLayout.FontSize}"
+                 FontFamily="{Binding ToastLayout.FontFamily}"
+                 LineBreakMode="{Binding ToastLayout.LineBreakMode}"
+                 MaxLines="{Binding ToastLayout.MaxLines}"
+                 TextColor="{Binding ToastLayout.TextColor}"
+                 BackgroundColor="{Binding ToastLayout.BackgroundColor}"
+                 CornerRadius="{Binding ToastLayout.CornerRadius}"
+                 HasShadow="{Binding ToastLayout.HasShadow}"
+                 Padding="{Binding ToastLayout.Padding}" />
     </ContentView.Content>
 
 </ContentView>

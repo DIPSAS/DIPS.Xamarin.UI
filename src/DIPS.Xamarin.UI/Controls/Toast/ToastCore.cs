@@ -22,8 +22,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         private CancellationTokenSource CancellationSource { get; set; } = new CancellationTokenSource();
         private Dictionary<string, Grid> ToastContainers { get; } = new Dictionary<string, Grid>();
-        private ToastLayout ToastLayout { get; set; }
-        private ToastOptions ToastOptions { get; set; }
 
         private void OnPageDisappearing(object sender, Page page)
         {
@@ -53,20 +51,19 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
             // get toast view, can be only one or none
             var toastContainer = FindByName(currentPage.Id.ToString());
-            var toastView = toastContainer?.Children.FirstOrDefault(w => w.GetType() == typeof(ToastView));
-            if (toastView == null)
+            if (!(toastContainer?.Children.FirstOrDefault(w => w.GetType() == typeof(ToastView)) is ToastView toast))
             {
                 return;
             }
 
             // animate toast
-            if (ToastOptions.OnBeforeHidingToast != null)
+            if (toast.ToastOptions.OnBeforeHidingToast != null)
             {
-                await ToastOptions.OnBeforeHidingToast((ToastView)toastView);
+                await toast.ToastOptions.OnBeforeHidingToast(toast);
             }
 
             // remove toast
-            toastContainer.Children.Remove(toastView);
+            toastContainer.Children.Remove(toast);
         }
 
         private async Task<Grid?> GetToastContainerSettingUpIfNeededAsync()
@@ -153,28 +150,20 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 $"Cannot display the Toast. Toast could not find an underlying {typeof(ContentPage)}");
         }
 
-        private ToastView GetToast(string text)
+        private ToastView GetToast(string text, ToastOptions options, ToastLayout layout)
         {
             var toast = new ToastView
             {
-                BackgroundColor = ToastLayout.BackgroundColor,
-                CornerRadius = ToastLayout.CornerRadius,
-                FontFamily = ToastLayout.FontFamily,
-                FontSize = ToastLayout.FontSize,
-                HasShadow = ToastLayout.HasShadow,
-                LineBreakMode = ToastLayout.LineBreakMode,
-                MaxLines = ToastLayout.MaxLines,
-                Padding = ToastLayout.Padding,
-                Margin = new Thickness(ToastLayout.HorizontalMargin, ToastLayout.PositionY,
-                    ToastLayout.HorizontalMargin, 0),
                 Text = text,
-                TextColor = ToastLayout.TextColor
+                ToastOptions = options,
+                ToastLayout = layout,
+                Margin = new Thickness(layout.HorizontalMargin, layout.PositionY, layout.HorizontalMargin, 0)
             };
 
             var tapGesture = new TapGestureRecognizer();
             tapGesture.Tapped += (s, e) =>
             {
-                ToastOptions.ToastAction?.Invoke();
+                toast.ToastOptions.ToastAction?.Invoke();
             };
             toast.GestureRecognizers.Add(tapGesture);
 
@@ -218,10 +207,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         internal async Task DisplayToast(string text, ToastOptions options = null, ToastLayout layout = null)
         {
-            // set properties
-            ToastOptions = options ?? new ToastOptions();
-            ToastLayout = layout ?? new ToastLayout();
-
             // get toast container
             var toastContainer = await GetToastContainerSettingUpIfNeededAsync();
             if (toastContainer == null)
@@ -230,19 +215,19 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             }
 
             // toast view
-            var toastView = GetToast(text);
+            var toastView = GetToast(text, options ?? new ToastOptions(), layout ?? new ToastLayout());
             toastContainer.Children.Add(toastView);
 
             // animate toast
-            if (ToastOptions.OnBeforeDisplayingToast != null)
+            if (toastView.ToastOptions.OnBeforeDisplayingToast != null)
             {
-                await ToastOptions.OnBeforeDisplayingToast(toastView);
+                await toastView.ToastOptions.OnBeforeDisplayingToast(toastView);
             }
 
             // hide toast
-            if (ToastOptions.Duration >= 0)
+            if (toastView.ToastOptions.Duration >= 0)
             {
-                await HideToastIn(ToastOptions.Duration);
+                await HideToastIn(toastView.ToastOptions.Duration);
             }
         }
 
