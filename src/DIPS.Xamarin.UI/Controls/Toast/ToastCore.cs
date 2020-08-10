@@ -9,23 +9,36 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
 {
-    internal class ToastCore
+    internal class ToastCore : IDisposable
     {
         public ToastCore()
         {
-            Application.Current.PageAppearing -= OnPageAppearing;
-            Application.Current.PageAppearing += OnPageAppearing;
+            if (Application.Current == null)
+            {
+                return;
+            }
 
-            Application.Current.PageDisappearing -= OnPageDisappearing;
+            Application.Current.PageAppearing += OnPageAppearing;
             Application.Current.PageDisappearing += OnPageDisappearing;
         }
 
         private CancellationTokenSource CancellationSource { get; set; } = new CancellationTokenSource();
         private Dictionary<string, Grid> ToastContainers { get; } = new Dictionary<string, Grid>();
 
-        private void OnPageAppearing(object sender, Page e)
+        public void Dispose()
         {
-            _ = GetToastContainerSettingUpIfNeededAsync();
+            Application.Current.PageAppearing -= OnPageAppearing;
+            Application.Current.PageDisappearing -= OnPageDisappearing;
+            CancellationSource.Dispose();
+        }
+
+        private void OnPageAppearing(object sender, Page page)
+        {
+            var currentPage = GetCurrentContentPage();
+            if (currentPage == page)
+            {
+                _ = GetToastContainerSettingUpIfNeededAsync();
+            }
         }
 
         private void OnPageDisappearing(object sender, Page page)

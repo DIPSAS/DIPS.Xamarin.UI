@@ -9,11 +9,12 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     /// </summary>
     public static class Toast
     {
-        private static ToastCore ToastCore { get; } = new ToastCore();
+        private static ToastCore? ToastCore { get; set; }
 
         internal static void Initialize()
         {
-            if (ToastCore == null) { } // allocate ToastCore object to ToastCore property
+            ToastCore?.Dispose();
+            ToastCore = new ToastCore();
         }
 
         /// <summary>
@@ -27,6 +28,11 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         {
             try
             {
+                if (ToastCore == null)
+                {
+                    throw new ApplicationException($"Invoke {nameof(Initialize)} first");
+                }
+
                 await ToastCore.DisplayToast(text, options, layout);
             }
             catch (Exception ex)
@@ -46,6 +52,11 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         {
             try
             {
+                if (ToastCore == null)
+                {
+                    throw new ApplicationException($"Invoke {nameof(Initialize)} first");
+                }
+
                 await ToastCore.DisplayToast(text, options, layout);
             }
             catch (Exception ex)
@@ -62,6 +73,11 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         {
             try
             {
+                if (ToastCore == null)
+                {
+                    throw new ApplicationException($"Invoke {nameof(Initialize)} first");
+                }
+
                 await ToastCore.HideToast();
             }
             catch (Exception ex)
