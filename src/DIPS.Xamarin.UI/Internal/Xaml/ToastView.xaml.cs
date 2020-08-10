@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using DIPS.Xamarin.UI.Controls.Toast;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,6 +9,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
     ///     Toaster control that would appear on top of the presented view
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ToastView : ContentView
     {
         /// <inheritdoc />
