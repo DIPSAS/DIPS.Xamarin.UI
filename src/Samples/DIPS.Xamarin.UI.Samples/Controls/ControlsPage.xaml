@@ -49,6 +49,7 @@
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="FloatingActionMenu"
                     Text="FloatingActionMenu" />
+                
                 <Button
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="TagControl"
@@ -58,6 +59,11 @@
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="Skeleton"
                     Text="Skeleton" />
+                
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="ToastControl"
+                    Text="Toast" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -39,6 +39,9 @@
           <AutoGen>True</AutoGen>
           <DependentUpon>InternalLocalizedStrings.resx</DependentUpon>
       </Compile>
+      <Compile Update="Internal\Xaml\ToastView.xaml.cs">
+        <DependentUpon>ToastView.xaml</DependentUpon>
+      </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +67,9 @@
     <EmbeddedResource Update="Resources\LocalizedStrings\LocalizedStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Internal\Xaml\ToastView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

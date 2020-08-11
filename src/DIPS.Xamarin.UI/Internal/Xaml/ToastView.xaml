@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIPS.Xamarin.UI.Internal.Xaml.ToastView"
+
+             xmlns:Tag="clr-namespace:DIPS.Xamarin.UI.Controls.Tag;assembly=DIPS.Xamarin.UI"
+             xmlns:Xaml="clr-namespace:DIPS.Xamarin.UI.Internal.Xaml;assembly=DIPS.Xamarin.UI"
+
+             VerticalOptions="Start"
+             HorizontalOptions="CenterAndExpand">
+
+    <ContentView.Content>
+        <Tag:Tag x:DataType="{x:Type Xaml:ToastView}"
+                 BindingContext="{Binding Source={RelativeSource AncestorType={x:Type Xaml:ToastView}}, Mode=OneTime}"
+
+                 Text="{Binding Text, Mode=OneTime}"
+                 FontSize="{Binding ToastLayout.FontSize, Mode=OneTime}"
+                 FontFamily="{Binding ToastLayout.FontFamily, Mode=OneTime}"
+                 LineBreakMode="{Binding ToastLayout.LineBreakMode, Mode=OneTime}"
+                 MaxLines="{Binding ToastLayout.MaxLines, Mode=OneTime}"
+                 TextColor="{Binding ToastLayout.TextColor, Mode=OneTime}"
+                 BackgroundColor="{Binding ToastLayout.BackgroundColor, Mode=OneTime}"
+                 CornerRadius="{Binding ToastLayout.CornerRadius, Mode=OneTime}"
+                 HasShadow="{Binding ToastLayout.HasShadow, Mode=OneTime}"
+                 Padding="{Binding ToastLayout.Padding, Mode=OneTime}" />
+    </ContentView.Content>
+
+</ContentView>

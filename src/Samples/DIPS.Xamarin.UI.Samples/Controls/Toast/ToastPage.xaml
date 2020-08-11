@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.Toast.ToastPage"
+             x:Name="toastPage"
+             
+             xmlns:ViewModel="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Toast;assembly=DIPS.Xamarin.UI.Samples">
+        
+        <ContentPage.BindingContext>
+                <ViewModel:ToastPageViewModel />
+        </ContentPage.BindingContext>
+
+        <ContentPage.Content>
+
+        <StackLayout>
+            <Label Text="{Binding PageTitle}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Button Text="Show Toast Moon"
+                    Margin="15,0,15,40"
+                    Command="{Binding MoonCommand}"
+                    CommandParameter="Hello, Moon!" />
+            <Button Text="Show Toast Venus"
+                    Margin="15,0,15,40"
+                    Command="{Binding VenusCommand}"
+                    CommandParameter="Hello, Venus! Second planet from the Sun! Named after the Roman goddess of love and beauty!" />
+            <Button Text="Show Toast Mars"
+                    Margin="15,0,15,40"
+                    Command="{Binding MarsCommand}"
+                    CommandParameter="Hello, Mars! The fourth planet of the Milky Way! The Red planet! The planet for War!" />
+            <Button Text="Show Toast Pluto"
+                    Margin="15,0,15,40"
+                    Command="{Binding PlutoCommand}"
+                    CommandParameter="Hello, Pluto!" />
+        </StackLayout>
+
+    </ContentPage.Content>
+
+</ContentPage>
