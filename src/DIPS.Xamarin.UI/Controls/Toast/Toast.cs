@@ -30,10 +30,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 if (ToastCore == null)
                 {
-                    throw new ApplicationException($"Invoke {nameof(Initialize)} first");
+                    Initialize();
                 }
 
-                await ToastCore.DisplayToast(text, options, layout);
+                await ToastCore?.DisplayToast(text, options, layout)!;
             }
             catch (Exception ex)
             {
@@ -54,10 +54,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 if (ToastCore == null)
                 {
-                    throw new ApplicationException($"Invoke {nameof(Initialize)} first");
+                    Initialize();
                 }
 
-                await ToastCore.DisplayToast(text, options, layout);
+                await ToastCore?.DisplayToast(text, options, layout)!;
             }
             catch (Exception ex)
             {
@@ -75,10 +75,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 if (ToastCore == null)
                 {
-                    throw new ApplicationException($"Invoke {nameof(Initialize)} first");
+                    Initialize();
                 }
 
-                await ToastCore.HideToast();
+                await ToastCore?.HideToast()!;
             }
             catch (Exception ex)
             {
