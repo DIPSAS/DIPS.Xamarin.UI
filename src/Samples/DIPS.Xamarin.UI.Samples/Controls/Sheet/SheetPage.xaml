@@ -32,6 +32,7 @@
                                 MinPosition="{Binding MinPosition}"	
                                 MaxPosition="{Binding MaxPosition}"	
                                 ActionCommand="{Binding ActionCommand}"	
+                                AutoClosePosition="{Binding AutoClosePosition}"
                                 IsCancelButtonVisible="False"	
                                 Title="{Binding Title}"	
                                 ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=CanExecute}}"	
@@ -264,6 +265,32 @@
                            Text="{Binding MaxPosition}" />
                 </Grid>
 
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Grid.Row="0"
+                           Text="AutoClosePosition"
+                           VerticalTextAlignment="Center" />
+                    <Slider Grid.Column="1"
+                            Grid.Row="0"
+                            Maximum="1"
+                            Minimum="0"
+                            MaximumTrackColor="Tomato"
+                            MinimumTrackColor="Tomato"
+                            Value="{Binding AutoClosePosition}" />
+                    <Label Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           Grid.Row="1"
+                           Text="{Binding AutoClosePosition}" />
+                </Grid>
+
                 <StackLayout>
                     <Label Text="Should close on overlay tapped" />
                     <CheckBox x:Name="ShouldCloseOnOverlayTappedCheckbox"
@@ -273,6 +300,5 @@
                        IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}" />
             </StackLayout>
         </ScrollView>
-
     </dxui:ModalityLayout>
 </ContentPage>

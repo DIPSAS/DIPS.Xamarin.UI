@@ -39,7 +39,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private bool m_shouldRememberPosition;
         private string m_contentColor;
         private string m_headerColor;
-        private bool m_cancelCanExecute = true;
         private string m_title;
         private bool m_hasActionButton;
 
@@ -106,6 +105,15 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
                 }
                 
             }
+
+        private double m_autoClosePosition;
+
+        public double AutoClosePosition
+        {
+            get => m_autoClosePosition;
+            set => PropertyChanged.RaiseWhenSet(ref m_autoClosePosition, value);
+        }
+
 
         public bool HasShadow
         {

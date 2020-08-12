@@ -18,6 +18,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public class SheetBehavior : Behavior<ModalityLayout>, IModalityHandler
     {
+
+        /// <summary>
+        /// <see cref="AutoClosePosition"/>
+        /// </summary>
+        public static readonly BindableProperty AutoClosePositionProperty = BindableProperty.Create(nameof(AutoClosePosition), typeof(double), typeof(SheetBehavior), defaultValue:0.05);
+
         /// <summary>
         ///     <see cref="OnBeforeOpenCommand" />
         /// </summary>
@@ -247,8 +253,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(MinPosition),
             typeof(double),
             typeof(SheetBehavior),
-            0.05,
-            BindingMode.TwoWay);
+            defaultBindingMode: BindingMode.TwoWay);
 
         /// <summary>
         ///     <see cref="BindingContextFactory" />
@@ -349,8 +354,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         public static readonly BindableProperty ActionCommandParameterProperty =
             BindableProperty.Create(nameof(ActionCommandParameter), typeof(object), typeof(SheetBehavior));
 
-        private readonly double m_autoCloseThreshold = 0.05;
-
         private bool m_fromIsOpenContext;
         private ModalityLayout? m_modalityLayout;
 
@@ -376,6 +379,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (ICommand)GetValue(ActionCommandProperty);
             set => SetValue(ActionCommandProperty, value);
+        }
+
+        /// <summary>
+        /// Determines the position the sheet will auto close when reached.
+        /// This is bindable property.
+        /// </summary>
+        public double AutoClosePosition
+        {
+            get => (double)GetValue(AutoClosePositionProperty);
+            set => SetValue(AutoClosePositionProperty, value);
         }
 
         /// <summary>
@@ -958,7 +971,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 };
 
                 //Set position based on size of content
-                if (Position <= m_autoCloseThreshold)
+                if (Position <= AutoClosePosition)
                 {
                     //Calculate what size the content needs if the position is set to 0
                     var newPosition = m_sheetView.SheetContentHeightRequest / m_modalityLayout.Height;
@@ -994,20 +1007,37 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
 
-            if (MinPosition < m_autoCloseThreshold || MinPosition > MaxPosition
-            ) //Min position should be bigger than the auto close threshold and max position
-                MinPosition = (double)MinPositionProperty.DefaultValue;
+            if (MinPosition < AutoClosePosition || MinPosition > MaxPosition) //Min position should be bigger than the auto close threshold and max position
+            {
+                MinPosition = (double)AutoClosePosition;
+            }
 
             if (MaxPosition <= 0 || MaxPosition > 1) //Max position should be between 0-1
-                MaxPosition = (double)MaxPositionProperty.DefaultValue;
-
-            if (newPosition < MinPosition)
             {
-                if (MinPosition > m_autoCloseThreshold
-                ) //Do not auto- close if the minimum position set by the consumer is bigger than the auto close threshold
+                MaxPosition = (double)MaxPositionProperty.DefaultValue;
+            }
+
+            if (newPosition == MinPosition) //If position is the same as the minimum position, the sheet should stop
+            {
+                Position = MinPosition;
+                return;
+            }
+
+            if (newPosition <= AutoClosePosition)
+            {
+                if (MinPosition > AutoClosePosition) //Do not auto- close if the minimum position set by the consumer is bigger than the auto close threshold
+                {
                     Position = MinPosition;
+                } 
                 else if (!m_fromIsOpenContext) //Auto close
+                {
                     IsOpen = false;
+                }
+                else
+                {
+                    Position = AutoClosePosition + newPosition;
+                }
+
                 return; //Return when we set property because it will lead to recursively calling this method
             }
 
