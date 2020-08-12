@@ -180,12 +180,10 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 Margin = new Thickness(layout.HorizontalMargin, layout.PositionY, layout.HorizontalMargin, 0)
             };
 
-            var tapGesture = new TapGestureRecognizer();
-            tapGesture.Tapped += (s, e) =>
+            if(toast.ToastOptions.ToastAction != null)
             {
-                toast.ToastOptions.ToastAction?.Invoke();
-            };
-            toast.GestureRecognizers.Add(tapGesture);
+                toast.GestureRecognizers.Add(new TapGestureRecognizer() { Command = new Command((toast.ToastOptions.ToastAction)) });
+            }
 
             return toast;
         }
@@ -237,10 +235,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         {
             // get toast container
             var toastContainer = GetToastContainer();
-            if (toastContainer == null)
-            {
-                return;
-            }
 
             // toast view
             var toastView = GetToast(text, options ?? new ToastOptions(), layout ?? new ToastLayout());
@@ -263,10 +257,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         {
             // get current page
             var currentPage = GetCurrentContentPage();
-            if (currentPage == null)
-            {
-                return;
-            }
 
             await HideToast(currentPage, false);
         }
