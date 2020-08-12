@@ -30,25 +30,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             CancellationSource.Dispose();
         }
 
-        //private void OnPageAppearing(object sender, Page page)
-        //{
-        //    var currentPage = GetCurrentContentPage();
-        //    if (currentPage == page)
-        //    {
-        //        _ = GetToastContainerSettingUpIfNeededAsync();
-        //    }
-        //}
-
-        //private void OnPageDisappearing(object sender, Page page)
-        //{
-        //    if (page is ContentPage contentPage)
-        //    {
-        //        var currentPage = GetCurrentContentPage();
-        //        CancellationSource.Cancel();
-        //        _ = HideToast(contentPage, currentPage == contentPage);
-        //    }
-        //}
-
         private async Task HideToast(ContentPage currentPage, bool removeContainer)
         {
             CancellationSource.Cancel();
