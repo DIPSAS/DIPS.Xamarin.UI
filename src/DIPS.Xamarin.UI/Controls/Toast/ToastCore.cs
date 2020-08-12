@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DIPS.Xamarin.UI.Extensions;
 using DIPS.Xamarin.UI.Internal.Xaml;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -11,6 +12,8 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 {
     internal class ToastCore : IDisposable
     {
+        private ContentPage m_currentPageWithToast;
+
         public ToastCore()
         {
             if (Application.Current == null)
@@ -79,17 +82,13 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             }
         }
 
-        private async Task<Grid?> GetToastContainerSettingUpIfNeededAsync()
+        private Grid GetToastContainer()
         {
             // get current page
-            var currentPage = GetCurrentContentPage();
-            if (currentPage == null)
-            {
-                return null;
-            }
+            m_currentPageWithToast = GetCurrentContentPage();
 
             // try get toast container
-            var toastContainer = FindByName(currentPage.Id.ToString());
+            var toastContainer = FindByName(m_currentPageWithToast.Id.ToString());
             if (toastContainer != null) // found toast container
             {
                 // check opened toasts, can be only one or none
@@ -104,20 +103,28 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             {
                 // create and register toast container
                 toastContainer = new Grid();
-                RegisterName(currentPage.Id.ToString(), toastContainer);
+                RegisterName(m_currentPageWithToast.Id.ToString(), toastContainer);
 
                 // old content
-                var oldContent = currentPage.Content;
+                var oldContent = m_currentPageWithToast.Content;
 
                 // set new content
-                await MainThread.InvokeOnMainThreadAsync(() => { currentPage.Content = toastContainer; });
+                m_currentPageWithToast.Content = toastContainer;
                 toastContainer.Children.Add(oldContent);
             }
+
+            m_currentPageWithToast.Disappearing += OnPageDissapearing;
 
             return toastContainer;
         }
 
-        private static ContentPage? GetCurrentContentPage()
+        private void OnPageDissapearing(object sender, EventArgs e)
+        {
+            m_currentPageWithToast.Disappearing -= OnPageDissapearing;
+            _ = HideToast(m_currentPageWithToast, false);
+        }
+
+        private static ContentPage GetCurrentContentPage()
         {
             if (Application.Current.MainPage is ContentPage contentPage)
             {
@@ -229,7 +236,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         internal async Task DisplayToast(string text, ToastOptions options = null, ToastLayout layout = null)
         {
             // get toast container
-            var toastContainer = await GetToastContainerSettingUpIfNeededAsync();
+            var toastContainer = GetToastContainer();
             if (toastContainer == null)
             {
                 return;

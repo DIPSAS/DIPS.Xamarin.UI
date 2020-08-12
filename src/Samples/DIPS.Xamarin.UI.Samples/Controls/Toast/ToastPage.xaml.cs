@@ -11,5 +11,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Toast
         {
             InitializeComponent();
         }
+
+        private void Button_Clicked(object sender, System.EventArgs e)
+        {
+            App.Current.MainPage.Navigation.PushAsync(new DIPS.Xamarin.UI.Samples.Controls.Sheet.SheetPage());
+        }
     }
 }

@@ -33,6 +33,8 @@
                     Margin="15,0,15,40"
                     Command="{Binding PlutoCommand}"
                     CommandParameter="Hello, Pluto!" />
+            <Button Clicked="Button_Clicked"
+                    Text="Navigate out" />
         </StackLayout>
 
     </ContentPage.Content>
