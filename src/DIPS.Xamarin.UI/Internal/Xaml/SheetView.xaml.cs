@@ -17,6 +17,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         private readonly SheetBehavior m_sheetBehaviour;
 
         private double m_newY;
+        private double m_newYTranslation;
 
         /// <summary>
         ///     Constructs a <see cref="SheetView" />
@@ -44,10 +45,10 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         /// </summary>
         internal Frame SheetFrame => OuterSheetFrame;
 
-        private void OnDrag(object sender, PanUpdatedEventArgs e)
+        private async void OnDrag(object sender, PanUpdatedEventArgs e)
         {
             if (!m_sheetBehaviour.IsDraggable) return;
-            if (m_newY == 0) m_newY = SheetFrame.TranslationY;
+            if (m_newY == 0) m_newY = SheetFrame.TranslationY; //This variable is used to fix a iOS issue where an view element that you have a pan gesture on it and that is translating the same view element jitters
 
             switch (e.StatusType)
             {
@@ -57,18 +58,15 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 case GestureStatus.Running:
 
                     var translationY = Device.RuntimePlatform == Device.Android ? OuterSheetFrame.TranslationY : m_newY;
-                    var newYTranslation = e.TotalY + translationY;
+                    m_newYTranslation = e.TotalY + translationY;
                     //Hack to remove jitter from android 
                     if (Device.RuntimePlatform == Device.Android)
                     {
-                        e = new PanUpdatedEventArgs(e.StatusType, e.GestureId, 0, newYTranslation);
-                        newYTranslation = e.TotalY;
+                        e = new PanUpdatedEventArgs(e.StatusType, e.GestureId, 0, m_newYTranslation);
+                        m_newYTranslation = e.TotalY;
                     }
-
-                    m_sheetBehaviour.UpdatePosition(newYTranslation);
                     break;
                 case GestureStatus.Completed:
-                    m_newY = SheetFrame.TranslationY;
                     m_sheetBehaviour.IsDragging = false;
                     //Snap?
                     break;
@@ -78,6 +76,15 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            if(e.StatusType != GestureStatus.Started)
+            {
+                await m_sheetBehaviour.UpdatePosition(m_newYTranslation);
+                if (e.StatusType == GestureStatus.Completed) //Makes sure the jitter is removed on iOS
+                {
+                    m_newY = SheetFrame.TranslationY;
+                }
+            }
+            
         }
 
         internal void Initialize()

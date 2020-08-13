@@ -37,7 +37,8 @@
                                 ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=CanExecute}}"	
                                 BindingContextFactory="{Binding SheetViewModelFactory}"	
                                 CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"	
-                                ShouldRememberPosition="{Binding ShouldRememberPosition}">
+                                ShouldRememberPosition="{Binding ShouldRememberPosition}"
+                                ShouldAutoClose="{Binding ShouldAutoClose}">
                 <StackLayout>
                     <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
                     <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
@@ -210,6 +211,15 @@
                             MaximumTrackColor="Tomato"
                             MinimumTrackColor="Tomato"
                             Value="{Binding Position}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*, *">
+                    <Label Grid.Column="0"
+                           Text="Should auto close"
+                           VerticalTextAlignment="Center" />
+                    <CheckBox Grid.Column="1"
+                              Grid.Row="0"
+                              IsChecked="{Binding ShouldAutoClose}" />
                 </Grid>
 
                 <Grid>
