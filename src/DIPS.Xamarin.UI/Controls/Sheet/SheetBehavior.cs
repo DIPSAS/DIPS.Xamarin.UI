@@ -708,11 +708,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        ///     Determines the minimum position of the sheet when it is visible.
+        ///     Determines the minimum position of the sheet.
         ///     This is a bindable property.
         /// </summary>
+        /// <remarks>This position is used to determine where the sheet will auto close if <see cref="ShouldAutoClose"/> is set to true</remarks>
+        /// <remarks>This position is used to determine where the sheet will snap to when <see cref="ShouldAutoClose"/> is set to false</remarks>
         /// <remarks>This will affect the size of the sheet if <see cref="Position" /> is set to 0</remarks>
-        /// <remarks>This will affect the people that are dragging the sheet</remarks>
         /// <remarks>The value have to be between 0 and 1.0 (percentage of the screen)</remarks>
         public double MinPosition
         {
@@ -1091,7 +1092,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             return newPosition;
         }
 
-        internal void UpdatePosition(double newYPosition)
+        internal async Task UpdatePosition(double newYPosition)
         {
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
@@ -1104,7 +1105,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             };
             if(!IsDragging)
             {
-                _ = TranslateBasedOnPosition(Position);
+                await TranslateBasedOnPosition(Position);
             }
         }
     }

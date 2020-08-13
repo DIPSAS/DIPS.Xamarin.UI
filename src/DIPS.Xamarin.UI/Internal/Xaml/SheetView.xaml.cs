@@ -45,10 +45,10 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         /// </summary>
         internal Frame SheetFrame => OuterSheetFrame;
 
-        private void OnDrag(object sender, PanUpdatedEventArgs e)
+        private async void OnDrag(object sender, PanUpdatedEventArgs e)
         {
             if (!m_sheetBehaviour.IsDraggable) return;
-            if (m_newY == 0) m_newY = SheetFrame.TranslationY;
+            if (m_newY == 0) m_newY = SheetFrame.TranslationY; //This variable is used to fix a iOS issue where an view element that you have a pan gesture on it and that is translating the same view element jitters
 
             switch (e.StatusType)
             {
@@ -67,7 +67,6 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                     }
                     break;
                 case GestureStatus.Completed:
-                    m_newY = SheetFrame.TranslationY;
                     m_sheetBehaviour.IsDragging = false;
                     //Snap?
                     break;
@@ -79,8 +78,13 @@ namespace DIPS.Xamarin.UI.Internal.xaml
             }
             if(e.StatusType != GestureStatus.Started)
             {
-                m_sheetBehaviour.UpdatePosition(m_newYTranslation);
+                await m_sheetBehaviour.UpdatePosition(m_newYTranslation);
+                if (e.StatusType == GestureStatus.Completed) //Makes sure the jitter is removed on iOS
+                {
+                    m_newY = SheetFrame.TranslationY;
+                }
             }
+            
         }
 
         internal void Initialize()
