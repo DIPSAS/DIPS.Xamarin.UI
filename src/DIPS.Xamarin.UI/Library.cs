@@ -16,7 +16,6 @@ namespace DIPS.Xamarin.UI
         [ExcludeFromCodeCoverage]
         public static void Initialize()
         {
-            Toast.Initialize();
         }
 
         /// <summary>

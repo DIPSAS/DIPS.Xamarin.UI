@@ -11,7 +11,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     {
         private static ToastCore? ToastCore { get; set; }
 
-        internal static void Initialize()
+        private static void Initialize()
         {
             ToastCore?.Dispose();
             ToastCore = new ToastCore();

@@ -4,7 +4,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.Toast.ToastPage"
              x:Name="toastPage"
-             
              xmlns:ViewModel="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Toast;assembly=DIPS.Xamarin.UI.Samples">
         
         <ContentPage.BindingContext>
