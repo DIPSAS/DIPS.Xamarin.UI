@@ -18,6 +18,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public class SheetBehavior : Behavior<ModalityLayout>, IModalityHandler
     {
+        private bool m_supressNextTranslation;
+        private bool m_fromIsOpenContext;
+        private ModalityLayout? m_modalityLayout;
+        private double? m_originalPosition = null;
+        private SheetView? m_sheetView;
+
         /// <summary>
         ///     <see cref="OnBeforeOpenCommand" />
         /// </summary>
@@ -353,13 +359,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public static readonly BindableProperty ActionCommandParameterProperty =
             BindableProperty.Create(nameof(ActionCommandParameter), typeof(object), typeof(SheetBehavior));
-
-        private bool m_fromIsOpenContext;
-        private ModalityLayout? m_modalityLayout;
-
-        private double? m_originalPosition = null;
-
-        private SheetView? m_sheetView;
 
         /// <summary>
         ///     Parameter passed to <see cref="ActionCommand" />.
@@ -721,8 +720,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(MinPositionProperty, value);
         }
 
-        private bool m_supressNextTranslation;
-
         /// <summary>
         ///     Determines the position of the sheet when it is visible.
         ///     This is a bindable property.
@@ -1022,14 +1019,20 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_sheetView == null) return;
             
 
-            if (MinPosition > MaxPosition) //Min position should be less than max position
+
+            if (MinPosition <= 0 || MinPosition > 1) //Min position should be between 0-1
             {
-                MinPosition = (double)MinPositionProperty.DefaultValue;
+                throw new XamlParseException($"{nameof(SheetBehavior)} {nameof(MinPosition)} has to be between 0 and 1");
             }
 
             if (MaxPosition <= 0 || MaxPosition > 1) //Max position should be between 0-1
             {
-                MaxPosition = (double)MaxPositionProperty.DefaultValue;
+                throw new XamlParseException($"{nameof(SheetBehavior)} {nameof(MaxPosition)} has to be between 0 and 1");
+            }
+
+            if (MinPosition > MaxPosition) //Min position should be less than max position
+            {
+                throw new XamlParseException($"{nameof(SheetBehavior)} {nameof(MinPosition)} can not be larger than {nameof(MaxPosition)}");
             }
 
 
