@@ -14,14 +14,6 @@ namespace DIPS.Xamarin.UI.Controls.Toast
     {
         private ContentPage m_currentPageWithToast;
 
-        public ToastCore()
-        {
-            if (Application.Current == null)
-            {
-                return;
-            }
-        }
-
         private CancellationTokenSource CancellationSource { get; set; } = new CancellationTokenSource();
         private Dictionary<string, Grid> ToastContainers { get; } = new Dictionary<string, Grid>();
 
@@ -94,14 +86,14 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 toastContainer.Children.Add(oldContent);
             }
 
-            m_currentPageWithToast.Disappearing += OnPageDissapearing;
+            m_currentPageWithToast.Disappearing += OnPageDisappearing;
 
             return toastContainer;
         }
 
-        private void OnPageDissapearing(object sender, EventArgs e)
+        private void OnPageDisappearing(object sender, EventArgs e)
         {
-            m_currentPageWithToast.Disappearing -= OnPageDissapearing;
+            m_currentPageWithToast.Disappearing -= OnPageDisappearing;
             _ = HideToast(m_currentPageWithToast, false);
         }
 
@@ -151,7 +143,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 $"Cannot display the Toast. Toast could not find an underlying {typeof(ContentPage)}");
         }
 
-        private ToastView GetToast(string text, ToastOptions options, ToastLayout layout)
+        private static ToastView GetToast(string text, ToastOptions options, ToastLayout layout)
         {
             var toast = new ToastView
             {
@@ -161,7 +153,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 Margin = new Thickness(layout.HorizontalMargin, layout.PositionY, layout.HorizontalMargin, 0)
             };
 
-            if(toast.ToastOptions.ToastAction != null)
+            if (toast.ToastOptions.ToastAction != null)
             {
                 toast.GestureRecognizers.Add(new TapGestureRecognizer() { Command = new Command((toast.ToastOptions.ToastAction)) });
             }
