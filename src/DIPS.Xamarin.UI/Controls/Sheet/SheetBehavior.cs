@@ -173,6 +173,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(SheetBehavior));
 
         /// <summary>
+        /// <see cref="ShouldAutoClose"/>
+        /// </summary>
+        public static readonly BindableProperty ShouldAutoCloseProperty = BindableProperty.Create(nameof(ShouldAutoClose), typeof(bool), typeof(SheetBehavior), true);
+
+        /// <summary>
         ///     <see cref="ShouldRememberPosition" />
         /// </summary>
         public static readonly BindableProperty ShouldRememberPositionProperty = BindableProperty.Create(
@@ -349,12 +354,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         public static readonly BindableProperty ActionCommandParameterProperty =
             BindableProperty.Create(nameof(ActionCommandParameter), typeof(object), typeof(SheetBehavior));
 
-        private readonly double m_autoCloseThreshold = 0.05;
-
         private bool m_fromIsOpenContext;
         private ModalityLayout? m_modalityLayout;
 
-        private double m_originalPosition = -1;
+        private double? m_originalPosition = null;
 
         private SheetView? m_sheetView;
 
@@ -497,6 +500,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (ICommand)GetValue(OnPositionChangedCommandProperty);
             set => SetValue(OnPositionChangedCommandProperty, value);
+        }
+
+        /// <summary>
+        /// Determines if the sheet should auto close at the minimum position
+        /// This is a bindable property.
+        /// </summary>
+        public bool ShouldAutoClose
+        {
+            get => (bool)GetValue(ShouldAutoCloseProperty);
+            set => SetValue(ShouldAutoCloseProperty, value);
         }
 
         /// <summary>
@@ -706,6 +719,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             get => (double)GetValue(MinPositionProperty);
             set => SetValue(MinPositionProperty, value);
         }
+
+        private bool m_supressNextTranslation;
 
         /// <summary>
         ///     Determines the position of the sheet when it is visible.
@@ -925,10 +940,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (!ShouldRememberPosition)
             {
-                if (Math.Abs(m_originalPosition - -1) < 0.0000001)
-                    m_originalPosition = Position;
+                if (m_originalPosition == null) //If original position is not set
+                {
+                    m_originalPosition = Position; //Set the original position when opened
+                }
                 else
-                    Position = m_originalPosition;
+                {
+                    if(m_originalPosition > 0) //If it is set and it's set to more than 0
+                    {
+                        Position = (double)m_originalPosition; //Set Position
+                    }
+                }
             }
 
             if (IsOpen)
@@ -958,7 +980,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 };
 
                 //Set position based on size of content
-                if (Position <= m_autoCloseThreshold)
+                if (Position <= MinPosition)
                 {
                     //Calculate what size the content needs if the position is set to 0
                     var newPosition = m_sheetView.SheetContentHeightRequest / m_modalityLayout.Height;
@@ -990,31 +1012,52 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private async Task TranslateBasedOnPosition(double newPosition)
         {
+            // IMPORTANT: Remember to always return when you set position in this method, else the app can go into a recursive forever loop
+
+            if (m_supressNextTranslation)
+                return;
             if (!IsOpen) return;
             if (m_modalityLayout == null) return;
             if (m_sheetView == null) return;
+            
 
-            if (MinPosition < m_autoCloseThreshold || MinPosition > MaxPosition
-            ) //Min position should be bigger than the auto close threshold and max position
+            if (MinPosition > MaxPosition) //Min position should be less than max position
+            {
                 MinPosition = (double)MinPositionProperty.DefaultValue;
+            }
 
             if (MaxPosition <= 0 || MaxPosition > 1) //Max position should be between 0-1
-                MaxPosition = (double)MaxPositionProperty.DefaultValue;
-
-            if (newPosition < MinPosition)
             {
-                if (MinPosition > m_autoCloseThreshold
-                ) //Do not auto- close if the minimum position set by the consumer is bigger than the auto close threshold
-                    Position = MinPosition;
-                else if (!m_fromIsOpenContext) //Auto close
-                    IsOpen = false;
-                return; //Return when we set property because it will lead to recursively calling this method
+                MaxPosition = (double)MaxPositionProperty.DefaultValue;
+            }
+
+
+            if (m_fromIsOpenContext)
+            {
+                if (newPosition < MinPosition) // If its calculated to open at a position thats less than min, use the same position as min
+                {
+                    newPosition = SetPositionAndSupressNextTranslation(MinPosition);
+                }
+            }
+            else
+            {
+                if(newPosition <= MinPosition) // If its dragged to a position thats less or equal to min
+                {
+                    if(ShouldAutoClose && !IsDragging) 
+                    {
+                        IsOpen = false; //Auto-close
+                        return;
+                    }
+                    else if(!IsDragging)
+                    {
+                        newPosition = SetPositionAndSupressNextTranslation(MinPosition);
+                    }
+                }
             }
 
             if (newPosition > MaxPosition) //If the content is to big
             {
-                Position = MaxPosition; //Use max position
-                return; //Return when we set property because it will lead to recursively calling this method
+                newPosition = SetPositionAndSupressNextTranslation(MaxPosition);
             }
 
             var yTranslation = Alignment switch
@@ -1040,6 +1083,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             }
         }
 
+        private double SetPositionAndSupressNextTranslation(double position)
+        {
+            m_supressNextTranslation = true;
+            var newPosition = Position = position; //Lock the sheet in position
+            m_supressNextTranslation = false;
+            return newPosition;
+        }
+
         internal void UpdatePosition(double newYPosition)
         {
             if (m_modalityLayout == null) return;
@@ -1051,6 +1102,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 AlignmentOptions.Top => (m_sheetView.SheetFrame.Height + newYPosition) / m_modalityLayout.Height,
                 _ => throw new ArgumentOutOfRangeException()
             };
+            if(!IsDragging)
+            {
+                _ = TranslateBasedOnPosition(Position);
+            }
         }
     }
 
