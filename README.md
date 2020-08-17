@@ -10,6 +10,8 @@
 
 ## [Documentation](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki)
 
+## [Releases](https://github.com/DIPSAS/DIPS.Xamarin.UI/releases) 
+
 ## Description
 
 A shared UI library that DIPS use and maintain for their mobile applications. The library contains different components that can be used by any [Xamarin.Forms](https://github.com/xamarin/Xamarin.Forms) app. The visual parts of the library is created in collaboration with our internal UX team.
