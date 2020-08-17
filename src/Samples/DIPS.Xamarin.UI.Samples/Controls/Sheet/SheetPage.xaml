@@ -31,7 +31,8 @@
                                 Position="{Binding Position}"	
                                 MinPosition="{Binding MinPosition}"	
                                 MaxPosition="{Binding MaxPosition}"	
-                                ActionCommand="{Binding ActionCommand}"	
+                                ActionCommand="{Binding ActionCommand}"
+                                Snap="{Binding Snap}"
                                 IsCancelButtonVisible="False"	
                                 Title="{Binding Title}"	
                                 ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=CanExecute}}"	
@@ -84,6 +85,9 @@
                     </Picker>
                 </StackLayout>
 
+                <Grid>
+
+                </Grid>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -281,6 +285,10 @@
                 </StackLayout>
                 <Label Text="{Binding StateText, StringFormat='State: {0}'}"
                        IsVisible="{Binding StateText, Converter={dxui:IsEmptyConverter Inverted=True}}" />
+
+                <Picker ItemsSource="{Binding SnapStrategies}" SelectedItem="{Binding SelectedSnapStrategy}">
+                </Picker>
+
             </StackLayout>
         </ScrollView>
 

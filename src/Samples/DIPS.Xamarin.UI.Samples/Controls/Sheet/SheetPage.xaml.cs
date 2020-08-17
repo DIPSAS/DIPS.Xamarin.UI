@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Sheet;
@@ -19,7 +20,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
 
         private void SheetBehavior_OnOnPositionChanged(object sender, EventArgs e)
         {
-            if (!(sender is SheetBehavior sheetBehavior)) return;
+            if (!(sender is SheetBehavior sheetBehavior))
+                return;
             sheetBehavior.Position = 0.9;
         }
     }
@@ -87,24 +89,30 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             set => PropertyChanged.RaiseWhenSet(ref m_alignment, value);
         }
 
+        public SnapStrategy Snap { get; set; } = SnapStrategy.Direction;
+
         public string HandleColor
         {
             get => m_handleColor;
             set
+            {
+                try
                 {
-                    try
-                    {
-                        new ColorTypeConverter().ConvertFromInvariantString(value);
-                        m_handleColor = value;
-                        PropertyChanged.Raise();
-                    }
-                    catch (Exception e)
-                    {
-                        //Swallow it.
-                    }
+                    new ColorTypeConverter().ConvertFromInvariantString(value);
+                    m_handleColor = value;
+                    PropertyChanged.Raise();
                 }
-                
+                catch (Exception e)
+                {
+                    //Swallow it.
+                }
             }
+
+        }
+
+        public List<SnapStrategy> SnapStrategies { get; set; } = new List<SnapStrategy>() { SnapStrategy.None, SnapStrategy.Direction, SnapStrategy.Nearest };
+
+        public SnapStrategy SelectedSnapStrategy { get; set; } = SnapStrategy.None;
 
         public bool HasShadow
         {

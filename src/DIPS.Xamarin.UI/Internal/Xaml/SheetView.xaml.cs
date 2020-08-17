@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using DIPS.Xamarin.UI.Controls.Sheet;
+using DIPS.Xamarin.UI.Util;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +16,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
     public partial class SheetView : ContentView
     {
         private readonly SheetBehavior m_sheetBehaviour;
+        private AccelerationService m_accelerationService = new AccelerationService(true);
 
         private double m_newY;
         private double m_newYTranslation;
@@ -54,6 +56,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
             {
                 case GestureStatus.Started:
                     m_sheetBehaviour.IsDragging = true;
+                    m_accelerationService.StartDrag(e.TotalY);
                     break;
                 case GestureStatus.Running:
 
@@ -65,13 +68,17 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                         e = new PanUpdatedEventArgs(e.StatusType, e.GestureId, 0, m_newYTranslation);
                         m_newYTranslation = e.TotalY;
                     }
+                    m_accelerationService.OnDrag(e.TotalY);
                     break;
                 case GestureStatus.Completed:
                     m_sheetBehaviour.IsDragging = false;
-                    //Snap?
+                    m_accelerationService.EndDrag();
+                    m_sheetBehaviour.DeltaY = m_accelerationService.Speed * -1;
                     break;
                 case GestureStatus.Canceled:
                     m_sheetBehaviour.IsDragging = false;
+                    m_accelerationService.EndDrag();
+                    m_sheetBehaviour.DeltaY = m_accelerationService.Speed * -1; // based on 
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

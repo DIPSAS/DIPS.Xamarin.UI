@@ -11,7 +11,6 @@ namespace DIPS.Xamarin.UI.Util
         private const double DefaultFriction = 2, DefaultGravity = 10.0, DefaultTrackTime = 0.18, ErrorMargin = 0.05;
         private readonly TimeTracker m_timeTracker = new TimeTracker();
 
-        private readonly Snapper? m_snapper;
         private readonly double m_friction, m_gravity, m_trackTime;
         private readonly object m_lock = new object();
 
@@ -25,9 +24,16 @@ namespace DIPS.Xamarin.UI.Util
         public double? Max { get; set; }
 
         /// <summary>
+        /// Change this to swap what type of snapping this AccelerationService uses.
+        /// </summary>
+        public Snapper Snapper { get; set; }
+
+        /// <summary>
         /// Minimum value of this accelerator. Will be used in by GetValue
         /// </summary>
         public double? Min { get; set; }
+
+        internal double Speed => m_speed;
 
         /// <summary>
         /// Creates an instance with whole number snaps if set to true
@@ -44,11 +50,11 @@ namespace DIPS.Xamarin.UI.Util
         {
             if (snap)
             {
-                m_snapper = new Snapper();
+                Snapper = new Snapper();
             }
             else
             {
-                m_snapper = null;
+                Snapper = null;
             }
 
             m_gravity = gravity;
@@ -69,7 +75,7 @@ namespace DIPS.Xamarin.UI.Util
             double gravity = DefaultGravity,
             double trackTime = DefaultTrackTime) : this(false, friction, gravity, trackTime)
         {
-            m_snapper = new Snapper(snapPoints);
+            Snapper = new Snapper(snapPoints);
         }
 
         private void AddDrag(double value)
@@ -145,7 +151,7 @@ namespace DIPS.Xamarin.UI.Util
                 }
 
                 var time = Math.Min(m_timeTracker.GetTimeD(), 1.0);
-                if (m_snapper == null)
+                if (Snapper == null)
                 {
                     ApplyFriction(time);
                     ApplySpeedByTime(time);
@@ -154,7 +160,7 @@ namespace DIPS.Xamarin.UI.Util
                     return m_value;
                 }
 
-                var snapPoint = m_snapper.GetSnapPoint(m_value);
+                var snapPoint = Snapper.GetSnapPoint(m_value);
                 ApplyGravity(time, snapPoint);
                 ApplyFriction(time);
                 ApplySpeedByTime(time);
