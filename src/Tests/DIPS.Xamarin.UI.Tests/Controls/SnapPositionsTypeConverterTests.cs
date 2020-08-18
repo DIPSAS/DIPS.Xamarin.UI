@@ -13,7 +13,7 @@ namespace DIPS.Xamarin.UI.Tests.Controls
         [InlineData(new object[] { "0.5", new double[] { 0.5 } })]
         [InlineData(new object[] { "0.5, 0.7, 0.9", new double[] { 0.5, 0.7, 0.9 } })]
         [InlineData(new object[] { "0.5,0.7,0.9", new double[] { 0.5, 0.7, 0.9 } })]
-        [InlineData(new object[] { null, new double[] { 0.5, 0.7, 0.9 } })]
+        [InlineData(new object[] { "0.5 0.7 0.9", new double[] { 0.5, 0.7, 0.9 } })]
         public void ConvertFromInvariantString(string input, double[] expected)
         {
             var typeConverter = new SnapPositionsTypeConverter();

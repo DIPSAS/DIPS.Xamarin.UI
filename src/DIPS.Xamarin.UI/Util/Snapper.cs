@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+
 namespace DIPS.Xamarin.UI.Util
 {
     /// <summary>
@@ -52,6 +54,35 @@ namespace DIPS.Xamarin.UI.Util
             }
 
             return bestValue;
+        }
+
+        public double GetNextSnapPoint(double currentValue, double speed)
+        {
+            if (m_snapWholeNumbers || m_points == null)
+            {
+                return speed > 0 ? Math.Ceiling(currentValue) : Math.Floor(currentValue);
+            }
+
+            if(speed < 0)
+            {
+                foreach(var point in m_points.OrderByDescending(p => p))
+                {
+                    if (point < currentValue)
+                        return point;
+                }
+
+                return m_points.Min();
+            }
+            else
+            {
+                foreach (var point in m_points.OrderBy(p => p))
+                {
+                    if (point > currentValue)
+                        return point;
+                }
+
+                return m_points.Max();
+            }
         }
     }
 }

@@ -59,7 +59,6 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                     m_accelerationService.StartDrag(e.TotalY);
                     break;
                 case GestureStatus.Running:
-
                     var translationY = Device.RuntimePlatform == Device.Android ? OuterSheetFrame.TranslationY : m_newY;
                     m_newYTranslation = e.TotalY + translationY;
                     //Hack to remove jitter from android 
@@ -73,17 +72,17 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 case GestureStatus.Completed:
                     m_sheetBehaviour.IsDragging = false;
                     m_accelerationService.EndDrag();
-                    m_sheetBehaviour.DeltaY = m_accelerationService.Speed * -1;
+                    m_sheetBehaviour.DeltaY = m_accelerationService.Speed;
                     break;
                 case GestureStatus.Canceled:
                     m_sheetBehaviour.IsDragging = false;
                     m_accelerationService.EndDrag();
-                    m_sheetBehaviour.DeltaY = m_accelerationService.Speed * -1; // based on 
+                    m_sheetBehaviour.DeltaY = m_accelerationService.Speed; // based on 
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            if(e.StatusType != GestureStatus.Started)
+            if (e.StatusType != GestureStatus.Started)
             {
                 await m_sheetBehaviour.UpdatePosition(m_newYTranslation);
                 if (e.StatusType == GestureStatus.Completed) //Makes sure the jitter is removed on iOS

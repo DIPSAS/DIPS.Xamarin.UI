@@ -20,11 +20,23 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public class SheetBehavior : Behavior<ModalityLayout>, IModalityHandler
     {
+        private Snapper Snapper => CreateSnapper();
         private bool m_supressNextTranslation;
         private bool m_fromIsOpenContext;
         private ModalityLayout? m_modalityLayout;
         private double? m_originalPosition = null;
         private SheetView? m_sheetView;
+
+        //TODO: Need to cache? Or fast enough?
+        private Snapper CreateSnapper()
+        {
+            if (ShouldAutoClose)
+            {
+                return SnapPositions == null ? new Snapper(new double[] { 0.0, MinPosition, MaxPosition }) : new Snapper(SnapPositions.Concat(new double[] { 0.0, MinPosition, MaxPosition }).ToArray());
+            }
+
+            return SnapPositions == null ? new Snapper(new double[] { MinPosition, MaxPosition }) : new Snapper(SnapPositions.Concat(new double[] { MinPosition, MaxPosition }).ToArray());
+        }
 
         /// <summary>
         ///     <see cref="OnBeforeOpenCommand" />
@@ -461,18 +473,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(ActionTitleProperty, value);
         }
 
-        private Snapper? Snapper { get; set; }
         /// <summary>
         ///     Positions to where the sheet will snap based on the Snap property.
         ///     This is a bindable property.
         /// </summary>
+        [TypeConverter(typeof(SnapPositionsTypeConverter))]
         public double[] SnapPositions
         {
             get => (double[])GetValue(SnapPositionsProperty);
             set
             {
                 SetValue(SnapPositionsProperty, value);
-                Snapper = SnapPositions == null ? null : new Snapper(SnapPositions.Concat(new double[] { MinPosition, MaxPosition }).ToArray());
             }
         }
 
@@ -984,7 +995,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private async void ToggleSheetVisibility()
         {
             m_fromIsOpenContext = true;
-            DeltaY = 1; // Open towards Max if needed.
+            DeltaY = Alignment == AlignmentOptions.Bottom ? -1 : 1; // Open towards Max if needed.
             if (m_modalityLayout == null) return;
 
             if (!ShouldRememberPosition)
@@ -1081,6 +1092,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 throw new XamlParseException($"{nameof(SheetBehavior)} {nameof(MinPosition)} can not be larger than {nameof(MaxPosition)}");
             }
 
+            if(Alignment == AlignmentOptions.Bottom)
+            {
+                DeltaY *= -1; // Swapping speed
+            }
+
+            DeltaY /= m_sheetView.SheetFrame.Height; // Normalize
 
             if (m_fromIsOpenContext)
             {
@@ -1090,58 +1107,27 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 }
                 else if(Snapper != null)
                 {
-                    newPosition = Snapper.GetSnapPoint(newPosition);
+                    newPosition = SetPositionAndSupressNextTranslation(Snapper.GetNextSnapPoint(newPosition, DeltaY));
                 }
             }
             else if(!IsDragging)
             {
                 if (Snap == SnapStrategy.Nearest)
                 {
-                    var closed = Position;
-                    var min = Math.Abs(Position - MinPosition);
-                    var max = Math.Abs(Position - MaxPosition);
-                    if (closed < min && closed < max)
+                    newPosition = SetPositionAndSupressNextTranslation(Snapper.GetSnapPoint(newPosition));
+                }
+                else if (Snap == SnapStrategy.Direction)
+                {
+                    newPosition = SetPositionAndSupressNextTranslation(Snapper.GetNextSnapPoint(newPosition + DeltaY * 0.1, DeltaY));
+                    if(newPosition < MinPosition)
                     {
                         IsOpen = false;
                         return;
                     }
-                    else if (min < max)
-                    {
-                        newPosition = SetPositionAndSupressNextTranslation(MinPosition);
-                    }
-                    else
-                    {
-                        newPosition = SetPositionAndSupressNextTranslation(MaxPosition);
-                    }
-                }
-                else if (Snap == SnapStrategy.Direction)
-                {
-                    if (Position > 0 && Position < MinPosition)
-                    {
-                        if (DeltaY < 0)
-                        {
-                            IsOpen = false;
-                            return;
-                        }
-                        else
-                        {
-                            newPosition = SetPositionAndSupressNextTranslation(MinPosition);
-                        }
-                    }
-                    else
-                    {
-                        if (DeltaY < 0)
-                        {
-                            newPosition = SetPositionAndSupressNextTranslation(MinPosition);
-                        }
-                        else
-                        {
-                            newPosition = SetPositionAndSupressNextTranslation(MaxPosition);
-                        }
-                    }
                 }
                 else
                 {
+                    newPosition = SetPositionAndSupressNextTranslation(newPosition + DeltaY * 0.1); // slide
                     if (newPosition <= MinPosition) // If its dragged to a position thats less or equal to min
                     {
                         if (ShouldAutoClose && !IsDragging)
@@ -1171,9 +1157,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (m_fromIsOpenContext || !IsDragging)
             {
-                var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
+                var dist = Math.Abs(m_sheetView.SheetFrame.TranslationY - yTranslation);
+                var speed = Math.Abs(DeltaY);
+                var time = (uint)Math.Max(0, Math.Min(250, dist / speed * 1000));
+                var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation, time, easing: m_fromIsOpenContext || Snap == SnapStrategy.None ? Easing.Linear :Easing.SpringOut);
 
-                await Task.Delay(250);
+                await Task.Delay((int)time);
                 await translationTask;
 
                 OnOpenCommand?.Execute(OnOpenCommandParameter);
@@ -1279,11 +1268,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <summary>
         /// Will snap towards the next in the direction of the drag
         /// </summary>
-        Direction,
-
-        /// <summary>
-        /// Will snap towards the closest point when dragging is finished
-        /// </summary>
-        Nearest
+        Smart
     }
 }

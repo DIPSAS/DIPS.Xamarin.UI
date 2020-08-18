@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,12 +11,24 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     {
         public override object ConvertFromInvariantString(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            try
             {
-                return new double[] { };
-            }
+                if (string.IsNullOrEmpty(value))
+                {
+                    return new double[] { };
+                }
 
-            return value.Split(',').Select(double.Parse).ToArray();
+                if (value.Contains(","))
+                {
+                    return value.Split(',').Select(d => double.Parse(d, CultureInfo.InvariantCulture)).ToArray();
+                }
+
+                return value.Split(' ').Select(d => double.Parse(d, CultureInfo.InvariantCulture)).ToArray();
+            }
+            catch(Exception e)
+            {
+                throw new XamlParseException($"{nameof(SheetBehavior)} SnapPositions has to be of format: 0.2, 0.3, 0.5");
+            }
         }
     }
 }

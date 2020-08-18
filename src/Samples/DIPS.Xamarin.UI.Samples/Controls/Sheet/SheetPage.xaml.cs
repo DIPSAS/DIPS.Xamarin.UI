@@ -89,7 +89,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             set => PropertyChanged.RaiseWhenSet(ref m_alignment, value);
         }
 
-        public SnapStrategy Snap { get; set; } = SnapStrategy.Direction;
+        public SnapStrategy Snap { get => m_snap; set => PropertyChanged.RaiseWhenSet(ref m_snap, value); }
 
         public string HandleColor
         {
@@ -107,10 +107,9 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
                     //Swallow it.
                 }
             }
-
         }
 
-        public List<SnapStrategy> SnapStrategies { get; set; } = new List<SnapStrategy>() { SnapStrategy.None, SnapStrategy.Direction, SnapStrategy.Nearest };
+        public List<SnapStrategy> SnapStrategies { get; set; } = new List<SnapStrategy>() { SnapStrategy.None, SnapStrategy.Smart };
 
         public SnapStrategy SelectedSnapStrategy { get; set; } = SnapStrategy.None;
 
@@ -178,6 +177,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         }
 
         private bool m_shouldAutoClose = true;
+        private SnapStrategy m_snap = SnapStrategy.Direction;
 
         public bool ShouldAutoClose
         {
