@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows.Input;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
 using DIPS.Xamarin.UI.Internal.Utilities;
 using Xamarin.Forms;
@@ -84,6 +85,32 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             get => (DateTime)GetValue(DateProperty);
             set => SetValue(DateProperty, value);
         }
+
+        public static readonly BindableProperty ExtraButtonCommandProperty = BindableProperty.Create(nameof(ExtraButtonCommand), typeof(ICommand), typeof(DatePicker));
+
+        public ICommand ExtraButtonCommand
+        {
+            get => (ICommand)GetValue(ExtraButtonCommandProperty);
+            set => SetValue(ExtraButtonCommandProperty, value);
+        }
+
+        public object ExtraButtonCommandParameter
+        {
+            get => (object)GetValue(ExtraButtonCommandParameterProperty);
+            set => SetValue(ExtraButtonCommandParameterProperty, value);
+        }
+
+        public static readonly BindableProperty ExtraButtonCommandParameterProperty = BindableProperty.Create(nameof(ExtraButtonCommandParameter), typeof(object), typeof(DatePicker));
+
+
+
+        public string ExtraButtonText
+        {
+            get => (string)GetValue(ExtraButtonTextProperty);
+            set => SetValue(ExtraButtonTextProperty, value);
+        }
+
+        public static readonly BindableProperty ExtraButtonTextProperty = BindableProperty.Create(nameof(ExtraButtonText), typeof(string), typeof(DatePicker));
 
         /// <summary>
         /// The format to use when displaying the date label, <see cref="DateConverter.DateConverterFormat"/>

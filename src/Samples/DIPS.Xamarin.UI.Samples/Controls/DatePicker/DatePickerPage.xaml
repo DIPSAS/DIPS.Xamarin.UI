@@ -17,6 +17,9 @@
                          MaximumDate="{Binding MaximumDate}"
                          MinimumDate="{Binding MinimumDate}"
                          HorizontalOptions="CenterAndExpand"
-                         VerticalOptions="CenterAndExpand" />
+                         VerticalOptions="CenterAndExpand" 
+                         ExtraButtonCommand="{Binding ExtraButtonCommand}"
+                         ExtraButtonCommandParameter="Extra pressed"
+                         ExtraButtonText="Extra"/>
     </ContentPage.Content>
 </ContentPage>
