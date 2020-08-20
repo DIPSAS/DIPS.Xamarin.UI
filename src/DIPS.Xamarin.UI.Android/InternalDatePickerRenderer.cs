@@ -7,17 +7,17 @@ using System.ComponentModel;
 using DIPS.Xamarin.UI.Android;
 using DIPS.Xamarin.UI.Internal;
 
-[assembly: ExportRenderer(typeof(DatePickerWithExtraButton), typeof(DatePickerWithExtraButtonRenderer))]
+[assembly: ExportRenderer(typeof(InternalDatePicker), typeof(InternalDatePickerRenderer))]
 namespace DIPS.Xamarin.UI.Android
 {
-    internal class DatePickerWithExtraButtonRenderer : DatePickerRenderer, IDialogInterfaceOnClickListener
+    internal class InternalDatePickerRenderer : DatePickerRenderer, IDialogInterfaceOnClickListener
     {
         internal static void Initialize() { }
 
-        private DatePickerWithExtraButton m_datepickerWithExtraButton;
+        private InternalDatePicker m_datepickerWithExtraButton;
         private DatePickerDialog m_dialog;
 
-        public DatePickerWithExtraButtonRenderer(Context context) : base(context)
+        public InternalDatePickerRenderer(Context context) : base(context)
         {
         }
 
@@ -25,12 +25,12 @@ namespace DIPS.Xamarin.UI.Android
         {
             base.OnElementChanged(e);
 
-            if (e.OldElement is DatePickerWithExtraButton oldDatePicker && Control != null)
+            if (e.OldElement is InternalDatePicker oldDatePicker && Control != null)
             {
-
+                //Dispose
             }
 
-            if (e.NewElement is DatePickerWithExtraButton newDatePicker && Control != null)
+            if (e.NewElement is InternalDatePicker newDatePicker && Control != null)
             {
                 m_datepickerWithExtraButton = newDatePicker;
             }
@@ -40,11 +40,24 @@ namespace DIPS.Xamarin.UI.Android
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName.Equals(nameof(DatePickerWithExtraButton.ExtraButtonText)))
+            if (e.PropertyName.Equals(nameof(InternalDatePicker.ExtraButtonText)))
             {
-                if (m_dialog != null)
+                SetExtraButtonText();
+
+            }
+        }
+
+        private void SetExtraButtonText()
+        {
+            if (m_dialog != null)
+            {
+                if (!string.IsNullOrEmpty(m_datepickerWithExtraButton.ExtraButtonText))
                 {
                     m_dialog.GetButton((int)DialogButtonType.Neutral).Text = m_datepickerWithExtraButton.ExtraButtonText;
+                }
+                else
+                {
+                    m_dialog.SetButton((int)DialogButtonType.Neutral, m_datepickerWithExtraButton.ExtraButtonText, this);
                 }
             }
         }
@@ -52,7 +65,12 @@ namespace DIPS.Xamarin.UI.Android
         protected override DatePickerDialog CreateDatePickerDialog(int year, int month, int day)
         {
             m_dialog = base.CreateDatePickerDialog(year, month, day);
-            m_dialog.SetButton((int)DialogButtonType.Neutral, m_datepickerWithExtraButton.ExtraButtonText, this);
+
+            if(!string.IsNullOrEmpty(m_datepickerWithExtraButton.ExtraButtonText))
+            {
+                m_dialog.SetButton((int)DialogButtonType.Neutral, m_datepickerWithExtraButton.ExtraButtonText, this);
+            }
+            
             return m_dialog;
         }
 
@@ -60,7 +78,7 @@ namespace DIPS.Xamarin.UI.Android
         {
             if (which == (int)DialogButtonType.Neutral)
             {
-                m_datepickerWithExtraButton.ExtraButtonCommand?.Execute(m_datepickerWithExtraButton.ExtraButtonCommandParameter);
+                m_datepickerWithExtraButton.OnExtraButtonClicked?.Invoke();
             }
         }
     }

@@ -4,7 +4,6 @@ using System.Windows.Input;
 using DIPS.Xamarin.UI.Converters.ValueConverters;
 using DIPS.Xamarin.UI.Internal.Utilities;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.DatePicker
@@ -16,6 +15,16 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DatePicker : ContentView
     {
+        /// <inheritdoc />
+        public DatePicker()
+        {
+            InitializeComponent();
+            FormsDatePicker.DateSelected += (sender, eventArgs) => DateSelected?.Invoke(sender, eventArgs);
+            FormsDatePicker.OnExtraButtonClicked = OnExtraButtonClicked;
+            FormsDatePicker.OniOSDoneClicked = OniOSDone;
+            FormsDatePicker.Date = Date;
+        }
+
         /// <summary>
         /// Bindable property for <see cref="Date"/>
         /// </summary>
@@ -26,6 +35,39 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             global::Xamarin.Forms.DatePicker.DateProperty.DefaultValue,
             BindingMode.TwoWay,
             propertyChanged: OnDateChanged);
+
+        /// <summary>
+        /// <see cref="ExtraButtonCommandParameter"/>
+        /// </summary>
+        public static readonly BindableProperty ExtraButtonCommandParameterProperty = BindableProperty.Create(nameof(ExtraButtonCommandParameter), typeof(object), typeof(DatePicker));
+
+        /// <summary>
+        /// <see cref="ExtraButtonCommand"/>
+        /// </summary>
+        public static readonly BindableProperty ExtraButtonCommandProperty = BindableProperty.Create(nameof(ExtraButtonCommand), typeof(ICommand), typeof(DatePicker));
+
+        /// <summary>
+        /// <see cref="ExtraButtonText"/>
+        /// </summary>
+        public static readonly BindableProperty ExtraButtonTextProperty = BindableProperty.Create(nameof(ExtraButtonText), typeof(string), typeof(DatePicker));
+
+        /// <summary>
+        /// Bindable property for <see cref="LabelColor"/>
+        /// </summary>
+        public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(
+            nameof(LabelColor),
+            typeof(Color),
+            typeof(DatePicker),
+            Color.Black);
+
+        /// <summary>
+        /// Bindable property for <see cref="LabelSize"/>
+        /// </summary>
+        public static readonly BindableProperty LabelSizeProperty = BindableProperty.Create(
+            nameof(LabelSize),
+            typeof(double),
+            typeof(DatePicker),
+            propertyChanged: OnLabelSizePropertyChanged);
 
         /// <summary>
         /// Bindable property for <see cref="MaximumDate"/>
@@ -46,35 +88,24 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             global::Xamarin.Forms.DatePicker.MinimumDateProperty.DefaultValue);
 
         /// <summary>
-        /// Bindable property for <see cref="LabelColor"/>
+        /// Invoked when the date picker is closed.
         /// </summary>
-        public static readonly BindableProperty LabelColorProperty = BindableProperty.Create(
-            nameof(LabelColor),
-            typeof(Color),
-            typeof(DatePicker),
-            Color.Black);
+        public event EventHandler Closed;
 
         /// <summary>
-        /// Bindable property for <see cref="LabelSize"/>
+        /// Invoked on date changes
         /// </summary>
-        public static readonly BindableProperty LabelSizeProperty = BindableProperty.Create(
-            nameof(LabelSize),
-            typeof(double),
-            typeof(DatePicker),
-            propertyChanged: OnLabelSizePropertyChanged);
+        public event EventHandler<DateChangedEventArgs>? DateSelected;
 
-        private static void OnLabelSizePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (!(bindable is DatePicker datepicker)) return;
-            datepicker.DateLabel.FontSize = (double)newvalue;
-        }
+        /// <summary>
+        /// Invoked when the extra button that is placed to the left in the date picker is clicked.
+        /// </summary>
+        public event EventHandler ExtraButtonClicked;
 
-        /// <inheritdoc />
-        public DatePicker()
-        {
-            InitializeComponent();
-            FormsDatePicker.DateSelected += (sender, eventArgs) => DateSelected?.Invoke(sender, eventArgs);
-        }
+        /// <summary>
+        /// Invoked when the date picker is opened.
+        /// </summary>
+        public event EventHandler Opened;
 
         /// <summary>
         /// The date that the user picks from the date picker
@@ -86,31 +117,35 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             set => SetValue(DateProperty, value);
         }
 
-        public static readonly BindableProperty ExtraButtonCommandProperty = BindableProperty.Create(nameof(ExtraButtonCommand), typeof(ICommand), typeof(DatePicker));
-
+        /// <summary>
+        /// The command that executes when the user taps the extra button to the left in the date picker.
+        /// This is a bindable property.
+        /// </summary>
         public ICommand ExtraButtonCommand
         {
             get => (ICommand)GetValue(ExtraButtonCommandProperty);
             set => SetValue(ExtraButtonCommandProperty, value);
         }
 
+        /// <summary>
+        /// The command paramter to be passed to the <see cref="ExtraButtonCommand"/>
+        /// This is a bindable property.
+        /// </summary>
         public object ExtraButtonCommandParameter
         {
-            get => (object)GetValue(ExtraButtonCommandParameterProperty);
+            get => GetValue(ExtraButtonCommandParameterProperty);
             set => SetValue(ExtraButtonCommandParameterProperty, value);
         }
 
-        public static readonly BindableProperty ExtraButtonCommandParameterProperty = BindableProperty.Create(nameof(ExtraButtonCommandParameter), typeof(object), typeof(DatePicker));
-
-
-
+        /// <summary>
+        /// The text of the extra button that you can add to the left in the date picker.
+        /// This is a bindable property.
+        /// </summary>
         public string ExtraButtonText
         {
             get => (string)GetValue(ExtraButtonTextProperty);
             set => SetValue(ExtraButtonTextProperty, value);
         }
-
-        public static readonly BindableProperty ExtraButtonTextProperty = BindableProperty.Create(nameof(ExtraButtonText), typeof(string), typeof(DatePicker));
 
         /// <summary>
         /// The format to use when displaying the date label, <see cref="DateConverter.DateConverterFormat"/>
@@ -160,21 +195,95 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         }
 
         /// <summary>
-        /// Invoked on date changes
+        /// A enum to pick between the different strategies for when the date picker should update its date value.
         /// </summary>
-        public event EventHandler<DateChangedEventArgs>? DateSelected;
+#pragma warning disable IDE1006 // Naming Styles
+        public iOSDateChangeStrategy iOSDateChangedStrategy { get; set; }
+#pragma warning restore IDE1006 // Naming Styles
 
         /// <summary>
         /// Opens the date picker
         /// </summary>
-        public void Open() => FormsDatePicker.Focus();
+        public void Open()
+        {
+            FormsDatePicker.Focus();
+        }
+
+        /// <summary>
+        /// Event that gets invoked when the user click the extra button to the left in the datepicker.
+        /// </summary>
+        internal void OnExtraButtonClicked()
+        {
+            ExtraButtonCommand?.Execute(ExtraButtonCommandParameter);
+            ExtraButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void OniOSDone(DateTime date)
+        {
+            if(iOSDateChangedStrategy == iOSDateChangeStrategy.WhenDone)
+            {
+                Date = date;
+            }
+        }
 
         private static void OnDateChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (!(bindable is DatePicker datePicker)) return;
+            if (!(bindable is DatePicker datePicker) || !(newvalue is DateTime newDate))
+            {
+                return;
+            }
+
+            datePicker.FormsDatePicker.Date = newDate;
             var formattedObject = new DateConverter() { Format = datePicker.Format }.Convert(datePicker.Date, null, null, CultureInfo.CurrentCulture);
-            if (!(formattedObject is string formattedDate)) return;
+            if (!(formattedObject is string formattedDate))
+            {
+                return;
+            }
+            
             datePicker.DateLabel.Text = formattedDate;
         }
+
+        private static void OnLabelSizePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is DatePicker datepicker))
+            {
+                return;
+            }
+
+            datepicker.DateLabel.FontSize = (double)newvalue;
+        }
+        private void FormsDatePicker_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            if(Device.RuntimePlatform == Device.iOS)
+            {
+                if(iOSDateChangedStrategy == iOSDateChangeStrategy.WhenDone)
+                {
+                    return;
+                }
+            }
+
+            Date = e.NewDate;
+        }
+
+        private void FormsDatePicker_Focused(object sender, FocusEventArgs e)
+        {
+            Opened?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void FormsDatePicker_Unfocused(object sender, FocusEventArgs e)
+        {
+            Closed?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    /// <summary>
+    /// <see cref="DatePicker.iOSDateChangedStrategy"/>
+    /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
+    public enum iOSDateChangeStrategy
+#pragma warning restore IDE1006 // Naming Styles
+    {
+        WhenValueChanged = 0,
+        WhenDone = 1
     }
 }

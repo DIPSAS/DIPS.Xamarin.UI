@@ -12,14 +12,14 @@
     <ContentPage.BindingContext>
         <DatePicker:DatePickerPageViewModel />
     </ContentPage.BindingContext>
-    <ContentPage.Content>
-        <dxui:DatePicker Date="{Binding Date}"
-                         MaximumDate="{Binding MaximumDate}"
-                         MinimumDate="{Binding MinimumDate}"
-                         HorizontalOptions="CenterAndExpand"
-                         VerticalOptions="CenterAndExpand" 
-                         ExtraButtonCommand="{Binding ExtraButtonCommand}"
-                         ExtraButtonCommandParameter="Extra pressed"
-                         ExtraButtonText="Extra"/>
-    </ContentPage.Content>
+    <dxui:DatePicker Date="{Binding Date}"
+                     LabelColor="{AppThemeBinding Dark=white, Light=black}"
+                     HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="CenterAndExpand"
+                     ExtraButtonCommand="{Binding SetTodayDateCommand}"
+                     ExtraButtonCommandParameter="Today pressed"
+                     ExtraButtonText="Today"
+                     iOSDateChangedStrategy="WhenDone"
+                     ExtraButtonClicked="ExtraButtonClicked"
+                     x:Name="datepicker" />
 </ContentPage>

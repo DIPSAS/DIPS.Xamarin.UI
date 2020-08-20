@@ -19,15 +19,20 @@ namespace DIPS.Xamarin.UI.Samples.Controls.DatePicker
         {
             InitializeComponent();
         }
+
+        private void ExtraButtonClicked(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class DatePickerPageViewModel : INotifyPropertyChanged
     {
         public DatePickerPageViewModel()
         {
-            ExtraButtonCommand = new Command<string>(s =>
+            SetTodayDateCommand = new Command<string>(s =>
             {
-                //Do something 
+                Date = DateTime.Now;
             });
         }
 
@@ -39,12 +44,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.DatePicker
             set => PropertyChanged.RaiseWhenSet(ref m_date, value);
         }
 
-        public DateTime MaximumDate => DateTime.Now.AddDays(5);
-
-        public DateTime MinimumDate => DateTime.Now.AddDays(-5);
-
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ICommand ExtraButtonCommand { get; }
+        public ICommand SetTodayDateCommand { get; }
     }
 }

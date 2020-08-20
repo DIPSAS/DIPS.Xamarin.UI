@@ -186,7 +186,7 @@ namespace DIPS.Xamarin.UI.Controls.Skeleton
         public List<SkeletonShape> Shapes { get; set; } = new List<SkeletonShape>();
 
         /// <summary>
-        ///  <see cref="SelectorItem" />
+        ///  <see cref="IsLoading" />
         /// </summary>
         public static readonly BindableProperty IsLoadingProperty = BindableProperty.Create(
             nameof(IsLoading),
