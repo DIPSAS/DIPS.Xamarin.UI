@@ -80,10 +80,7 @@ namespace DIPS.Xamarin.UI.iOS
 
         private void OnDone(object sender, EventArgs e)
         {
-            if(Control.InputView is UIDatePicker uIDatePicker)
-            {
-                m_internalDatePicker.OniOSDoneClicked?.Invoke(m_uiDatePicker.Date.ToDateTime().Date);
-            }
+            m_internalDatePicker.OniOSDoneClicked?.Invoke(m_uiDatePicker.Date.ToDateTime().Date);
         }
 
         private void SetExtraButtonTitle()
