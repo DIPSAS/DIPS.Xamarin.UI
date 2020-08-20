@@ -85,7 +85,8 @@ namespace DIPS.Xamarin.UI.iOS
 
         private void SetExtraButtonTitle()
         {
-            var extraButton = m_toolBar.Items.SingleOrDefault(item => item.AccessibilityIdentifier.Equals(ExtraButtonIdentifier));
+            var extraButton = m_toolBar.Items.SingleOrDefault(item => item.AccessibilityIdentifier != null &&
+            item.AccessibilityIdentifier.Equals(ExtraButtonIdentifier));
             if (extraButton != null)
             {
                 extraButton.Title = m_internalDatePicker.ExtraButtonText;

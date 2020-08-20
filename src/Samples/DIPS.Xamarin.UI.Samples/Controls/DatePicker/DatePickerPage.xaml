@@ -19,7 +19,7 @@
                      ExtraButtonCommand="{Binding SetTodayDateCommand}"
                      ExtraButtonCommandParameter="Today pressed"
                      ExtraButtonText="Today"
-                     iOSDateChangedStrategy="WhenDone"
+                     iOSDateChangedStrategy="WhenValueChanged"
                      ExtraButtonClicked="ExtraButtonClicked"
-                     x:Name="datepicker" />
+                     />
 </ContentPage>
