@@ -1335,11 +1335,13 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Droid
 			global::DIPS.Xamarin.UI.Android.Resource.String.abc_shareactionprovider_share_with_application = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.abc_shareactionprovider_share_with_application;
 			global::DIPS.Xamarin.UI.Android.Resource.String.abc_toolbar_collapse_description = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.abc_toolbar_collapse_description;
 			global::DIPS.Xamarin.UI.Android.Resource.String.appbar_scrolling_view_behavior = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.appbar_scrolling_view_behavior;
+			global::DIPS.Xamarin.UI.Android.Resource.String.app_name = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.app_name;
 			global::DIPS.Xamarin.UI.Android.Resource.String.bottom_sheet_behavior = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.bottom_sheet_behavior;
 			global::DIPS.Xamarin.UI.Android.Resource.String.character_counter_content_description = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.character_counter_content_description;
 			global::DIPS.Xamarin.UI.Android.Resource.String.character_counter_pattern = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.character_counter_pattern;
 			global::DIPS.Xamarin.UI.Android.Resource.String.fab_transformation_scrim_behavior = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.fab_transformation_scrim_behavior;
 			global::DIPS.Xamarin.UI.Android.Resource.String.fab_transformation_sheet_behavior = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.fab_transformation_sheet_behavior;
+			global::DIPS.Xamarin.UI.Android.Resource.String.hello = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.hello;
 			global::DIPS.Xamarin.UI.Android.Resource.String.hide_bottom_view_on_scroll_behavior = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.hide_bottom_view_on_scroll_behavior;
 			global::DIPS.Xamarin.UI.Android.Resource.String.mtrl_chip_close_icon_content_description = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.mtrl_chip_close_icon_content_description;
 			global::DIPS.Xamarin.UI.Android.Resource.String.password_toggle_content_description = global::DIPS.Xamarin.Forms.IssuesRepro.Droid.Resource.String.password_toggle_content_description;
