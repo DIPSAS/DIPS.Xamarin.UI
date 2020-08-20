@@ -283,7 +283,13 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
     public enum iOSDateChangeStrategy
 #pragma warning restore IDE1006 // Naming Styles
     {
+        /// <summary>
+        /// The date will change when the user spins to a date in the ios date picker spinner
+        /// </summary>
         WhenValueChanged = 0,
+        /// <summary>
+        /// The date will change when the user taps done in the date picker spinner toolbar
+        /// </summary>
         WhenDone = 1
     }
 }
