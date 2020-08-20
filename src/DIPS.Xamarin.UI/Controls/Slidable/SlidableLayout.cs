@@ -38,7 +38,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             Config = new SliderConfig(int.MinValue, int.MaxValue);
             m_rec = new PanGestureRecognizer();
             var tapGesture = new TapGestureRecognizer();
-            GestureRecognizers.Add(m_rec);
+            if (Device.RuntimePlatform == Device.iOS) GestureRecognizers.Add(m_rec);
             GestureRecognizers.Add(tapGesture);
             m_rec.PanUpdated += Rec_PanUpdated;
             tapGesture.Tapped += OnTapped;
@@ -392,6 +392,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                     GestureRecognizers.Add(m_rec);
                 }
             }
+        }
+
+        internal void SendPan(float distanceX, float distanceY, GestureStatus status, int id)
+        {
+            if (!DisableTouchScroll) Rec_PanUpdated(this, new PanUpdatedEventArgs(status, id, distanceX, distanceY));
         }
     }
 }

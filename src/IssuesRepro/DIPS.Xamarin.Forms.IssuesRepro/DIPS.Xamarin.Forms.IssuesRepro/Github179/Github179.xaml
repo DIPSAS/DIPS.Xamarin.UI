@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
 <ContentPage x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github179.Github179"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -33,6 +34,11 @@
                            BackgroundColor="WhiteSmoke"
                            CornerRadius="0"
                            HasShadow="False">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                                  Command="{Binding SelectCommand}"/>
+                        </Frame.GestureRecognizers>
+
                         <Grid Margin="0"
                               Padding="0"
                               HorizontalOptions="FillAndExpand"
