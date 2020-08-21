@@ -211,6 +211,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
 
         internal void OnExtraButtonClicked()
         {
+            FormsDatePicker.Unfocus();
             ExtraButtonCommand?.Execute(ExtraButtonCommandParameter);
             ExtraButtonClicked?.Invoke(this, EventArgs.Empty);
         }
