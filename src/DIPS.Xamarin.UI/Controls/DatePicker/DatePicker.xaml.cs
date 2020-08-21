@@ -19,7 +19,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         public DatePicker()
         {
             InitializeComponent();
-            FormsDatePicker.DateSelected += (sender, eventArgs) => DateSelected?.Invoke(sender, eventArgs);
+
             FormsDatePicker.OnExtraButtonClicked = OnExtraButtonClicked;
             FormsDatePicker.OniOSDoneClicked = OniOSDone;
             FormsDatePicker.Date = Date;
@@ -228,7 +228,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
 
         private static void OnDateChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (!(bindable is DatePicker datePicker) || !(newvalue is DateTime newDate))
+            if (!(bindable is DatePicker datePicker) || !(newvalue is DateTime newDate) || !(oldvalue is DateTime oldDate))
             {
                 return;
             }
@@ -239,8 +239,13 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             {
                 return;
             }
-            
+            datePicker.InvokeDateSelected(oldDate, newDate);
             datePicker.DateLabel.Text = formattedDate;
+        }
+
+        private void InvokeDateSelected(DateTime oldDate, DateTime newDate)
+        {
+            DateSelected?.Invoke(this, new DateChangedEventArgs(oldDate, newDate));
         }
 
         private static void OnLabelSizePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)

@@ -17,10 +17,11 @@
                      HorizontalOptions="CenterAndExpand"
                      VerticalOptions="CenterAndExpand"
                      ExtraButtonCommand="{Binding SetTodayDateCommand}"
-                     DateChangedStrategyiOS="WhenValueChanged"
+                     DateChangedStrategyiOS="WhenDone"
                      ExtraButtonCommandParameter="Today pressed"
                      ExtraButtonText="Today"
                      ExtraButtonClicked="ExtraButtonClicked"
+                     DateSelected="DatePicker_DateSelected"
                      
                      />
 </ContentPage>
