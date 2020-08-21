@@ -24,6 +24,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.DatePicker
         {
 
         }
+
+        private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
+        {
+
+        }
     }
 
     public class DatePickerPageViewModel : INotifyPropertyChanged
