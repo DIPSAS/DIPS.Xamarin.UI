@@ -209,9 +209,6 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             FormsDatePicker.Focus();
         }
 
-        /// <summary>
-        /// Event that gets invoked when the user click the extra button to the left in the datepicker.
-        /// </summary>
         internal void OnExtraButtonClicked()
         {
             ExtraButtonCommand?.Execute(ExtraButtonCommandParameter);
