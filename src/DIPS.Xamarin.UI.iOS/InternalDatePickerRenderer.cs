@@ -21,6 +21,7 @@ namespace DIPS.Xamarin.UI.iOS
         private InternalDatePicker m_internalDatePicker;
         private UIToolbar m_toolBar;
         private UIDatePicker m_uiDatePicker;
+        private UIBarButtonItem m_doneButton;
 
         protected override void OnElementChanged(ElementChangedEventArgs<DatePicker> e)
         {
@@ -28,7 +29,10 @@ namespace DIPS.Xamarin.UI.iOS
 
             if (e.OldElement is InternalDatePicker oldDatePicker && Control != null)
             {
-                //Dispose
+                if(m_doneButton != null)
+                {
+                    m_doneButton.Clicked -= OnDone;
+                }
             }
 
             if (e.NewElement is InternalDatePicker newDatePicker && Control != null)
@@ -64,10 +68,10 @@ namespace DIPS.Xamarin.UI.iOS
                     AccessibilityIdentifier = ExtraButtonIdentifier
                 };
 
-                var doneButton = previousItems.FirstOrDefault(item => item.Style == UIBarButtonItemStyle.Done);
-                if(doneButton != null)
+                m_doneButton = previousItems.FirstOrDefault(item => item.Style == UIBarButtonItemStyle.Done);
+                if(m_doneButton != null)
                 {
-                    doneButton.Clicked += OnDone;
+                    m_doneButton.Clicked += OnDone;
                 }
 
                 var newItems = new List<UIBarButtonItem>();

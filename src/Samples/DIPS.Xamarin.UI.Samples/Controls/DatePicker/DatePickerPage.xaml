@@ -17,9 +17,9 @@
                      HorizontalOptions="CenterAndExpand"
                      VerticalOptions="CenterAndExpand"
                      ExtraButtonCommand="{Binding SetTodayDateCommand}"
+                     iOSDateChangedStrategy="WhenValueChanged"
                      ExtraButtonCommandParameter="Today pressed"
                      ExtraButtonText="Today"
-                     iOSDateChangedStrategy="WhenValueChanged"
                      ExtraButtonClicked="ExtraButtonClicked"
                      />
 </ContentPage>
