@@ -12,9 +12,9 @@
         <TimePicker:TimePickerPageViewModel />
     </ContentPage.BindingContext>
     <dxui:TimePicker Time="{Binding Time}"
+                     LabelColor="{AppThemeBinding Dark=white, Light=black}"
                      Format="Default"
                      HorizontalOptions="CenterAndExpand"
                      VerticalOptions="CenterAndExpand"
-                     LabelColor="Black"
                      LabelSize="20" />
 </ContentPage>
