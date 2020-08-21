@@ -198,7 +198,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         /// A enum to pick between the different strategies for when the date picker should update its date value.
         /// </summary>
 #pragma warning disable IDE1006 // Naming Styles
-        public iOSDateChangeStrategy iOSDateChangedStrategy { get; set; }
+        public iOSDateChangeStrategy DateChangedStrategyiOS { get; set; }
 #pragma warning restore IDE1006 // Naming Styles
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
 
         internal void OniOSDone(DateTime date)
         {
-            if(iOSDateChangedStrategy == iOSDateChangeStrategy.WhenDone)
+            if(DateChangedStrategyiOS == iOSDateChangeStrategy.WhenDone)
             {
                 Date = date;
             }
@@ -256,7 +256,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         {
             if(Device.RuntimePlatform == Device.iOS)
             {
-                if(iOSDateChangedStrategy == iOSDateChangeStrategy.WhenDone)
+                if(DateChangedStrategyiOS == iOSDateChangeStrategy.WhenDone)
                 {
                     return;
                 }
@@ -277,7 +277,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
     }
 
     /// <summary>
-    /// <see cref="DatePicker.iOSDateChangedStrategy"/>
+    /// <see cref="DatePicker.DateChangedStrategyiOS"/>
     /// </summary>
 #pragma warning disable IDE1006 // Naming Styles
     public enum iOSDateChangeStrategy
