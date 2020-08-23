@@ -108,7 +108,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         public event EventHandler Opened;
 
         /// <summary>
-        /// The date that the user picks from the date picker
+        /// The date that the user picks from the date picker.
         /// This is a bindable property
         /// </summary>
         public DateTime Date
@@ -128,7 +128,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         }
 
         /// <summary>
-        /// The command paramter to be passed to the <see cref="ExtraButtonCommand"/>
+        /// The command paramter to be passed to the <see cref="ExtraButtonCommand"/>.
         /// This is a bindable property.
         /// </summary>
         public object ExtraButtonCommandParameter
@@ -153,7 +153,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         public DateConverter.DateConverterFormat Format { get; set; }
 
         /// <summary>
-        /// The color of the label that the user can click to open the date picker
+        /// The color of the label that the user can click to open the date picker.
         /// This is a bindable property
         /// </summary>
         public Color LabelColor
@@ -163,7 +163,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         }
 
         /// <summary>
-        /// The label size of the label that the user can click to open the date picker
+        /// The label size of the label that the user can click to open the date picker.
         /// This is a bindable property
         /// </summary>
         /// <remarks>This support named font sizes <see href="https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/text/fonts#named-font-sizes"/></remarks>
@@ -175,7 +175,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         }
 
         /// <summary>
-        /// The maximum date to set to the date picker
+        /// The maximum date to set to the date picker.
         /// This is a bindable property
         /// </summary>
         public DateTime MaximumDate
@@ -185,7 +185,7 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         }
 
         /// <summary>
-        /// The minimum date to set to the date picker
+        /// The minimum date to set to the date picker.
         /// This is a bindable property
         /// </summary>
         public DateTime MinimumDate
@@ -202,15 +202,40 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
 #pragma warning restore IDE1006 // Naming Styles
 
         /// <summary>
-        /// Opens the date picker
+        /// Opens the date picker.
         /// </summary>
         public void Open()
         {
             FormsDatePicker.Focus();
         }
 
+        /// <summary>
+        /// Closes the date picker.
+        /// </summary>
+        public void Close()
+        {
+            FormsDatePicker.Unfocus();
+        }
+
+        /// <summary>
+        /// <see cref="Open"/>
+        /// </summary>
+        public new void Focus()
+        {
+            Open();
+        }
+
+        /// <summary>
+        /// <see cref="Close"/>
+        /// </summary>
+        public new void Unfocus()
+        {
+            Close();
+        }
+
         internal void OnExtraButtonClicked()
         {
+            Close();
             ExtraButtonCommand?.Execute(ExtraButtonCommandParameter);
             ExtraButtonClicked?.Invoke(this, EventArgs.Empty);
         }
