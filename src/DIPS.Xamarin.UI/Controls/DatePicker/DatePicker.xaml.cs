@@ -210,6 +210,14 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         }
 
         /// <summary>
+        /// Closes the date picker.
+        /// </summary>
+        public void Close()
+        {
+            FormsDatePicker.Unfocus();
+        }
+
+        /// <summary>
         /// <see cref="Open"/>
         /// </summary>
         public new void Focus()
@@ -217,9 +225,17 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
             Open();
         }
 
+        /// <summary>
+        /// <see cref="Close"/>
+        /// </summary>
+        public new void Unfocus()
+        {
+            Close();
+        }
+
         internal void OnExtraButtonClicked()
         {
-            FormsDatePicker.Unfocus();
+            Close();
             ExtraButtonCommand?.Execute(ExtraButtonCommandParameter);
             ExtraButtonClicked?.Invoke(this, EventArgs.Empty);
         }
