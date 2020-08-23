@@ -21,7 +21,5 @@
                      ExtraButtonCommandParameter="Today pressed"
                      ExtraButtonText="Today"
                      ExtraButtonClicked="ExtraButtonClicked"
-                     DateSelected="DatePicker_DateSelected"
-                     
-                     />
+                     DateSelected="DatePicker_DateSelected" />
 </ContentPage>
