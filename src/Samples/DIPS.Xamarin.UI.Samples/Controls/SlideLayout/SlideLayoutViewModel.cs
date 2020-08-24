@@ -24,8 +24,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
         {
             await Task.Delay(1);
             SlidableProperties = new SlidableProperties(1);
-            //await Task.Delay(1000);
-            //SlidableProperties = new SlidableProperties(-3);
+            await Task.Delay(1000);
+            SlidableProperties = new SlidableProperties(-3);
         }
 
         public SliderConfig Config => new SliderConfig(-10, 0);
