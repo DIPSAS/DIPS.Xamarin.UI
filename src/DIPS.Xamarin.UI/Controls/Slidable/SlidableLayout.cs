@@ -358,7 +358,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             Rec_PanUpdated(this, new PanUpdatedEventArgs(status, id, distanceX, distanceY));
         }
 
-        public void SendTapped(float x, float y)
+        internal void SendTapped(float x, float y)
         {
             
         }

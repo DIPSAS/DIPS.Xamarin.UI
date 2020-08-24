@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Content;
+using Android.Util;
 using Android.Views;
 using DIPS.Xamarin.UI.Android;
 using DIPS.Xamarin.UI.Controls.Slidable;
@@ -13,6 +14,7 @@ namespace DIPS.Xamarin.UI.Android
 {
     internal class SlidableLayoutContentView : ViewRenderer, GestureDetector.IOnGestureListener
     {
+        private readonly Context m_context;
         private readonly GestureDetector m_detector;
         private SlidableLayout m_elem;
         private bool m_isScrolling;
@@ -23,8 +25,9 @@ namespace DIPS.Xamarin.UI.Android
 
         public SlidableLayoutContentView(Context context) : base(context)
         {
+            m_context = context;
             m_random = new Random();
-            //m_scaledTouchSlop = ViewConfiguration.Get(context).ScaledTouchSlop; //Can be used to get device default.
+            m_scaledTouchSlop = ViewConfiguration.Get(context).ScaledTouchSlop; //Can be used to get device default.
             m_detector = new GestureDetector(context, this);
         }
 
@@ -85,7 +88,11 @@ namespace DIPS.Xamarin.UI.Android
             switch (action)
             {
                 case MotionEventActions.Up:
-                    if (!m_isScrolling) m_elem.SendTapped(ev.RawX, ev.RawY);
+                    if (!m_isScrolling)
+                    {
+                        var (x, y) = ToDps(ev.RawX, ev.RawY);
+                        m_elem.SendTapped(x, y);
+                    }
                     break;
                 case MotionEventActions.Move:
                     return m_isScrolling || StartScroll(ev);
@@ -103,7 +110,11 @@ namespace DIPS.Xamarin.UI.Android
             if (e.ActionMasked == MotionEventActions.Up || e.ActionMasked == MotionEventActions.Cancel)
             {
                 if (m_isScrolling) m_elem?.SendPan(e.GetX() - m_startX, 0, GestureStatus.Completed, m_pointerId);
-                else m_elem.SendTapped(e.RawX, e.RawY);
+                else
+                {
+                    var (x, y) = ToDps(e.RawX, e.RawY);
+                    m_elem.SendTapped(x, y);
+                }
                 m_isScrolling = false;
                 return false;
             }
@@ -114,6 +125,12 @@ namespace DIPS.Xamarin.UI.Android
             }
 
             return m_detector.OnTouchEvent(e);
+        }
+
+        private (float, float) ToDps(float rawX, float rawY)
+        {
+            var density = m_context.Resources.DisplayMetrics.Density;
+            return (rawX / density, rawY / density);
         }
     }
 }
