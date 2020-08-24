@@ -27,7 +27,7 @@ namespace DIPS.Xamarin.UI.Android
         {
             m_context = context;
             m_random = new Random();
-            m_scaledTouchSlop = ViewConfiguration.Get(context).ScaledTouchSlop; //Can be used to get device default.
+            //m_scaledTouchSlop = ViewConfiguration.Get(context).ScaledTouchSlop; //Can be used to get device default.
             m_detector = new GestureDetector(context, this);
         }
 
