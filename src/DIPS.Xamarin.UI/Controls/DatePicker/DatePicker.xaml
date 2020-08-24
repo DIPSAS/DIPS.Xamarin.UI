@@ -1,28 +1,31 @@
-﻿<?xml version="1.0"
-      encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="DIPS.Xamarin.UI.Controls.DatePicker.DatePicker"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
-             mc:Ignorable="d"
-             x:Class="DIPS.Xamarin.UI.Controls.DatePicker.DatePicker"
-             x:Name="codeBehind">
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:internal="clr-namespace:DIPS.Xamarin.UI.Internal"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="codeBehind"
+             mc:Ignorable="d">
     <Grid IsClippedToBounds="True">
-        <DatePicker x:Name="FormsDatePicker"
-                    Date="{Binding Source={x:Reference codeBehind}, Path=Date}"
-                    MaximumDate="{Binding Source={x:Reference codeBehind}, Path=MaximumDate}"
-                    MinimumDate="{Binding Source={x:Reference codeBehind}, Path=MinimumDate}"
-                    BackgroundColor="{Binding Source={x:Reference codeBehind}, Path=BackgroundColor}"
-                    Margin="{Binding Source={x:Reference DateLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
-                    TextColor="Transparent"
-                    HeightRequest="{Binding Source={x:Reference DateLabel}, Path=Height}"
-                    WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}" />
+        <internal:InternalDatePicker x:Name="FormsDatePicker"
+                                     Margin="{Binding Source={x:Reference DateLabel}, Path=Height, Converter={ValueConverters:MultiplicationConverter Factor=-1}}"
+                                     BackgroundColor="{Binding Source={x:Reference codeBehind}, Path=BackgroundColor}"
+                                     ExtraButtonText="{Binding Source={x:Reference codeBehind}, Path=ExtraButtonText}"
+                                     Focused="FormsDatePicker_Focused"
+                                     HeightRequest="{Binding Source={x:Reference DateLabel}, Path=Height}"
+                                     MaximumDate="{Binding Source={x:Reference codeBehind}, Path=MaximumDate}"
+                                     MinimumDate="{Binding Source={x:Reference codeBehind}, Path=MinimumDate}"
+                                     TextColor="Transparent"
+                                     Unfocused="FormsDatePicker_Unfocused"
+                                     DateSelected="FormsDatePicker_DateSelected"
+                                     WidthRequest="{Binding Source={x:Reference DateLabel}, Path=Width}" />
         <Label x:Name="DateLabel"
-               TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
                BackgroundColor="{Binding Source={x:Reference codeBehind}, Path=BackgroundColor}"
-               InputTransparent="True"
                HorizontalOptions="{Binding Source={x:Reference codeBehind}, Path=HorizontalOptions}"
+               InputTransparent="True"
+               TextColor="{Binding Source={x:Reference codeBehind}, Path=LabelColor}"
                VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}" />
     </Grid>
 </ContentView>

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SlidableLayoutContentView.cs" />
+    <Compile Include="InternalDatePickerRenderer.cs" />
     <Compile Include="Util\Inspector.cs" />
     <Compile Include="Library.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

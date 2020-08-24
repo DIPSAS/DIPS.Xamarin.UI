@@ -15,6 +15,7 @@ namespace DIPS.Xamarin.UI.iOS
         public static void Initialize()
         {
             DIPS.Xamarin.UI.Internal.Utilities.Inspector.Instance = new Inspector();
+            InternalDatePickerRenderer.Initialize();
         }
     }
 }
