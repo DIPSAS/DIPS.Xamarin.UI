@@ -37,14 +37,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             VerticalOptions = LayoutOptions.FillAndExpand;
             Config = new SliderConfig(int.MinValue, int.MaxValue);
             m_rec = new PanGestureRecognizer();
-            var tapGesture = new TapGestureRecognizer();
 
             if (Device.RuntimePlatform == Device.iOS)
             {
                 GestureRecognizers.Add(m_rec);
-                GestureRecognizers.Add(tapGesture);
                 m_rec.PanUpdated += Rec_PanUpdated;
-                tapGesture.Tapped += OnTapped;
             }
         }
 
@@ -80,48 +77,6 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         public void ScrollTo(int index, int length = 250)
         {
             SlidableProperties.ScrollTo(s => SlideProperties = s, () => SlideProperties, index, length);
-        }
-            
-        private void OnTapped(object sender, EventArgs e)
-        {
-            if(m_disableTouchStop)
-            {
-                return;
-            }
-
-            if (DisableTouchScroll)
-            {
-                return;
-            }
-
-            if (Config == null)
-            {
-                return;
-            }
-
-            if (SlideProperties.IsHeld)
-            {
-                return;
-            }
-
-            var id = m_tappedValue--;
-            m_lastId = id;
-            var index = SlideProperties.Position;
-            SlideProperties = new SlidableProperties(index, id, false);
-            m_accelerator.StartDrag(index);
-            m_accelerator.EndDrag();
-            Device.StartTimer(TimeSpan.FromMilliseconds(20), () => // ~40 fps
-            {
-                if (id != SlideProperties.HoldId) return false;
-                m_accelerator.Min = Config.MinValue - 0.45;
-                m_accelerator.Max = Config.MaxValue + 0.45;
-                var next = m_accelerator.GetValue(out bool isDone);
-                index = next;
-                if (SlideProperties.IsHeld) return false;
-                SlideProperties = new SlidableProperties(index, id, false);
-                OnScrolledInternal();
-                return !isDone;
-            });
         }
 
         private void Rec_PanUpdated(object sender, PanUpdatedEventArgs e)

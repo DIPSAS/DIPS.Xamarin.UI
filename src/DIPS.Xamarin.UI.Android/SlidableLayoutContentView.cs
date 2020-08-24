@@ -20,7 +20,6 @@ namespace DIPS.Xamarin.UI.Android
         private readonly Random m_random;
         private readonly int m_scaledTouchSlop = 5;
         private float m_startX;
-        private int m_tappedWithId;
 
         public SlidableLayoutContentView(Context context) : base(context)
         {
@@ -31,8 +30,6 @@ namespace DIPS.Xamarin.UI.Android
 
         public bool OnDown(MotionEvent e)
         {
-            //if (m_tappedWithId != m_pointerId) m_elem.SendTapped(e.GetX(), e.GetY()); // Prevents sending twice for a single tap when there are no children with gesture recognizers.
-            //m_tappedWithId = m_pointerId;
             return true;
         }
 
@@ -88,7 +85,7 @@ namespace DIPS.Xamarin.UI.Android
             switch (action)
             {
                 case MotionEventActions.Up:
-                    if (!m_isScrolling) m_elem.SendTapped(ev.GetX(), ev.GetY());
+                    if (!m_isScrolling) m_elem.SendTapped(ev.RawX, ev.RawY);
                     break;
                 case MotionEventActions.Move:
                     return m_isScrolling || StartScroll(ev);
@@ -106,7 +103,7 @@ namespace DIPS.Xamarin.UI.Android
             if (e.ActionMasked == MotionEventActions.Up || e.ActionMasked == MotionEventActions.Cancel)
             {
                 if (m_isScrolling) m_elem?.SendPan(e.GetX() - m_startX, 0, GestureStatus.Completed, m_pointerId);
-                else m_elem.SendTapped(e.GetX(), e.GetY());
+                else m_elem.SendTapped(e.RawX, e.RawY);
                 m_isScrolling = false;
                 return false;
             }
