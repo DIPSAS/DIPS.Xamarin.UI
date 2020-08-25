@@ -22,6 +22,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             if (!(sender is SheetBehavior sheetBehavior)) return;
             sheetBehavior.Position = 0.9;
         }
+
+        private void StackLayout_LayoutChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class SheetPageViewModel : INotifyPropertyChanged

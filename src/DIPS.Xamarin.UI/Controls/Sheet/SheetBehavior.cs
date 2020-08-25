@@ -859,7 +859,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             if (!(bindable is SheetBehavior sheetBehavior)) return;
             sheetBehavior.UpdateBindingContextForSheetContent();
-            sheetBehavior?.m_sheetView?.OnSheetContentChanged(newvalue as View);
         }
 
         private static void BackgroundColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -977,14 +976,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 OnBeforeOpen?.Invoke(this, EventArgs.Empty);
 
                 m_sheetView = new SheetView(this);
-                var view = SheetContent;
                 if (SheetContentTemplate != null)
                 {
-                    view = (View)SheetContentTemplate.CreateContent();
+                    SheetContent = (View)SheetContentTemplate.CreateContent();
                 }
-
-                m_sheetView.Initialize(view);
                 UpdateBindingContextForSheetContent();
+                m_sheetView.Initialize();
+                
 
                 //Set height / width
                 var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
