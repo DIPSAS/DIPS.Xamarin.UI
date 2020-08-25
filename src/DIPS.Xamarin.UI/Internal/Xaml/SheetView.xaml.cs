@@ -18,6 +18,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
 
         private double m_newY;
         private double m_newYTranslation;
+        private View? m_contentView;
 
         /// <summary>
         ///     Constructs a <see cref="SheetView" />
@@ -87,8 +88,10 @@ namespace DIPS.Xamarin.UI.Internal.xaml
             
         }
 
-        internal void Initialize()
+        internal void Initialize(View content)
         {
+            sheetContentView.Content = content;
+
             m_newY = 0;
             //Flip the grid if alignment is set to top
             if (m_sheetBehaviour.Alignment == AlignmentOptions.Top)
@@ -140,6 +143,11 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         private void ActionButtonClicked(object sender, EventArgs e)
         {
             m_sheetBehaviour.ActionClickedInternal();
+        }
+
+        internal void OnSheetContentChanged(View? view)
+        {
+            m_contentView = view;
         }
     }
 }
