@@ -206,7 +206,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
 
         /// <summary>
-        /// 
+        ///     The content template to use when the sheet opens.
+        ///     This is a bindable property.
+        ///     <remarks><see cref="BindingContextFactory" /> to set the binding context of the datatemplate when the sheet opens</remarks>
         /// </summary>
         public DataTemplate SheetContentTemplate
         {
@@ -215,7 +217,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// <see cref="SeetContentTemplate"/>
+        /// <see cref="SheetContentTemplate"/>
         /// </summary>
         public static readonly BindableProperty SheetContentTemplateProperty = BindableProperty.Create(nameof(SheetContentTemplate), typeof(DataTemplate), typeof(SheetBehavior));
 
