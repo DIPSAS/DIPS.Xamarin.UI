@@ -14,7 +14,6 @@ namespace DIPS.Xamarin.UI.Android
 {
     internal class SlidableLayoutContentView : ViewRenderer, GestureDetector.IOnGestureListener
     {
-        private readonly Context m_context;
         private readonly GestureDetector m_detector;
         private SlidableLayout m_elem;
         private bool m_isScrolling;
@@ -22,13 +21,14 @@ namespace DIPS.Xamarin.UI.Android
         private readonly Random m_random;
         private readonly int m_scaledTouchSlop = 5;
         private float m_startX;
+        private float m_density;
 
         public SlidableLayoutContentView(Context context) : base(context)
         {
-            m_context = context;
             m_random = new Random();
             //m_scaledTouchSlop = ViewConfiguration.Get(context).ScaledTouchSlop; //Can be used to get device default.
             m_detector = new GestureDetector(context, this);
+            m_density = context.Resources.DisplayMetrics.Density;
         }
 
         public bool OnDown(MotionEvent e)
@@ -47,7 +47,11 @@ namespace DIPS.Xamarin.UI.Android
 
         public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
         {
-            if (m_isScrolling) m_elem?.SendPan(e2.GetX() - m_startX, 0, GestureStatus.Running, m_pointerId);
+            if (m_isScrolling)
+            {
+                var (x, y) = ToDps(e2.RawX, e2.RawY);
+                m_elem?.SendPan(x - m_startX, 0, GestureStatus.Running, m_pointerId);
+            }
             return true;
         }
 
@@ -85,19 +89,20 @@ namespace DIPS.Xamarin.UI.Android
         {
             var action = ev.ActionMasked;
 
+            var (x, y) = ToDps(ev.RawX, ev.RawY);
+
             switch (action)
             {
                 case MotionEventActions.Up:
                     if (!m_isScrolling)
                     {
-                        var (x, y) = ToDps(ev.RawX, ev.RawY);
                         m_elem.SendTapped(x, y);
                     }
                     break;
                 case MotionEventActions.Move:
                     return m_isScrolling || StartScroll(ev);
                 case MotionEventActions.Down: // This case is the only case that is always intercepted no matter the view hierarchy. (I think) 
-                    m_startX = ev.GetX();
+                    m_startX = x;
                     m_pointerId = m_random.Next(100000);
                     return false;
             }
@@ -109,10 +114,11 @@ namespace DIPS.Xamarin.UI.Android
         {
             if (e.ActionMasked == MotionEventActions.Up || e.ActionMasked == MotionEventActions.Cancel)
             {
-                if (m_isScrolling) m_elem?.SendPan(e.GetX() - m_startX, 0, GestureStatus.Completed, m_pointerId);
+                var (x, y) = ToDps(e.RawX, e.RawY);
+
+                if (m_isScrolling) m_elem?.SendPan(x - m_startX, 0, GestureStatus.Completed, m_pointerId);
                 else
                 {
-                    var (x, y) = ToDps(e.RawX, e.RawY);
                     m_elem.SendTapped(x, y);
                 }
                 m_isScrolling = false;
@@ -127,10 +133,6 @@ namespace DIPS.Xamarin.UI.Android
             return m_detector.OnTouchEvent(e);
         }
 
-        private (float, float) ToDps(float rawX, float rawY)
-        {
-            var density = m_context.Resources.DisplayMetrics.Density;
-            return (rawX / density, rawY / density);
-        }
+        private (float, float) ToDps(float rawX, float rawY) => (rawX / m_density, rawY / m_density);
     }
 }
