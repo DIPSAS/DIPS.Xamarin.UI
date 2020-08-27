@@ -127,6 +127,7 @@
                Padding="10"
                BackgroundColor="Green">
             <Label Text="TAPPED!"
+                   x:Name="label"
                    TextColor="White" />
         </Frame>
     </Grid>
