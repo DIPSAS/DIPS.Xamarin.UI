@@ -49,7 +49,7 @@ namespace DIPS.Xamarin.UI.Android
         {
             if (m_isScrolling)
             {
-                var (x, y) = ToDps(e2.RawX, e2.RawY);
+                var (x, y) = ToDip(e2.RawX, e2.RawY);
                 m_elem?.SendPan(x - m_startX, 0, GestureStatus.Running, m_pointerId);
             }
             return true;
@@ -89,7 +89,7 @@ namespace DIPS.Xamarin.UI.Android
         {
             var action = ev.ActionMasked;
 
-            var (x, y) = ToDps(ev.RawX, ev.RawY);
+            var (x, y) = ToDip(ev.RawX, ev.RawY);
 
             switch (action)
             {
@@ -114,7 +114,7 @@ namespace DIPS.Xamarin.UI.Android
         {
             if (e.ActionMasked == MotionEventActions.Up || e.ActionMasked == MotionEventActions.Cancel)
             {
-                var (x, y) = ToDps(e.RawX, e.RawY);
+                var (x, y) = ToDip(e.RawX, e.RawY);
 
                 if (m_isScrolling) m_elem?.SendPan(x - m_startX, 0, GestureStatus.Completed, m_pointerId);
                 else
@@ -133,6 +133,6 @@ namespace DIPS.Xamarin.UI.Android
             return m_detector.OnTouchEvent(e);
         }
 
-        private (float, float) ToDps(float rawX, float rawY) => (rawX / m_density, rawY / m_density);
+        private (float, float) ToDip(float rawX, float rawY) => (rawX / m_density, rawY / m_density);
     }
 }
