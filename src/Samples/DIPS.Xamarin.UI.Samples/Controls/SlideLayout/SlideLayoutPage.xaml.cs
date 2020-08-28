@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
@@ -17,6 +18,17 @@ namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
         {
             base.OnAppearing();
             ((SlideLayoutViewModel)BindingContext).Initialize();
+        }
+
+        private async void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
+        {
+            if(sender is Frame view && view.BindingContext is CalendarViewModel calendar && view.Content is Grid grid && grid.Children.OfType<Label>().Any())
+            {
+                label.Text = grid.Children.OfType<Label>().First().Text;
+            }
+            frame.FadeTo(1, 150);
+            await Task.Delay(1000);
+            frame.FadeTo(0, 150);
         }
     }
 }

@@ -20,11 +20,8 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
 
         public void DateSelected(object sender, DateChangedEventArgs eventArgs)
         {
-            var dateDiff = (int)Math.Round(((eventArgs.NewDate.Date - m_date.Date).TotalDays));
-            if (Math.Abs(slidablecontent.SlideProperties.Position - dateDiff) < 1)
-            {
-                return;
-            }
+            var dateDiff = (int)Math.Round((eventArgs.NewDate.Date - m_date.Date).TotalDays);
+            if (Math.Abs(slidablecontent.SlideProperties.Position - dateDiff) < 1) return;
             var time = Math.Min(1000, Math.Abs(dateDiff * 50));
             slidablecontent.ScrollTo(dateDiff, time);
         }
@@ -44,7 +41,10 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
             }
         }
 
-        public Func<int, object> CreateCalendar => i => new CalendarViewModel(DateTime.Now.AddDays(i).ToString("dd.MM"), () => SlidableProperties.ScrollTo(s => SlidableProperties = s, () => SlidableProperties, i));
+        public Func<int, object> CreateCalendar =>
+            i => new CalendarViewModel(
+                DateTime.Now.AddDays(i).ToString("dd.MM"),
+                () => SlidableProperties.ScrollTo(s => SlidableProperties = s, () => SlidableProperties, i));
 
         public DateTime Date => DateTime.Now.Date.AddDays(SlidableProperties.Position);
 
@@ -54,6 +54,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
     public class CalendarViewModel : ISliderSelectable, INotifyPropertyChanged
     {
         private bool m_selected;
+
         public CalendarViewModel(string value, Action onSelectedAction)
         {
             Value = value;
@@ -63,12 +64,17 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github179
         public ICommand SelectCommand { get; }
         public string Value { get; }
 
+        public bool Selected
+        {
+            get => m_selected;
+            set => PropertyChanged.RaiseWhenSet(ref m_selected, value);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public void OnSelectionChanged(bool selected)
         {
             Selected = selected;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public bool Selected { get => m_selected; set => PropertyChanged.RaiseWhenSet(ref m_selected, value); }
     }
 }

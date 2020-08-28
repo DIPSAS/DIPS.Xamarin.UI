@@ -39,7 +39,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Xamarin.Forms.IssuesRe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIPS.Xamarin.UI.InternalShared", "Samples\DIPS.Xamarin.UI.InternalShared\DIPS.Xamarin.UI.InternalShared.csproj", "{CF0A633C-7CC7-4479-9004-60DF7CADA5FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIPS.Xamarin.Forms.IssuesRepro", "IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro.csproj", "{14C40818-F24B-4F0E-A9D1-A9EC2AA244AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIPS.Xamarin.Forms.IssuesRepro", "IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro\DIPS.Xamarin.Forms.IssuesRepro.csproj", "{14C40818-F24B-4F0E-A9D1-A9EC2AA244AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -114,6 +114,7 @@ Global
 		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}.Release|Any CPU.ActiveCfg = Release|iPhone
 		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}.Release|iPhone.ActiveCfg = Release|iPhone
 		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}.Release|iPhone.Build.0 = Release|iPhone
+		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}.Release|iPhone.Deploy.0 = Release|iPhone
 		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{5D1BB5EC-52D3-4784-B20B-C4B022A496D0}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{2FF448DB-3436-440A-9316-30665E1940A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

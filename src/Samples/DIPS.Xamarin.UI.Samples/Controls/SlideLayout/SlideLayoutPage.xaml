@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
 <ContentPage x:Class="DIPS.Xamarin.UI.Samples.Controls.SlideLayout.SlideLayoutPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -8,9 +9,9 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition Height="75" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="75" />
+            <RowDefinition Height="150" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="150" />
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0"
@@ -34,6 +35,9 @@
                            Padding="0"
                            CornerRadius="0"
                            HasShadow="False">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                        </Frame.GestureRecognizers>
                         <Grid Margin="0"
                               Padding="0"
                               HorizontalOptions="FillAndExpand"
@@ -114,5 +118,17 @@
                      WidthRequest="2"
                      Color="{x:Static dxui:Theme.TealPrimary}" />
         </Grid>
+
+        <Frame Grid.RowSpan="5"
+               x:Name="frame"
+               Opacity="0"
+               VerticalOptions="End"
+               HorizontalOptions="Center"
+               Padding="10"
+               BackgroundColor="Green">
+            <Label Text="TAPPED!"
+                   x:Name="label"
+                   TextColor="White" />
+        </Frame>
     </Grid>
 </ContentPage>
