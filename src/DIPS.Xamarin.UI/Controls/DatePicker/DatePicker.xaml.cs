@@ -295,6 +295,12 @@ namespace DIPS.Xamarin.UI.Controls.DatePicker
         private void FormsDatePicker_Focused(object sender, FocusEventArgs e)
         {
             Opened?.Invoke(this, EventArgs.Empty);
+
+            //Make sure iOS date is syncronized if the user used the DateChangedStrategyiOS == iOSDateChangeStrategy.WhenDone but closed the date picker without picking
+            if (FormsDatePicker.Date.Date != Date.Date)
+            {
+                FormsDatePicker.Date = Date;
+            }
         }
 
         private void FormsDatePicker_Unfocused(object sender, FocusEventArgs e)
