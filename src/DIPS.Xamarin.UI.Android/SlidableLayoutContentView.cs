@@ -26,7 +26,6 @@ namespace DIPS.Xamarin.UI.Android
         public SlidableLayoutContentView(Context context) : base(context)
         {
             m_random = new Random();
-            //m_scaledTouchSlop = ViewConfiguration.Get(context).ScaledTouchSlop; //Can be used to get device default.
             m_detector = new GestureDetector(context, this);
             m_density = context.Resources.DisplayMetrics.Density;
         }
@@ -103,7 +102,7 @@ namespace DIPS.Xamarin.UI.Android
                     return m_isScrolling || StartScroll(ev);
                 case MotionEventActions.Down: // This case is the only case that is always intercepted no matter the view hierarchy. (I think) 
                     m_startX = x;
-                    m_pointerId = m_random.Next(100000);
+                    m_pointerId = m_random.Next();
                     return false;
             }
 
