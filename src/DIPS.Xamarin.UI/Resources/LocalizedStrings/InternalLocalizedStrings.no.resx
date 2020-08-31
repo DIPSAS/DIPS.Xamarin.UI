@@ -120,9 +120,6 @@
   <data name="Cancel" xml:space="preserve">
     <value>Avslutt</value>
   </data>
-  <data name="Done" xml:space="preserve">
-    <value>Ferdig</value>
-  </data>
   <data name="Today" xml:space="preserve">
     <value>I dag</value>
   </data>
