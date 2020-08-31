@@ -34,5 +34,10 @@
     <string>DIPS Xamarin UI</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>no</string>
+        <string>en</string>
+    </array>
 </dict>
 </plist>
