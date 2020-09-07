@@ -66,6 +66,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// The size of the title label.
         /// This is a bindable property.
         /// </summary>
+        /// <remarks>Default value is <see cref="NamedSize.Medium"/></remarks>
         [TypeConverter(typeof(FontSizeConverter))]
         public double TitleSize
         {
@@ -82,6 +83,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// The size of the label of the cancel button.
         /// This is a bindable property.
         /// </summary>
+        /// <remarks>Default value is <see cref="NamedSize.Small"/></remarks>
         [TypeConverter(typeof(FontSizeConverter))]
         public double CancelButtonSize
         {
@@ -97,6 +99,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <summary>
         /// The size of the label of the action button.
         /// This is a bindable property.
+        /// <remarks>Default value is <see cref="NamedSize.Small"/></remarks>
         /// </summary>
         [TypeConverter(typeof(FontSizeConverter))]
         public double ActionButtonSize
