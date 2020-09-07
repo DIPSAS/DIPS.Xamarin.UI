@@ -202,6 +202,25 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             new ContentView { HeightRequest = 100, VerticalOptions = LayoutOptions.Start },
             propertyChanged: OnSheetContentPropertyChanged);
 
+
+
+
+        /// <summary>
+        ///     The content template to use when the sheet opens.
+        ///     This is a bindable property.
+        ///     <remarks><see cref="BindingContextFactory" /> to set the binding context of the datatemplate when the sheet opens</remarks>
+        /// </summary>
+        public DataTemplate SheetContentTemplate
+        {
+            get => (DataTemplate)GetValue(SheetContentTemplateProperty);
+            set => SetValue(SheetContentTemplateProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="SheetContentTemplate"/>
+        /// </summary>
+        public static readonly BindableProperty SheetContentTemplateProperty = BindableProperty.Create(nameof(SheetContentTemplate), typeof(DataTemplate), typeof(SheetBehavior));
+
         /// <summary>
         ///     <see cref="BackgroundColor" />
         /// </summary>
@@ -957,8 +976,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 OnBeforeOpen?.Invoke(this, EventArgs.Empty);
 
                 m_sheetView = new SheetView(this);
-                m_sheetView.Initialize();
+                if (SheetContentTemplate != null)
+                {
+                    SheetContent = (View)SheetContentTemplate.CreateContent();
+                }
                 UpdateBindingContextForSheetContent();
+                m_sheetView.Initialize();
+                
 
                 //Set height / width
                 var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
@@ -1004,8 +1028,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private void UpdateBindingContextForSheetContent()
         {
-            if (SheetContent == null) return;
-            SheetContent.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
+            if (m_sheetView == null) return;
+            if (m_sheetView.SheetContentView == null)return;
+            m_sheetView.SheetContentView.Content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
         }
 
         private async Task TranslateBasedOnPosition(double newPosition)
