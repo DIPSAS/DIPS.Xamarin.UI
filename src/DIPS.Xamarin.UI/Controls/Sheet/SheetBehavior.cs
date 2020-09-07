@@ -63,6 +63,56 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(SheetBehavior));
 
         /// <summary>
+        /// The size of the title label.
+        /// This is a bindable property.
+        /// </summary>
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double TitleSize
+        {
+            get => (double)GetValue(TitleSizeProperty);
+            set => SetValue(TitleSizeProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="TitleSize"/>
+        /// </summary>
+        public static readonly BindableProperty TitleSizeProperty = BindableProperty.Create(nameof(TitleSize), typeof(double), typeof(SheetBehavior), defaultValueCreator:b => Device.GetNamedSize(NamedSize.Medium, typeof(Label)));
+
+        /// <summary>
+        /// The size of the label of the cancel button.
+        /// This is a bindable property.
+        /// </summary>
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double CancelButtonSize
+        {
+            get => (double)GetValue(CancelButtonSizeProperty);
+            set => SetValue(CancelButtonSizeProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="CancelButtonSize"/>
+        /// </summary>
+        public static readonly BindableProperty CancelButtonSizeProperty = BindableProperty.Create(nameof(CancelButtonSize), typeof(double), typeof(SheetBehavior), defaultValueCreator: b => Device.GetNamedSize(NamedSize.Small, typeof(Button)));
+
+        /// <summary>
+        /// The size of the label of the action button.
+        /// This is a bindable property.
+        /// </summary>
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double ActionButtonSize
+        {
+            get => (double)GetValue(ActionButtonSizeProperty);
+            set => SetValue(ActionButtonSizeProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="ActionButtonSize"/>
+        /// </summary>
+        public static readonly BindableProperty ActionButtonSizeProperty = BindableProperty.Create(nameof(ActionButtonSize), typeof(double), typeof(SheetBehavior), defaultValueCreator: b => Device.GetNamedSize(NamedSize.Small, typeof(Button)));
+
+
+
+        /// <summary>
         ///     <see cref="OnBeforeCloseCommandParameter" />
         /// </summary>
         public static readonly BindableProperty OnBeforeCloseCommandParameterProperty = BindableProperty.Create(
