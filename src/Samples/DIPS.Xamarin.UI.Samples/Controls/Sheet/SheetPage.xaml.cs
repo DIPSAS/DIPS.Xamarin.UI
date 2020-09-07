@@ -149,7 +149,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         }
 
         public Func<object> SheetViewModelFactory => () => new InsideSheetViewModel();
-        public InsideSheetViewModel InsideSheetViewModel => new InsideSheetViewModel();
 
         public ContentAlignment VerticalContentAlignment
         {
