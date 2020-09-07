@@ -38,18 +38,22 @@
                                 Position="{Binding Position}"
                                 ShouldAutoClose="{Binding ShouldAutoClose}"
                                 ShouldRememberPosition="{Binding ShouldRememberPosition}">
-                <StackLayout>
-                    <Label Text="{Binding Title}" />
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                    <Entry x:Name="entry"
-                           Placeholder="TextEntry" />
-                    <Button dxui:Modality.CloseOnClick="True"
-                            Text="Close sheet" />
-                </StackLayout>
+                <dxui:SheetBehavior.SheetContentTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding Title}" />
+                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
+                            <Entry x:Name="entry"
+                                   Placeholder="TextEntry" />
+                            <Button dxui:Modality.CloseOnClick="True"
+                                    Text="Close sheet" />
+                        </StackLayout>
+                    </DataTemplate>
+                </dxui:SheetBehavior.SheetContentTemplate>
             </dxui:SheetBehavior>
         </dxui:ModalityLayout.Behaviors>
 
