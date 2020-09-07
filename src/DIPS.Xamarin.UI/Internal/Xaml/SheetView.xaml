@@ -75,7 +75,7 @@
                     <Label x:Name="TitleLabel"
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
-                           FontSize="Large"
+                           FontSize="{Binding TitleSize}"
                            FontAttributes="Bold"
                            HorizontalOptions="Center"
                            Padding="10"
@@ -87,7 +87,7 @@
 
                     <Button x:Name="cancelButton"
                             Grid.Column="0"
-                            FontSize="Medium"
+                            FontSize="{Binding CancelButtonSize}"
                             Padding="10"
                             IsVisible="{Binding IsCancelButtonVisible}"
                             TextColor="{Binding CancelTitleColor}"
@@ -99,7 +99,7 @@
 
                     <Button x:Name="actionButton"
                             Grid.Column="2"
-                            FontSize="Medium"
+                            FontSize="{Binding ActionButtonSize}"
                             Padding="10"
                             BackgroundColor="{Binding HeaderColor}"
                             Command="{Binding ActionCommand}"
