@@ -12,6 +12,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github234
     public partial class Github234 : ContentPage
     {
         public static Page CurrentMain;
+        public static bool StopIt;
         public Github234()
         {
             InitializeComponent();
@@ -20,10 +21,13 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github234
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            Button_Clicked(null, EventArgs.Empty);
+            if (!StopIt)
+            {
+                Button_Clicked2(null, EventArgs.Empty);
+            }
         }
 
-        async void Button_Clicked(System.Object sender, System.EventArgs e)
+        async void Button_Clicked2(System.Object sender, System.EventArgs e)
         {
             CurrentMain = Application.Current.MainPage;
             try
@@ -46,6 +50,11 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github234
                     }
                 };
             }
+        }
+
+        void Button_Clicked(System.Object sender, System.EventArgs e)
+        {
+            StopIt = !StopIt;
         }
     }
 }
