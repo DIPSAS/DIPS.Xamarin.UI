@@ -8,13 +8,11 @@
              xmlns:Converters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters;assembly=DIPS.Xamarin.UI"
              xmlns:Utilities="clr-namespace:DIPS.Xamarin.UI.Internal.Utilities;assembly=DIPS.Xamarin.UI"
              xmlns:Colors="clr-namespace:DIPS.Xamarin.UI.Resources.Colors;assembly=DIPS.Xamarin.UI"
-             x:Name="CodeBehind"
              mc:Ignorable="d"
              InputTransparent="True"
              x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.MenuButton">
 
-    <Grid BindingContext="{x:Reference CodeBehind}"
-          ColumnSpacing="8">
+    <Grid ColumnSpacing="8" x:Name="grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -52,7 +50,6 @@
                                 x:FieldModifier="internal"
                                 Opacity="0"
                                 Grid.Column="1"
-                                BindingContext="{x:Reference CodeBehind}"
                                 BackgroundColor="{Binding BackgroundColor}"
                                 BorderColor="White"
                                 BorderWidth="3"
@@ -66,7 +63,6 @@
         <ImageButton x:Name="imageButton"
                      x:FieldModifier="internal"
                      Grid.Column="1"
-                     BindingContext="{x:Reference CodeBehind}"
                      BackgroundColor="{Binding BackgroundColor}"
                      Source="{Binding Source}"
                      IsVisible="{Binding Source={x:Reference Button}, Path=IsVisible, Converter={Converters:InvertedBoolConverter}}"

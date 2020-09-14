@@ -158,6 +158,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         public MenuButton()
         {
             InitializeComponent();
+            grid.BindingContext = this;
         }
 
         /// <summary>
