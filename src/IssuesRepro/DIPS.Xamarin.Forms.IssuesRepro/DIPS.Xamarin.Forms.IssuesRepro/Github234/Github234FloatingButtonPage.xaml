@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:dxui="http://dips.xamarin.ui.com" x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github234.Github234FloatingButtonPage">
+    <dxui:ModalityLayout>
+        <dxui:ModalityLayout.Behaviors>
+            <dxui:FloatingActionMenuBehaviour Size="60"
+                                              ExpandButtonBackgroundColor="LightSeaGreen"
+                                              ExpandButtonText="Open"
+                                              ExpandButtonFontSize="12"
+                                              ExpandButtonTextColor="Azure"
+                                              XPosition=".9"
+                                              YPosition=".95"
+                                              IsVisible="true">
+
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                 Text="A"
+                                 x:Name="FirstButton"
+                                 TextColor="White"
+                                 Title="Toggle C visibility"
+                                 CommandParameter="First tapped!" />
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                 Text="B"
+                                 TextColor="White"
+                                 Title="First page"
+                                 Source="https://www.pngitem.com/pimgs/m/549-5493065_xamarin-logo-png-transparent-xamarin-forms-logo-png.png"
+                                 CommandParameter="Second tapped!" />
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                 Text="C"
+                                 TextColor="White"
+                                 Source="https://www.pngitem.com/pimgs/m/549-5493065_xamarin-logo-png-transparent-xamarin-forms-logo-png.png"
+                                 Title="Second page"
+                                 IsEnabled="False"
+                                 CommandParameter="Third tapped!" />
+                <dxui:MenuButton BackgroundColor="LightSeaGreen"
+                                 Text="D"
+                                 TextColor="White"
+                                 Title="Third page"
+                                 CommandParameter="Fourth tapped!" />
+            </dxui:FloatingActionMenuBehaviour>
+        </dxui:ModalityLayout.Behaviors>
+        <Frame BackgroundColor="LightPink">
+            <Button Text="Go back" HorizontalOptions="Center" VerticalOptions="Center" Clicked="Button_Clicked"/>
+
+        </Frame>
+
+    </dxui:ModalityLayout>
+</ContentPage>
+

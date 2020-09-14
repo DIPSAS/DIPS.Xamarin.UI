@@ -13,7 +13,7 @@
              InputTransparent="True"
              x:Class="DIPS.Xamarin.UI.Controls.FloatingActionMenu.MenuButton">
 
-    <Grid BindingContext="{x:Reference CodeBehind}"
+    <Grid 
           ColumnSpacing="8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -23,7 +23,7 @@
         <Frame x:Name="TitleFrame"
                x:FieldModifier="internal"
                Grid.Column="0"
-               BackgroundColor="{Binding IsEnabled, Converter={Converters:BoolToObjectConverter TrueObject={x:Static Color.White}, FalseObject={x:Static Colors:ColorPalette.QuinaryAir}}}"
+               BackgroundColor="{Binding Source={x:Reference CodeBehind}, Path=IsEnabled, Converter={Converters:BoolToObjectConverter TrueObject={x:Static Color.White}, FalseObject={x:Static Colors:ColorPalette.QuinaryAir}}}"
                Opacity="0"
                CornerRadius="8"
                HasShadow="False"
@@ -31,10 +31,10 @@
                VerticalOptions="Center"
                HorizontalOptions="End">
             <Label x:Name="TitleLabel"
-                   Text="{Binding Title}"
-                   TextColor="{Binding TitleTextColor}"
-                   FontSize="{Binding TitleFontSize}"
-                   FontFamily="{Binding TitleFontFamily}"
+                   Text="{Binding Source={x:Reference CodeBehind}, Path= Title}"
+                   TextColor="{Binding Source={x:Reference CodeBehind}, Path= TitleTextColor}"
+                   FontSize="{Binding Source={x:Reference CodeBehind}, Path= TitleFontSize}"
+                   FontFamily="{Binding Source={x:Reference CodeBehind}, Path= TitleFontFamily}"
                    Margin="10,5,10,5"
                    VerticalOptions="Center" />
 
@@ -52,23 +52,21 @@
                                 x:FieldModifier="internal"
                                 Opacity="0"
                                 Grid.Column="1"
-                                BindingContext="{x:Reference CodeBehind}"
-                                BackgroundColor="{Binding BackgroundColor}"
+                                BackgroundColor="{Binding Source={x:Reference CodeBehind}, Path= BackgroundColor}"
                                 BorderColor="White"
                                 BorderWidth="3"
-                                FontSize="{Binding FontSize}"
-                                Text="{Binding Text}"
-                                TextColor="{Binding TextColor}"
-                                FontFamily="{Binding FontFamily}"
+                                FontSize="{Binding Source={x:Reference CodeBehind}, Path= FontSize}"
+                                Text="{Binding Source={x:Reference CodeBehind}, Path= Text}"
+                                TextColor="{Binding Source={x:Reference CodeBehind}, Path= TextColor}"
+                                FontFamily="{Binding Source={x:Reference CodeBehind}, Path= FontFamily}"
                                 Clicked="MenuButton_OnClicked"
-                                IsVisible="{Binding Source, Converter={Converters:IsEmptyConverter}}" />
+                                IsVisible="{Binding Source={x:Reference CodeBehind}, Path=Source, Converter={Converters:IsEmptyConverter}}" />
 
         <ImageButton x:Name="imageButton"
                      x:FieldModifier="internal"
                      Grid.Column="1"
-                     BindingContext="{x:Reference CodeBehind}"
-                     BackgroundColor="{Binding BackgroundColor}"
-                     Source="{Binding Source}"
+                     BackgroundColor="{Binding Source={x:Reference CodeBehind}, Path= BackgroundColor}"
+                     Source="{Binding Source={x:Reference CodeBehind}, Path= Source}"
                      IsVisible="{Binding Source={x:Reference Button}, Path=IsVisible, Converter={Converters:InvertedBoolConverter}}"
                      Opacity="0"
                      BorderColor="White"
@@ -83,8 +81,8 @@
         <Frame x:Name="BadgeFrame"
                x:FieldModifier="internal"
                Grid.Column="1"
-               IsVisible="{Binding IsBadgeVisible}"
-               BackgroundColor="{Binding BadgeColor}"
+               IsVisible="{Binding Source={x:Reference CodeBehind}, Path= IsBadgeVisible}"
+               BackgroundColor="{Binding Source={x:Reference CodeBehind}, Path= BadgeColor}"
                HeightRequest="20"
                WidthRequest="20"
                CornerRadius="10"
@@ -94,9 +92,9 @@
                HorizontalOptions="End"
                HasShadow="False"
                Opacity=".5">
-            <Label TextColor="{Binding BadgeTextColor}"
-                   Text="{Binding BadgeCount}"
-                   FontFamily="{Binding BadgeFontFamily}"
+            <Label TextColor="{Binding Source={x:Reference CodeBehind}, Path= BadgeTextColor}"
+                   Text="{Binding Source={x:Reference CodeBehind}, Path= BadgeCount}"
+                   FontFamily="{Binding Source={x:Reference CodeBehind}, Path= BadgeFontFamily}"
                    FontSize="12"
                    LineBreakMode="NoWrap"
                    BackgroundColor="Transparent"
