@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:dxui="http://dips.xamarin.ui.com" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github236.Github236">
+    <ListView ItemsSource="{Binding Items}" x:Name="list">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <dxui:SkeletonView IsLoading="{Binding BindingContext.IsLoading, Source={x:Reference list}}">
+                        <dxui:SkeletonView.Shapes>
+                            <dxui:SkeletonShape Margin="5" CornerRadius="5"/>
+                        </dxui:SkeletonView.Shapes>
+                        <Label Text="{Binding Data}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </dxui:SkeletonView>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
