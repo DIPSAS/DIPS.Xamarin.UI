@@ -114,11 +114,11 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             {
                 var behindBar = graphContainer.Children[i];
                 behindBar.TranslationY += behindBar.Height;
-                behindBar.TranslateTo(0, behindBar.TranslationY - behindBar.Height, 500, Easing.Linear);
+                _ = behindBar.TranslateTo(0, behindBar.TranslationY - behindBar.Height, 500, Easing.Linear);
 
                 var frontBar = graphContainer.Children[i + 1];
                 frontBar.TranslationY += frontBar.Height;
-                frontBar.TranslateTo(0, frontBar.TranslationY - frontBar.Height, 750, Easing.Linear);
+                _ = frontBar.TranslateTo(0, frontBar.TranslationY - frontBar.Height, 750, Easing.Linear);
             }
         }
 
