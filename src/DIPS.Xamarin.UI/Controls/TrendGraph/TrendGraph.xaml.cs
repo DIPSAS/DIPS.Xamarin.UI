@@ -76,6 +76,11 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
                 DrawGraph(x, item, widthPerItem);
                 x += widthPerItem + margin;
             }
+
+            if (Animate)
+            {
+                AnimateTrendBars();
+            }
         }
 
         private void DrawGraph(double x, object item, double widthPerItem)
@@ -101,7 +106,20 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
                 yConstraint: Constraint.RelativeToParent(r => backFrame.Y + backFrame.Height - (itemHeight * backFrame.Height)),
                 widthConstraint: Constraint.RelativeToParent(r => backFrame.Width),
                 heightConstraint: Constraint.RelativeToParent(r => itemHeight * backFrame.Height));
+        }
 
+        private void AnimateTrendBars()
+        {
+            for (var i = 0; i < graphContainer.Children.Count; i += 2)
+            {
+                var behindBar = graphContainer.Children[i];
+                behindBar.TranslationY += behindBar.Height;
+                behindBar.TranslateTo(0, behindBar.TranslationY - behindBar.Height, 500, Easing.Linear);
+
+                var frontBar = graphContainer.Children[i + 1];
+                frontBar.TranslationY += frontBar.Height;
+                frontBar.TranslateTo(0, frontBar.TranslationY - frontBar.Height, 750, Easing.Linear);
+            }
         }
 
         private BoxView CreateBoxView(Color background) => new BoxView { BackgroundColor = background, CornerRadius = 0 };
@@ -116,6 +134,12 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             if (!(bindable is TrendGraph trendGraph)) return;
             trendGraph.StartRedraw(trendGraph, EventArgs.Empty);
         }
+
+        /// <summary>
+        ///     If set to <c>True</c>, animates the graph bars on displaying
+        ///     <remarks>Default is True</remarks>
+        /// </summary>
+        public bool Animate { get; set; } = true;
 
         /// <summary>
         /// Color of each graph
