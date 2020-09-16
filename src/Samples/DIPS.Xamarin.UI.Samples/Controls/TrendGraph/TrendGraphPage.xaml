@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
 <ContentPage
     x:Class="DIPS.Xamarin.UI.Samples.Controls.TrendGraph.TrendGraphPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -22,6 +23,27 @@
                 Grid.Column="1"
                 Margin="5"
                 Text="Normal trend bar bound to an observable collection"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <dxui:TrendGraph
+                Margin="5"
+                GraphMargin="1"
+                ItemsSource="{Binding TrendItems}"
+                LowerBound="1"
+                MaxValue="{Binding MaxValue}"
+                MinValue="0"
+                ValueMemberPath="Value"
+                Animate="False" />
+            <Label
+                Grid.Column="1"
+                Margin="5"
+                Text="Normal trend bars without animation"
                 VerticalOptions="Center" />
         </Grid>
 
