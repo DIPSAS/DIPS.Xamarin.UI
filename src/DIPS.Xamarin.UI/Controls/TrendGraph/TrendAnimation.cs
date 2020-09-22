@@ -22,7 +22,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
         GrowAndFade,
 
         /// <summary>
-        ///     Growing bars with fixed background animation
+        ///     Growing bars with not changing background animation
         /// </summary>
         GrowAndNone
     }
