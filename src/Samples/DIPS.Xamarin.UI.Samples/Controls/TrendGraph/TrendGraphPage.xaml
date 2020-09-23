@@ -1,102 +1,190 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
 <ContentPage
     x:Class="DIPS.Xamarin.UI.Samples.Controls.TrendGraph.TrendGraphPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:dxui="http://dips.xamarin.ui.com">
-    <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <dxui:TrendGraph
-                Margin="5"
-                GraphMargin="1"
-                ItemsSource="{Binding TrendItems}"
-                LowerBound="1"
-                MaxValue="{Binding MaxValue}"
-                MinValue="0"
-                ValueMemberPath="Value" />
-            <Label
-                Grid.Column="1"
-                Margin="5"
-                Text="Normal trend bar bound to an observable collection"
-                VerticalOptions="Center" />
-        </Grid>
+    <ScrollView>
+        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <dxui:TrendGraph
+                    Margin="5"
+                    GraphMargin="1"
+                    ItemsSource="{Binding TrendItems}"
+                    LowerBound="1"
+                    MaxValue="{Binding MaxValue}"
+                    MinValue="0"
+                    ValueMemberPath="Value" />
+                <Label
+                    Grid.Column="1"
+                    Margin="5"
+                    Text="Normal trend bar bound to an observable collection"
+                    VerticalOptions="Center" />
+            </Grid>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <dxui:TrendGraph
-                Margin="5"
-                ItemsSource="{Binding TrendItems2}"
-                LowerBound="{Binding LowerBound}"
-                MaxValue="10"
-                MinValue="0"
-                UpperBound="{Binding UpperBound}" />
-            <Label
-                Grid.Column="1"
-                Margin="5"
-                Text="Bound to double list"
-                VerticalOptions="Center" />
-        </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <dxui:TrendGraph
+                    Margin="5"
+                    ItemsSource="{Binding TrendItems2}"
+                    LowerBound="{Binding LowerBound}"
+                    MaxValue="10"
+                    MinValue="0"
+                    UpperBound="{Binding UpperBound}" />
+                <Label
+                    Grid.Column="1"
+                    Margin="5"
+                    Text="Bound to double list"
+                    VerticalOptions="Center" />
+            </Grid>
 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <dxui:TrendGraph
+                    Margin="5"
+                    GraphBackgroundColor="LightGray"
+                    GraphColor="Red"
+                    ItemsSource="{Binding TrendItems3}"
+                    LowerBound="3"
+                    MaxValue="6"
+                    MinValue="2"
+                    UpperBound="4" />
+                <Label
+                    Grid.Column="1"
+                    Margin="5"
+                    Text="Bound to int list with min value at 2"
+                    VerticalOptions="Center" />
+            </Grid>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <dxui:TrendGraph
-                Margin="5"
-                GraphBackgroundColor="LightGray"
-                GraphColor="Red"
-                ItemsSource="{Binding TrendItems3}"
-                LowerBound="3"
-                MaxValue="6"
-                MinValue="2"
-                UpperBound="4" />
-            <Label
-                Grid.Column="1"
-                Margin="5"
-                Text="Bound to int list with min value at 2"
-                VerticalOptions="Center" />
-        </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <dxui:TrendGraph
+                    Margin="5"
+                    ItemsSource="{Binding TrendItems4}"
+                    MaxValue="10"
+                    MinValue="0" />
+                <Label
+                    Grid.Column="1"
+                    Margin="5"
+                    Text="One less item"
+                    VerticalOptions="Center" />
+            </Grid>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <dxui:TrendGraph
-                Margin="5"
-                ItemsSource="{Binding TrendItems4}"
-                MaxValue="10"
-                MinValue="0" />
-            <Label
-                Grid.Column="1"
-                Margin="5"
-                Text="One less item"
-                VerticalOptions="Center" />
-        </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <dxui:TrendGraph
+                    Margin="5"
+                    ItemsSource="{Binding TrendItems5}"
+                    ValueMemberPath="Value" />
+                <Button
+                    Grid.Column="1"
+                    Margin="5"
+                    Command="{Binding AddGraphItemCommand}"
+                    Text="Add item" />
+            </Grid>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <dxui:TrendGraph
-                Margin="5"
-                ItemsSource="{Binding TrendItems5}"
-                ValueMemberPath="Value" />
-            <Button
-                Grid.Column="1"
-                Margin="5"
-                Command="{Binding AddGraphItemCommand}"
-                Text="Add item" />
-        </Grid>
-    </StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <dxui:TrendGraph Grid.Column="0" Grid.Row="0"
+                                 Margin="5"
+                                 WidthRequest="100"
+                                 HeightRequest="100"
+                                 GraphMargin="1"
+                                 ItemsSource="{Binding TrendItems}"
+                                 LowerBound="1"
+                                 MaxValue="{Binding MaxValue}"
+                                 MinValue="0"
+                                 ValueMemberPath="Value"
+                                 HorizontalOptions="Center"
+                                 Animate="None" />
+                <Label Grid.Column="0" Grid.Row="1"
+                       Margin="5"
+                       Text="No animation"
+                       HorizontalOptions="Fill" />
+
+                <dxui:TrendGraph Grid.Column="1" Grid.Row="0"
+                                 Margin="5"
+                                 WidthRequest="100"
+                                 HeightRequest="100"
+                                 GraphMargin="1"
+                                 ItemsSource="{Binding TrendItems}"
+                                 LowerBound="1"
+                                 MaxValue="{Binding MaxValue}"
+                                 MinValue="0"
+                                 ValueMemberPath="Value"
+                                 HorizontalOptions="Center"
+                                 Animate="GrowAll" />
+                <Label Grid.Column="1" Grid.Row="1"
+                       Margin="5"
+                       Text="Grow all animation"
+                       HorizontalOptions="Fill" />
+
+                <dxui:TrendGraph Grid.Column="0" Grid.Row="2"
+                                 Margin="5"
+                                 WidthRequest="100"
+                                 HeightRequest="100"
+                                 GraphMargin="1"
+                                 ItemsSource="{Binding TrendItems}"
+                                 LowerBound="1"
+                                 MaxValue="{Binding MaxValue}"
+                                 MinValue="0"
+                                 ValueMemberPath="Value"
+                                 HorizontalOptions="Center"
+                                 Animate="GrowAndFade" />
+                <Label Grid.Column="0" Grid.Row="3"
+                       Margin="5"
+                       Text="Grow and fade animation"
+                       HorizontalOptions="Fill" />
+
+                <dxui:TrendGraph Grid.Column="1" Grid.Row="2"
+                                 Margin="5"
+                                 WidthRequest="100"
+                                 HeightRequest="100"
+                                 GraphMargin="1"
+                                 ItemsSource="{Binding TrendItems}"
+                                 LowerBound="1"
+                                 MaxValue="{Binding MaxValue}"
+                                 MinValue="0"
+                                 ValueMemberPath="Value"
+                                 HorizontalOptions="Center"
+                                 Animate="GrowAndNone" />
+                <Label Grid.Column="1" Grid.Row="3"
+                       Margin="5"
+                       Text="Grow and none animation"
+                       HorizontalOptions="Fill" />
+
+                <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"
+                        Text="Refresh Animations"
+                        Command="{Binding RefreshAnimationsCommand}" />
+            </Grid>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
