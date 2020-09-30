@@ -76,7 +76,7 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="3"
                            FontSize="{Binding TitleSize}"
-                           FontAttributes="Bold"
+                           FontAttributes="{Binding TitleFontAttributes}"
                            HorizontalOptions="Center"
                            Padding="10"
                            Text="{Binding Title}"
