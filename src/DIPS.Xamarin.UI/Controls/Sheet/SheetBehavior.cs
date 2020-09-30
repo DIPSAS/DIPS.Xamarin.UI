@@ -209,7 +209,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(TitleColor),
             typeof(Color),
             typeof(SheetBehavior),
-            ColorPalette.TertiaryLight);
+            Label.TextColorProperty.DefaultValue);
 
         /// <summary>
         ///     <see cref="Title" />
