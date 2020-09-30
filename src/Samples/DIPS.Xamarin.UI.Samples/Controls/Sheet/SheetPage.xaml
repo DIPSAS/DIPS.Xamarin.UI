@@ -16,8 +16,6 @@
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
             <dxui:SheetBehavior Title="{Binding Title}"
-                                TitleSize="Body"
-                                TitleFontAttributes="Bold"
                                 VerticalContentAlignment="{Binding VerticalContentAlignment}"
                                 ActionCommand="{Binding ActionCommand}"
                                 ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=CanExecute}}"
