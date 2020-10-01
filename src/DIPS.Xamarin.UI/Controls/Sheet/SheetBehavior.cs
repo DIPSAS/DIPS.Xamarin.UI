@@ -79,6 +79,23 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public static readonly BindableProperty TitleSizeProperty = BindableProperty.Create(nameof(TitleSize), typeof(double), typeof(SheetBehavior), defaultValueCreator:b => Device.GetNamedSize(NamedSize.Medium, typeof(Label)));
 
+
+        /// <summary>
+        /// Title font attributes.
+        /// This is a bindable property.
+        /// </summary>
+        /// <remarks>Default is bold</remarks>
+        public FontAttributes TitleFontAttributes
+        {
+            get => (FontAttributes)GetValue(TitleFontAttributesProperty);
+            set => SetValue(TitleFontAttributesProperty, value);
+        }
+
+        /// <summary>
+        /// <see cref="TitleFontAttributes"/>
+        /// </summary>
+        public static readonly BindableProperty TitleFontAttributesProperty = BindableProperty.Create(nameof(TitleFontAttributes), typeof(FontAttributes), typeof(SheetBehavior), defaultValue: FontAttributes.Bold);
+
         /// <summary>
         /// The size of the label of the cancel button.
         /// This is a bindable property.
@@ -192,7 +209,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(TitleColor),
             typeof(Color),
             typeof(SheetBehavior),
-            ColorPalette.TertiaryLight);
+            Label.TextColorProperty.DefaultValue);
 
         /// <summary>
         ///     <see cref="Title" />
