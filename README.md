@@ -20,15 +20,15 @@ The library differentiate its components in three types:
 
 ### UI Components
 
-Our UI components include different visual components that are well known to people using our apps. This can be a [sheet](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Sheet), [popup](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Popup), [radio buttons](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/RadioButton) with more. Our UI components focuses heavily on the [MVVM design pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel). This means that you can find useful properties that are bindable and is easy to use with commands. Each UI component should have a well documented WIKI and a samples page that our consumers can look at.
+UI components include different visual components that are well known to people using our apps. This can be a [sheet](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Sheet), [popup](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Popup), [radio buttons](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/RadioButton) with more. The UI components focuses heavily on the [MVVM design pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel). This means that you can find useful properties that are bindable and is easy to use with commands. Each UI component should have a well documented WIKI and a samples page that you can look at.
 
 ### Resources
 
-Our resources can be used in our pages and UI components. This can be [colors](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Colors), icons and [converters](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Converters) with more.
+Resources can be used in pages and UI components. This can be [colors](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Colors), icons and [converters](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Converters) with more.
 
 ### API
 
-Our API includes utilities that is useful when working with the MVVM pattern and XAML. This can be a [property changed api](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#propertychangedextensions|), [commands](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#asynccommand), [recursively searching the visual tree](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#getparentoftype) with more.
+API includes utilities that is useful when working with the MVVM pattern and XAML. This can be a [property changed api](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#propertychangedextensions|), [commands](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#asynccommand), [recursively searching the visual tree](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/The-API#getparentoftype) with more.
 
 ## Supported platforms
 
