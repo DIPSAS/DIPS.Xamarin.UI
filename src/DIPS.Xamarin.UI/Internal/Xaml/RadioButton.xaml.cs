@@ -128,6 +128,14 @@ namespace DIPS.Xamarin.UI.Internal.xaml
             set => SetValue(TextProperty, value);
         }
 
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), Color.Black);
+
+        public Color TextColor
+        {
+            get => (Color)GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
+        }
+
         internal void Initialize(IHandleRadioButtons radioButtonsHandler)
         {
             m_radioButtonsHandler = radioButtonsHandler;

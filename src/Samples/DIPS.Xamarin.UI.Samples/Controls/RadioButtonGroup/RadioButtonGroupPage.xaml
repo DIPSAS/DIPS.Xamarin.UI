@@ -18,15 +18,16 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-            <ScrollView>
-            <dxui:RadioButtonGroup Grid.Row="0"
-                                    ItemsSource="{Binding Items}"
-                                    SelectedItem="{Binding SelectedItem}"
-                                    SelectedItemChangedCommand="{Binding SelectedItemChangedCommand}"
-                                    DisplayMemberPath="Name"
-                                    SelectedColor="{Binding SelectedColor}"
-                                    DeSelectedColor="{Binding DeSelectedColor}"
-                                    SeparatorColor="{Binding SeparatorColor}" />
+            <ScrollView
+                BackgroundColor="White">
+            <dxui:RadioButtonGroup ItemsSource="{Binding Items}"
+                                   SelectedItem="{Binding SelectedItem}"
+                                   SelectedItemChangedCommand="{Binding SelectedItemChangedCommand}"
+                                   DisplayMemberPath="Name"
+                                   SelectedColor="{Binding SelectedColor}"
+                                   DeSelectedColor="{Binding DeSelectedColor}"
+                                   SeparatorColor="{Binding SeparatorColor}" 
+                                   TextColor="White"/>
             </ScrollView>
         <ScrollView Grid.Row="1">
             <StackLayout>
