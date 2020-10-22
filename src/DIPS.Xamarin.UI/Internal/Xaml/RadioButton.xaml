@@ -38,6 +38,7 @@
                HeightRequest="{Binding Source={x:Reference outerButton}, Path=HeightRequest}"
                VerticalOptions="Center"
                Text="{Binding Text}"
+               TextColor="{Binding TextColor}"
                FontSize="Body"
                InputTransparent="True"
                Margin="{StaticResource spacing}" />

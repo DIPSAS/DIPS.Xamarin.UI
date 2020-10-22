@@ -8,6 +8,7 @@ using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
+using RadioButton = DIPS.Xamarin.UI.Internal.xaml.RadioButton;
 
 namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
 {
@@ -17,8 +18,6 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RadioButtonGroup : ContentView, IHandleRadioButtons
     {
-        private readonly IList<Internal.xaml.RadioButton> m_radioButtons = new List<Internal.xaml.RadioButton>();
-
         /// <summary>
         ///     <see cref="SelectedColor" />
         /// </summary>
@@ -48,8 +47,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             nameof(SeparatorColor),
             typeof(Color),
             typeof(RadioButtonGroup),
-            Color.Black,
-            BindingMode.OneWay);
+            Color.Black);
 
         /// <summary>
         ///     <see cref="ItemsSource" />
@@ -90,11 +88,33 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             propertyChanged: OnIsSelectedPropertyChanged);
 
         /// <summary>
+        ///     <see cref="TextColor" />
+        /// </summary>
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
+            nameof(TextColor),
+            typeof(Color),
+            typeof(RadioButtonGroup),
+            Color.Black,
+            propertyChanged: TextColorPropertyChanged);
+
+        private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
+
+        /// <summary>
         ///     Constructs an radio button group
         /// </summary>
         public RadioButtonGroup()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        ///     Color of the text in the radiobutton label.
+        ///     This is a bindable property.
+        /// </summary>
+        public Color TextColor
+        {
+            get => (Color)GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
         }
 
         /// <summary>
@@ -174,7 +194,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(SeparatorColorProperty, value);
         }
 
-        void IHandleRadioButtons.OnRadioButtonTapped(Internal.xaml.RadioButton tappedRadioButton)
+        void IHandleRadioButtons.OnRadioButtonTapped(RadioButton tappedRadioButton)
         {
             if (SelectedItem == tappedRadioButton.Identifier) return;
 
@@ -185,23 +205,28 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             SelectedItem = selectedObject;
         }
 
+        private static void TextColorPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (!(bindable is RadioButtonGroup radioButtonGroup))
+                return;
+            if (!(newvalue is Color newColor))
+                return;
+
+            radioButtonGroup.m_radioButtons.ForEach(rb => { rb.TextColor = newColor; });
+        }
+
         private static void OnItemsSourcePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (!(bindable is RadioButtonGroup radioButtonGroup)) return;
 
             var oldNotifyCollectionChanged = oldvalue as INotifyCollectionChanged;
-            if (oldNotifyCollectionChanged != null)
-            {
-                oldNotifyCollectionChanged.CollectionChanged -= radioButtonGroup.CollectionChanged;
-            }
+            if (oldNotifyCollectionChanged != null) oldNotifyCollectionChanged.CollectionChanged -= radioButtonGroup.CollectionChanged;
 
             var newItemsSource = newvalue as IEnumerable;
             if (newItemsSource == null) return;
 
             if (newItemsSource is INotifyCollectionChanged newNotifyCollectionChanged)
-            {
                 newNotifyCollectionChanged.CollectionChanged += radioButtonGroup.CollectionChanged;
-            }
 
             radioButtonGroup.Initialize(newItemsSource);
         }
@@ -259,25 +284,22 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             {
                 var selectedRadioButton = m_radioButtons.FirstOrDefault(rb => rb.Identifier == SelectedItem);
                 if (selectedRadioButton != null)
-                {
                     selectedRadioButton.IsSelected = true;
-                }
                 else
-                {
                     SelectedItem = null;
-                }
             }
         }
 
         private void AddItem(object item)
         {
-            var radioButton = new Internal.xaml.RadioButton
+            var radioButton = new RadioButton
             {
+                TextColor = TextColor,
                 Text = item.GetPropertyValue(DisplayMemberPath),
                 Identifier = item,
                 SelectedColor = SelectedColor,
                 DeSelectedColor = DeSelectedColor,
-                Padding = new Thickness(0, 15, 0, 15),
+                Padding = new Thickness(0, 15, 0, 15)
             };
 
             radioButton.RefreshColor(radioButton.IsSelected);

@@ -10,6 +10,5 @@
     <StackLayout x:Name="container"
                  Orientation="Vertical"
                  HorizontalOptions="{Binding Source={x:Reference codeBehind}, Path=HorizontalOptions}"
-                 VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}"
-                 />
+                 VerticalOptions="{Binding Source={x:Reference codeBehind}, Path=VerticalOptions}"/>
 </ContentView>
