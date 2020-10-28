@@ -7,9 +7,8 @@
     <ContentPage.BindingContext>
         <github244:Github244ViewModel />
     </ContentPage.BindingContext>
-    <dxui:RadioButtonGroup TextColor="AliceBlue"
-                           ItemsSource="{Binding Items}"
-                           RadioButtonPadding="50" />
+    <dxui:RadioButtonGroup ItemsSource="{Binding Items}"
+                           RadioButtonPadding="0,10,0,10" />
 
 
 </ContentPage>
