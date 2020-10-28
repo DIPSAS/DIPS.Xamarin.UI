@@ -9,6 +9,4 @@
     </ContentPage.BindingContext>
     <dxui:RadioButtonGroup ItemsSource="{Binding Items}"
                            RadioButtonPadding="0,10,0,10" />
-
-
 </ContentPage>

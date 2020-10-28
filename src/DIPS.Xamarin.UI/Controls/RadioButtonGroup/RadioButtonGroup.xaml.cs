@@ -109,7 +109,14 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             set => SetValue(RadioButtonPaddingProperty, value);
         }
 
-        public static readonly BindableProperty RadioButtonPaddingProperty = BindableProperty.Create(nameof(RadioButtonPadding), typeof(Thickness), typeof(RadioButtonGroup), defaultValue: new Thickness(0, 15, 0, 15));
+        /// <summary>
+        ///     <see cref="RadioButtonPadding" />
+        /// </summary>
+        public static readonly BindableProperty RadioButtonPaddingProperty = BindableProperty.Create(
+            nameof(RadioButtonPadding),
+            typeof(Thickness),
+            typeof(RadioButtonGroup),
+            defaultValue: new Thickness(0, 15, 0, 15));
 
         /// <summary>
         ///     Constructs an radio button group
