@@ -100,7 +100,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
 
         /// <summary>
-        ///     Padding of the radiobutton group.
+        ///     Padding of a radio button.
         ///     This is a bindable property.
         /// </summary>
         public Thickness RadioButtonPadding
