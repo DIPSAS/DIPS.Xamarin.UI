@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github244.Github244"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:github244="clr-namespace:DIPS.Xamarin.Forms.IssuesRepro.Github244">
+    <ContentPage.BindingContext>
+        <github244:Github244ViewModel />
+    </ContentPage.BindingContext>
+    <dxui:RadioButtonGroup ItemsSource="{Binding Items}"
+                           RadioButtonPadding="0,10,0,10" />
+</ContentPage>

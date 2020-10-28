@@ -100,6 +100,25 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         private readonly IList<RadioButton> m_radioButtons = new List<RadioButton>();
 
         /// <summary>
+        ///     Padding of a radio button.
+        ///     This is a bindable property.
+        /// </summary>
+        public Thickness RadioButtonPadding
+        {
+            get => (Thickness)GetValue(RadioButtonPaddingProperty);
+            set => SetValue(RadioButtonPaddingProperty, value);
+        }
+
+        /// <summary>
+        ///     <see cref="RadioButtonPadding" />
+        /// </summary>
+        public static readonly BindableProperty RadioButtonPaddingProperty = BindableProperty.Create(
+            nameof(RadioButtonPadding),
+            typeof(Thickness),
+            typeof(RadioButtonGroup),
+            defaultValue: new Thickness(0, 15, 0, 15));
+
+        /// <summary>
         ///     Constructs an radio button group
         /// </summary>
         public RadioButtonGroup()
@@ -299,7 +318,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
                 Identifier = item,
                 SelectedColor = SelectedColor,
                 DeSelectedColor = DeSelectedColor,
-                Padding = new Thickness(0, 15, 0, 15)
+                Padding = RadioButtonPadding
             };
 
             radioButton.RefreshColor(radioButton.IsSelected);
