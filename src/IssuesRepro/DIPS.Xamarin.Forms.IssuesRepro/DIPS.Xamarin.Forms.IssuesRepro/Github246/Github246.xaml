@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github246.Github246">
+    <ListView ItemsSource="{Binding ItemsWithTrends}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid ColumnDefinitions="Auto,7*">
+                        <dxui:TrendGraph
+                            HeightRequest="26"
+                            WidthRequest="26"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="5"
+                            GraphMargin="1"
+                            ItemsSource="{Binding TrendItems}"
+                            LowerBound="1"
+                            MaxValue="1"
+                            MinValue="0"
+                            ValueMemberPath="Value" />
+                        <Label Grid.Column="1"
+                               Text="{Binding ItemName}"/>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
