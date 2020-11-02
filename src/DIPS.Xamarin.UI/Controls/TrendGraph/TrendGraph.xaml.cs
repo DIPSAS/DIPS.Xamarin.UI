@@ -223,7 +223,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             }
 
             var itemHeight = value.CalculateRelativePosition(MinValue, MaxValue);
-            var backFrame = CreateBoxView(GraphBackgroundColor);
+            var backFrame = CreateFrame(GraphBackgroundColor);
 
             graphContainer.Children.Add(backFrame,
                 Constraint.RelativeToParent(r => x),
@@ -231,7 +231,7 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
                 Constraint.RelativeToParent(r => widthPerItem),
                 Constraint.RelativeToParent(r => r.Height));
 
-            graphContainer.Children.Add(CreateBoxView(color),
+            graphContainer.Children.Add(CreateFrame(color),
                 Constraint.RelativeToParent(r => backFrame.X),
                 Constraint.RelativeToParent(r => (backFrame.Y + backFrame.Height) - (itemHeight * backFrame.Height)),
                 Constraint.RelativeToParent(r => backFrame.Width),
@@ -294,9 +294,9 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             }
         }
 
-        private BoxView CreateBoxView(Color background)
+        private static Frame CreateFrame(Color background)
         {
-            return new BoxView {BackgroundColor = background, CornerRadius = 0};
+            return new Frame {BackgroundColor = background, CornerRadius = 0, Padding = 0, HasShadow = false};
         }
 
         private void CollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
