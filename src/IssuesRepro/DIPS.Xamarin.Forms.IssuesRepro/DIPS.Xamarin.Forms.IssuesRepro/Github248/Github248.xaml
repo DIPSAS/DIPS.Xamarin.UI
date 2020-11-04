@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github248.Github248"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <dxui:ModalityLayout>
+        <dxui:ModalityLayout.Behaviors>
+            <dxui:SheetBehavior x:Name="sheetBehavior"
+                                IsOpen="True"
+                                IsCancelButtonVisible="True"
+                                CancelTitle="Cancel"
+                                ActionTitle="Edit"
+                                Title="TITLE"
+                                TitleColor="{dxui:DIPSColor ColorPalette=Dark}"
+                                TitleSize="16"
+                                HeaderColor="{x:Static dxui:ColorPalette.LightLight}"
+                                MinPosition=".5"
+                                MaxPosition="0.98"
+                                IsDraggable="True"
+                                VerticalContentAlignment="Fit"/>
+        </dxui:ModalityLayout.Behaviors>
+    </dxui:ModalityLayout>
+</ContentPage>

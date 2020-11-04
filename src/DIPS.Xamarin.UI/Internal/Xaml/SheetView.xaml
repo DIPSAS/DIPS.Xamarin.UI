@@ -95,7 +95,15 @@
                             Command="{Binding CancelCommand}"
                             Text="{Binding CancelTitle}"
                             Clicked="CancelButtonClicked"
-                            BackgroundColor="{Binding HeaderColor}" />
+                            BackgroundColor="{Binding HeaderColor}"
+                            HorizontalOptions="Start">
+                        <Button.Margin>
+                           <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="8,0,0,0" />
+                                <On Platform="Android" Value="0,0,0,0" />
+                           </OnPlatform>
+                        </Button.Margin>
+                    </Button>
 
                     <Button x:Name="actionButton"
                             Grid.Column="2"
@@ -107,7 +115,15 @@
                             TextColor="{Binding ActionTitleColor}"
                             Text="{Binding ActionTitle}"
                             Clicked="ActionButtonClicked"
-                            IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}" />
+                            IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}"
+                            HorizontalOptions="End">
+                        <Button.Margin>
+                           <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0,0,8,0" />
+                                <On Platform="Android" Value="0,0,-10,0" />
+                           </OnPlatform>
+                        </Button.Margin>
+                    </Button>
                 </Grid>
 
                 <BoxView x:Name="SeparatorBoxView"
