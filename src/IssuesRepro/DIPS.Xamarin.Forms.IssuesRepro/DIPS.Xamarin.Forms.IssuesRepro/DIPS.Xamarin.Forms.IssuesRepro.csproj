@@ -69,5 +69,6 @@
     <Folder Include="Github203\" />
     <Folder Include="Github211\" />
     <Folder Include="Github234\" />
+    <Folder Include="Github248\" />
   </ItemGroup>
 </Project>

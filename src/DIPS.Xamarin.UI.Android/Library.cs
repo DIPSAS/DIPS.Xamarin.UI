@@ -16,6 +16,7 @@ namespace DIPS.Xamarin.UI.Android
         {
             Inspector.Instance = new Util.Inspector();
             InternalDatePickerRenderer.Initialize();
+            InternalButtonRenderer.Initialize();
         }
     }
 }
