@@ -11,8 +11,15 @@ using TextAlignment = Xamarin.Forms.TextAlignment;
 
 namespace DIPS.Xamarin.UI.Android
 {
+    /// <summary>
+    /// A internal class to use when having to interact with the buttons on Android platform
+    /// </summary>
     internal class InternalButtonRenderer : ButtonRenderer
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public InternalButtonRenderer(Context context) : base(context)
         {
         }
@@ -72,6 +79,9 @@ namespace DIPS.Xamarin.UI.Android
         }
     }
 
+    /// <summary>
+    /// To set the flags for horizontal, vertictal text alignment.
+    /// </summary>
     public static class AlignmentHelper
     {
         /// <summary>

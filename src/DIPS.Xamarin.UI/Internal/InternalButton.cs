@@ -2,6 +2,9 @@
 
 namespace DIPS.Xamarin.UI.Internal
 {
+    /// <summary>
+    /// A internal class to use when having to interact with the buttons
+    /// </summary>
     internal class InternalButton : Button
     {
         /// <summary>
