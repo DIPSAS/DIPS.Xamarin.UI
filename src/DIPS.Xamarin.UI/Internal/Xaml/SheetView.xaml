@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0"
       encoding="UTF-8"?>
+
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Controls.Sheet;assembly=DIPS.Xamarin.UI"
+             xmlns:local="clr-namespace:DIPS.Xamarin.UI.Internal"
              mc:Ignorable="d dblend"
              x:Class="DIPS.Xamarin.UI.Internal.xaml.SheetView"
              x:DataType="{x:Type Sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              xmlns:MultiValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.MultiValueConverters"
-             xmlns:Utilities="clr-namespace:DIPS.Xamarin.UI.Internal.Utilities;assembly=DIPS.Xamarin.UI"
              dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
     <Frame x:Name="OuterSheetFrame"
            HasShadow="{Binding HasShadow}"
@@ -57,7 +58,8 @@
                       ColumnSpacing="0"
                       IsClippedToBounds="True">
                     <Grid.IsVisible>
-                        <MultiBinding Converter="{MultiValueConverters:LogicalExpressionConverter
+                        <MultiBinding
+                            Converter="{MultiValueConverters:LogicalExpressionConverter
                                     LogicalGate=Or}">
                             <Binding Source="{x:Reference TitleLabel}"
                                      Path="IsVisible" />
@@ -84,46 +86,32 @@
                            IsVisible="{Binding Title, Converter={ValueConverters:IsEmptyConverter Inverted=True}}"
                            LineBreakMode="TailTruncation"
                            VerticalOptions="Center" />
-
-                    <Button x:Name="cancelButton"
-                            Grid.Column="0"
-                            FontSize="{Binding CancelButtonSize}"
-                            Padding="10"
-                            IsVisible="{Binding IsCancelButtonVisible}"
-                            TextColor="{Binding CancelTitleColor}"
-                            CommandParameter="{Binding CancelCommandParameter}"
-                            Command="{Binding CancelCommand}"
-                            Text="{Binding CancelTitle}"
-                            Clicked="CancelButtonClicked"
-                            BackgroundColor="{Binding HeaderColor}"
-                            HorizontalOptions="Start">
-                        <Button.Margin>
-                           <OnPlatform x:TypeArguments="Thickness">
-                                <On Platform="iOS" Value="8,0,0,0" />
-                                <On Platform="Android" Value="0,0,0,0" />
-                           </OnPlatform>
-                        </Button.Margin>
-                    </Button>
-
-                    <Button x:Name="actionButton"
-                            Grid.Column="2"
-                            FontSize="{Binding ActionButtonSize}"
-                            Padding="10"
-                            BackgroundColor="{Binding HeaderColor}"
-                            Command="{Binding ActionCommand}"
-                            CommandParameter="{Binding ActionCommandParameter}"
-                            TextColor="{Binding ActionTitleColor}"
-                            Text="{Binding ActionTitle}"
-                            Clicked="ActionButtonClicked"
-                            IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}"
-                            HorizontalOptions="End">
-                        <Button.Margin>
-                           <OnPlatform x:TypeArguments="Thickness">
-                                <On Platform="iOS" Value="0,0,8,0" />
-                                <On Platform="Android" Value="0,0,-10,0" />
-                           </OnPlatform>
-                        </Button.Margin>
-                    </Button>
+                    <local:InternalButton x:Name="cancelButton"
+                                          Grid.Column="0"
+                                          Padding="15,10,10,10"
+                                          FontSize="{Binding CancelButtonSize}"
+                                          IsVisible="{Binding IsCancelButtonVisible}"
+                                          TextColor="{Binding CancelTitleColor}"
+                                          CommandParameter="{Binding CancelCommandParameter}"
+                                          Command="{Binding CancelCommand}"
+                                          Text="{Binding CancelTitle}"
+                                          Clicked="CancelButtonClicked"
+                                          BackgroundColor="{Binding HeaderColor}"
+                                          HorizontalTextAlignment="Start"
+                                          VerticalTextAlignment="Center" />
+                    <local:InternalButton x:Name="actionButton"
+                                          Grid.Column="2"
+                                          Padding="10,10,15,10"
+                                          FontSize="{Binding ActionButtonSize}"
+                                          BackgroundColor="{Binding HeaderColor}"
+                                          Command="{Binding ActionCommand}"
+                                          CommandParameter="{Binding ActionCommandParameter}"
+                                          TextColor="{Binding ActionTitleColor}"
+                                          Text="{Binding ActionTitle}"
+                                          Clicked="ActionButtonClicked"
+                                          HorizontalTextAlignment="End"
+                                          VerticalTextAlignment="Center"
+                                          IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}" />
                 </Grid>
 
                 <BoxView x:Name="SeparatorBoxView"
@@ -158,7 +146,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <ContentView x:Name="sheetContentView" Content="{Binding SheetContent}"/>
+                <ContentView x:Name="sheetContentView" Content="{Binding SheetContent}" />
             </Grid>
         </Grid>
     </Frame>
