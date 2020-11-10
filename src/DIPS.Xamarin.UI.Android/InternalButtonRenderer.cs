@@ -17,6 +17,11 @@ namespace DIPS.Xamarin.UI.Android
     internal class InternalButtonRenderer : ButtonRenderer
     {
         /// <summary>
+        /// Setting initialization
+        /// </summary>
+        internal static void Initialize() { }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="context"></param>
