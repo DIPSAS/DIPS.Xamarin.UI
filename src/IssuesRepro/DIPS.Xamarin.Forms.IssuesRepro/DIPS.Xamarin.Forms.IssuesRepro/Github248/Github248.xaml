@@ -23,20 +23,20 @@
                                 MaxPosition="0.98"
                                 IsDraggable="True"
                                 VerticalContentAlignment="Fit">
-                <dxui:SheetBehavior.SheetContentTemplate>
-                    <DataTemplate>
-                        <StackLayout Spacing="0"
-                                     Orientation="Vertical">
-                            <Editor x:Name="editor"
-                                    TextColor="{x:Static dxui:ColorPalette.Dark}"
-                                    Text="Sample text sample text sample text sample text sample iiiii text sample text sample text sample text"
-                                    Margin="10,0"
-                                    FontSize="Small"
-                                    BackgroundColor="{x:Static dxui:ColorPalette.LightAir}" />
-                        </StackLayout>
-                    </DataTemplate>
-                </dxui:SheetBehavior.SheetContentTemplate>
-            </dxui:SheetBehavior>
+                    <dxui:SheetBehavior.SheetContentTemplate>
+                        <DataTemplate>
+                            <StackLayout Spacing="0"
+                                         Orientation="Vertical">
+                                <Editor x:Name="editor"
+                                        TextColor="{x:Static dxui:ColorPalette.Dark}"
+                                        Text="Sample text sample text sample text sample text sample iiiii text sample text sample text sample text"
+                                        Margin="10,0"
+                                        FontSize="Small"
+                                        BackgroundColor="{x:Static dxui:ColorPalette.LightAir}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </dxui:SheetBehavior.SheetContentTemplate>
+                </dxui:SheetBehavior>
         </dxui:ModalityLayout.Behaviors>
     </dxui:ModalityLayout>
 </ContentPage>
