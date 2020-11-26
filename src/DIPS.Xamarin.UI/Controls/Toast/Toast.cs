@@ -48,7 +48,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
         /// <param name="options"><see cref="ToastOptions" /> to set for the Toast</param>
         /// <param name="layout"><see cref="ToastLayout" /> to set for the Toast</param>
         /// <returns>A void <c>Task</c></returns>
-        public static async Task DisplayToast(string text, ToastOptions options = null, ToastLayout layout = null)
+        public static async Task DisplayToast(string text, ToastOptions? options = null, ToastLayout? layout = null)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                     Initialize();
                 }
 
-                await ToastCore?.DisplayToast(text, options, layout)!;
+                await ToastCore?.DisplayToast(text, options ?? new ToastOptions(), layout ?? new ToastLayout())!;
             }
             catch (Exception ex)
             {
