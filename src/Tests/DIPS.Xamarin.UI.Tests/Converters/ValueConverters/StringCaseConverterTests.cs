@@ -24,8 +24,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         [InlineData('c')]
         public void Convert_InvalidInput_ThrowsException(object input)
         {
-            Action act = () => m_stringCaseConverter.Convert(input, null, null, null);
-            act.Should().Throw<Exception>();
+            m_stringCaseConverter.Convert(input, null, null, null).Should().BeNull();
         }
 
 
