@@ -20,6 +20,6 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
 
     public class StringCaseConverterViewModel
     {
-        public string MyString => "Test string";
+        public string MyString => "en test string";
     }
 }

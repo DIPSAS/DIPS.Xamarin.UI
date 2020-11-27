@@ -23,7 +23,8 @@
             </Grid.ColumnDefinitions>
             <Label Text="Using LocalizedString"
                    Grid.Column="0" />
-            <Label Text="{dxui:StringCase Input={x:Static SamplesResources:LocalizedStrings.TestString},StringCase=Upper}" />
+            <Label Grid.Column="1"
+                   Text="{dxui:StringCase Input={x:Static SamplesResources:LocalizedStrings.TestString},StringCase=Upper}" />
         </Grid>
         <Grid  Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -32,7 +33,8 @@
             </Grid.ColumnDefinitions>
             <Label Text="Using LocalizedString"
                    Grid.Column="0" />
-            <Label Text="{Binding MyString, Converter={dxui:StringCaseConverter StringCase=Upper}}" />
+            <Label Grid.Column="1" 
+                   Text="{Binding MyString, Converter={dxui:StringCaseConverter StringCase=Upper}, TargetNullValue='var null her'}" />
         </Grid>
     </Grid>
 </ContentPage>

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Text;
 using DIPS.Xamarin.UI.Extensions.Markup;
-using DIPS.Xamarin.UI.Internal.Utilities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -34,7 +31,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is string stringValue))
-                throw new XamlParseException("Input has to be of type string").WithXmlLineInfo(m_serviceProvider);
+                return null;
             if (stringValue == string.Empty)
                 return string.Empty;
 

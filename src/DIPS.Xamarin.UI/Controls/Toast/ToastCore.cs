@@ -204,13 +204,13 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             await DisplayToast(text, toastOptions, layoutOptions);
         }
 
-        internal async Task DisplayToast(string text, ToastOptions options = null, ToastLayout layout = null)
+        internal async Task DisplayToast(string text, ToastOptions options, ToastLayout layout)
         {
             // get toast container
             var toastContainer = GetToastContainer();
 
             // toast view
-            var toastView = GetToast(text, options ?? new ToastOptions(), layout ?? new ToastLayout());
+            var toastView = GetToast(text, options, layout);
             toastContainer.Children.Add(toastView);
 
             // animate toast
