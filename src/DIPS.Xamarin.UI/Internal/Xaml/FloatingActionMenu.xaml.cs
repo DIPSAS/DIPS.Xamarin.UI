@@ -110,9 +110,12 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             m_animationComplete = false;
 
+            m_isExpanded = !m_isExpanded;
+            m_behaviour.IsOpen = m_isExpanded;
+
             InvokeBeforeEvents();
 
-            if (!m_isExpanded)
+            if (m_isExpanded)
             {
                 DisplayOverlay();
             }
@@ -124,11 +127,11 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
             var position = 0;
             foreach (var menuButton in Children.Where(menuButton => menuButton.IsVisible))
             {
-                TranslateMenuButton(menuButton, position, m_isExpanded);
+                TranslateMenuButton(menuButton, position, !m_isExpanded);
                 position++;
             }
 
-            ExpandButton.FadeTo(m_isExpanded ? .5 : 1, 250, Easing.CubicInOut);
+            ExpandButton.FadeTo(!m_isExpanded ? .5 : 1, 250, Easing.CubicInOut);
 
             var rotateTask = ExpandButton.RelRotateTo(180, 250, Easing.CubicInOut);
             await Task.Delay(250);
@@ -136,13 +139,12 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
             InvokeAfterEvents();
 
-            m_isExpanded = !m_isExpanded;
             m_animationComplete = true;
         }
 
         private void InvokeAfterEvents()
         {
-            if (m_isExpanded)
+            if (!m_isExpanded)
             {
                 OnAfterClose?.Invoke(null, EventArgs.Empty);
                 m_behaviour.OnAfterCloseCommand?.Execute(m_behaviour.OnAfterCloseCommandParameter);
@@ -156,7 +158,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
 
         private void InvokeBeforeEvents()
         {
-            if (m_isExpanded)
+            if (!m_isExpanded)
             {
                 OnBeforeClose?.Invoke(null, EventArgs.Empty);
                 m_behaviour.OnBeforeCloseCommand?.Execute(m_behaviour.OnBeforeCloseCommandParameter);
@@ -208,8 +210,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
         {
             if (!m_animationComplete) return;
             await AnimateAll();
-
-            m_behaviour.IsOpen = m_isExpanded;
         }
 
         internal void AddTo(ModalityLayout layout)

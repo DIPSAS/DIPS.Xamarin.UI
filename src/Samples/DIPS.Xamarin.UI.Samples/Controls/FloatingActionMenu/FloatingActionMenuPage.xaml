@@ -35,7 +35,8 @@
     <dxui:ModalityLayout x:Name="modalityLayout"
                          BackgroundColor="WhiteSmoke">
         <dxui:ModalityLayout.Behaviors>
-            <dxui:FloatingActionMenuBehaviour Size="60"
+            <dxui:FloatingActionMenuBehaviour x:Name="floatingActionMenuBehaviour"
+                                              Size="60"
                                               ExpandButtonBackgroundColor="LightSeaGreen"
                                               ExpandButtonText="Open"
                                               ExpandButtonFontSize="12"
@@ -160,6 +161,18 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
+
+            <Label x:Name="IsOpenLabel"
+                   FontSize="20"
+                   Margin="10">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="IsOpen: " />
+                        <Span Text="{Binding Source={x:Reference floatingActionMenuBehaviour}, Path=IsOpen}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
         </StackLayout>
     </dxui:ModalityLayout>
 </ContentPage>
