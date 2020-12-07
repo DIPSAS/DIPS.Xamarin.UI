@@ -21,7 +21,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             /// <summary>
             ///     The short format, which is the same as <see cref="Default" /> to use during conversion
             /// </summary>
-            /// <example>12 Dec 1990 12:00 PM</example>
+            /// <example>12 Dec 1990 13:00</example>
             Short = 0,
 
             /// <summary>
@@ -32,7 +32,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             /// <summary>
             ///     A text format to use during conversion
             /// </summary>
-            /// <example>Today 12:00 PM</example>
+            /// <example>Today 13:00</example>
             Text,
         }
 

@@ -23,7 +23,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             /// <summary>
             ///     The default time converter format
             /// </summary>
-            /// <example>12:00 PM</example>
+            /// <example>13:00</example>
             Default = 0,
         }
 
@@ -74,7 +74,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
 
         private static string ConvertToDefaultFormat(DateTime dateTimeInput, CultureInfo culture)
         {
-            var time = dateTimeInput.ToString("hh:mm tt", culture);
+            var time = dateTimeInput.ToString("HH:mm", culture);
             if (culture.IsNorwegian())
             {
                 var hour = dateTimeInput.ToString("HH", culture);

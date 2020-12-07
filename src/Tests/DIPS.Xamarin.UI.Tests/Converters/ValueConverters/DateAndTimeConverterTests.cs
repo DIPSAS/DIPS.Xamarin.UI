@@ -15,7 +15,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
     [Collection("Sequential")] //This test class is using an static shared property that is used in other tests
     public class DateAndTimeConverterTests
     {
-        private readonly DateTime m_now = new DateTime(1990, 12, 12, 12, 00, 00);
+        private readonly DateTime m_now = new DateTime(1990, 12, 12, 13, 00, 00);
         private readonly DateAndTimeConverter m_dateAndTimeConverter = new DateAndTimeConverter();
 
         [Theory]
@@ -41,9 +41,9 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         public static IEnumerable<object[]> TestDataForShortFormat =>
             new List<object[]>()
             {
-                new object[] { "no", new DateTime(1991, 12, 12,12,12,12), "12. des 1991 kl 12:12" },
-                new object[] { "en", new DateTime(1991, 12, 12,12,12,12), "12th Dec 1991 12:12 PM" },
-                new object[] { "en", new DateTime(1991, 12, 12,10,12,12), "12th Dec 1991 10:12 AM" },
+                new object[] { "no", new DateTime(1991,12,12,12,12,12), "12. des 1991 kl 12:12" },
+                new object[] { "en", new DateTime(1991,12,12,13,00,00), "12th Dec 1991 13:00" },
+                new object[] { "en", new DateTime(1991,12,12,10,12,00), "12th Dec 1991 10:12" },
             };
 
         [Theory]
@@ -60,14 +60,14 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         public static IEnumerable<object[]> TestDataForTextFormat =>
             new List<object[]>()
             {
-                new object[] { "en", new DateTime(1990,12,12,12,12,00), "Today 12:12 PM" },
-                new object[] { "en", new DateTime(1991, 12, 10, 12, 12, 12), "10th Dec 12:12 PM" },
-                new object[] { "en", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(-1), "Yesterday 12:12 PM" },
-                new object[] { "en", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(1), "Tomorrow 12:12 PM" },
-                new object[] { "no", new DateTime(1990, 12, 12, 10, 12, 00), "I dag, kl 10:12" },
-                new object[] { "no", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(-1), "I går, kl 12:12" },
-                new object[] { "no", new DateTime(1990, 12, 12, 12, 12, 00).AddDays(1), "I morgen, kl 12:12" },
-                new object[] { "no", new DateTime(1990, 12, 10, 09, 09, 00), "10. des kl 09:09" }
+                new object[] { "en", new DateTime(1990,12,12,13,00,00), "Today 13:00" },
+                new object[] { "en", new DateTime(1991,12,10,13,00,00), "10th Dec 13:00" },
+                new object[] { "en", new DateTime(1990,12,12,13,00,00).AddDays(-1), "Yesterday 13:00" },
+                new object[] { "en", new DateTime(1990,12,12,13,00,00).AddDays(1), "Tomorrow 13:00" },
+                new object[] { "no", new DateTime(1990,12,12,13,00,00), "I dag, kl 13:00" },
+                new object[] { "no", new DateTime(1990,12,12,13,00,00).AddDays(-1), "I går, kl 13:00" },
+                new object[] { "no", new DateTime(1990,12,12,13,00,00).AddDays(1), "I morgen, kl 13:00" },
+                new object[] { "no", new DateTime(1990,12,10,13,00,00), "10. des kl 13:00" }
             };
 
         [Theory]

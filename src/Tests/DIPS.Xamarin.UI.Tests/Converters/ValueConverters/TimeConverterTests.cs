@@ -41,8 +41,8 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
             {
                 new object[] { "nb", new TimeSpan(09,12,00), "09:12" },
                 new object[] { "nb", new TimeSpan(21,12,00), "21:12" },
-                new object[] { "en", new TimeSpan(09,12,00), "09:12 AM" },
-                new object[] { "en", new TimeSpan(21,12,00), "09:12 PM" },
+                new object[] { "en", new TimeSpan(09,12,00), "21:12" },
+                new object[] { "en", new TimeSpan(21,12,00), "21:12" },
             };
 
         [Theory]
@@ -59,8 +59,8 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         [Fact]
         public void Convert_WithShortFormat_WithDateTime_CorrectFormat()
         {
-            var expected = "12:12 PM";
-            var date = new DateTime(1991, 12, 12, 12, 12, 12);
+            var expected = "13:00";
+            var date = new DateTime(1991, 12, 12, 13, 00, 00);
             Clock.OverrideClock(date);
             m_timeConverter.Format = TimeConverterFormat.Default;
 
