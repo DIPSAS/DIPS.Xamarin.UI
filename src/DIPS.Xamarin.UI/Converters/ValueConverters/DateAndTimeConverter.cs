@@ -58,11 +58,12 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             if (value == null) return string.Empty;
             if (!(value is DateTime dateTimeInput))
                 throw new XamlParseException("The input has to be of type DateTime").WithXmlLineInfo(m_serviceProvider);
-            return Format switch 
+            return Format switch
             {
-                DateAndTimeConverterFormat.Short => ConvertToShortFormat(dateTimeInput, culture), 
+                DateAndTimeConverterFormat.Short => ConvertToShortFormat(dateTimeInput, culture),
                 DateAndTimeConverterFormat.Text
-                => ConvertToTextFormat(dateTimeInput, culture), _ => string.Empty
+                    => ConvertToTextFormat(dateTimeInput, culture),
+                _ => string.Empty
             };
         }
 
@@ -75,8 +76,10 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
 
         private static string ConvertToTextFormat(DateTime dateTimeInput, CultureInfo culture)
         {
-            var date = new DateConverter { Format = DateConverter.DateConverterFormat.Text }.Convert(dateTimeInput, null, null, culture);
-            var time = new TimeConverter { Format = TimeConverter.TimeConverterFormat.Default }.Convert(dateTimeInput, null, null, culture);
+            var date = new DateConverter {Format = DateConverter.DateConverterFormat.Text}.Convert(dateTimeInput, null,
+                null, culture);
+            var time = new TimeConverter {Format = TimeConverter.TimeConverterFormat.Default}.Convert(dateTimeInput,
+                null, null, culture);
 
             if (culture.IsNorwegian())
             {
@@ -84,15 +87,19 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
                 {
                     return $"{date},{Space}kl{Space}{time}";
                 }
+
                 return $"{date}{Space}kl{Space}{time}";
             }
+
             return $"{date}{Space}{time}";
         }
 
         private static string ConvertToShortFormat(DateTime dateTimeInput, CultureInfo culture)
         {
-            var date = new DateConverter { Format = DateConverter.DateConverterFormat.Short }.Convert(dateTimeInput, null, null, culture);
-            var time = new TimeConverter { Format = TimeConverter.TimeConverterFormat.Default }.Convert(dateTimeInput, null, null, culture);
+            var date = new DateConverter {Format = DateConverter.DateConverterFormat.Short}.Convert(dateTimeInput, null,
+                null, culture);
+            var time = new TimeConverter {Format = TimeConverter.TimeConverterFormat.Default}.Convert(dateTimeInput,
+                null, null, culture);
 
             return culture.IsNorwegian() ? $"{date}{Space}kl{Space}{time}" : $"{date}{Space}{time}";
         }

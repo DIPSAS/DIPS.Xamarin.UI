@@ -39,6 +39,6 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand OpenLocaleMobileSettingsCommand { get; }
-        public string Locale => System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+        public string Locale => System.Threading.Thread.CurrentThread.CurrentCulture.ThreeLetterWindowsLanguageName;
     }
 }

@@ -62,11 +62,12 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             if (value == null) return string.Empty;
             if (!(value is DateTime dateTimeInput))
                 throw new XamlParseException("The input has to be of type DateTime").WithXmlLineInfo(m_serviceProvider);
-            return Format switch 
-            { 
-                    DateConverterFormat.Short => ConvertToDefaultDateTime(dateTimeInput, culture), 
-                    DateConverterFormat.Text =>
-                    ConvertDateTimeAsText(dateTimeInput, culture), _ => string.Empty
+            return Format switch
+            {
+                DateConverterFormat.Short => ConvertToDefaultDateTime(dateTimeInput, culture),
+                DateConverterFormat.Text =>
+                    ConvertDateTimeAsText(dateTimeInput, culture),
+                _ => string.Empty
             };
         }
 
@@ -83,6 +84,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
 
             var month = GetMonthBasedOnCulture(dateTime, culture);
             var year = dateTime.ToString("yyyy", culture);
+            if (culture.ThreeLetterWindowsLanguageName.Equals("ENU"))
+            {
+                return $"{month}{Space}{day}{Space}{year}";
+            }
+
             return $"{day}{Space}{month}{Space}{year}";
         }
 
@@ -93,6 +99,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             {
                 day = day.TrimStart('0');
                 day += dateTime.GetEnglishDaySuffix();
+            }
+
+            if (culture.ThreeLetterWindowsLanguageName.Equals("ENU"))
+            {
+                day += ",";
             }
 
             if (culture.IsNorwegian())
@@ -122,6 +133,12 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
 
             var month = GetMonthBasedOnCulture(dateTime, culture);
             var day = GetDayBasedOnCulture(dateTime, culture);
+
+            if (culture.ThreeLetterWindowsLanguageName.Equals("ENU"))
+            {
+                return $"{month}{Space}{day}";
+            }
+
             return $"{day}{Space}{month}";
         }
 

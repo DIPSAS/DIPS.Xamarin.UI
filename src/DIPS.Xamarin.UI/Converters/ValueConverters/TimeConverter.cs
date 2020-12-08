@@ -46,7 +46,8 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             var dateTimeInput = DateTime.MinValue;
             if (value == null) return string.Empty;
             if (!(value is DateTime) && !(value is TimeSpan))
-                throw new XamlParseException("The input has to be of type DateTime or TimeSpan").WithXmlLineInfo(m_serviceProvider);
+                throw new XamlParseException("The input has to be of type DateTime or TimeSpan").WithXmlLineInfo(
+                    m_serviceProvider);
 
             switch (value)
             {
@@ -80,6 +81,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
                 var hour = dateTimeInput.ToString("HH", culture);
                 var minutes = dateTimeInput.ToString("mm", culture);
                 time = $"{hour}:{minutes}";
+            }
+
+            if (culture.ThreeLetterWindowsLanguageName.Equals("ENU"))
+            {
+                time = dateTimeInput.ToString("hh:mm tt", culture);
             }
 
             return time;
