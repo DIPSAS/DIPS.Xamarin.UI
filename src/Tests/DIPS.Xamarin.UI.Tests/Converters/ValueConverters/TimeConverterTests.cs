@@ -39,12 +39,12 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         public static IEnumerable<object[]> TestDataForDefaultFormat =>
             new List<object[]>()
             {
-                new object[] {"NOR", new TimeSpan(09, 12, 00), "09:12"},
-                new object[] {"NOR", new TimeSpan(21, 12, 00), "21:12"},
-                new object[] {"ENU", new TimeSpan(09, 12, 00), "09:12"},
-                new object[] {"ENU", new TimeSpan(21, 12, 00), "21:12"},
-                new object[] {"ENG", new TimeSpan(09, 12, 00), "09:12 AM"},
-                new object[] {"ENG", new TimeSpan(21, 12, 00), "09:12 PM"},
+                new object[] {"no", new TimeSpan(09, 12, 00), "09:12"},
+                new object[] {"no", new TimeSpan(21, 12, 00), "21:12"},
+                new object[] {"enu", new TimeSpan(09, 12, 00), "09:12"},
+                new object[] {"enu", new TimeSpan(21, 12, 00), "21:12"},
+                new object[] {"en", new TimeSpan(09, 12, 00), "09:12 AM"},
+                new object[] {"en", new TimeSpan(21, 12, 00), "09:12 PM"},
             };
 
         [Theory]
@@ -67,7 +67,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
             Clock.OverrideClock(date);
             m_timeConverter.Format = TimeConverterFormat.Default;
 
-            var actual = m_timeConverter.Convert<string>(date, new CultureInfo("ENU"));
+            var actual = m_timeConverter.Convert<string>(date, new CultureInfo("enu"));
 
             actual.Should().Be(expected);
         }
