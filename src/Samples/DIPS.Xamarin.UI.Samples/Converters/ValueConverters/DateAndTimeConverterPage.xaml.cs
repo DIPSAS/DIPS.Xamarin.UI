@@ -50,7 +50,7 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
         public DateTime DateTime => Date + Time;
 
         public ICommand OpenLocaleMobileSettingsCommand { get; }
-        public string Locale => System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+        public string Locale => System.Threading.Thread.CurrentThread.CurrentCulture.ThreeLetterWindowsLanguageName;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

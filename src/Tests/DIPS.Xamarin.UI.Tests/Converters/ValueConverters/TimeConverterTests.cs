@@ -39,15 +39,18 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         public static IEnumerable<object[]> TestDataForDefaultFormat =>
             new List<object[]>()
             {
-                new object[] { "nb", new TimeSpan(09,12,00), "09:12" },
-                new object[] { "nb", new TimeSpan(21,12,00), "21:12" },
-                new object[] { "en", new TimeSpan(09,12,00), "09:12 AM" },
-                new object[] { "en", new TimeSpan(21,12,00), "09:12 PM" },
+                new object[] {"no", new TimeSpan(09, 12, 00), "09:12"},
+                new object[] {"no", new TimeSpan(21, 12, 00), "21:12"},
+                new object[] {"en-gb", new TimeSpan(09, 12, 00), "09:12"},
+                new object[] {"en-gb", new TimeSpan(21, 12, 00), "21:12"},
+                new object[] {"en-us", new TimeSpan(09, 12, 00), "09:12 AM"},
+                new object[] {"en-us", new TimeSpan(21, 12, 00), "09:12 PM"},
             };
 
         [Theory]
         [MemberData(nameof(TestDataForDefaultFormat))]
-        public void Convert_WithDefaultFormat_WithCulture_CorrectFormat(string cultureName, TimeSpan time, string expected)
+        public void Convert_WithDefaultFormat_WithCulture_CorrectFormat(string cultureName, TimeSpan time,
+            string expected)
         {
             m_timeConverter.Format = TimeConverterFormat.Default;
 
@@ -59,12 +62,12 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
         [Fact]
         public void Convert_WithShortFormat_WithDateTime_CorrectFormat()
         {
-            var expected = "12:12 PM";
-            var date = new DateTime(1991, 12, 12, 12, 12, 12);
+            var expected = "13:00";
+            var date = new DateTime(1991, 12, 12, 13, 00, 00);
             Clock.OverrideClock(date);
             m_timeConverter.Format = TimeConverterFormat.Default;
 
-            var actual = m_timeConverter.Convert<string>(date, new CultureInfo("en"));
+            var actual = m_timeConverter.Convert<string>(date, new CultureInfo("en-gb"));
 
             actual.Should().Be(expected);
         }
