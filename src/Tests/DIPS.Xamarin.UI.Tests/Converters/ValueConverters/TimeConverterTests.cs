@@ -67,7 +67,7 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
             Clock.OverrideClock(date);
             m_timeConverter.Format = TimeConverterFormat.Default;
 
-            var actual = m_timeConverter.Convert<string>(date, new CultureInfo("enu"));
+            var actual = m_timeConverter.Convert<string>(date, new CultureInfo("en-gb"));
 
             actual.Should().Be(expected);
         }
