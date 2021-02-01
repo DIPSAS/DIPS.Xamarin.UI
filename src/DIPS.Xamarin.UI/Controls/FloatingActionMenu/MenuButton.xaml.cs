@@ -395,17 +395,17 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                 {
                     if (newCount > 99)
                     {
-                        menuButton.BadgeFrame.HeightRequest = 22;
+                        menuButton.BadgeFrame.HeightRequest = 20;
                         menuButton.BadgeFrame.WidthRequest = -1;
-                        menuButton.BadgeFrame.Padding = new Thickness(5, 1);
-                        menuButton.BadgeFrame.CornerRadius = 8f;
+                        menuButton.BadgeFrame.Padding = new Thickness(5, 0);
+                        menuButton.BadgeFrame.CornerRadius = 8;
                         return value;
                     }
                 }
 
-                menuButton.BadgeFrame.HeightRequest = 22;
-                menuButton.BadgeFrame.WidthRequest = 22;
-                menuButton.BadgeFrame.CornerRadius = 11;
+                menuButton.BadgeFrame.HeightRequest = 20;
+                menuButton.BadgeFrame.WidthRequest = 20;
+                menuButton.BadgeFrame.CornerRadius = 10;
                 menuButton.BadgeFrame.Padding = new Thickness(1);
             }
 
