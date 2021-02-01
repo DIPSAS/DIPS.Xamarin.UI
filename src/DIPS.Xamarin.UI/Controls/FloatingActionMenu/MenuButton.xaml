@@ -83,9 +83,6 @@
                Grid.Column="1"
                IsVisible="{Binding Source={x:Reference CodeBehind}, Path= IsBadgeVisible}"
                BackgroundColor="{Binding Source={x:Reference CodeBehind}, Path= BadgeColor}"
-               HeightRequest="20"
-               WidthRequest="20"
-               CornerRadius="10"
                InputTransparent="True"
                Padding="0"
                VerticalOptions="Start"
@@ -97,9 +94,9 @@
                    FontFamily="{Binding Source={x:Reference CodeBehind}, Path= BadgeFontFamily}"
                    FontSize="12"
                    LineBreakMode="NoWrap"
-                   BackgroundColor="Transparent"
-                   VerticalTextAlignment="Center"
-                   HorizontalTextAlignment="Center" />
+                   BackgroundColor="Transparent" 
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
 
         </Frame>
     </Grid>

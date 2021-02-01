@@ -395,16 +395,28 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                 {
                     if (newCount > 99)
                     {
-                        menuButton.BadgeFrame.HeightRequest = 25;
-                        menuButton.BadgeFrame.WidthRequest = 25;
-                        menuButton.BadgeFrame.CornerRadius = 12.5f;
-                        return "99+";
+                        menuButton.BadgeFrame.HeightRequest = 20;
+                        menuButton.BadgeFrame.WidthRequest = -1;
+                        menuButton.BadgeFrame.Padding = new Thickness(5, 0);
+                        menuButton.BadgeFrame.CornerRadius = 8;
+                        return value;
                     }
                 }
 
-                menuButton.BadgeFrame.HeightRequest = 20;
-                menuButton.BadgeFrame.WidthRequest = 20;
-                menuButton.BadgeFrame.CornerRadius = 10;
+                if (Device.RuntimePlatform == Device.Android)
+                {
+                    menuButton.BadgeFrame.HeightRequest = 20;
+                    menuButton.BadgeFrame.WidthRequest = 20;
+                    menuButton.BadgeFrame.CornerRadius = 10;
+                    menuButton.BadgeFrame.Padding = new Thickness(1);
+                }
+                else
+                {
+                    menuButton.BadgeFrame.HeightRequest = 22;
+                    menuButton.BadgeFrame.WidthRequest = 22;
+                    menuButton.BadgeFrame.CornerRadius = 11;
+                    menuButton.BadgeFrame.Padding = new Thickness(0);
+                }
             }
 
             return value;

@@ -71,6 +71,7 @@
                                  IsBadgeVisible="{Binding ShowBadge}"
                                  BadgeColor="{Binding BadgeColor}"
                                  BadgeCount="{Binding BadgeCounter}"
+                                 BadgeTextColor="White"
                                  IsVisible="{Binding IsMenuButtonVisible}"
                                  Source="https://www.pngitem.com/pimgs/m/549-5493065_xamarin-logo-png-transparent-xamarin-forms-logo-png.png"
                                  Title="Second page"
