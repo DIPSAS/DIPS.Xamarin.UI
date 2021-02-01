@@ -52,8 +52,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
     {
         private string m_text;
         private bool m_showBadge;
-        private int m_badgeCounter;
-        private Color m_badgeColor;
+        private int m_badgeCounter = 99;
+        private Color m_badgeColor = Color.Green;
         private string m_currentEvent;
         private bool m_isMenuButtonVisible = true;
 
@@ -65,8 +65,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu
             DecreaseCounterCommand = new Command(() => BadgeCounter--);
             ChangeBadgeColorCommand = new Command(() =>
             {
-                if ( BadgeColor != Color.BlueViolet) BadgeColor = Color.BlueViolet;
-                else BadgeColor = Color.IndianRed;
+                if (BadgeColor != Color.Green) BadgeColor = Color.Red;
+                else BadgeColor = Color.Red;
             });
             ToggleButtonVisibilityCommand = new Command(() => IsMenuButtonVisible = !IsMenuButtonVisible);
 
