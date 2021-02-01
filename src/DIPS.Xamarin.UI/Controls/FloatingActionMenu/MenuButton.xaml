@@ -84,7 +84,7 @@
                IsVisible="{Binding Source={x:Reference CodeBehind}, Path= IsBadgeVisible}"
                BackgroundColor="{Binding Source={x:Reference CodeBehind}, Path= BadgeColor}"
                InputTransparent="True"
-               Padding="1"
+               Padding="0"
                VerticalOptions="Start"
                HorizontalOptions="End"
                HasShadow="False"
@@ -94,9 +94,9 @@
                    FontFamily="{Binding Source={x:Reference CodeBehind}, Path= BadgeFontFamily}"
                    FontSize="12"
                    LineBreakMode="NoWrap"
-                   BackgroundColor="Transparent"
+                   BackgroundColor="Transparent" 
                    VerticalOptions="Center"
-                   HorizontalOptions="Center" />
+                   HorizontalOptions="Center"/>
 
         </Frame>
     </Grid>

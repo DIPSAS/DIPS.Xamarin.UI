@@ -403,10 +403,20 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
                     }
                 }
 
-                menuButton.BadgeFrame.HeightRequest = 20;
-                menuButton.BadgeFrame.WidthRequest = 20;
-                menuButton.BadgeFrame.CornerRadius = 10;
-                menuButton.BadgeFrame.Padding = new Thickness(1);
+                if (Device.RuntimePlatform == Device.Android)
+                {
+                    menuButton.BadgeFrame.HeightRequest = 20;
+                    menuButton.BadgeFrame.WidthRequest = 20;
+                    menuButton.BadgeFrame.CornerRadius = 10;
+                    menuButton.BadgeFrame.Padding = new Thickness(1);
+                }
+                else
+                {
+                    menuButton.BadgeFrame.HeightRequest = 22;
+                    menuButton.BadgeFrame.WidthRequest = 22;
+                    menuButton.BadgeFrame.CornerRadius = 11;
+                    menuButton.BadgeFrame.Padding = new Thickness(0);
+                }
             }
 
             return value;
