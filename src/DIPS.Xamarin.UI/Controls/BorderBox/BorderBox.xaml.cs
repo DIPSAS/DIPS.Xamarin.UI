@@ -3,21 +3,33 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.BorderBox
 {
+    /// <summary>
+    ///     <c>BoxView</c> with the support for Borders
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BorderBox : ContentView
     {
+        /// <summary>
+        ///     Bindable property for <see cref="FillColor" />
+        /// </summary>
         public static readonly BindableProperty FillColorProperty = BindableProperty.Create(
             nameof(FillColor),
             typeof(Color),
             typeof(BorderBox),
             Color.LightGray);
 
+        /// <summary>
+        ///     Bindable property for <see cref="BorderColor" />
+        /// </summary>
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
             nameof(BorderColor),
             typeof(Color),
             typeof(BorderBox),
             Color.Black);
 
+        /// <summary>
+        ///     Bindable property for <see cref="WidthRequest" />
+        /// </summary>
         public static new readonly BindableProperty WidthRequestProperty = BindableProperty.Create(
             nameof(WidthRequest),
             typeof(double),
@@ -25,6 +37,9 @@ namespace DIPS.Xamarin.UI.Controls.BorderBox
             -1d,
             propertyChanging: OnWidthRequestChanging);
 
+        /// <summary>
+        ///     Bindable property for <see cref="HeightRequest" />
+        /// </summary>
         public static new readonly BindableProperty HeightRequestProperty = BindableProperty.Create(
             nameof(HeightRequest),
             typeof(double),
@@ -32,6 +47,9 @@ namespace DIPS.Xamarin.UI.Controls.BorderBox
             -1d,
             propertyChanging: OnHeightRequestChanging);
 
+        /// <summary>
+        ///     Bindable property for <see cref="BorderThickness" />
+        /// </summary>
         public static readonly BindableProperty BorderThicknessProperty = BindableProperty.Create(
             nameof(BorderThickness),
             typeof(double),
@@ -39,6 +57,9 @@ namespace DIPS.Xamarin.UI.Controls.BorderBox
             0d,
             propertyChanging: OnBorderThicknessChanging);
 
+        /// <summary>
+        ///     Bindable property for <see cref="CornerRadius" />
+        /// </summary>
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(
             nameof(CornerRadius),
             typeof(CornerRadius),
@@ -46,41 +67,62 @@ namespace DIPS.Xamarin.UI.Controls.BorderBox
             default(CornerRadius),
             propertyChanging: OnCornerRadiusChanging);
 
+        /// <inheritdoc />
         public BorderBox()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        ///     Gets or sets the filling color of the BorderBox. This is a bindable property.
+        /// </summary>
         public Color FillColor
         {
             get => (Color)GetValue(FillColorProperty);
             set => SetValue(FillColorProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the border color of the BorderBox. This is a bindable property.
+        /// </summary>
         public Color BorderColor
         {
             get => (Color)GetValue(BorderColorProperty);
             set => SetValue(BorderColorProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the desired width override of the BorderBox. This is a bindable property.
+        ///     <remarks>Border thickness will be added when rendering the final width of the BorderBox</remarks>
+        /// </summary>
         public new double WidthRequest
         {
             get => (double)GetValue(WidthRequestProperty);
             set => SetValue(WidthRequestProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the desired height override of the BorderBox. This is a bindable property.
+        ///     <remarks>Border thickness will be added when rendering the final height of the BorderBox</remarks>
+        /// </summary>
         public new double HeightRequest
         {
             get => (double)GetValue(HeightRequestProperty);
             set => SetValue(HeightRequestProperty, value);
         }
 
+        /// <summary>
+        ///     Thickness of the BorderBox border. This is a bindable property.
+        /// </summary>
         public double BorderThickness
         {
             get => (double)GetValue(BorderThicknessProperty);
             set => SetValue(BorderThicknessProperty, value);
         }
 
+        /// <summary>
+        ///     Gets or sets the corner radius for the BorderBox. This is a bindable property.
+        /// </summary>
         public CornerRadius CornerRadius
         {
             get => (CornerRadius)GetValue(CornerRadiusProperty);
