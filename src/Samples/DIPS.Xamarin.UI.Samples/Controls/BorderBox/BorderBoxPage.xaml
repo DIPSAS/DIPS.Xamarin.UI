@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:borderBox="clr-namespace:DIPS.Xamarin.UI.Controls.BorderBox;assembly=DIPS.Xamarin.UI"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.BorderBox.BorderBoxPage">
+	
+	<Grid VerticalOptions="Center"
+	      HorizontalOptions="Center"
+	      BackgroundColor="Aqua">
+		<borderBox:BorderBox WidthRequest="280"
+		                     HeightRequest="280" />
+		
+		<StackLayout Spacing="12"
+		             HorizontalOptions="Center"
+		             VerticalOptions="Center">
+			<StackLayout Orientation="Horizontal"
+			             Spacing="25"
+			             HorizontalOptions="Center">
+				<borderBox:BorderBox WidthRequest="100"
+				                     HeightRequest="0"
+				                     BorderThickness="10"
+				                     CornerRadius="0,5,5,0" />
+				
+				<borderBox:BorderBox WidthRequest="100"
+				                     HeightRequest="4"
+				                     BorderThickness="8"
+				                     CornerRadius="5,0,0,5" />
+			</StackLayout>
+			
+			<StackLayout Orientation="Horizontal"
+			             Spacing="40"
+			             HorizontalOptions="Center">
+				<borderBox:BorderBox WidthRequest="80"
+				                     HeightRequest="40"
+				                     BorderThickness="2"
+				                     CornerRadius="0,5,15,10" />
+				
+				<borderBox:BorderBox WidthRequest="76"
+				                     HeightRequest="36"
+				                     BorderThickness="4"
+				                     CornerRadius="5,0,10,15" />
+			</StackLayout>
+			
+			<borderBox:BorderBox WidthRequest="36"
+			                     HeightRequest="36"
+			                     BorderThickness="1"
+			                     CornerRadius="18" />
+			
+			<borderBox:BorderBox WidthRequest="100"
+			                     HeightRequest="50"
+			                     BorderThickness="8"
+			                     CornerRadius="0,0,30,30" />
+		</StackLayout>
+	</Grid>
+	<!-- <StackLayout VerticalOptions="Center" Spacing="40"> -->
+	<!-- 	<borderBox:BorderBox WidthRequest="15"  -->
+	<!-- 	                     HeightRequest="15"  -->
+	<!-- 	                     BorderThickness="2" /> -->
+	<!-- 	<borderBox:BorderBox CornerRadius="20" -->
+	<!-- 	                     WidthRequest="40"  -->
+	<!-- 	                     HeightRequest="40"  -->
+	<!-- 	                     BorderThickness="2" /> -->
+	<!-- 	<borderBox:BorderBox CornerRadius="10"  -->
+	<!-- 	                     WidthRequest="100"  -->
+	<!-- 	                     HeightRequest="50"  -->
+	<!-- 	                     BorderThickness="20"  /> -->
+	<!-- 	<borderBox:BorderBox WidthRequest="30"  -->
+	<!-- 	                     HeightRequest="30"  -->
+	<!-- 	                     BorderThickness="2" /> -->
+	<!-- 	<borderBox:BorderBox CornerRadius="11" -->
+	<!-- 	                     WidthRequest="60"  -->
+	<!-- 	                     HeightRequest="47"  -->
+	<!-- 	                     BorderThickness="27" /> -->
+	<!-- </StackLayout> -->
+	
+</ContentPage>

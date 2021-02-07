@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Input;
+using DIPS.Xamarin.UI.Samples.Controls.BorderBox;
 using DIPS.Xamarin.UI.Samples.Controls.Content;
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;
@@ -54,9 +55,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                     await m_navigation.PushAsync(new TagPage {Title = parameter});
                 if (parameter.Equals("ToastControl"))
                     await m_navigation.PushAsync(new ToastPage {Title = parameter});
-                if(parameter.Equals("Skeleton"))
+                if (parameter.Equals("Skeleton"))
                     await m_navigation.PushAsync(new SkeletonPage {Title = parameter});
-
+                if (parameter.Equals("BorderBoxControl"))
+                    await m_navigation.PushAsync(new BorderBoxPage {Title = parameter});
             }
             catch (Exception e)
             {
