@@ -3,20 +3,21 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIPS.Xamarin.UI.Controls.BorderBox.BorderBox"
-             x:Name="BorderBoxContent">
-	<Grid x:Name="containerView"
-	      HorizontalOptions="CenterAndExpand"
-	      VerticalOptions="CenterAndExpand"
+
+             xmlns:local="clr-namespace:DIPS.Xamarin.UI.Controls.BorderBox;assembly=DIPS.Xamarin.UI">
+
+	<Grid HorizontalOptions="Center"
+	      VerticalOptions="Center"
 	      ColumnSpacing="0"
 	      RowSpacing="0"
 	      Padding="0"
-	      BindingContext="{Binding ., Source={x:Reference BorderBoxContent}}">
+	      BindingContext="{Binding Source={RelativeSource AncestorType={x:Type local:BorderBox}}}">
 
-		<BoxView x:Name="outerBoxView"
+		<BoxView x:Name="OuterBoxView"
 		         HorizontalOptions="CenterAndExpand"
 		         VerticalOptions="CenterAndExpand"
 		         BackgroundColor="{Binding BorderColor}" />
-		<BoxView x:Name="innerBoxView"
+		<BoxView x:Name="InnerBoxView"
 		         CornerRadius="{Binding CornerRadius}"
 		         WidthRequest="{Binding WidthRequest}"
 		         HeightRequest="{Binding HeightRequest}"
@@ -25,4 +26,5 @@
 		         BackgroundColor="{Binding FillColor}" />
 
 	</Grid>
+
 </ContentView>

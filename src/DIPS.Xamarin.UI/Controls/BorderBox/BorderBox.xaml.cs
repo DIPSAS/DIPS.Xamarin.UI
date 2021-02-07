@@ -10,7 +10,7 @@ namespace DIPS.Xamarin.UI.Controls.BorderBox
             nameof(FillColor),
             typeof(Color),
             typeof(BorderBox),
-            Color.FromHex("D9C0C0C0"));
+            Color.LightGray);
 
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
             nameof(BorderColor),
@@ -91,8 +91,7 @@ namespace DIPS.Xamarin.UI.Controls.BorderBox
         {
             if (bindable is BorderBox borderBox)
             {
-                borderBox.containerView.WidthRequest = (double)newvalue + (borderBox.BorderThickness * 2);
-                borderBox.outerBoxView.WidthRequest = (double)newvalue + (borderBox.BorderThickness * 2);
+                borderBox.OuterBoxView.WidthRequest = (double)newvalue + (borderBox.BorderThickness * 2);
             }
         }
 
@@ -100,8 +99,7 @@ namespace DIPS.Xamarin.UI.Controls.BorderBox
         {
             if (bindable is BorderBox borderBox)
             {
-                borderBox.containerView.HeightRequest = (double)newvalue + (borderBox.BorderThickness * 2);
-                borderBox.outerBoxView.HeightRequest = (double)newvalue + (borderBox.BorderThickness * 2);
+                borderBox.OuterBoxView.HeightRequest = (double)newvalue + (borderBox.BorderThickness * 2);
             }
         }
 
@@ -109,24 +107,22 @@ namespace DIPS.Xamarin.UI.Controls.BorderBox
         {
             if (bindable is BorderBox borderBox)
             {
-                borderBox.containerView.WidthRequest = borderBox.innerBoxView.WidthRequest + ((double)newvalue * 2);
-                borderBox.outerBoxView.WidthRequest = borderBox.innerBoxView.WidthRequest + ((double)newvalue * 2);
-                borderBox.containerView.HeightRequest = borderBox.innerBoxView.HeightRequest + ((double)newvalue * 2);
-                borderBox.outerBoxView.HeightRequest = borderBox.innerBoxView.HeightRequest + ((double)newvalue * 2);
+                borderBox.OuterBoxView.WidthRequest = borderBox.InnerBoxView.WidthRequest + ((double)newvalue * 2);
+                borderBox.OuterBoxView.HeightRequest = borderBox.InnerBoxView.HeightRequest + ((double)newvalue * 2);
 
-                var topLeft = borderBox.innerBoxView.CornerRadius.TopLeft == 0
+                var topLeft = borderBox.InnerBoxView.CornerRadius.TopLeft == 0
                     ? 0
-                    : borderBox.innerBoxView.CornerRadius.TopLeft + (double)newvalue;
-                var topRight = borderBox.innerBoxView.CornerRadius.TopRight == 0
+                    : borderBox.InnerBoxView.CornerRadius.TopLeft + (double)newvalue;
+                var topRight = borderBox.InnerBoxView.CornerRadius.TopRight == 0
                     ? 0
-                    : borderBox.innerBoxView.CornerRadius.TopRight + (double)newvalue;
-                var bottomLeft = borderBox.innerBoxView.CornerRadius.BottomLeft == 0
+                    : borderBox.InnerBoxView.CornerRadius.TopRight + (double)newvalue;
+                var bottomLeft = borderBox.InnerBoxView.CornerRadius.BottomLeft == 0
                     ? 0
-                    : borderBox.innerBoxView.CornerRadius.BottomLeft + (double)newvalue;
-                var bottomRight = borderBox.innerBoxView.CornerRadius.BottomRight == 0
+                    : borderBox.InnerBoxView.CornerRadius.BottomLeft + (double)newvalue;
+                var bottomRight = borderBox.InnerBoxView.CornerRadius.BottomRight == 0
                     ? 0
-                    : borderBox.innerBoxView.CornerRadius.BottomRight + (double)newvalue;
-                borderBox.outerBoxView.CornerRadius = new CornerRadius(topLeft, topRight, bottomLeft, bottomRight);
+                    : borderBox.InnerBoxView.CornerRadius.BottomRight + (double)newvalue;
+                borderBox.OuterBoxView.CornerRadius = new CornerRadius(topLeft, topRight, bottomLeft, bottomRight);
             }
         }
 
@@ -146,7 +142,7 @@ namespace DIPS.Xamarin.UI.Controls.BorderBox
                 var bottomRight = ((CornerRadius)newvalue).BottomRight == 0
                     ? 0
                     : ((CornerRadius)newvalue).BottomRight + borderBox.BorderThickness;
-                borderBox.outerBoxView.CornerRadius = new CornerRadius(topLeft, topRight, bottomLeft, bottomRight);
+                borderBox.OuterBoxView.CornerRadius = new CornerRadius(topLeft, topRight, bottomLeft, bottomRight);
             }
         }
     }
