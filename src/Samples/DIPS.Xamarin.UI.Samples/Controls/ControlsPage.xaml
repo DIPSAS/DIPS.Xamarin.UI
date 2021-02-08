@@ -64,6 +64,11 @@
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="ToastControl"
                     Text="Toast" />
+                
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="BorderBoxControl"
+                    Text="BorderBox" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -32,3 +32,4 @@ using Xamarin.Forms.Xaml;
 [assembly: XmlnsDefinition("http://dips.xamarin.ui.com", "DIPS.Xamarin.UI.Controls.Tag")]
 [assembly: XmlnsDefinition("http://dips.xamarin.ui.com", "DIPS.Xamarin.UI.Controls.Skeleton")]
 [assembly: XmlnsDefinition("http://dips.xamarin.ui.com", "DIPS.Xamarin.UI.Extensions.Markup")]
+[assembly: XmlnsDefinition("http://dips.xamarin.ui.com", "DIPS.Xamarin.UI.Controls.BorderBox.BorderBox")]
