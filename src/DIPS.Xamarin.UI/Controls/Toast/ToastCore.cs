@@ -60,7 +60,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             // get current page
             m_currentPageWithToast = GetCurrentContentPage();
 
-            // try get toast container
+            // try get registered toast container
             var toastContainer = FindByName(m_currentPageWithToast.Id.ToString());
             if (toastContainer != null) // found toast container
             {
@@ -72,8 +72,21 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                     toastContainer.Children.Remove(oldToast);
                 }
             }
-            else // no toast container
+            else // no registered toast container
             {
+                //Get existing toast container 
+                var componentsList = m_currentPageWithToast.LogicalChildren.Where(w => w.GetType() == typeof(ToastContainer)).ToList();
+                if (componentsList.Any())
+                {
+                    var toastContainerWrapper = (ToastContainer)componentsList.First();
+                    var containerList = toastContainerWrapper.Children.Where(w => w.GetType() == typeof(Grid));
+                    toastContainer = (Grid)containerList.First();
+
+                    RegisterName(m_currentPageWithToast.Id.ToString(), toastContainer);
+                    m_currentPageWithToast.Disappearing += OnPageDisappearing;
+                    return toastContainer;
+                }
+                // no any toast container
                 // create and register toast container
                 toastContainer = new Grid();
                 RegisterName(m_currentPageWithToast.Id.ToString(), toastContainer);
