@@ -9,6 +9,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ToastContainer : Grid
     {
+        /// <summary>
+        ///     Initialize Component
+        /// </summary>
         public ToastContainer()
         {
             InitializeComponent();
