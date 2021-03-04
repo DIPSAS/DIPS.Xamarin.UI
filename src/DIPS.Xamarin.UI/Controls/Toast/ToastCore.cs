@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DIPS.Xamarin.UI.Extensions;
 using DIPS.Xamarin.UI.Internal.Xaml;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.Toast
@@ -60,7 +58,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
             // get current page
             m_currentPageWithToast = GetCurrentContentPage();
 
-            // try get toast container
+            // try get registered toast container
             var toastContainer = FindByName(m_currentPageWithToast.Id.ToString());
             if (toastContainer != null) // found toast container
             {
@@ -72,8 +70,17 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                     toastContainer.Children.Remove(oldToast);
                 }
             }
-            else // no toast container
+            else // no registered toast container
             {
+                //Get existing toast container 
+                if (m_currentPageWithToast.Content is ToastContainer currentToastContainer)
+                {
+                    RegisterName(m_currentPageWithToast.Id.ToString(), currentToastContainer);
+                    m_currentPageWithToast.Disappearing += OnPageDisappearing;
+                    return currentToastContainer;
+                }
+
+                // no any toast container
                 // create and register toast container
                 toastContainer = new Grid();
                 RegisterName(m_currentPageWithToast.Id.ToString(), toastContainer);
