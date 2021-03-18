@@ -63,7 +63,16 @@ namespace DIPS.Xamarin.UI.Internal.xaml
             typeof(int),
             typeof(RadioButton),
             2);
-
+       
+        /// <summary>
+        ///     <see cref="FontSize" />
+        /// </summary>
+        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
+            nameof(FontSize), 
+            typeof(double), 
+            typeof(RadioButton), 
+            16d);
+        
         /// <summary>
         ///     Constructs an radio button
         /// </summary>
@@ -132,7 +141,11 @@ namespace DIPS.Xamarin.UI.Internal.xaml
         /// <summary>
         ///     <see cref="TextColor" />
         /// </summary>
-        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), Color.Black);
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
+            nameof(TextColor), 
+            typeof(Color), 
+            typeof(RadioButton), 
+            Color.Black);
 
         /// <summary>
         ///     Color of the text in the radiobutton label.
@@ -143,7 +156,15 @@ namespace DIPS.Xamarin.UI.Internal.xaml
             get => (Color)GetValue(TextColorProperty);
             set => SetValue(TextColorProperty, value);
         }
-
+        
+        /// <summary>
+        ///     The font size for the radio button text
+        /// </summary>
+        public double FontSize
+        {
+            get => (double)GetValue(FontSizeProperty);
+            set => SetValue(FontSizeProperty, value);
+        }
         internal void Initialize(IHandleRadioButtons radioButtonsHandler)
         {
             m_radioButtonsHandler = radioButtonsHandler;

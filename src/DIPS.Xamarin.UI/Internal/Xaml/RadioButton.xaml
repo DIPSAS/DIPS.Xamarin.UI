@@ -39,7 +39,7 @@
                VerticalOptions="Center"
                Text="{Binding Text}"
                TextColor="{Binding TextColor}"
-               FontSize="Body"
+               FontSize="{Binding FontSize}"
                InputTransparent="True"
                Margin="{StaticResource spacing}" />
     </StackLayout>

@@ -24,10 +24,11 @@
                                    SelectedItem="{Binding SelectedItem}"
                                    SelectedItemChangedCommand="{Binding SelectedItemChangedCommand}"
                                    DisplayMemberPath="Name"
+                                   FontSize="Large"
                                    SelectedColor="{Binding SelectedColor}"
                                    DeSelectedColor="{Binding DeSelectedColor}"
                                    SeparatorColor="{Binding SeparatorColor}" 
-                                   TextColor="White"/>
+                                   TextColor="Green"/>
             </ScrollView>
         <ScrollView Grid.Row="1">
             <StackLayout>

@@ -117,7 +117,16 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             typeof(Thickness),
             typeof(RadioButtonGroup),
             defaultValue: new Thickness(0, 15, 0, 15));
-
+        
+        /// <summary>
+        ///     <see cref="FontSize" />
+        /// </summary>
+        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
+            nameof(FontSize), 
+            typeof(double), 
+            typeof(RadioButtonGroup), 
+            16d);
+        
         /// <summary>
         ///     Constructs an radio button group
         /// </summary>
@@ -211,6 +220,16 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
         {
             get => (Color)GetValue(SeparatorColorProperty);
             set => SetValue(SeparatorColorProperty, value);
+        }
+
+        /// <summary>
+        ///     The font size for the radio button text
+        /// </summary>
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double FontSize
+        {
+            get => (double)GetValue(FontSizeProperty);
+            set => SetValue(FontSizeProperty, value);
         }
 
         void IHandleRadioButtons.OnRadioButtonTapped(RadioButton tappedRadioButton)
@@ -315,6 +334,7 @@ namespace DIPS.Xamarin.UI.Controls.RadioButtonGroup
             {
                 TextColor = TextColor,
                 Text = item.GetPropertyValue(DisplayMemberPath),
+                FontSize = FontSize,
                 Identifier = item,
                 SelectedColor = SelectedColor,
                 DeSelectedColor = DeSelectedColor,
