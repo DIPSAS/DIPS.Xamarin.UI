@@ -374,9 +374,19 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             
         }
         
+        /// <summary>
+        /// Toggles drag effect after pan gesture is completed. Set to true if scroll should stop immediately after finger is lifted. 
+        /// </summary>
         public bool StopOnGestureEnded { get; set; }
         
+        /// <summary>
+        /// Invoked on start of a Pan gesture
+        /// </summary>
         public event EventHandler<PanEventArgs> PanStarted;
+        
+        /// <summary>
+        /// Invoked on end of Pan gesture.
+        /// </summary>
         public event EventHandler<PanEventArgs> PanEnded;
     }
 }
