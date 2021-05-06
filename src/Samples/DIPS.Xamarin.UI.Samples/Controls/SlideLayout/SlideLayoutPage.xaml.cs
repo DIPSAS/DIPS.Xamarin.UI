@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DIPS.Xamarin.UI.Controls.Slidable;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
@@ -29,6 +30,22 @@ namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
             frame.FadeTo(1, 150);
             await Task.Delay(1000);
             frame.FadeTo(0, 150);
+        }
+
+        private void SlidableLayout_OnPanStarted(object sender, PanEventArgs e)
+        {
+            if (BindingContext is SlideLayoutViewModel ctx)
+            {
+                ctx.PanStartedIndex = e.CurrentIndex;
+            }
+        }
+
+        private void SlidableLayout_OnPanEnded(object sender, PanEventArgs e)
+        {
+            if (BindingContext is SlideLayoutViewModel ctx)
+            {
+                ctx.PanEndedIndex = e.CurrentIndex;
+            }
         }
     }
 }

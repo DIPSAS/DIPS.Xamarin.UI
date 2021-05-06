@@ -13,11 +13,18 @@
             <RowDefinition Height="100" />
             <RowDefinition Height="150" />
         </Grid.RowDefinitions>
-
-        <Label Grid.Row="0"
-               HorizontalOptions="Center"
-               Text="{Binding Selected}"
-               VerticalOptions="Center" />
+        <StackLayout Orientation="Horizontal"
+                     Padding="10">
+            <Label HorizontalOptions="StartAndExpand"
+                   Text="{Binding Selected}"
+                   VerticalOptions="Center" />
+            <Label Text="{Binding PanStartedIndex}"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Center" />
+            <Label Text="{Binding PanEndedIndex}"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="Center" />
+        </StackLayout>
 
         <dxui:SlidableContentLayout x:Name="layout"
                                     Grid.Row="4"
@@ -105,7 +112,10 @@
                                         ScaleDown="False"
                                         SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
                                         SlideProperties="{Binding SlidableProperties}"
-                                        VibrateOnSelectionChanged="True">
+                                        VibrateOnSelectionChanged="True"
+                                        StopOnGestureEnded="True"
+                                        PanStarted="SlidableLayout_OnPanStarted"
+                                        PanEnded="SlidableLayout_OnPanEnded">
                 <dxui:SlidableContentLayout.Config>
                     <dxui:SliderConfig MaxValue="5"
                                        MinValue="-20" />
