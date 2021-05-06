@@ -13,7 +13,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
     {
         private SlidableProperties slidableProperties;
         private string selected;
+        private int m_panStartedIndex;
+        private int m_panEndedIndex;
 
+        
         public SlideLayoutViewModel()
         {
             OnSelectedIndexChangedCommand = new Command(o => Selected = o.ToString());
@@ -37,6 +40,18 @@ namespace DIPS.Xamarin.UI.Samples.Controls.SlideLayout
         public SlidableProperties SlidableProperties { get => slidableProperties; set => PropertyChanged?.RaiseWhenSet(ref slidableProperties, value); }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public int PanStartedIndex
+        {
+            get => m_panStartedIndex;
+            set => PropertyChanged.RaiseWhenSet(ref m_panStartedIndex, value);
+        }
+
+        public int PanEndedIndex
+        {
+            get => m_panEndedIndex;
+            set => PropertyChanged.RaiseWhenSet(ref m_panEndedIndex, value);
+        }
     }
 
     public class CalendarViewModel : INotifyPropertyChanged, ISliderSelectable

@@ -101,6 +101,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             {
                 // Start tracking time
                 m_startSlideLocation = CalculateDist(SlideProperties.Position);
+                PanStarted?.Invoke(this, new PanEventArgs((int) Math.Round(CalculateIndex(m_startSlideLocation))));
             }
 
             var currentPos = m_startSlideLocation - e.TotalX;
@@ -122,6 +123,13 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             if (e.StatusType == GestureStatus.Completed || e.StatusType == GestureStatus.Canceled)
             {
                 m_accelerator.EndDrag();
+
+                if (StopOnGestureEnded)
+                {
+                    PanEnded?.Invoke(this, new PanEventArgs((int) Math.Round(index)));
+                    return;
+                }
+                
                 Device.StartTimer(TimeSpan.FromMilliseconds(20), () => // ~40 fps
                 {
                     if (currentId != SlideProperties.HoldId) return false;
@@ -132,6 +140,9 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                     if (SlideProperties.IsHeld) return false;
                     SlideProperties = new SlidableProperties(index, m_lastId, false);
                     OnScrolledInternal();
+                    
+                    if (isDone) PanEnded?.Invoke(this, new PanEventArgs((int) Math.Round(index)));
+                    
                     return !isDone;
                 });
             }
@@ -362,5 +373,10 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         {
             
         }
+        
+        public bool StopOnGestureEnded { get; set; }
+        
+        public event EventHandler<PanEventArgs> PanStarted;
+        public event EventHandler<PanEventArgs> PanEnded;
     }
 }
