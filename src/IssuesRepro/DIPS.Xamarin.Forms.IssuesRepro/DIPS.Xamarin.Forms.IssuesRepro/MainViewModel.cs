@@ -93,8 +93,9 @@ namespace DIPS.Xamarin.Forms.IssuesRepro
                     PresentedValue = model.title;
                     IsBug = model.title.ToLower().Contains("bug");
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
+                    // ignored
                 }
             }
 

@@ -89,6 +89,7 @@ namespace DIPS.Xamarin.UI.Internal.xaml
 
         internal void Initialize()
         {
+
             m_newY = 0;
             //Flip the grid if alignment is set to top
             if (m_sheetBehaviour.Alignment == AlignmentOptions.Top)
@@ -127,7 +128,23 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                 case ContentAlignment.Fill:
                     SheetContentGrid.VerticalOptions = LayoutOptions.Fill;
                     break;
-                default:
+                case ContentAlignment.SameAsSheet:
+                    SheetContentGrid.VerticalOptions = m_sheetBehaviour.Alignment == AlignmentOptions.Top
+                        ? LayoutOptions.EndAndExpand
+                        : LayoutOptions.StartAndExpand;
+                    
+                    // if (m_sheetBehaviour.VerticalContentAlignment == ContentAlignment.SameAsSheet)
+                    // {
+                    //     SheetFrame.PropertyChanged += (sender, args) =>
+                    //     {
+                    //         if (args.PropertyName.Equals(View.TranslationYProperty.PropertyName))
+                    //         {
+                    //             var y = SheetFrame.Y;
+                    //             var newHeight = SheetFrame.Height - SheetFrame.TranslationY - (SheetContentHeightRequest - SheetContentView.Content.Height);
+                    //             SheetContentGrid.HeightRequest = newHeight;
+                    //         }
+                    //     };
+                    // }
                     break;
             }
         }

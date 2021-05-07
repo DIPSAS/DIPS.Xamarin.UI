@@ -32,7 +32,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github234
             CurrentMain = Application.Current.MainPage;
             try
             {
-                var p = await Task.Run(async () =>
+                var p = await Task.Run(() =>
                 {
                     Thread.Sleep(10);
                     var page = new Github234FloatingButtonPage();

@@ -47,7 +47,7 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github246
         }
     }
 
-    public class TrendItemViewModel : INotifyPropertyChanged
+    public class TrendItemViewModel
     {
         public TrendItemViewModel(double value)
         {
@@ -57,7 +57,5 @@ namespace DIPS.Xamarin.Forms.IssuesRepro.Github246
         public double Value { get; set; }
         public int IntValue => (int)Value;
         public float FloatValue => (float)Value;
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

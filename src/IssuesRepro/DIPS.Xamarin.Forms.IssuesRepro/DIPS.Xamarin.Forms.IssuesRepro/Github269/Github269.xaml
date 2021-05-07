@@ -1,0 +1,59 @@
+<?xml version="1.0"
+      encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github269.Github269"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true">
+    <dxui:ModalityLayout>
+        <dxui:ModalityLayout.Behaviors>
+            <dxui:SheetBehavior x:Name="sheetBehavior"
+                                Position="0.5"
+                                IsDraggable="True"
+                                VerticalContentAlignment="SameAsSheet">
+                <dxui:SheetBehavior.SheetContentTemplate>
+                    <DataTemplate>
+                        <ScrollView>
+                            <StackLayout>
+                                <BindableLayout.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                        <x:String>Item</x:String>
+                                    </x:Array>
+                                </BindableLayout.ItemsSource>
+                            </StackLayout>
+                        </ScrollView>
+                    </DataTemplate>
+                </dxui:SheetBehavior.SheetContentTemplate>
+            </dxui:SheetBehavior>
+        </dxui:ModalityLayout.Behaviors>
+        <Button Text="Open Sheet" Command="{Binding 
+        Source={x:Reference sheetBehavior}, 
+        Path=OpenSheetCommand}"
+                HorizontalOptions="Center" VerticalOptions="Center"/>
+    </dxui:ModalityLayout>
+</ContentPage>

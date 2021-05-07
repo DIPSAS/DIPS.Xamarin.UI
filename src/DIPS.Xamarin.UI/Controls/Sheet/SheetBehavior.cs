@@ -448,6 +448,25 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public static readonly BindableProperty ActionCommandParameterProperty =
             BindableProperty.Create(nameof(ActionCommandParameter), typeof(object), typeof(SheetBehavior));
+        
+        internal static readonly BindablePropertyKey OpenSheetCommandPropertyKey = BindableProperty.CreateReadOnly(
+            nameof(OpenSheetCommand),
+            typeof(ICommand),
+            typeof(SheetBehavior),
+            default,
+            BindingMode.OneWayToSource,
+            defaultValueCreator: OpenSheetCommandValueCreator);
+
+        internal static readonly BindableProperty OpenSheetCommandProperty = OpenSheetCommandPropertyKey.BindableProperty;
+        static object? OpenSheetCommandValueCreator(BindableObject? b)
+        {
+            if (b is SheetBehavior sheetBehavior)
+            {
+                return new Command(() => sheetBehavior.IsOpen = true);
+            }
+
+            return null;
+        }
 
         /// <summary>
         ///     Parameter passed to <see cref="ActionCommand" />.
@@ -488,6 +507,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             get => (ICommand)GetValue(CancelCommandProperty);
             set => SetValue(CancelCommandProperty, value);
         }
+
+        /// <summary>
+        /// Command to open the sheet. This is not meant to be used in your view model, but you can bind to it with for example a button.Command to open the sheet directly in xaml
+        /// </summary>
+        public ICommand? OpenSheetCommand => (ICommand?)GetValue(OpenSheetCommandProperty);
 
         /// <summary>
         ///     Determines if the cancel button is visible.
@@ -1237,7 +1261,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <summary>
         ///     The content will use the entire sheet as space.
         /// </summary>
-        Fill
+        Fill,
+        /// <summary>
+        ///     The content will use the same space as the sheet
+        /// </summary>
+        SameAsSheet
     }
 
     /// <summary>
