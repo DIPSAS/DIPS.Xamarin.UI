@@ -449,15 +449,15 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         public static readonly BindableProperty ActionCommandParameterProperty =
             BindableProperty.Create(nameof(ActionCommandParameter), typeof(object), typeof(SheetBehavior));
         
-        internal static readonly BindablePropertyKey OpenSheetCommandPropertyKey = BindableProperty.CreateReadOnly(
-            nameof(OpenSheetCommand),
+        internal static readonly BindablePropertyKey OpenCommandPropertyKey = BindableProperty.CreateReadOnly(
+            nameof(OpenCommand),
             typeof(ICommand),
             typeof(SheetBehavior),
             default,
             BindingMode.OneWayToSource,
             defaultValueCreator: OpenSheetCommandValueCreator);
 
-        internal static readonly BindableProperty OpenSheetCommandProperty = OpenSheetCommandPropertyKey.BindableProperty;
+        internal static readonly BindableProperty OpenCommandProperty = OpenCommandPropertyKey.BindableProperty;
         static object? OpenSheetCommandValueCreator(BindableObject? b)
         {
             if (b is SheetBehavior sheetBehavior)
@@ -511,7 +511,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <summary>
         /// Command to open the sheet. This is not meant to be used in your view model, but you can bind to it with for example a button.Command to open the sheet directly in xaml
         /// </summary>
-        public ICommand? OpenSheetCommand => (ICommand?)GetValue(OpenSheetCommandProperty);
+        public ICommand? OpenCommand => (ICommand?)GetValue(OpenCommandProperty);
 
         /// <summary>
         ///     Determines if the cancel button is visible.

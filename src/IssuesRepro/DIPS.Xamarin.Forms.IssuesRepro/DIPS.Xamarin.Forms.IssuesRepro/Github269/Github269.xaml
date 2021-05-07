@@ -51,9 +51,11 @@
                 </dxui:SheetBehavior.SheetContentTemplate>
             </dxui:SheetBehavior>
         </dxui:ModalityLayout.Behaviors>
-        <Button Text="Open Sheet" Command="{Binding 
-        Source={x:Reference sheetBehavior}, 
-        Path=OpenSheetCommand}"
-                HorizontalOptions="Center" VerticalOptions="Center"/>
+       <Label Text="Press me" BackgroundColor="Red">
+           <Label.GestureRecognizers>
+               <TapGestureRecognizer Command="{Binding Source={x:Reference sheetBehavior}, 
+               Path=OpenCommand}"></TapGestureRecognizer>
+           </Label.GestureRecognizers>
+       </Label>
     </dxui:ModalityLayout>
 </ContentPage>

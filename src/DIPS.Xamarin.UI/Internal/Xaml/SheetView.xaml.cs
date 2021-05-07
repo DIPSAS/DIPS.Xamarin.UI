@@ -133,18 +133,18 @@ namespace DIPS.Xamarin.UI.Internal.xaml
                         ? LayoutOptions.EndAndExpand
                         : LayoutOptions.StartAndExpand;
                     
-                    // if (m_sheetBehaviour.VerticalContentAlignment == ContentAlignment.SameAsSheet)
-                    // {
-                    //     SheetFrame.PropertyChanged += (sender, args) =>
-                    //     {
-                    //         if (args.PropertyName.Equals(View.TranslationYProperty.PropertyName))
-                    //         {
-                    //             var y = SheetFrame.Y;
-                    //             var newHeight = SheetFrame.Height - SheetFrame.TranslationY - (SheetContentHeightRequest - SheetContentView.Content.Height);
-                    //             SheetContentGrid.HeightRequest = newHeight;
-                    //         }
-                    //     };
-                    // }
+                    if (m_sheetBehaviour.VerticalContentAlignment == ContentAlignment.SameAsSheet)
+                    {
+                        SheetFrame.PropertyChanged += (sender, args) =>
+                        {
+                            if (args.PropertyName.Equals(View.TranslationYProperty.PropertyName))
+                            {
+                                var y = SheetFrame.Y;
+                                var newHeight = SheetFrame.Height - SheetFrame.TranslationY - (SheetContentHeightRequest - SheetContentView.Content.Height);
+                                SheetContentGrid.HeightRequest = newHeight;
+                            }
+                        };
+                    }
                     break;
             }
         }
