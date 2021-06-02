@@ -47,10 +47,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             OpenSheetCommand = new Command(() => IsSheetOpen = true);
             OnOpenCommand = new Command<string>(SheetOpened);
             OnCloseCommand = new Command<string>(SheetClosed);
-            CancelCommand = new CancelSheetCommand(
-                () =>
+            CancelCommand = new CancelSheetCommand(async () =>
                 {
-
+                    await Application.Current.MainPage.DisplayAlert("An Asynchronous action", "Async action", "Ok");
+                    IsSheetOpen = false;
                 },
                 () =>
                 {
@@ -59,7 +59,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
                 }, async () =>
                {
                    //Do logic to determine if the sheet should close
-                  return await App.Current.MainPage.DisplayAlert("Confirmation", "Do you really want to close this?", "Yes", "No");
+                   return false;
                });
 
             ActionCommand = new Command(

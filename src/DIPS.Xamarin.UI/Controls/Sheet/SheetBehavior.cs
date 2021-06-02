@@ -871,6 +871,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <inheritdoc />
         public void Hide()
         {
+            CancelCommand?.Execute(CancelCommandParameter);
             CancelClickedInternal();
         }
 
