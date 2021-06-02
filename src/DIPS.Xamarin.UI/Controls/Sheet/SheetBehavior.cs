@@ -871,7 +871,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <inheritdoc />
         public void Hide()
         {
-            IsOpen = false;
+            CancelClickedInternal();
         }
 
         /// <inheritdoc />

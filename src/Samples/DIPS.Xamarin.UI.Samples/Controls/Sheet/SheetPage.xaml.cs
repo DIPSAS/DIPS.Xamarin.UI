@@ -56,10 +56,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
                 {
                     return true;
 
-                }, () =>
+                }, async () =>
                {
                    //Do logic to determine if the sheet should close
-                   return true;
+                  return await App.Current.MainPage.DisplayAlert("Confirmation", "Do you really want to close this?", "Yes", "No");
                });
 
             ActionCommand = new Command(
