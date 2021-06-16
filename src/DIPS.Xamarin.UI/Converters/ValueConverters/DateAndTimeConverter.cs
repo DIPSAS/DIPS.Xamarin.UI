@@ -9,7 +9,7 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
     /// <summary>
-    ///     Converters a DateTime object with an format and convert it to a readable string
+    ///     Converters a DateTime object with a format and convert it to a readable string in local time zone
     /// </summary>
     public class DateAndTimeConverter : IMarkupExtension, IValueConverter
     {
@@ -36,6 +36,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             Text,
         }
 
+        /// <summary>
+        ///     Ignores the conversion to local timezone
+        /// </summary>
+        public bool IgnoreLocalTime { get; set; } = false;
+
         private const string Space = " ";
         private IServiceProvider m_serviceProvider;
 
@@ -60,9 +65,9 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
                 throw new XamlParseException("The input has to be of type DateTime").WithXmlLineInfo(m_serviceProvider);
             return Format switch
             {
-                DateAndTimeConverterFormat.Short => ConvertToShortFormat(dateTimeInput, culture),
+                DateAndTimeConverterFormat.Short => ConvertToShortFormat(dateTimeInput, culture, IgnoreLocalTime),
                 DateAndTimeConverterFormat.Text
-                    => ConvertToTextFormat(dateTimeInput, culture),
+                    => ConvertToTextFormat(dateTimeInput, culture, IgnoreLocalTime),
                 _ => string.Empty
             };
         }
@@ -74,11 +79,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             throw new NotImplementedException();
         }
 
-        private static string ConvertToTextFormat(DateTime dateTimeInput, CultureInfo culture)
+        private static string ConvertToTextFormat(DateTime dateTimeInput, CultureInfo culture, bool ignoreLocalTime)
         {
-            var date = new DateConverter {Format = DateConverter.DateConverterFormat.Text}.Convert(dateTimeInput, null,
+            var date = new DateConverter {Format = DateConverter.DateConverterFormat.Text, IgnoreLocalTime = ignoreLocalTime}.Convert(dateTimeInput, null,
                 null, culture);
-            var time = new TimeConverter {Format = TimeConverter.TimeConverterFormat.Default}.Convert(dateTimeInput,
+            var time = new TimeConverter {Format = TimeConverter.TimeConverterFormat.Default, IgnoreLocalTime = ignoreLocalTime}.Convert(dateTimeInput,
                 null, null, culture);
 
             if (culture.IsNorwegian())
@@ -94,11 +99,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             return $"{date}{Space}{time}";
         }
 
-        private static string ConvertToShortFormat(DateTime dateTimeInput, CultureInfo culture)
+        private static string ConvertToShortFormat(DateTime dateTimeInput, CultureInfo culture, bool ignoreLocalTime)
         {
-            var date = new DateConverter {Format = DateConverter.DateConverterFormat.Short}.Convert(dateTimeInput, null,
+            var date = new DateConverter {Format = DateConverter.DateConverterFormat.Short, IgnoreLocalTime = ignoreLocalTime}.Convert(dateTimeInput, null,
                 null, culture);
-            var time = new TimeConverter {Format = TimeConverter.TimeConverterFormat.Default}.Convert(dateTimeInput,
+            var time = new TimeConverter {Format = TimeConverter.TimeConverterFormat.Default, IgnoreLocalTime = ignoreLocalTime}.Convert(dateTimeInput,
                 null, null, culture);
 
             return culture.IsNorwegian() ? $"{date}{Space}kl{Space}{time}" : $"{date}{Space}{time}";

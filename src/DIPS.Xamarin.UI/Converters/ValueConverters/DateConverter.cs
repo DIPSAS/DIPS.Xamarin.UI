@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
     /// <summary>
-    ///     Converts an DateTime object to an format and convert it to a readable string
+    ///     Converts an DateTime object to a format and convert it to a readable string in local timezone
     /// </summary>
     public class DateConverter : IValueConverter, IMarkupExtension
     {
@@ -48,6 +48,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// </summary>
         public DateConverterFormat Format { get; set; }
 
+        /// <summary>
+        ///     Ignores the conversion to the local timezone
+        /// </summary>
+        public bool IgnoreLocalTime { get; set; }
+
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider)
@@ -64,9 +69,9 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
                 throw new XamlParseException("The input has to be of type DateTime").WithXmlLineInfo(m_serviceProvider);
             return Format switch
             {
-                DateConverterFormat.Short => ConvertToDefaultDateTime(dateTimeInput, culture),
+                DateConverterFormat.Short => ConvertToDefaultDateTime(dateTimeInput, culture, IgnoreLocalTime),
                 DateConverterFormat.Text =>
-                    ConvertDateTimeAsText(dateTimeInput, culture),
+                    ConvertDateTimeAsText(dateTimeInput, culture, IgnoreLocalTime),
                 _ => string.Empty
             };
         }
@@ -78,8 +83,13 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             throw new NotImplementedException();
         }
 
-        private static string ConvertToDefaultDateTime(DateTime dateTime, CultureInfo culture)
+        private static string ConvertToDefaultDateTime(DateTime dateTime, CultureInfo culture, bool ignoreLocalTime)
         {
+            if (!ignoreLocalTime)
+            {
+                dateTime = dateTime.ToLocalTime();
+            }
+
             var day = GetDayBasedOnCulture(dateTime, culture);
 
             var month = GetMonthBasedOnCulture(dateTime, culture);
@@ -114,8 +124,13 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
             return day;
         }
 
-        private static string ConvertDateTimeAsText(DateTime dateTime, CultureInfo culture)
+        private static string ConvertDateTimeAsText(DateTime dateTime, CultureInfo culture, bool ignoreLocalTime)
         {
+            if (!ignoreLocalTime)
+            {
+                dateTime = dateTime.ToLocalTime();
+            }
+            
             if (dateTime.IsToday())
             {
                 return InternalLocalizedStrings.Today;

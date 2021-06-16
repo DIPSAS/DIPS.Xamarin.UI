@@ -9,7 +9,8 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
     /// <summary>
-    ///     Converts an DateTime or TimeSpan object with a format and convert it to a readable time string
+    ///     Converts an DateTime or TimeSpan object with a format and convert it to a readable time string in local
+    ///     timezone
     /// </summary>
     public class TimeConverter : IMarkupExtension, IValueConverter
     {
@@ -31,6 +32,11 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         ///     The format to use during conversion
         /// </summary>
         public TimeConverterFormat Format { get; set; }
+
+        /// <summary>
+        ///     Ignores the conversion to the local timezone
+        /// </summary>
+        public bool IgnoreLocalTime { get; set; }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
@@ -55,7 +61,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
                     dateTimeInput += timeSpanInput;
                     break;
                 case DateTime dateTimeValue:
-                    dateTimeInput = dateTimeValue;
+                    dateTimeInput = IgnoreLocalTime ? dateTimeValue : dateTimeValue.ToLocalTime();
                     break;
             }
 
