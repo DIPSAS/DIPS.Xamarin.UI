@@ -222,20 +222,42 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
                 color = OutOfBoundsColor;
             }
 
-            var itemHeight = value.CalculateRelativePosition(MinValue, MaxValue);
-            var backFrame = CreateFrame(GraphBackgroundColor);
+            var backBar = CreateGraphBar(GraphBackgroundColor);
+            var barHeight = value.CalculateRelativePosition(MinValue, MaxValue);
+            var graphBar = CreateGraphBar(color);
 
-            graphContainer.Children.Add(backFrame,
-                Constraint.RelativeToParent(r => x),
-                Constraint.RelativeToParent(r => 0),
-                Constraint.RelativeToParent(r => widthPerItem),
-                Constraint.RelativeToParent(r => r.Height));
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    graphContainer.Children.Add(backBar,
+                        Constraint.RelativeToParent(r => x),
+                        Constraint.RelativeToParent(r => 0),
+                        Constraint.RelativeToParent(r => widthPerItem),
+                        Constraint.RelativeToParent(r => r.Height));
 
-            graphContainer.Children.Add(CreateFrame(color),
-                Constraint.RelativeToParent(r => backFrame.X),
-                Constraint.RelativeToParent(r => (backFrame.Y + backFrame.Height) - (itemHeight * backFrame.Height)),
-                Constraint.RelativeToParent(r => backFrame.Width),
-                Constraint.RelativeToParent(r => itemHeight * backFrame.Height));
+                    graphContainer.Children.Add(graphBar,
+                        Constraint.RelativeToParent(r => backBar.X),
+                        Constraint.RelativeToParent(r =>
+                            backBar.Y + backBar.Height - (barHeight * backBar.Height)),
+                        Constraint.RelativeToParent(r => backBar.Width),
+                        Constraint.RelativeToParent(r => barHeight * backBar.Height));
+                });
+            }
+            else
+            {
+                graphContainer.Children.Add(backBar,
+                    Constraint.RelativeToParent(r => x),
+                    Constraint.RelativeToParent(r => 0),
+                    Constraint.RelativeToParent(r => widthPerItem),
+                    Constraint.RelativeToParent(r => r.Height));
+
+                graphContainer.Children.Add(graphBar,
+                    Constraint.RelativeToParent(r => backBar.X),
+                    Constraint.RelativeToParent(r => backBar.Y + backBar.Height - (barHeight * backBar.Height)),
+                    Constraint.RelativeToParent(r => backBar.Width),
+                    Constraint.RelativeToParent(r => barHeight * backBar.Height));
+            }
         }
 
         private void AnimateTrendBarsIfNeeded()
@@ -294,9 +316,9 @@ namespace DIPS.Xamarin.UI.Controls.TrendGraph
             }
         }
 
-        private static Frame CreateFrame(Color background)
+        private static BoxView CreateGraphBar(Color background)
         {
-            return new Frame {BackgroundColor = background, CornerRadius = 0, Padding = 0, HasShadow = false};
+            return new BoxView {BackgroundColor = background, CornerRadius = 0};
         }
 
         private void CollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
