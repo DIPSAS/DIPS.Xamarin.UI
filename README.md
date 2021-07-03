@@ -46,3 +46,8 @@ We follow semantic versioning for our [nuget package](https://www.nuget.org/pack
 ## Contribution
 
 The library will be maintained by DIPS AS, but the public is always welcome to contribute. Please see our [developer guidelines](https://github.com/DIPSAS/DIPS.Xamarin.UI/wiki/Developer-guidelines) to get familiar with how to contribute.
+
+## Publicity
+
+- [Norwegian national news of DIPS Visit](https://tv.nrk.no/serie/dagsrevyen-21/202107/NNFA21070121#t=489s)
+- [Microsoft .Net Conf 2020](https://m.youtube.com/watch?v=QFNmLE7pVl4&t=18458s)
