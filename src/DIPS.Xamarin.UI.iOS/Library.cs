@@ -16,6 +16,7 @@ namespace DIPS.Xamarin.UI.iOS
         {
             DIPS.Xamarin.UI.Internal.Utilities.Inspector.Instance = new Inspector();
             InternalDatePickerRenderer.Initialize();
+            VibrationService.Initialize();
         }
     }
 }
