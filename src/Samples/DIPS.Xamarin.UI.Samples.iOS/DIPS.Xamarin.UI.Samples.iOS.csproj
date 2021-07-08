@@ -45,7 +45,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer</CodesignKey>
+      <CodesignKey>Apple Development: Erling Moxnes Kristiansen (P5LCCRY74H)</CodesignKey>
+      <CodesignProvision>Wildcard</CodesignProvision>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>None</MtouchLink>
