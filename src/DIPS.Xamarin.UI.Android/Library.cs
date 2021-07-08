@@ -18,7 +18,7 @@ namespace DIPS.Xamarin.UI.Android
             InternalButtonRenderer.Initialize();
 
             var vibrationService = new VibrationService();
-            Vibration.Initialize(vibrationService);
+            Vibration.Vibration.Initialize(vibrationService);
             VibrationService.Initialize();
         }
     }

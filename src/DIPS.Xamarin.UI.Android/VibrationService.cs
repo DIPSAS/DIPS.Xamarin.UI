@@ -1,20 +1,28 @@
-﻿using Android;
+﻿using System;
+using Android;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using DIPS.Xamarin.UI.Vibration;
 using Xamarin.Essentials;
 
 namespace DIPS.Xamarin.UI.Android
 {
-    public class VibrationService : IVibrationService
+    internal class VibrationService : IVibrationService
     {
         private static Activity s_activity;
         private static Permission s_hasPermission;
         private static Vibrator? s_vibrator;
-        private readonly VibrationEffect m_doubleClick = VibrationEffect.CreatePredefined(VibrationEffect.EffectDoubleClick);
-        private readonly VibrationEffect m_selectionChanged = VibrationEffect.CreatePredefined(VibrationEffect.EffectTick);
         private readonly VibrationEffect m_click = VibrationEffect.CreatePredefined(VibrationEffect.EffectClick);
-        private readonly VibrationEffect m_heavyClick = VibrationEffect.CreatePredefined(VibrationEffect.EffectHeavyClick);
+
+        private readonly VibrationEffect m_doubleClick =
+            VibrationEffect.CreatePredefined(VibrationEffect.EffectDoubleClick);
+
+        private readonly VibrationEffect m_heavyClick =
+            VibrationEffect.CreatePredefined(VibrationEffect.EffectHeavyClick);
+
+        private readonly VibrationEffect m_selectionChanged =
+            VibrationEffect.CreatePredefined(VibrationEffect.EffectTick);
 
         public void Vibrate(int duration)
         {
@@ -76,6 +84,11 @@ namespace DIPS.Xamarin.UI.Android
             s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(250, VibrationEffect.DefaultAmplitude));
         }
 
+        public IGenerator Generate()
+        {
+            return new PlatformGenerator();
+        }
+
         internal static void Initialize()
         {
             s_activity = Platform.CurrentActivity;
@@ -91,6 +104,27 @@ namespace DIPS.Xamarin.UI.Android
 
             s_vibrator ??= Vibrator.FromContext(s_activity);
             return true;
+        }
+        
+        private class PlatformGenerator : IGenerator
+        {
+            public void SelectionChanged()
+            {
+                if (!ShouldVibrate())
+                {
+                    return;
+                }
+
+                s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(10, VibrationEffect.DefaultAmplitude));
+            }
+
+            public void Prepare()
+            {
+            }
+
+            public void Release()
+            {
+            }
         }
     }
 }

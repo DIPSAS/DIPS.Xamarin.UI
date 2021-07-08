@@ -6,6 +6,7 @@ using DIPS.Xamarin.UI.Util;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using DIPS.Xamarin.UI.Vibration;
 
 namespace DIPS.Xamarin.UI.Controls.Slidable
 {
@@ -102,6 +103,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 // Start tracking time
                 m_startSlideLocation = CalculateDist(SlideProperties.Position);
                 PanStarted?.Invoke(this, new PanEventArgs((int) Math.Round(CalculateIndex(m_startSlideLocation))));
+                if (VibrateOnSelectionChanged)
+                {
+                    m_feedbackGenerator = new SelectionFeedbackGenerator();
+                    m_feedbackGenerator.Prepare();
+                }
             }
 
             var currentPos = m_startSlideLocation - e.TotalX;
@@ -127,6 +133,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 if (StopOnGestureEnded)
                 {
                     PanEnded?.Invoke(this, new PanEventArgs((int) Math.Round(index)));
+                    m_feedbackGenerator.Release();
                     return;
                 }
                 
@@ -228,16 +235,12 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             OnScrolled(SlideProperties.Position);
         }
 
-        private async void Vibrate()
+        private void Vibrate()
         {
             if (!VibrateOnSelectionChanged) return;
             try
             {
-                var duration = TimeSpan.FromSeconds(0.01);
-                await Task.Run(() =>
-                {
-                    Vibration.Vibrate(duration);
-                });
+                m_feedbackGenerator.SelectionChanged();
             }
             catch
             {
@@ -333,6 +336,8 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             typeof(bool),
             typeof(SlidableLayout),
             true);
+
+        private SelectionFeedbackGenerator m_feedbackGenerator;
 
 
         /// <summary>
