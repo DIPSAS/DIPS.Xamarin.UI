@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Dynamic;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
-namespace DIPS.Xamarin.UI
+namespace DIPS.Xamarin.UI.Vibration
 {
     public static class Vibration
     {
-        private static IVibrationService? VibrationService { get; set; }
+        internal static IVibrationService? VibrationService { get; set; }
 
-        public static void Initialize(IVibrationService vibrationService)
+        internal static void Initialize(IVibrationService vibrationService)
         {
             VibrationService = vibrationService;
         }
