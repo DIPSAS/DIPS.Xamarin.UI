@@ -30,8 +30,17 @@ namespace DIPS.Xamarin.UI.Android
             {
                 return;
             }
+
+            var longs = new long[6];
+            longs[0] = 50;
+            longs[1] = 100;
+            longs[2] = 50;
+            longs[3] = 200;
+            longs[4] = 50;
+            longs[5] = 300;
+            s_vibrator?.Vibrate(VibrationEffect.CreateWaveform(longs, -1));
             
-            s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(duration, VibrationEffect.DefaultAmplitude));
+            // s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(duration, VibrationEffect.DefaultAmplitude));
         }
 
         public void Click()
