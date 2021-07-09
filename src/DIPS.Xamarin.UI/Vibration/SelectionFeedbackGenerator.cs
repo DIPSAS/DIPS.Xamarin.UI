@@ -19,7 +19,7 @@ namespace DIPS.Xamarin.UI.Vibration
         
         public void Prepare()
         {
-            m_generator?.Release();
+            m_generator?.Prepare();
         }
 
         public void Release()

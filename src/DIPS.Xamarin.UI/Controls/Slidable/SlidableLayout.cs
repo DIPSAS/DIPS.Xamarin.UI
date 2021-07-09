@@ -133,7 +133,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                 if (StopOnGestureEnded)
                 {
                     PanEnded?.Invoke(this, new PanEventArgs((int) Math.Round(index)));
-                    m_feedbackGenerator.Release();
+                    m_feedbackGenerator?.Release();
                     return;
                 }
                 
@@ -147,8 +147,12 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
                     if (SlideProperties.IsHeld) return false;
                     SlideProperties = new SlidableProperties(index, m_lastId, false);
                     OnScrolledInternal();
-                    
-                    if (isDone) PanEnded?.Invoke(this, new PanEventArgs((int) Math.Round(index)));
+
+                    if (isDone)
+                    {
+                        PanEnded?.Invoke(this, new PanEventArgs((int) Math.Round(index)));
+                        m_feedbackGenerator?.Release();
+                    }
                     
                     return !isDone;
                 });
@@ -240,11 +244,10 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             if (!VibrateOnSelectionChanged) return;
             try
             {
-                m_feedbackGenerator.SelectionChanged();
+                m_feedbackGenerator?.SelectionChanged();
             }
-            catch
+            catch (Exception e)
             {
-                VibrateOnSelectionChanged = false;
             }
         }
 
@@ -352,7 +355,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         /// <summary>
         /// Set this to true if you want a small vibration every time the index changes.
         /// </summary>
-        public bool VibrateOnSelectionChanged { get; set; }
+        public bool VibrateOnSelectionChanged => true;
 
         /// <summary>
         /// Disables the scrolling on this Layout. Use this if you layout has to be inside a ScrollView on Android.
