@@ -30,7 +30,7 @@ namespace DIPS.Xamarin.UI.Android
             {
                 return;
             }
-
+            
             s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(duration, VibrationEffect.DefaultAmplitude));
         }
 
@@ -82,6 +82,16 @@ namespace DIPS.Xamarin.UI.Android
             }
 
             s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(250, VibrationEffect.DefaultAmplitude));
+        }
+
+        public void Success()
+        {
+            if (!ShouldVibrate())
+            {
+                return;
+            }
+
+            s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(200, VibrationEffect.DefaultAmplitude));
         }
 
         public IGenerator Generate()

@@ -11,9 +11,10 @@ namespace DIPS.Xamarin.UI.Vibration
             VibrationService = vibrationService;
         }
 
-        public static void Vibrate(TimeSpan duration)
+        public static void Vibrate(int duration)
         {
-            VibrationService?.Vibrate(duration.Milliseconds);
+            if (duration < 0) return;
+            VibrationService?.Vibrate(duration);
         }
         
         public static void Click()
@@ -23,12 +24,12 @@ namespace DIPS.Xamarin.UI.Vibration
         
         public static void DoubleClick()
         {
-            VibrationService?.Click();
+            VibrationService?.DoubleClick();
         }        
         
         public static void HeavyClick()
         {
-            VibrationService?.Click();
+            VibrationService?.HeavyClick();
         }
 
         public static void SelectionChanged()
@@ -39,6 +40,11 @@ namespace DIPS.Xamarin.UI.Vibration
         public static void Error()
         {
             VibrationService?.Error();
+        }
+        
+        public static void Success()
+        {
+            VibrationService?.Success();
         }
     }
 }

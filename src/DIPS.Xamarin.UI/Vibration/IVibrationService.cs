@@ -13,6 +13,9 @@ namespace DIPS.Xamarin.UI.Vibration
         void SelectionChanged();
         
         void Error();
+        
+        void Success();
+        
         IGenerator Generate();
     }
 
