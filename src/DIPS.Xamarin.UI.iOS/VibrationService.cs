@@ -46,20 +46,20 @@ namespace DIPS.Xamarin.UI.iOS
             new UINotificationFeedbackGenerator().NotificationOccurred(UINotificationFeedbackType.Success);
         }
 
-        public IGenerator Generate()
+        public IPlatformFeedbackGenerator Generate()
         {
-            return new PlatformGenerator();
+            return new PlatformFeedbackGenerator();
         }
 
         internal static void Initialize()
         {
         }
 
-        private class PlatformGenerator : IGenerator
+        private class PlatformFeedbackGenerator : IPlatformFeedbackGenerator
         {
             private UISelectionFeedbackGenerator m_generator;
 
-            public PlatformGenerator()
+            public PlatformFeedbackGenerator()
             {
                 m_generator = new UISelectionFeedbackGenerator();
             }

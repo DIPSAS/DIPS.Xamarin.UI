@@ -63,16 +63,6 @@ namespace DIPS.Xamarin.UI.Android
             s_vibrator?.Vibrate(m_doubleClick);
         }
 
-        public void SelectionChanged()
-        {
-            if (!ShouldVibrate())
-            {
-                return;
-            }
-
-            s_vibrator?.Vibrate(m_selectionChanged);
-        }
-
         public void Error()
         {
             if (!ShouldVibrate())
@@ -98,9 +88,9 @@ namespace DIPS.Xamarin.UI.Android
             s_vibrator?.Vibrate(VibrationEffect.CreateWaveform(new long[] {0, action, pause, action}, -1));
         }
 
-        public IGenerator Generate()
+        public IPlatformFeedbackGenerator Generate()
         {
-            return new PlatformGenerator();
+            return new PlatformFeedbackGenerator();
         }
 
         internal static void Initialize()
@@ -111,25 +101,29 @@ namespace DIPS.Xamarin.UI.Android
 
         private static bool ShouldVibrate()
         {
-            if (s_hasPermission == Permission.Denied)
-            {
-                return false;
-            }
 
             s_vibrator ??= Vibrator.FromContext(s_activity);
             return true;
         }
 
-        private class PlatformGenerator : IGenerator
+        private class PlatformFeedbackGenerator : IPlatformFeedbackGenerator
         {
+            private Vibrator? m_vibrator;
+            private VibrationEffect? m_vibe = VibrationEffect.CreateOneShot(5, 5);
+
+            public PlatformFeedbackGenerator()
+            {
+                m_vibrator ??= Vibrator.FromContext(s_activity);
+            }
+            
             public void SelectionChanged()
             {
-                if (!ShouldVibrate())
+                if (s_hasPermission == Permission.Denied)
                 {
                     return;
                 }
 
-                s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(10, VibrationEffect.DefaultAmplitude));
+                m_vibrator?.Vibrate(m_vibe);
             }
 
             public void Prepare()
@@ -138,6 +132,7 @@ namespace DIPS.Xamarin.UI.Android
 
             public void Release()
             {
+                m_vibrator = null;
             }
         }
     }

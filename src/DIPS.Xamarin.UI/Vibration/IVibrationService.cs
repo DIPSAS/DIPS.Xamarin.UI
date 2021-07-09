@@ -14,10 +14,10 @@ namespace DIPS.Xamarin.UI.Vibration
         
         void Success();
         
-        IGenerator Generate();
+        IPlatformFeedbackGenerator Generate();
     }
 
-    internal interface IGenerator
+    internal interface IPlatformFeedbackGenerator
     {
         void SelectionChanged();
 

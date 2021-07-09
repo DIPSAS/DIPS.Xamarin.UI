@@ -5,7 +5,7 @@ namespace DIPS.Xamarin.UI.Vibration
     /// </summary>
     public sealed class SelectionFeedbackGenerator
     {
-        private readonly IGenerator? m_generator;
+        private readonly IPlatformFeedbackGenerator? m_generator;
 
         public SelectionFeedbackGenerator()
         {
