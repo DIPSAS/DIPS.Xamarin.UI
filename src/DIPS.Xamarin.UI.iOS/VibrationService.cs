@@ -28,6 +28,7 @@ namespace DIPS.Xamarin.UI.iOS
 
         public void DoubleClick()
         {
+            new UINotificationFeedbackGenerator().NotificationOccurred(UINotificationFeedbackType.Warning);
         }
 
         public void SelectionChanged()
@@ -38,6 +39,11 @@ namespace DIPS.Xamarin.UI.iOS
         public void Error()
         {
             new UINotificationFeedbackGenerator().NotificationOccurred(UINotificationFeedbackType.Error);
+        }
+
+        public void Success()
+        {
+            new UINotificationFeedbackGenerator().NotificationOccurred(UINotificationFeedbackType.Success);
         }
 
         public IGenerator Generate()

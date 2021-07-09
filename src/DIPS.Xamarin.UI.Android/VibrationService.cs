@@ -1,5 +1,4 @@
-﻿using System;
-using Android;
+﻿using Android;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
@@ -31,16 +30,7 @@ namespace DIPS.Xamarin.UI.Android
                 return;
             }
 
-            var longs = new long[6];
-            longs[0] = 50;
-            longs[1] = 100;
-            longs[2] = 50;
-            longs[3] = 200;
-            longs[4] = 50;
-            longs[5] = 300;
-            s_vibrator?.Vibrate(VibrationEffect.CreateWaveform(longs, -1));
-            
-            // s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(duration, VibrationEffect.DefaultAmplitude));
+            s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(duration, VibrationEffect.DefaultAmplitude));
         }
 
         public void Click()
@@ -90,7 +80,10 @@ namespace DIPS.Xamarin.UI.Android
                 return;
             }
 
-            s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(250, VibrationEffect.DefaultAmplitude));
+            var pause = 50;
+            var action = 80;
+            s_vibrator?.Vibrate(
+                VibrationEffect.CreateWaveform(new long[] {0, action, pause, action, pause, action, pause, 150}, -1));
         }
 
         public void Success()
@@ -100,7 +93,9 @@ namespace DIPS.Xamarin.UI.Android
                 return;
             }
 
-            s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(200, VibrationEffect.DefaultAmplitude));
+            var pause = 50;
+            var action = 80;
+            s_vibrator?.Vibrate(VibrationEffect.CreateWaveform(new long[] {0, action, pause, action}, -1));
         }
 
         public IGenerator Generate()
@@ -124,7 +119,7 @@ namespace DIPS.Xamarin.UI.Android
             s_vibrator ??= Vibrator.FromContext(s_activity);
             return true;
         }
-        
+
         private class PlatformGenerator : IGenerator
         {
             public void SelectionChanged()

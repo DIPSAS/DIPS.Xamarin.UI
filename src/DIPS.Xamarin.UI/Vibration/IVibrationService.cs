@@ -10,8 +10,6 @@ namespace DIPS.Xamarin.UI.Vibration
 
         void DoubleClick();
 
-        void SelectionChanged();
-        
         void Error();
         
         void Success();

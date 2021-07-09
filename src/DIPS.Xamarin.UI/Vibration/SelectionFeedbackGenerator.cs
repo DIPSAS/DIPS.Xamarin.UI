@@ -1,5 +1,8 @@
 namespace DIPS.Xamarin.UI.Vibration
 {
+    /// <summary>
+    /// Use this for continuous short feedback when a selection changes.
+    /// </summary>
     public sealed class SelectionFeedbackGenerator
     {
         private readonly IGenerator? m_generator;
