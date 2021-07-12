@@ -248,6 +248,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             }
             catch (Exception e)
             {
+                VibrateOnSelectionChanged = false;
             }
         }
 
@@ -355,7 +356,11 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         /// <summary>
         /// Set this to true if you want a small vibration every time the index changes.
         /// </summary>
-        public bool VibrateOnSelectionChanged => true;
+        public bool VibrateOnSelectionChanged
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Disables the scrolling on this Layout. Use this if you layout has to be inside a ScrollView on Android.

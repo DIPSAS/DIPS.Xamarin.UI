@@ -5,12 +5,6 @@ namespace DIPS.Xamarin.UI.iOS
 {
     internal class VibrationService : IVibrationService
     {
-        private readonly UINotificationFeedbackGenerator m_uiNotificationFeedbackGenerator =
-            new UINotificationFeedbackGenerator();
-
-        private readonly UISelectionFeedbackGenerator m_uiSelectionFeedbackGenerator =
-            new UISelectionFeedbackGenerator();
-
         public void Vibrate(int duration)
         {
             new UIImpactFeedbackGenerator(UIImpactFeedbackStyle.Medium).ImpactOccurred();

@@ -20,9 +20,6 @@ namespace DIPS.Xamarin.UI.Android
         private readonly VibrationEffect m_heavyClick =
             VibrationEffect.CreatePredefined(VibrationEffect.EffectHeavyClick);
 
-        private readonly VibrationEffect m_selectionChanged =
-            VibrationEffect.CreatePredefined(VibrationEffect.EffectTick);
-
         public void Vibrate(int duration)
         {
             if (!ShouldVibrate())
