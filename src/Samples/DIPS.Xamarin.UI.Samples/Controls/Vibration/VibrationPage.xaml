@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.Vibration.VibrationPage">
+    <Grid RowDefinitions="Auto, Auto, *"
+          RowSpacing="20">
+
+        <Slider MinimumTrackColor="Red"
+                MaximumTrackColor="LightGray"
+                Maximum="3000"
+                Minimum="10"
+                Value="200"
+                Margin="10"
+                ValueChanged="Slider_OnValueChanged" />
+        <Label Grid.Row="1"
+               x:Name="TimeSpanLabel"
+               Margin="10" />
+        <StackLayout Grid.Row="2">
+            <Button Text="Click" Clicked="Click"
+                    VerticalOptions="Center" />
+            <Button VerticalOptions="Center"
+                    Text="HeavyClick" 
+                    Clicked="HeavyClick"/>
+            <Button VerticalOptions="Center"
+                    Text="DoubleClick" 
+                    Clicked="DoubleClick"/>
+            <Button VerticalOptions="Center"
+                    Text="Vibrate" 
+                    Clicked="Vibrate"/>
+            <Button VerticalOptions="Center"
+                    Text="Success" 
+                    Clicked="Success"/>
+            <Button VerticalOptions="Center"
+                    Text="Error" 
+                    Clicked="Error"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>

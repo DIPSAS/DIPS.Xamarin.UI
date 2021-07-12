@@ -13,6 +13,7 @@ using DIPS.Xamarin.UI.Samples.Controls.Tag;
 using DIPS.Xamarin.UI.Samples.Controls.TimePicker;
 using DIPS.Xamarin.UI.Samples.Controls.Toast;
 using DIPS.Xamarin.UI.Samples.Controls.TrendGraph;
+using DIPS.Xamarin.UI.Samples.Controls.Vibration;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples.Controls
@@ -59,6 +60,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                     await m_navigation.PushAsync(new SkeletonPage {Title = parameter});
                 if (parameter.Equals("BorderBoxControl"))
                     await m_navigation.PushAsync(new BorderBoxPage {Title = parameter});
+                if (parameter.Equals("Vibration"))
+                    await m_navigation.PushAsync(new VibrationPage() {Title = parameter});
             }
             catch (Exception e)
             {

@@ -112,7 +112,6 @@
                                         ScaleDown="False"
                                         SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
                                         SlideProperties="{Binding SlidableProperties}"
-                                        VibrateOnSelectionChanged="True"
                                         StopOnGestureEnded="True"
                                         PanStarted="SlidableLayout_OnPanStarted"
                                         PanEnded="SlidableLayout_OnPanEnded">
