@@ -31,7 +31,8 @@
                                     Padding="0,10"
                                     BindingContextFactory="{Binding CreateCalendar}"
                                     SelectedItemChangedCommand="{Binding OnSelectedIndexChangedCommand}"
-                                    SlideProperties="{Binding SlidableProperties}">
+                                    SlideProperties="{Binding SlidableProperties}"
+                                    VibrateOnSelectionChanged="True">
             <dxui:SlidableContentLayout.Config>
                 <dxui:SliderConfig MaxValue="5"
                                    MinValue="-5" />
