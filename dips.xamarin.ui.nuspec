@@ -16,15 +16,15 @@
         <dependencies>
             <group targetFramework="netstandard2.0">
                 <dependency id="Xamarin.Essentials" version="1.6.1" />
-                <dependency id="Xamarin.Forms" version="5.0.0" />
+                <dependency id="Xamarin.Forms" version="5.0.0.2012" />
             </group>
             <group targetFramework="MonoAndroid">
                 <dependency id="Xamarin.Essentials" version="1.6.1" />
-                <dependency id="Xamarin.Forms" version="5.0.0"/>
+                <dependency id="Xamarin.Forms" version="5.0.0.2012"/>
             </group>
             <group targetFramework="Xamarin.iOS10">
                 <dependency id="Xamarin.Essentials" version="1.6.1" />
-                <dependency id="Xamarin.Forms" version="5.0.0" />
+                <dependency id="Xamarin.Forms" version="5.0.0.2012" />
             </group>
         </dependencies>
     </metadata>
