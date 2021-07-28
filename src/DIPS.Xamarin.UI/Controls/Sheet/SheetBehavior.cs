@@ -1193,9 +1193,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (m_fromIsOpenContext || !IsDragging)
             {
-                var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
-
                 await Task.Delay(250);
+                var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
+                
                 await translationTask;
 
                 OnOpenCommand?.Execute(OnOpenCommandParameter);
