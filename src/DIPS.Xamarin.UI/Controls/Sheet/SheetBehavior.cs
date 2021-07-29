@@ -887,11 +887,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 AlignmentOptions.Top => -m_modalityLayout.Height,
                 _ => throw new ArgumentOutOfRangeException()
             };
-            
-            // Wait for show the modal Layout and set the start position
-            await Task.Delay(250);
-            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
 
+            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
+            await Task.Delay(250);
+            
             await translationTask;
         }
 
@@ -1098,6 +1097,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     AlignmentOptions.Top => -m_sheetView.SheetFrame.Height,
                     _ => throw new ArgumentOutOfRangeException()
                 };
+                // Wait until all the bindings are done
+                await Task.Delay(250);
 
                 //Set position based on size of content
                 if (Position <= MinPosition)
@@ -1196,10 +1197,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (m_fromIsOpenContext || !IsDragging)
             {
-                // Wait for show the modal Layout and set the start position
-                await Task.Delay(250);
                 var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
-
+                await Task.Delay(250);
+                
                 await translationTask;
 
                 OnOpenCommand?.Execute(OnOpenCommandParameter);
