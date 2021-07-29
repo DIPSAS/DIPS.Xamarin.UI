@@ -887,9 +887,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 AlignmentOptions.Top => -m_modalityLayout.Height,
                 _ => throw new ArgumentOutOfRangeException()
             };
-
-            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
+            
+            // Wait for show the modal Layout and set the start position
             await Task.Delay(250);
+            var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, y);
+
             await translationTask;
         }
 
@@ -1075,9 +1077,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 {
                     SheetContent = (View)SheetContentTemplate.CreateContent();
                 }
+     
                 UpdateBindingContextForSheetContent();
                 m_sheetView.Initialize();
-                
 
                 //Set height / width
                 var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
@@ -1086,8 +1088,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                         r => m_modalityLayout.Height +
                              m_sheetView.SheetFrame
                                  .CornerRadius); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
-                m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
 
+                m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
+                
                 //Set start position
                 m_sheetView.SheetFrame.TranslationY = Alignment switch
                 {
@@ -1193,9 +1196,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             if (m_fromIsOpenContext || !IsDragging)
             {
+                // Wait for show the modal Layout and set the start position
                 await Task.Delay(250);
                 var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
-                
+
                 await translationTask;
 
                 OnOpenCommand?.Execute(OnOpenCommandParameter);
