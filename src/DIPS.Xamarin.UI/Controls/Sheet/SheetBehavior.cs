@@ -1096,7 +1096,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 };
                 
                 // Wait until all the bindings are done
-                await Task.Delay(50);
+                await Task.Delay(100);
 
                 //Set position based on size of content
                 if (Position <= MinPosition)
