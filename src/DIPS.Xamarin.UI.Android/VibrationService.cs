@@ -1,4 +1,5 @@
-﻿using Android;
+﻿using System.Threading.Tasks;
+using Android;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
@@ -12,6 +13,7 @@ namespace DIPS.Xamarin.UI.Android
         private static Activity s_activity;
         private static Permission s_hasPermission;
         private static Vibrator? s_vibrator;
+        
         private readonly VibrationEffect m_click = VibrationEffect.CreatePredefined(VibrationEffect.EffectClick);
 
         private readonly VibrationEffect m_doubleClick =
@@ -37,7 +39,14 @@ namespace DIPS.Xamarin.UI.Android
                 return;
             }
 
-            s_vibrator?.Vibrate(m_click);
+            if (Build.VERSION.SdkInt <= BuildVersionCodes.P)
+            {
+                s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(10, VibrationEffect.DefaultAmplitude));
+            }
+            else
+            {
+                s_vibrator?.Vibrate(m_click);
+            }
         }
 
         public void HeavyClick()
@@ -46,18 +55,34 @@ namespace DIPS.Xamarin.UI.Android
             {
                 return;
             }
-
-            s_vibrator?.Vibrate(m_heavyClick);
+            
+            if (Build.VERSION.SdkInt <= BuildVersionCodes.P)
+            {
+                s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(20, VibrationEffect.DefaultAmplitude + 10));
+            }
+            else
+            {
+                s_vibrator?.Vibrate(m_heavyClick);
+            }
         }
 
-        public void DoubleClick()
+        public async void DoubleClick()
         {
             if (!ShouldVibrate())
             {
                 return;
             }
-
-            s_vibrator?.Vibrate(m_doubleClick);
+            
+            if (Build.VERSION.SdkInt <= BuildVersionCodes.P)
+            {
+                s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(10, VibrationEffect.DefaultAmplitude));
+                await Task.Delay(20);
+                s_vibrator?.Vibrate(VibrationEffect.CreateOneShot(10, VibrationEffect.DefaultAmplitude));
+            }
+            else
+            {
+                s_vibrator?.Vibrate(m_doubleClick);
+            }
         }
 
         public void Error()
