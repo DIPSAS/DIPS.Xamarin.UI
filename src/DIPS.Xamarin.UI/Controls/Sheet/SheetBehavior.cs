@@ -1077,7 +1077,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 }
                 UpdateBindingContextForSheetContent();
                 m_sheetView.Initialize();
-                
 
                 //Set height / width
                 var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
@@ -1086,8 +1085,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                         r => m_modalityLayout.Height +
                              m_sheetView.SheetFrame
                                  .CornerRadius); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
-                m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
 
+                m_modalityLayout.Show(this, m_sheetView.SheetFrame, widthConstraint: widthConstraint, heightConstraint: heightConstraint);
                 //Set start position
                 m_sheetView.SheetFrame.TranslationY = Alignment switch
                 {
@@ -1095,6 +1094,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                     AlignmentOptions.Top => -m_sheetView.SheetFrame.Height,
                     _ => throw new ArgumentOutOfRangeException()
                 };
+                
+                // Wait until all the bindings are done
+                await Task.Delay(100);
 
                 //Set position based on size of content
                 if (Position <= MinPosition)
@@ -1194,7 +1196,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             if (m_fromIsOpenContext || !IsDragging)
             {
                 var translationTask = m_sheetView.SheetFrame.TranslateTo(m_sheetView.SheetFrame.X, yTranslation);
-
+                
                 await Task.Delay(250);
                 await translationTask;
 
