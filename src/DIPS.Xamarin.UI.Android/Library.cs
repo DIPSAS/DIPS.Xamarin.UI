@@ -1,5 +1,4 @@
-﻿using Android.Graphics.Pdf;
-using DIPS.Xamarin.UI.Internal.Utilities;
+﻿using DIPS.Xamarin.UI.Internal.Utilities;
 
 namespace DIPS.Xamarin.UI.Android
 {
@@ -17,6 +16,10 @@ namespace DIPS.Xamarin.UI.Android
             Inspector.Instance = new Util.Inspector();
             InternalDatePickerRenderer.Initialize();
             InternalButtonRenderer.Initialize();
+
+            var vibrationService = new VibrationService();
+            Vibration.Vibration.Initialize(vibrationService);
+            VibrationService.Initialize();
         }
     }
 }

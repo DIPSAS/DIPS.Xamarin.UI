@@ -45,13 +45,14 @@
     <Compile Include="Util\Inspector.cs" />
     <Compile Include="Library.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VibrationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Essentials">
-      <Version>1.3.1</Version>
+      <Version>1.6.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>4.7.0.1239</Version>
+      <Version>5.0.0.2012</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
