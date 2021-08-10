@@ -225,7 +225,7 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
         private void OnScrolledInternal(bool initial = false)
         {
             var index = (int)Math.Round(SlideProperties.Position);
-            if (index != m_lastIndex && SelectedItemChangedCommand != null)
+            if (index != m_lastIndex)
             {
                 if (!initial)
                 {
