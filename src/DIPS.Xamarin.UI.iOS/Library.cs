@@ -9,17 +9,21 @@ namespace DIPS.Xamarin.UI.iOS
     /// </summary>
     public static class Library
     {
+        private static bool s_isInitialized;
+
         /// <summary>
         /// Method to call at startup of the app in order to keep assemblies and to run other initializing methods in the library
         /// </summary>
         public static void Initialize()
         {
+            if (s_isInitialized) return;
             DIPS.Xamarin.UI.Internal.Utilities.Inspector.Instance = new Inspector();
             InternalDatePickerRenderer.Initialize();
             
             var vibrationService = new VibrationService();
             Vibration.Vibration.Initialize(vibrationService);
             VibrationService.Initialize();
+            s_isInitialized = true;
         }
     }
 }
