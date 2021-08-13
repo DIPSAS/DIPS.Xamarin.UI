@@ -97,6 +97,7 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             if (bindable is FloatingActionMenuBehaviour behaviour)
             {
                 behaviour.Children.ForEach(mb => mb.IsVisible = (bool) newvalue);
+                behaviour.Children.ForEach(mb => mb.IsBadgeVisible = (bool)newvalue);
             }
         }
 
