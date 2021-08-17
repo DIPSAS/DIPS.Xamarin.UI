@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DIPS.Xamarin.UI.Vibration
+﻿namespace DIPS.Xamarin.UI.Vibration
 {
     /// <summary>
     /// Vibration/haptic feedback.

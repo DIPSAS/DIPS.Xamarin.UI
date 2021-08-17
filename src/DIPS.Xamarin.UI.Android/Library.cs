@@ -1,4 +1,5 @@
-﻿using DIPS.Xamarin.UI.Internal.Utilities;
+﻿using Android.App;
+using DIPS.Xamarin.UI.Internal.Utilities;
 
 namespace DIPS.Xamarin.UI.Android
 {
@@ -12,7 +13,7 @@ namespace DIPS.Xamarin.UI.Android
         /// <summary>
         /// Method to call at startup of the app in order to keep assemblies and to run other initializing methods in the library
         /// </summary>
-        public static void Initialize()
+        public static void Initialize(Activity activity)
         {
             if (s_isInitialized) return;
             Inspector.Instance = new Util.Inspector();
@@ -21,7 +22,7 @@ namespace DIPS.Xamarin.UI.Android
 
             var vibrationService = new VibrationService();
             Vibration.Vibration.Initialize(vibrationService);
-            VibrationService.Initialize();
+            VibrationService.Initialize(activity);
             s_isInitialized = true;
         }
     }
