@@ -28,7 +28,7 @@ namespace DIPS.Xamarin.UI.Samples.Droid
             Essentials.Platform.Init(this, savedInstanceState); //Xamarin essentials
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            DIPS.Xamarin.UI.Android.Library.Initialize();
+            DIPS.Xamarin.UI.Android.Library.Initialize(this);
 
             InternalShared.MobileSettings.Instance = new AndroidSettings(this);
 

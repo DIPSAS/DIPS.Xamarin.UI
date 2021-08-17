@@ -4,7 +4,6 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using DIPS.Xamarin.UI.Vibration;
-using Xamarin.Essentials;
 
 namespace DIPS.Xamarin.UI.Android
 {
@@ -115,15 +114,14 @@ namespace DIPS.Xamarin.UI.Android
             return new PlatformFeedbackGenerator();
         }
 
-        internal static void Initialize()
+        internal static void Initialize(Activity activity)
         {
-            s_activity = Platform.CurrentActivity;
+            s_activity = activity;
             s_hasPermission = s_activity.CheckSelfPermission(Manifest.Permission.Vibrate);
         }
 
         private static bool ShouldVibrate()
         {
-
             s_vibrator ??= Vibrator.FromContext(s_activity);
             return true;
         }
