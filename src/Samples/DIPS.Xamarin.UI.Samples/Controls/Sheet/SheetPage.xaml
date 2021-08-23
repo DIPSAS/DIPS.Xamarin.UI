@@ -38,7 +38,6 @@
                                 OnOpenCommandParameter="Opened"
                                 Position="{Binding Position}"
                                 ShouldAutoClose="{Binding ShouldAutoClose}"
-                                ShouldCloseOpenSheets="False"
                                 ShouldRememberPosition="{Binding ShouldRememberPosition}">
                 <dxui:SheetBehavior.SheetContentTemplate>
                     <DataTemplate>
