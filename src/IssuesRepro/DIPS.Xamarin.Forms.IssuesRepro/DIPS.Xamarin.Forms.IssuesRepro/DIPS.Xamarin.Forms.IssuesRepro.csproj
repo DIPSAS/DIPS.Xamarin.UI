@@ -24,6 +24,14 @@
     <Compile Update="Github185\Github185Page.xaml.cs">
       <DependentUpon>Github185Page.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Github287\Github287.xaml.cs">
+      <DependentUpon>Github142.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Github287\Github287.xaml.cs">
+      <DependentUpon>Github287.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
