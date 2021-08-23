@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 
-namespace DIPS.Xamarin.UI.Converters
+namespace DIPS.Xamarin.UI.Converters.ValueConverters
 {
     /// <summary>
     /// Pipes input through a group of converters.
