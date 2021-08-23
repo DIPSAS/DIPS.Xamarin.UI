@@ -38,6 +38,15 @@ namespace DIPS.Xamarin.UI.Controls.Modality
             typeof(Color),
             typeof(ModalityLayout),
             Color.Gray);
+        
+        /// <summary>
+        ///     <see cref="ShouldCloseOpenedModals"/>
+        /// </summary>
+        public static readonly BindableProperty ShouldCloseOpenedModalsProperty = BindableProperty.Create(
+            nameof(ShouldCloseOpenedModals),
+            typeof(bool),
+            typeof(ModalityLayout),
+            true);
 
         private View? m_currentView;
 
@@ -59,6 +68,16 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         {
             get => (View)GetValue(MainContentProperty);
             set => SetValue(MainContentProperty, value);
+        }
+
+        /// <summary>
+        ///     Determines if the modality layout should close any open modals when opening a new one.
+        ///     This is a bindable property.
+        /// </summary>
+        public bool ShouldCloseOpenedModals
+        {
+            get => (bool)GetValue(ShouldCloseOpenedModalsProperty);
+            set => SetValue(ShouldCloseOpenedModalsProperty, value);
         }
 
         /// <summary>
@@ -165,6 +184,11 @@ namespace DIPS.Xamarin.UI.Controls.Modality
         /// <remarks>Using relative to parent with the constraints will give you the <see cref="ModalityLayout"/></remarks>
         public void Show(IModalityHandler modalityHandler, View view, Constraint? xConstraint = null, Constraint? yConstraint = null, Constraint? widthConstraint = null, Constraint? heightConstraint = null)
         {
+            if (ShouldCloseOpenedModals && CurrentShowingModalityLayout != modalityHandler)
+            {
+                HideCurrentShowingModality();
+            }
+
             CurrentShowingModalityLayout = modalityHandler;
             m_currentView = view;
 

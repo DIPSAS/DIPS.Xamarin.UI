@@ -253,12 +253,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public static readonly BindableProperty ShouldAutoCloseProperty = BindableProperty.Create(nameof(ShouldAutoClose), typeof(bool), typeof(SheetBehavior), true);
 
-        public static readonly BindableProperty ShouldCloseOpenSheetsProperty = BindableProperty.Create(
-            nameof(ShouldCloseOpenSheets),
-            typeof(bool),
-            typeof(SheetBehavior),
-            true);
-
         /// <summary>
         ///     <see cref="ShouldRememberPosition" />
         /// </summary>
@@ -628,16 +622,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (bool)GetValue(ShouldAutoCloseProperty);
             set => SetValue(ShouldAutoCloseProperty, value);
-        }
-        
-        /// <summary>
-        ///     Determines if the sheet should close other open sheets when it's opened.
-        ///     This is a bindable property.
-        /// </summary>
-        public bool ShouldCloseOpenSheets
-        {
-            get => (bool)GetValue(ShouldCloseOpenSheetsProperty);
-            set => SetValue(ShouldCloseOpenSheetsProperty, value);
         }
 
         /// <summary>

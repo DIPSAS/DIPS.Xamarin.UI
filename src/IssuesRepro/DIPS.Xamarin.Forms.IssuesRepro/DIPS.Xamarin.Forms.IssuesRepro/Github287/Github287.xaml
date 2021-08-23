@@ -1,24 +1,68 @@
 ﻿<?xml version="1.0"
       encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage x:Name="GitHub287" 
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dxui="http://dips.xamarin.ui.com"
              mc:Ignorable="d"
              x:Class="DIPS.Xamarin.Forms.IssuesRepro.Github287.Github287">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <dxui:ModalityLayout>
-            <dxui:ModalityLayout.Behaviors>
-                <dxui:SheetBehavior IsOpen="True"
-                                    IsDraggable="True"
-                                    Position="0.5">
-                    <Label Text="The bug is fixed if you can only see one handle and the app doesn't freeze"/>
-                </dxui:SheetBehavior>
-            </dxui:ModalityLayout.Behaviors>
-        </dxui:ModalityLayout>
-</Grid>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="A"
+                     Command="{Binding Source={x:Reference sheetA}, Path=OpenCommand}">
+        </ToolbarItem>
+        <ToolbarItem Text="B"
+                     Command="{Binding Source={x:Reference sheetB}, Path=OpenCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <dxui:ModalityLayout BindingContext="{x:Reference Name=GitHub287}"
+                         ShouldCloseOpenedModals="{Binding IsCloseEnabled}">
+        <dxui:ModalityLayout.Behaviors>
+            <dxui:SheetBehavior x:Name="sheetA"
+                                Title="Sheet A"
+                                Position="0.5"
+                                IsDraggable="True"
+                                VerticalContentAlignment="SameAsSheet">
+                <dxui:SheetBehavior.SheetContentTemplate>
+                    <DataTemplate>
+                        <Label Text="Sheet A"/>
+                    </DataTemplate>
+                </dxui:SheetBehavior.SheetContentTemplate>
+            </dxui:SheetBehavior>
+            <dxui:SheetBehavior x:Name="sheetB"
+                                BindingContext="{x:Reference Name=GitHub287}"
+                                Title="Sheet B"
+                                IsDraggable="True"
+                                Position="0.5"
+                                VerticalContentAlignment="SameAsSheet">
+                <dxui:SheetBehavior.SheetContentTemplate>
+                    <DataTemplate>
+                        <Label Text="Sheet B"/>
+                    </DataTemplate>
+                </dxui:SheetBehavior.SheetContentTemplate>
+            </dxui:SheetBehavior>
+        </dxui:ModalityLayout.Behaviors>
+        <StackLayout Margin="16">
+            <Label Text="Toggle 'ShouldClosenOpenModals'"
+                   HorizontalOptions="Center"/>
+            <Switch BindingContext="{x:Reference Name=GitHub287}"
+                    HorizontalOptions="Center"
+                    Margin="16"
+                    IsToggled="{Binding IsCloseEnabled}"/>
+            <Button Text="Show Popup">
+                <Button.Behaviors>
+                    <dxui:PopupBehavior Direction="Above">
+                        <Frame>
+                            <StackLayout>
+                                <Label Text="Hello!"/>
+                                <Button Text="Close" dxui:Modality.CloseOnClick="True"/>
+                            </StackLayout>
+                        </Frame>
+                    </dxui:PopupBehavior>
+                </Button.Behaviors>
+            </Button>
+        </StackLayout>
+        
+    </dxui:ModalityLayout>
 </ContentPage>
