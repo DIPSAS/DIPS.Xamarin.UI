@@ -99,21 +99,19 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             {
                 behaviour.Children.ForEach(mb => mb.IsVisible = (bool)newvalue);
 
-                var menuButton = behaviour.Children.FindAll(mb => mb.Title == "Notifications");
-
                 if (!(bool)newvalue)
                 {
                     behaviour.Children.ForEach(mb => mb.IsBadgeVisible = false);
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(menuButton.FirstOrDefault()?.BadgeCount))
+                    if (behaviour.Children.Any(mb => !string.IsNullOrEmpty(mb.BadgeCount)))
                     {
-                        behaviour.Children.ForEach(mb => mb.IsBadgeVisible = false);
+                        behaviour.Children.ForEach(mb => mb.IsBadgeVisible = true);
                     }
                     else
                     {
-                        behaviour.Children.ForEach(mb => mb.IsBadgeVisible = true);
+                        behaviour.Children.ForEach(mb => mb.IsBadgeVisible = false);
                     }
                 }
             }
