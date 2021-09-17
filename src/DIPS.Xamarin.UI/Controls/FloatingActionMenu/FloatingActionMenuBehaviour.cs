@@ -99,20 +99,15 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
             {
                 behaviour.Children.ForEach(mb => mb.IsVisible = (bool)newvalue);
 
+                var menuButtons = behaviour.Children.FindAll(mb => !string.IsNullOrEmpty(mb.BadgeCount));
+
                 if (!(bool)newvalue)
                 {
                     behaviour.Children.ForEach(mb => mb.IsBadgeVisible = false);
                 }
                 else
                 {
-                    if (behaviour.Children.Any(mb => !string.IsNullOrEmpty(mb.BadgeCount)))
-                    {
-                        behaviour.Children.ForEach(mb => mb.IsBadgeVisible = true);
-                    }
-                    else
-                    {
-                        behaviour.Children.ForEach(mb => mb.IsBadgeVisible = false);
-                    }
+                    menuButtons.ForEach(mb => mb.IsBadgeVisible = true);
                 }
             }
         }
