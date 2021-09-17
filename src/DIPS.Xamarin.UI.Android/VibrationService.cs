@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Android;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using DIPS.Xamarin.UI.Vibration;
-using Xamarin.Essentials;
 
 namespace DIPS.Xamarin.UI.Android
 {
@@ -13,14 +13,6 @@ namespace DIPS.Xamarin.UI.Android
         private static Activity s_activity;
         private static Permission s_hasPermission;
         private static Vibrator? s_vibrator;
-        
-        private readonly VibrationEffect m_click = VibrationEffect.CreatePredefined(VibrationEffect.EffectClick);
-
-        private readonly VibrationEffect m_doubleClick =
-            VibrationEffect.CreatePredefined(VibrationEffect.EffectDoubleClick);
-
-        private readonly VibrationEffect m_heavyClick =
-            VibrationEffect.CreatePredefined(VibrationEffect.EffectHeavyClick);
 
         public void Vibrate(int duration)
         {
@@ -45,7 +37,7 @@ namespace DIPS.Xamarin.UI.Android
             }
             else
             {
-                s_vibrator?.Vibrate(m_click);
+                s_vibrator?.Vibrate(VibrationEffect.CreatePredefined(VibrationEffect.EffectClick));
             }
         }
 
@@ -62,7 +54,7 @@ namespace DIPS.Xamarin.UI.Android
             }
             else
             {
-                s_vibrator?.Vibrate(m_heavyClick);
+                s_vibrator?.Vibrate(VibrationEffect.CreatePredefined(VibrationEffect.EffectHeavyClick));
             }
         }
 
@@ -81,7 +73,7 @@ namespace DIPS.Xamarin.UI.Android
             }
             else
             {
-                s_vibrator?.Vibrate(m_doubleClick);
+                s_vibrator?.Vibrate(VibrationEffect.CreatePredefined(VibrationEffect.EffectDoubleClick));
             }
         }
 
@@ -115,15 +107,14 @@ namespace DIPS.Xamarin.UI.Android
             return new PlatformFeedbackGenerator();
         }
 
-        internal static void Initialize()
+        internal static void Initialize(Activity activity)
         {
-            s_activity = Platform.CurrentActivity;
+            s_activity = activity;
             s_hasPermission = s_activity.CheckSelfPermission(Manifest.Permission.Vibrate);
         }
 
         private static bool ShouldVibrate()
         {
-
             s_vibrator ??= Vibrator.FromContext(s_activity);
             return true;
         }
