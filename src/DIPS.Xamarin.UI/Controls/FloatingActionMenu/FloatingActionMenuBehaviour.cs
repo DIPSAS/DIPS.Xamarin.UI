@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Modality;
 using Xamarin.Forms;
@@ -96,8 +97,18 @@ namespace DIPS.Xamarin.UI.Controls.FloatingActionMenu
         {
             if (bindable is FloatingActionMenuBehaviour behaviour)
             {
-                behaviour.Children.ForEach(mb => mb.IsVisible = (bool) newvalue);
-                behaviour.Children.ForEach(mb => mb.IsBadgeVisible = (bool)newvalue);
+                behaviour.Children.ForEach(mb => mb.IsVisible = (bool)newvalue);
+
+                var menuButtons = behaviour.Children.FindAll(mb => !string.IsNullOrEmpty(mb.BadgeCount));
+
+                if (!(bool)newvalue)
+                {
+                    behaviour.Children.ForEach(mb => mb.IsBadgeVisible = false);
+                }
+                else
+                {
+                    menuButtons.ForEach(mb => mb.IsBadgeVisible = true);
+                }
             }
         }
 
