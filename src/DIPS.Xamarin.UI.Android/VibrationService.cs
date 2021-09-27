@@ -115,8 +115,13 @@ namespace DIPS.Xamarin.UI.Android
 
         private static bool ShouldVibrate()
         {
+            if (s_hasPermission == Permission.Denied)
+            {
+                return false;
+            }
+            
             s_vibrator ??= Vibrator.FromContext(s_activity);
-            return s_hasPermission == Permission.Granted; 
+            return true;
         }
 
         private class PlatformFeedbackGenerator : IPlatformFeedbackGenerator
