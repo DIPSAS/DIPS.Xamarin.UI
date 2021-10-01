@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:valueConverters="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.ObjectToBoolConverterPage">
+    <ContentPage.BindingContext>
+        <valueConverters:ObjectToBoolConverterViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0"
+                         Orientation="Horizontal">
+                <Entry Text="{Binding SomeObject}" 
+                       HorizontalOptions="FillAndExpand"/>
+                <Label Text="Type 'Hello'" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="1">
+                <Label
+                    Opacity="{Binding SomeObject, Converter={dxui:ObjectToBoolConverter TrueObject='Hello'}}"
+                    Text="The object is 'Hello'" />
+                <Label
+                    Opacity="{Binding SomeObject, Converter={dxui:ObjectToBoolConverter TrueObject='Hello', Inverted=True}}"
+                    Text="The object is not 'Hello'}" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
