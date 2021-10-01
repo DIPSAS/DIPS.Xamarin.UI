@@ -60,6 +60,9 @@ namespace DIPS.Xamarin.UI.Samples.Converters
                 case "PositionInListConverter":
                     m_navigation.PushAsync(new PositionInListConverterPage() { Title = parameter });
                     break;
+                case "ObjectToBoolConverter":
+                    m_navigation.PushAsync(new ObjectToBoolConverterPage() { Title = parameter });
+                    break;
             }
         }
     }

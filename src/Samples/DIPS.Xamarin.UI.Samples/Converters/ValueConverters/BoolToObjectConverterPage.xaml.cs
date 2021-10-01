@@ -30,6 +30,7 @@ namespace DIPS.Xamarin.UI.Samples.Converters.ValueConverters
             get => m_someLogicalProperty;
             set => this.Set(ref m_someLogicalProperty, value, PropertyChanged);
         }
+        
     }
 
 }

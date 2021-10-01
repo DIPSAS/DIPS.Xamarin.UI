@@ -47,6 +47,9 @@
             <Button Command="{Binding NavigateToCommand}"
                     CommandParameter="PositionInListConverter"
                     Text="PositionInListConverter" />
+            <Button Command="{Binding NavigateToCommand}"
+                    CommandParameter="ObjectToBoolConverter"
+                    Text="ObjectToBoolConverter" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
