@@ -36,6 +36,10 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Controls\Sheet\CheatSheetPage.xaml.cs">
+      <DependentUpon>CheatSheetPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
     <ItemGroup>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sheet="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Sheet;assembly=DIPS.Xamarin.UI.Samples"
+             xmlns:sheet1="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Sheet;assembly=DIPS.Xamarin.UI"
+             xmlns:cheatSheet="clr-namespace:DIPS.Xamarin.UI.Controls.Sheet.CheatSheet;assembly=DIPS.Xamarin.UI"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.Sheet.CheatSheetPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Open"
+                     Clicked="OpenSheet"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <cheatSheet:CheatSheet x:Name="CheatSheet" />
+</ContentPage>

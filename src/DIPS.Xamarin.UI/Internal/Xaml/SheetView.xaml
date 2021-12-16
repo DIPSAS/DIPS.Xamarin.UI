@@ -15,15 +15,14 @@
              xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              xmlns:MultiValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.MultiValueConverters"
              dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
+    
     <Frame x:Name="OuterSheetFrame"
+           x:FieldModifier="internal"
            HasShadow="{Binding HasShadow}"
            CornerRadius="8"
            Padding="0"
            IsClippedToBounds="True"
            BackgroundColor="{Binding ContentColor}">
-        <Frame.GestureRecognizers>
-            <PanGestureRecognizer PanUpdated="OnDrag" />
-        </Frame.GestureRecognizers>
 
         <!-- Alignement = Bottom -->
         <!-- Alignement = Top is set from Initialize() in code behind -->

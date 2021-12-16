@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundColor="Red"
+             x:Class="DIPS.Xamarin.UI.Controls.Sheet.CheatSheet.CheatSheet">
+
+    <Frame x:Name="Frame"
+           BackgroundColor="Gray">
+        <StackLayout Orientation="Vertical">
+            <Label VerticalOptions="Start"
+                   HorizontalOptions="Center"
+                   Text="THE CHEAT SHEET"
+                   FontSize="25" />
+            <Label x:Name="YLabel"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Center" />
+        </StackLayout>
+    </Frame>
+</ContentView>
