@@ -1,0 +1,157 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Controls.Sheet;assembly=DIPS.Xamarin.UI"
+             xmlns:local="clr-namespace:DIPS.Xamarin.UI.Internal"
+             mc:Ignorable="d dblend"
+             x:Class="DIPS.Xamarin.UI.Internal.Xaml.Sheet.SheetView"
+             x:DataType="{x:Type Sheet:SheetBehavior}"
+             xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             xmlns:MultiValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.MultiValueConverters"
+             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
+    
+    <Frame x:Name="OuterSheetFrame"
+           x:FieldModifier="internal"
+           HasShadow="False"
+           CornerRadius="8"
+           Padding="0"
+           IsClippedToBounds="True"
+           BackgroundColor="{Binding ContentColor}">
+
+        <!-- Alignement = Bottom -->
+        <!-- Alignement = Top is set from Initialize() in code behind -->
+        <Grid x:Name="SheetGrid"
+              RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid x:Name="HeaderGrid"
+                  Grid.Row="0"
+                  RowSpacing="0"
+                  BackgroundColor="{Binding HeaderColor}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <BoxView x:Name="HandleBoxView"
+                         Grid.Row="0"
+                         HeightRequest="5"
+                         CornerRadius="2"
+                         Margin="0,5"
+                         WidthRequest="50"
+                         BackgroundColor="{Binding HandleColor}"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         IsVisible="{Binding IsDraggable}" />
+
+                <Grid x:Name="titleAndButtonsGrid"
+                      Grid.Row="1"
+                      ColumnSpacing="0"
+                      IsClippedToBounds="True">
+                    <Grid.IsVisible>
+                        <MultiBinding
+                            Converter="{MultiValueConverters:LogicalExpressionConverter
+                                    LogicalGate=Or}">
+                            <Binding Source="{x:Reference TitleLabel}"
+                                     Path="IsVisible" />
+                            <Binding Source="{x:Reference cancelButton}"
+                                     Path="IsVisible" />
+                            <Binding Source="{x:Reference actionButton}"
+                                     Path="IsVisible" />
+                        </MultiBinding>
+                    </Grid.IsVisible>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="TitleLabel"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           FontSize="{Binding TitleSize}"
+                           FontAttributes="{Binding TitleFontAttributes}"
+                           HorizontalOptions="Center"
+                           Padding="10"
+                           Text="{Binding Title}"
+                           TextColor="{Binding TitleColor}"
+                           IsVisible="{Binding Title, Converter={ValueConverters:IsEmptyConverter Inverted=True}}"
+                           LineBreakMode="TailTruncation"
+                           VerticalOptions="Center" />
+                    <local:InternalButton x:Name="cancelButton"
+                                          Grid.Column="0"
+                                          Padding="15,10,10,10"
+                                          FontSize="{Binding CancelButtonSize}"
+                                          IsVisible="{Binding IsCancelButtonVisible}"
+                                          TextColor="{Binding CancelTitleColor}"
+                                          CommandParameter="{Binding CancelCommandParameter}"
+                                          Command="{Binding CancelCommand}"
+                                          Text="{Binding CancelTitle}"
+                                          Clicked="CancelButtonClicked"
+                                          BackgroundColor="{Binding HeaderColor}"
+                                          HorizontalTextAlignment="Start"
+                                          VerticalTextAlignment="Center" />
+                    <local:InternalButton x:Name="actionButton"
+                                          Grid.Column="2"
+                                          Padding="10,10,15,10"
+                                          FontSize="{Binding ActionButtonSize}"
+                                          BackgroundColor="{Binding HeaderColor}"
+                                          Command="{Binding ActionCommand}"
+                                          CommandParameter="{Binding ActionCommandParameter}"
+                                          TextColor="{Binding ActionTitleColor}"
+                                          Text="{Binding ActionTitle}"
+                                          Clicked="ActionButtonClicked"
+                                          HorizontalTextAlignment="End"
+                                          VerticalTextAlignment="Center"
+                                          IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}" />
+                </Grid>
+
+                <BoxView x:Name="SeparatorBoxView"
+                         Grid.Row="2"
+                         HeightRequest=".6"
+                         Color="{Binding TitleSeparatorColor}"
+                         IsVisible="{Binding Source={x:Reference titleAndButtonsGrid}, Path=IsVisible}"
+                         Opacity="{Binding IsTitleSeparatorVisible, Converter={ValueConverters:BoolToObjectConverter TrueObject=1.0, FalseObject=0.0}}"
+                         android:VisualElement.Elevation="0">
+                    <BoxView.Triggers>
+                        <DataTrigger TargetType="BoxView"
+                                     Binding="{Binding Alignment}"
+                                     Value="{x:Static Sheet:AlignmentOptions.Top}">
+                            <Setter Property="BoxView.Margin"
+                                    Value="0,0,0,5" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="BoxView"
+                                     Binding="{Binding Alignment}"
+                                     Value="{x:Static Sheet:AlignmentOptions.Bottom}">
+                            <Setter Property="BoxView.Margin"
+                                    Value="0,5,0,0" />
+                        </DataTrigger>
+                    </BoxView.Triggers>
+                </BoxView>
+            </Grid>
+
+            <!-- VerticalOptions are set in Initialize() -->
+            <Grid x:Name="SheetContentGrid"
+                  Grid.Row="1"
+                  RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ContentView x:Name="sheetContentView"
+                             Content="{Binding SheetContent}" />
+                <BoxView Grid.Row="1"
+                         Opacity="0" 
+                         HeightRequest="20"/>
+            </Grid>
+        </Grid>
+    </Frame>
+</ContentView>

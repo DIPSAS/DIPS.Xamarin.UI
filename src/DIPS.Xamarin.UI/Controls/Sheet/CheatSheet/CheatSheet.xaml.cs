@@ -9,7 +9,7 @@ using Xamarin.Forms.Xaml;
 namespace DIPS.Xamarin.UI.Controls.Sheet.CheatSheet
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CheatSheet : IGestureAware
+    public partial class CheatSheet : IPanAware
     {
         private double m_endY, m_startY;
         private readonly float[] m_latestDeltas = new float[5];
@@ -28,7 +28,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet.CheatSheet
 
         public float PixelsPerSecond { get; set; } = 1000;
 
-        void IGestureAware.SendPan(float totalX, float totalY, float distanceX, float distanceY, GestureStatus status, int id)
+        void IPanAware.SendPan(float totalX, float totalY, float distanceX, float distanceY, GestureStatus status, int id)
         {
             switch (status)
             {
@@ -64,9 +64,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet.CheatSheet
             }
         }
 
-        void IGestureAware.SendTapped(float x, float y)
-        {
-        }
+
 
         private void MoveSheet(float distanceY)
         {

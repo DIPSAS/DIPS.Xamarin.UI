@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.Modality;
 using DIPS.Xamarin.UI.Internal.xaml;
+using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -31,8 +32,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <inheritdoc />
         public Task AfterRemoval()
         {
-            CloseCommand?.Execute(CloseCommandParameter);
-            Close?.Invoke(this, EventArgs.Empty);
+            ClosedCommand?.Execute(ClosedCommandParameter);
+            Closed?.Invoke(this, EventArgs.Empty);
 
             return Task.CompletedTask;
         }
@@ -180,7 +181,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         
                 SetupSheet();
                 
-                m_sheetView.Toggle();
+                m_sheetView.Show();
 
                 // Wait until all the bindings are done
                 await Task.Delay(100);

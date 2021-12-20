@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage x:Class="DIPS.Xamarin.UI.Samples.Controls.Sheet.SheetPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Sheet;assembly=DIPS.Xamarin.UI.Samples"
-             xmlns:System="clr-namespace:System;assembly=netstandard"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:dxui="http://dips.xamarin.ui.com"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
@@ -19,40 +19,55 @@
                                 CancelCommand="{Binding CancelCommand}"
                                 VerticalContentAlignment="{Binding VerticalContentAlignment}"
                                 ActionCommand="{Binding ActionCommand}"
-                                ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=CanExecute}}"
+                                ActionTitle="Action"
                                 Alignment="{Binding Alignment}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                                 CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
                                 ContentColor="{Binding ContentColor}"
                                 HandleColor="{Binding HandleColor}"
-                                HasShadow="{Binding HasShadow}"
                                 HeaderColor="{Binding HeaderColor}"
                                 IsCancelButtonVisible="False"
                                 IsDraggable="{Binding IsDraggable}"
                                 IsOpen="{Binding IsSheetOpen}"
-                                MaxPosition="{Binding MaxPosition}"
-                                MinPosition="{Binding MinPosition}"
-                                CloseCommand="{Binding OnCloseCommand}"
-                                CloseCommandParameter="Closed"
-                                OnOpenCommand="{Binding OnOpenCommand}"
-                                OnOpenCommandParameter="Opened"
+                                ClosedCommand="{Binding OnCloseCommand}"
+                                ClosedCommandParameter="Closed"
+                                OpenedCommand="{Binding OnOpenCommand}"
+                                OpenedCommandParameter="Opened"
                                 Position="{Binding Position}"
-                                ShouldAutoClose="{Binding ShouldAutoClose}"
-                                ShouldRememberPosition="{Binding ShouldRememberPosition}">
+                                FlingVelocityThreshold="Medium"
+                                SheetOpeningStrategy="FirstSnapPoint"
+                                SnapPoints=".5,.98">
                 <dxui:SheetBehavior.SheetContentTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding Title}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Entry x:Name="entry"
-                                   Placeholder="TextEntry" />
-                            <Button dxui:Modality.CloseOnClick="True"
-                                    Text="Close sheet" />
-                        </StackLayout>
+                    <DataTemplate x:DataType="{x:Type Sheet:InsideSheetViewModel}">
+                        <!-- <Button Text="HEI" -->
+                        <!--        FontSize="20" -->
+                        <!--        VerticalOptions="Center" -->
+                        <!--        HorizontalOptions="Center"></Button> -->
+                        <CollectionView ItemsSource="{Binding Items}"
+                                        BackgroundColor="White">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="20"
+                                                   Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+
+                                <DataTemplate x:DataType="{x:Type Sheet:SomeClass}">
+                                    <Frame Padding="10"
+                                           BackgroundColor="Azure"
+                                           HasShadow="False">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ClickedCommand}" />
+                                        </Frame.GestureRecognizers>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="Some row title" HorizontalOptions="StartAndExpand"
+                                                   FontSize="20" />
+                                            <Label Text="Some row end"
+                                                   HorizontalOptions="End" />
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </DataTemplate>
                 </dxui:SheetBehavior.SheetContentTemplate>
             </dxui:SheetBehavior>

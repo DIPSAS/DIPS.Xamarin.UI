@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace DIPS.Xamarin.UI.Controls.Sheet.CheatSheet
+namespace DIPS.Xamarin.UI.Controls.Sheet
 {
     [TypeConversion(typeof(IList<double>))]
     public class SnapPointConverter : TypeConverter

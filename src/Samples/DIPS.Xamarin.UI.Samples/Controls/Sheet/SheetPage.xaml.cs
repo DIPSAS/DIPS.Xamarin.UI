@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Sheet;
@@ -11,7 +13,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SheetPage : ContentPage
     {
-
         public SheetPage()
         {
             InitializeComponent();
@@ -19,7 +20,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
 
         private void SheetBehavior_OnOnPositionChanged(object sender, EventArgs e)
         {
-            if (!(sender is SheetBehavior sheetBehavior)) return;
+            if (!(sender is SheetBehavior sheetBehavior))
+            {
+                return;
+            }
+
             sheetBehavior.Position = 0.9;
         }
     }
@@ -27,20 +32,22 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
     public class SheetPageViewModel : INotifyPropertyChanged
     {
         private AlignmentOptions m_alignment;
+        private string m_contentColor;
         private string m_handleColor;
+        private bool m_hasActionButton;
         private bool m_hasShadow;
-        private bool m_isDraggable;
+        private string m_headerColor;
+        private bool m_isDraggable = true;
         private bool m_isSheetOpen;
-        private ContentAlignment m_verticalContentAlignment;
-        private double m_position;
         private double m_maxPosition = 1;
         private double m_minPosition = 0.05;
-        private string m_stateText;
+        private double m_position;
+
+        private bool m_shouldAutoClose = true;
         private bool m_shouldRememberPosition;
-        private string m_contentColor;
-        private string m_headerColor;
-        private string m_title;
-        private bool m_hasActionButton;
+        private string m_stateText;
+        private string m_title = "Title";
+        private ContentAlignment m_verticalContentAlignment;
 
         public SheetPageViewModel()
         {
@@ -54,30 +61,18 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
                 () =>
                 {
                     return true;
-
                 }, async () =>
-               {
-                   //Do logic to determine if the sheet should close
-                   return await Application.Current.MainPage.DisplayAlert("Are you sure?", "Do you want to close the sheet view?", "Yes", "No");
-               });
+                {
+                    //Do logic to determine if the sheet should close
+                    return await Application.Current.MainPage.DisplayAlert("Are you sure?",
+                        "Do you want to close the sheet view?", "Yes", "No");
+                });
 
             ActionCommand = new Command(
                 () =>
                 {
                     //Do work when action is pressed
                 });
-        }
-
-        private void SheetClosed(string commandParameter)
-        {
-            //This is when the sheet has finished it's animation and is closed
-            StateText = commandParameter;
-        }
-
-        private void SheetOpened(string commandParameter)
-        {
-            //This is when the sheet has finished it's animation and is open
-            StateText = commandParameter;
         }
 
         public AlignmentOptions Alignment
@@ -90,20 +85,19 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             get => m_handleColor;
             set
+            {
+                try
                 {
-                    try
-                    {
-                        new ColorTypeConverter().ConvertFromInvariantString(value);
-                        m_handleColor = value;
-                        PropertyChanged.Raise();
-                    }
-                    catch (Exception e)
-                    {
-                        //Swallow it.
-                    }
+                    new ColorTypeConverter().ConvertFromInvariantString(value);
+                    m_handleColor = value;
+                    PropertyChanged.Raise();
                 }
-                
+                catch (Exception e)
+                {
+                    //Swallow it.
+                }
             }
+        }
 
         public bool HasShadow
         {
@@ -168,8 +162,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             set => PropertyChanged.RaiseWhenSet(ref m_shouldRememberPosition, value);
         }
 
-        private bool m_shouldAutoClose = true;
-
         public bool ShouldAutoClose
         {
             get => m_shouldAutoClose;
@@ -210,7 +202,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
                 {
                     //Swallow it.
                 }
-
             }
         }
 
@@ -230,13 +221,50 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             set => PropertyChanged.RaiseWhenSet(ref m_hasActionButton, value);
         }
 
+
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void SheetClosed(string commandParameter)
+        {
+            //This is when the sheet has finished it's animation and is closed
+            StateText = commandParameter;
+        }
+
+        private void SheetOpened(string commandParameter)
+        {
+            //This is when the sheet has finished it's animation and is open
+            StateText = commandParameter;
+        }
     }
 
     public class InsideSheetViewModel : INotifyPropertyChanged
     {
         public string Title => "Sheet Title";
+        public ObservableCollection<SomeClass> Items
+        {
+            get
+            {
+                var list = new List<SomeClass>();
+                for (var i = 0; i < 50; i++)
+                {
+                    list.Add(new SomeClass(){Text = $"string number: {i}"});
+                }
 
+                return new ObservableCollection<SomeClass>(list);
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
+    }
+
+    public class SomeClass
+    {
+        public string Text { get; set; }
+
+        public ICommand ClickedCommand => new Command(Execute);
+
+        private void Execute()
+         {
+        }
     }
 }

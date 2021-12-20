@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Modality;
 using DIPS.Xamarin.UI.Internal.xaml;
+using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
 using DIPS.Xamarin.UI.Resources.Colors;
 using DIPS.Xamarin.UI.Resources.LocalizedStrings;
 using Xamarin.Forms;
@@ -11,40 +13,40 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
     public partial class SheetBehavior
     {
         /// <summary>
-        ///     <see cref="OnBeforeOpenCommand" />
+        ///     <see cref="BeforeOpenedCommand" />
         /// </summary>
-        public static readonly BindableProperty OnBeforeOpenCommandProperty = BindableProperty.Create(
-            nameof(OnBeforeOpenCommand),
+        public static readonly BindableProperty BeforeOpenedCommandProperty = BindableProperty.Create(
+            nameof(BeforeOpenedCommand),
             typeof(ICommand),
             typeof(SheetBehavior));
 
         /// <summary>
-        ///     <see cref="OnBeforeOpenCommandParameter" />
+        ///     <see cref="BeforeOpenedCommandParameter" />
         /// </summary>
-        public static readonly BindableProperty OnBeforeOpenCommandParameterProperty = BindableProperty.Create(
-            nameof(OnBeforeOpenCommandParameter),
+        public static readonly BindableProperty BeforeOpenedCommandParameterProperty = BindableProperty.Create(
+            nameof(BeforeOpenedCommandParameter),
             typeof(object),
             typeof(SheetBehavior));
 
         /// <summary>
-        ///     <see cref="OnOpenCommand" />
+        ///     <see cref="OpenedCommand" />
         /// </summary>
-        public static readonly BindableProperty OnOpenCommandProperty = BindableProperty.Create(
-            nameof(OnOpenCommand),
+        public static readonly BindableProperty OpenedCommandProperty = BindableProperty.Create(
+            nameof(OpenedCommand),
             typeof(ICommand),
             typeof(SheetBehavior));
 
         /// <summary>
-        ///     <see cref="OnOpenCommandProperty" />
+        ///     <see cref="OpenedCommandProperty" />
         /// </summary>
-        public static readonly BindableProperty OnOpenCommandParameterProperty =
-            BindableProperty.Create(nameof(OnOpenCommandParameter), typeof(object), typeof(SheetBehavior));
+        public static readonly BindableProperty OpenedCommandParameterProperty =
+            BindableProperty.Create(nameof(OpenedCommandParameter), typeof(object), typeof(SheetBehavior));
 
         /// <summary>
-        ///     <see cref="OnBeforeCloseCommand" />
+        ///     <see cref="BeforeClosedCommand" />
         /// </summary>
-        public static readonly BindableProperty OnBeforeCloseCommandProperty = BindableProperty.Create(
-            nameof(OnBeforeCloseCommand),
+        public static readonly BindableProperty BeforeClosedCommandProperty = BindableProperty.Create(
+            nameof(BeforeClosedCommand),
             typeof(ICommand),
             typeof(SheetBehavior));
 
@@ -76,28 +78,27 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             BindableProperty.Create(nameof(ActionButtonSize), typeof(double), typeof(SheetBehavior),
                 defaultValueCreator: b => Device.GetNamedSize(NamedSize.Small, typeof(Button)));
 
-
         /// <summary>
-        ///     <see cref="OnBeforeCloseCommandParameter" />
+        ///     <see cref="BeforeClosedCommandParameter" />
         /// </summary>
-        public static readonly BindableProperty OnBeforeCloseCommandParameterProperty = BindableProperty.Create(
-            nameof(OnBeforeCloseCommandParameter),
+        public static readonly BindableProperty BeforeClosedCommandParameterProperty = BindableProperty.Create(
+            nameof(BeforeClosedCommandParameter),
             typeof(object),
             typeof(SheetBehavior));
 
         /// <summary>
-        ///     <see cref="CloseCommand" />
+        ///     <see cref="ClosedCommand" />
         /// </summary>
-        public static readonly BindableProperty CloseCommandProperty = BindableProperty.Create(
-            nameof(CloseCommand),
+        public static readonly BindableProperty ClosedCommandProperty = BindableProperty.Create(
+            nameof(ClosedCommand),
             typeof(ICommand),
             typeof(SheetBehavior));
 
         /// <summary>
-        ///     <see cref="CloseCommandParameter" />
+        ///     <see cref="ClosedCommandParameter" />
         /// </summary>
-        public static readonly BindableProperty OnCloseCommandParameterProperty = BindableProperty.Create(
-            nameof(CloseCommandParameter),
+        public static readonly BindableProperty ClosedCommandParameterProperty = BindableProperty.Create(
+            nameof(ClosedCommandParameter),
             typeof(object),
             typeof(SheetBehavior));
 
@@ -186,27 +187,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             propertyChanged: IsOpenPropertyChanged);
 
         /// <summary>
-        ///     <see cref="OnPositionChangedCommand" />
+        ///     <see cref="PositionChangedCommand" />
         /// </summary>
-        public static readonly BindableProperty OnPositionChangedCommandProperty = BindableProperty.Create(
-            nameof(OnPositionChangedCommand),
+        public static readonly BindableProperty PositionChangedCommandProperty = BindableProperty.Create(
+            nameof(PositionChangedCommand),
             typeof(ICommand),
             typeof(SheetBehavior));
-
-        /// <summary>
-        ///     <see cref="ShouldAutoClose" />
-        /// </summary>
-        public static readonly BindableProperty ShouldAutoCloseProperty =
-            BindableProperty.Create(nameof(ShouldAutoClose), typeof(bool), typeof(SheetBehavior), true);
-
-        /// <summary>
-        ///     <see cref="ShouldRememberPosition" />
-        /// </summary>
-        public static readonly BindableProperty ShouldRememberPositionProperty = BindableProperty.Create(
-            nameof(ShouldRememberPosition),
-            typeof(bool),
-            typeof(SheetBehavior),
-            false);
 
         /// <summary>
         ///     <see cref="SheetContent" />
@@ -223,7 +209,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public static readonly BindableProperty SheetContentTemplateProperty =
             BindableProperty.Create(nameof(SheetContentTemplate), typeof(DataTemplate), typeof(SheetBehavior));
-
 
         /// <summary>
         ///     <see cref="HeaderColor" />
@@ -254,26 +239,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             BindingMode.TwoWay);
 
         /// <summary>
-        ///     <see cref="MaxPosition" />
-        /// </summary>
-        public static readonly BindableProperty MaxPositionProperty = BindableProperty.Create(
-            nameof(MaxPosition),
-            typeof(double),
-            typeof(SheetBehavior),
-            1.0,
-            BindingMode.TwoWay);
-
-        /// <summary>
-        ///     <see cref="MinPosition" />
-        /// </summary>
-        public static readonly BindableProperty MinPositionProperty = BindableProperty.Create(
-            nameof(MinPosition),
-            typeof(double),
-            typeof(SheetBehavior),
-            0.05,
-            BindingMode.TwoWay);
-
-        /// <summary>
         ///     <see cref="BindingContextFactory" />
         /// </summary>
         public static readonly BindableProperty BindingContextFactoryProperty = BindableProperty.Create(
@@ -288,15 +253,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(IsDraggable),
             typeof(bool),
             typeof(SheetBehavior));
-
-        /// <summary>
-        ///     <see cref="HasShadow" />
-        /// </summary>
-        public static readonly BindableProperty HasShadowProperty = BindableProperty.Create(
-            nameof(HasShadow),
-            typeof(bool),
-            typeof(SheetBehavior),
-            false);
 
         /// <summary>
         ///     <see cref="HandleColor" />
@@ -381,6 +337,20 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             defaultValueCreator: OpenSheetCommandValueCreator);
 
         internal static readonly BindableProperty OpenCommandProperty = OpenCommandPropertyKey.BindableProperty;
+
+        public static readonly BindableProperty SnapPointsProperty = BindableProperty.Create(
+            nameof(SnapPoints),
+            typeof(IList<double>),
+            typeof(SheetBehavior),
+            new List<double> {.5, 1.0});
+
+        public static readonly BindableProperty FlingVelocityThresholdProperty =
+            BindableProperty.Create(nameof(FlingVelocityThreshold), typeof(int), typeof(SheetBehavior), 1000);
+
+        public static readonly BindableProperty SheetOpeningStrategyProperty =
+            BindableProperty.Create(nameof(SheetOpeningStrategy), typeof(SheetOpeningStrategy), typeof(SheetBehavior),
+                SheetOpeningStrategy.MostFittingSnapPoint);
+
         private ModalityLayout? m_modalityLayout;
         private SheetView? m_sheetView;
 
@@ -396,6 +366,18 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(TitleSizeProperty, value);
         }
 
+        [TypeConverter(typeof(FlingSensitivityConverter))]
+        public int FlingVelocityThreshold
+        {
+            get => (int)GetValue(FlingVelocityThresholdProperty);
+            set => SetValue(FlingVelocityThresholdProperty, value);
+        }
+
+        public SheetOpeningStrategy SheetOpeningStrategy
+        {
+            get => (SheetOpeningStrategy)GetValue(SheetOpeningStrategyProperty);
+            set => SetValue(SheetOpeningStrategyProperty, value);
+        }
 
         /// <summary>
         ///     Title font attributes.
@@ -406,6 +388,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (FontAttributes)GetValue(TitleFontAttributesProperty);
             set => SetValue(TitleFontAttributesProperty, value);
+        }
+
+        [TypeConverter(typeof(SnapPointConverter))]
+        public IList<double> SnapPoints
+        {
+            get => (IList<double>)GetValue(SnapPointsProperty);
+            set => SetValue(SnapPointsProperty, value);
         }
 
         /// <summary>
@@ -585,30 +574,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     The command parameter will be the new positional value, same as <see cref="Position" />.
         ///     This is a bindable property.
         /// </summary>
-        public ICommand OnPositionChangedCommand
+        public ICommand PositionChangedCommand
         {
-            get => (ICommand)GetValue(OnPositionChangedCommandProperty);
-            set => SetValue(OnPositionChangedCommandProperty, value);
-        }
-
-        /// <summary>
-        ///     Determines if the sheet should auto close at the minimum position
-        ///     This is a bindable property.
-        /// </summary>
-        public bool ShouldAutoClose
-        {
-            get => (bool)GetValue(ShouldAutoCloseProperty);
-            set => SetValue(ShouldAutoCloseProperty, value);
-        }
-
-        /// <summary>
-        ///     Determines if the sheet should remember its position when it is opened and closed.
-        ///     This is a bindable property.
-        /// </summary>
-        public bool ShouldRememberPosition
-        {
-            get => (bool)GetValue(ShouldRememberPositionProperty);
-            set => SetValue(ShouldRememberPositionProperty, value);
+            get => (ICommand)GetValue(PositionChangedCommandProperty);
+            set => SetValue(PositionChangedCommandProperty, value);
         }
 
         /// <summary>
@@ -662,17 +631,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        ///     Determines if the sheet should have shadow.
-        ///     This is a bindable property
-        /// </summary>
-        /// <remarks>This only works for iOS.</remarks>
-        public bool HasShadow
-        {
-            get => (bool)GetValue(HasShadowProperty);
-            set => SetValue(HasShadowProperty, value);
-        }
-
-        /// <summary>
         ///     Determines if the sheet should be draggable or not.
         ///     This is a bindable property.
         /// </summary>
@@ -696,112 +654,79 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     Command that execute when the sheet is about to start it's animation to open.
         ///     This is a bindable property.
         /// </summary>
-        public ICommand OnBeforeOpenCommand
+        public ICommand BeforeOpenedCommand
         {
-            get => (ICommand)GetValue(OnBeforeOpenCommandProperty);
-            set => SetValue(OnBeforeOpenCommandProperty, value);
+            get => (ICommand)GetValue(BeforeOpenedCommandProperty);
+            set => SetValue(BeforeOpenedCommandProperty, value);
         }
 
         /// <summary>
-        ///     Parameter to pass to <see cref="OnBeforeOpenCommand" />.
+        ///     Parameter to pass to <see cref="BeforeOpenedCommand" />.
         ///     This is a bindable property.
         /// </summary>
-        public object OnBeforeOpenCommandParameter
+        public object BeforeOpenedCommandParameter
         {
-            get => GetValue(OnBeforeOpenCommandParameterProperty);
-            set => SetValue(OnBeforeOpenCommandParameterProperty, value);
+            get => GetValue(BeforeOpenedCommandParameterProperty);
+            set => SetValue(BeforeOpenedCommandParameterProperty, value);
         }
 
         /// <summary>
         ///     Command that executes when the sheet has completed it's animation and is open.
         ///     This is a bindable property.
         /// </summary>
-        public ICommand OnOpenCommand
+        public ICommand OpenedCommand
         {
-            get => (ICommand)GetValue(OnOpenCommandProperty);
-            set => SetValue(OnOpenCommandProperty, value);
+            get => (ICommand)GetValue(OpenedCommandProperty);
+            set => SetValue(OpenedCommandProperty, value);
         }
 
         /// <summary>
-        ///     The parameter to pass to the <see cref="OnOpenCommand" />.
+        ///     The parameter to pass to the <see cref="OpenedCommand" />.
         ///     This is a bindable property.
         /// </summary>
-        public object OnOpenCommandParameter
+        public object OpenedCommandParameter
         {
-            get => GetValue(OnOpenCommandParameterProperty);
-            set => SetValue(OnOpenCommandParameterProperty, value);
+            get => GetValue(OpenedCommandParameterProperty);
+            set => SetValue(OpenedCommandParameterProperty, value);
         }
 
         /// <summary>
         ///     Command that execute before the sheet start it's animation when closing.
         ///     This is a bindable property.
         /// </summary>
-        public ICommand OnBeforeCloseCommand
+        public ICommand BeforeClosedCommand
         {
-            get => (ICommand)GetValue(OnBeforeCloseCommandProperty);
-            set => SetValue(OnBeforeCloseCommandProperty, value);
+            get => (ICommand)GetValue(BeforeClosedCommandProperty);
+            set => SetValue(BeforeClosedCommandProperty, value);
         }
 
         /// <summary>
-        ///     The parameter to pass to <see cref="OnBeforeCloseCommand" />.
+        ///     The parameter to pass to <see cref="BeforeClosedCommand" />.
         ///     This is a bindable property.
         /// </summary>
-        public object OnBeforeCloseCommandParameter
+        public object BeforeClosedCommandParameter
         {
-            get => GetValue(OnBeforeCloseCommandParameterProperty);
-            set => SetValue(OnBeforeCloseCommandParameterProperty, value);
+            get => GetValue(BeforeClosedCommandParameterProperty);
+            set => SetValue(BeforeClosedCommandParameterProperty, value);
         }
 
         /// <summary>
         ///     Command that executes when the sheet has completed it's animation and is closed.
         ///     This is a bindable property.
         /// </summary>
-        public ICommand CloseCommand
+        public ICommand ClosedCommand
         {
-            get => (ICommand)GetValue(CloseCommandProperty);
-            set => SetValue(CloseCommandProperty, value);
+            get => (ICommand)GetValue(ClosedCommandProperty);
+            set => SetValue(ClosedCommandProperty, value);
         }
 
         /// <summary>
-        ///     The parameter to pass to the <see cref="CloseCommand" />.
+        ///     The parameter to pass to the <see cref="ClosedCommand" />.
         /// </summary>
-        public object CloseCommandParameter
+        public object ClosedCommandParameter
         {
-            get => GetValue(OnCloseCommandParameterProperty);
-            set => SetValue(OnCloseCommandParameterProperty, value);
-        }
-
-        /// <summary>
-        ///     Determines the maximum position of the sheet when it is visible.
-        ///     This is a bindable property.
-        /// </summary>
-        /// <remarks>This will affect the size of the sheet if <see cref="Position" /> is set to 0</remarks>
-        /// <remarks>This will affect the people that are dragging the sheet</remarks>
-        /// <remarks>The value have to be between 0 and 1.0 (percentage of the screen)</remarks>
-        public double MaxPosition
-        {
-            get => (double)GetValue(MaxPositionProperty);
-            set => SetValue(MaxPositionProperty, value);
-        }
-
-        /// <summary>
-        ///     Determines the minimum position of the sheet.
-        ///     This is a bindable property.
-        /// </summary>
-        /// <remarks>
-        ///     This position is used to determine where the sheet will auto close if <see cref="ShouldAutoClose" /> is set to
-        ///     true
-        /// </remarks>
-        /// <remarks>
-        ///     This position is used to determine where the sheet will snap to when <see cref="ShouldAutoClose" /> is set to
-        ///     false
-        /// </remarks>
-        /// <remarks>This will affect the size of the sheet if <see cref="Position" /> is set to 0</remarks>
-        /// <remarks>The value have to be between 0 and 1.0 (percentage of the screen)</remarks>
-        public double MinPosition
-        {
-            get => (double)GetValue(MinPositionProperty);
-            set => SetValue(MinPositionProperty, value);
+            get => GetValue(ClosedCommandParameterProperty);
+            set => SetValue(ClosedCommandParameterProperty, value);
         }
 
         /// <summary>
@@ -854,22 +779,22 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <summary>
         ///     Event that gets raised when the sheet is about to start it's animation to open.
         /// </summary>
-        public event EventHandler? BeforeOpen;
+        public event EventHandler? BeforeOpened;
 
         /// <summary>
         ///     Event that gets raised when the sheet has completed it's animation and is open.
         /// </summary>
-        public event EventHandler? Open;
+        public event EventHandler? Opened;
 
         /// <summary>
         ///     Event that gets raised before the sheet start it's animation when closing
         /// </summary>
-        public event EventHandler? BeforeClose;
+        public event EventHandler? BeforeClosed;
 
         /// <summary>
         ///     Event that gets raised when the sheet has completed it's animation and is closed.
         /// </summary>
-        public event EventHandler? Close;
+        public event EventHandler? Closed;
 
         /// <summary>
         ///     Event that gets raised when the user has clicked the action button.
