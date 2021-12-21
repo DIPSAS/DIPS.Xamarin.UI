@@ -186,14 +186,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             propertyChanged: IsOpenPropertyChanged);
 
         /// <summary>
-        ///     <see cref="PositionChangedCommand" />
-        /// </summary>
-        public static readonly BindableProperty PositionChangedCommandProperty = BindableProperty.Create(
-            nameof(PositionChangedCommand),
-            typeof(ICommand),
-            typeof(SheetBehavior));
-
-        /// <summary>
         ///     <see cref="SheetContent" />
         /// </summary>
         public static readonly BindableProperty SheetContentProperty = BindableProperty.Create(
@@ -569,17 +561,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        ///     A command that executes when the position of the sheet changes.
-        ///     The command parameter will be the new positional value, same as <see cref="Position" />.
-        ///     This is a bindable property.
-        /// </summary>
-        public ICommand PositionChangedCommand
-        {
-            get => (ICommand)GetValue(PositionChangedCommandProperty);
-            set => SetValue(PositionChangedCommandProperty, value);
-        }
-
-        /// <summary>
         ///     Determines the position of the sheet when it appears.
         ///     This is a bindable property.
         /// </summary>
@@ -769,24 +750,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             get => (bool)GetValue(CloseOnOverlayTappedProperty);
             set => SetValue(CloseOnOverlayTappedProperty, value);
         }
-
-        private static void PositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (newvalue is double nD && bindable is SheetBehavior sheetBehavior && oldvalue is double oD)
-            {
-                if (sheetBehavior.PositionChangedCommand is not null && sheetBehavior.PositionChangedCommand.CanExecute(null))
-                {
-                    sheetBehavior.PositionChangedCommand.Execute(null);
-                }
-
-                sheetBehavior.PositionChanged?.Invoke(sheetBehavior, new PositionEventArgs(nD, oD));
-            }
-        }
-
-        /// <summary>
-        ///     Event that gets raised when the sheet has changed it's position.
-        /// </summary>
-        public event EventHandler<PositionEventArgs>? PositionChanged;
 
         /// <summary>
         ///     Event that gets raised when the sheet is about to start it's animation to open.
