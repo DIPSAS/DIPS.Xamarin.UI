@@ -16,7 +16,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             var doubles = new List<double>();
             foreach (var t in strings)
             {
-                if (double.TryParse(t, out var d))
+
+                if (double.TryParse(t.Trim(), System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out var d))
                 {
                     d = Math.Abs(d);
                     doubles.Add(SheetViewUtility.CoerceRatio(d));

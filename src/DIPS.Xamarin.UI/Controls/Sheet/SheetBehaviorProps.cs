@@ -326,8 +326,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(SnapPoints),
             typeof(IList<double>),
             typeof(SheetBehavior),
-            new List<double> {.5, 1.0},
-            validateValue: ValidateValue);
+            new List<double> {.5, 1.0}
+            );
 
         private static bool ValidateValue(BindableObject bindable, object value)
         {

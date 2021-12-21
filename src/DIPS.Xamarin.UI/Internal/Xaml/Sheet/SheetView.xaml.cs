@@ -66,6 +66,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         {
             if (!IsDraggable) return;
             
+            Console.WriteLine("PANNING: " + distanceY);
+            
             switch (status)
             {
                 case GestureStatus.Started:
@@ -90,7 +92,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         private void OnPan(object sender, PanUpdatedEventArgs e) // iOS
         {
-            SendPan((float)e.TotalX, (float)e.TotalY, (float)(e.TotalX - m_prevX), (float)(e.TotalY - m_prevY),
+            SendPan((float)e.TotalX, (float)e.TotalY, e.StatusType == GestureStatus.Completed ? 0 : (float)(e.TotalX - m_prevX), e.StatusType == GestureStatus.Completed ? 0 : (float)(e.TotalY - m_prevY),
                 e.StatusType, e.GestureId);
             m_prevX = e.TotalX;
             m_prevY = e.TotalY;
