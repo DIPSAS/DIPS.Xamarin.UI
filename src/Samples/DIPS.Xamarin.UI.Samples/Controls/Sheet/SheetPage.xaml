@@ -10,6 +10,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              ios:Page.UseSafeArea="true"
              mc:Ignorable="d">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Move"
+                     Clicked="MoveSheet" />
+    </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
         <Sheet:SheetPageViewModel />
     </ContentPage.BindingContext>
@@ -26,45 +31,39 @@
                                 ContentColor="{Binding ContentColor}"
                                 HandleColor="{Binding HandleColor}"
                                 HeaderColor="{Binding HeaderColor}"
-                                IsCancelButtonVisible="False"
-                                IsDraggable="{Binding IsDraggable}"
+                                IsCancelButtonVisible="True"
+                                IsDraggable="True"
                                 IsOpen="{Binding IsSheetOpen}"
-                                ClosedCommand="{Binding OnCloseCommand}"
-                                ClosedCommandParameter="Closed"
-                                OpenedCommand="{Binding OnOpenCommand}"
-                                OpenedCommandParameter="Opened"
                                 Position="{Binding Position}"
-                                FlingSpeedThreshold="750"
-                                SheetOpeningStrategy="FirstSnapPoint"
-                                SnapPoints=".5,.98">
+                                FlingSpeedThreshold="500"
+                                SheetOpeningStrategy="MostFittingSnapPoint"
+                                SnapPoints=".5,.75,.98">
                 <dxui:SheetBehavior.SheetContentTemplate>
                     <DataTemplate x:DataType="{x:Type Sheet:InsideSheetViewModel}">
-                        <!-- <Button Text="HEI" -->
-                        <!--        FontSize="20" -->
-                        <!--        VerticalOptions="Center" -->
-                        <!--        HorizontalOptions="Center"></Button> -->
-                        <ScrollView>
-                            <CollectionView ItemsSource="{Binding Items}"
-                                         BackgroundColor="White">
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="{x:Type Sheet:SomeClass}">
-                                        <Frame Padding="10"
-                                               BackgroundColor="Azure"
-                                               HasShadow="False">
-                                            <Frame.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ClickedCommand}" />
-                                            </Frame.GestureRecognizers>
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label Text="Some row title" HorizontalOptions="StartAndExpand"
-                                                       FontSize="20" />
-                                                <Label Text="Some row end"
-                                                       HorizontalOptions="End" />
-                                            </StackLayout>
-                                        </Frame>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </ScrollView>
+                        <Button Text="HEI"
+                               FontSize="20"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"></Button>
+                            <!-- <CollectionView ItemsSource="{Binding Items}" -->
+                            <!--                 BackgroundColor="White"> -->
+                            <!--     <CollectionView.ItemTemplate> -->
+                            <!--         <DataTemplate x:DataType="{x:Type Sheet:SomeClass}"> -->
+                            <!--             <Frame Padding="10" -->
+                            <!--                    BackgroundColor="Azure" -->
+                            <!--                    HasShadow="False"> -->
+                            <!--                 <Frame.GestureRecognizers> -->
+                            <!--                     <TapGestureRecognizer Command="{Binding ClickedCommand}" /> -->
+                            <!--                 </Frame.GestureRecognizers> -->
+                            <!--                 <StackLayout Orientation="Horizontal"> -->
+                            <!--                     <Label Text="Some row title" HorizontalOptions="StartAndExpand" -->
+                            <!--                            FontSize="20" /> -->
+                            <!--                     <Label Text="Some row end" -->
+                            <!--                            HorizontalOptions="End" /> -->
+                            <!--                 </StackLayout> -->
+                            <!--             </Frame> -->
+                            <!--         </DataTemplate> -->
+                            <!--     </CollectionView.ItemTemplate> -->
+                            <!-- </CollectionView> -->
                     </DataTemplate>
                 </dxui:SheetBehavior.SheetContentTemplate>
             </dxui:SheetBehavior>
@@ -79,8 +78,8 @@
                 <Label FontSize="Title"
                        Text="Sheet properties"
                        VerticalTextAlignment="Center" />
-                
-                <Label Text="{Binding Position}"></Label>
+
+                <Label Text="{Binding Position}" />
 
                 <StackLayout HorizontalOptions="Fill"
                              Orientation="Horizontal">

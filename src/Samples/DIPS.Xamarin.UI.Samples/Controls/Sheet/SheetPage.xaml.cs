@@ -17,6 +17,11 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             InitializeComponent();
         }
+
+        private void MoveSheet(object sender, EventArgs e)
+        {
+            SheetBehavior.MoveTo(0.7);
+        }
     }
 
     public class SheetPageViewModel : INotifyPropertyChanged

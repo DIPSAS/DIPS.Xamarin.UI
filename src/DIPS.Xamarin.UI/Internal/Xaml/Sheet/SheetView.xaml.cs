@@ -19,8 +19,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
     public partial class SheetView : IPanAware
     {
         private readonly object m_lock = new();
-        private readonly SheetBehavior m_sheetBehaviour;
-        private (float, long)[] m_latestDeltas = new (float, long)[25];
+        internal readonly SheetBehavior m_sheetBehaviour;
+        private (float, long)[] m_latestDeltas = new (float, long)[20];
         private long m_prevDuration;
         private double m_prevX, m_prevY;
         private int m_recordCount;
@@ -46,7 +46,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         /// <summary>
         ///     The height that the sheet content needs if it should display all of its content
         /// </summary>
-        private double SheetContentHeightRequest =>
+        internal double SheetContentHeightRequest =>
             sheetContentView.Content != null
                 ? SheetContentView.Content.Height + HeaderGrid.Height + HeaderGrid.Padding.Top +
                   HeaderGrid.Padding.Bottom +
@@ -57,7 +57,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         internal SheetView Sheet => this;
 
-        private IList<double> SnapPoints => m_sheetBehaviour.SnapPoints;
+        internal IList<double> SnapPoints => m_sheetBehaviour.SnapPoints;
         private int PixelsPerSecond => m_sheetBehaviour.FlingSpeedThreshold;
         private bool IsDraggable => m_sheetBehaviour.IsDraggable;
 
@@ -86,7 +86,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             }
         }
 
-        public bool ShouldInterceptScroll => TranslationY > SheetViewUtility.RatioToYValue(SnapPoints.LastOrDefault(), Height, m_sheetBehaviour.Alignment) + 20; //TODO: More fine-grained?
+        public bool ShouldInterceptScroll => TranslationY > this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment) + 20; //TODO: More fine-grained?
 
         private void OnPan(object sender, PanUpdatedEventArgs e) // iOS
         {
@@ -120,7 +120,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                 return;
             }
             
-            var openPosition = SheetViewUtility.RatioToYValue(SnapPoints.LastOrDefault(), Height, m_sheetBehaviour.Alignment);
+            var openPosition = this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment);
 
             TranslationY += ShouldOpen(deltaY) ? openPosition - TranslationY : deltaY;
 
@@ -129,7 +129,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         private void Open(float velocity = 1500)
         {
-            TranslateSheet(SheetViewUtility.RatioToYValue(SnapPoints.LastOrDefault(), Height, m_sheetBehaviour.Alignment), velocity);
+            TranslateSheet(this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment), velocity);
         }
 
         private void NotifyClose(float velocity = 1500)
@@ -157,10 +157,10 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             return m_sheetBehaviour.Alignment switch
             {
                 AlignmentOptions.Bottom => TranslationY + deltaY <=
-                                           SheetViewUtility.RatioToYValue(SnapPoints.LastOrDefault(), Height,
+                                           this.RatioToYValue(SnapPoints.LastOrDefault(),
                                                AlignmentOptions.Bottom),
                 AlignmentOptions.Top => TranslationY + deltaY >=
-                                        SheetViewUtility.RatioToYValue(SnapPoints.LastOrDefault(), Height,
+                                        this.RatioToYValue(SnapPoints.LastOrDefault(),
                                             AlignmentOptions.Top),
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -168,42 +168,12 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         internal async Task Show()
         {
-            FillerBoxView.HeightRequest = (Height * (1 - SnapPoints.LastOrDefault())) + 20; //TODO: seems to be some missing height requirement??
+            FillerBoxView.HeightRequest = (Height * (1 - SnapPoints.LastOrDefault())) + OuterSheetFrame.CornerRadius;
 
             m_sheetBehaviour.BeforeShowing();
             
-            double y;
-
-            switch (m_sheetBehaviour.SheetOpeningStrategy)
-            {
-                case SheetOpeningStrategy.FirstSnapPoint:
-                    y = SheetViewUtility.RatioToYValue(SnapPoints.FirstOrDefault(), Height, m_sheetBehaviour.Alignment);
-                    break;
-                case SheetOpeningStrategy.MostFittingSnapPoint:
-                    if (TryFindSnapPoint(
-                        m_sheetBehaviour.Alignment == AlignmentOptions.Bottom ? DragDirection.Up : DragDirection.Down,
-                        SheetViewUtility.YValueToRatio(SheetContentHeightRequest, Height), out y)) { }
-                    else
-                    {
-                        y = SheetViewUtility.RatioToYValue(SnapPoints.LastOrDefault(), Height, m_sheetBehaviour.Alignment);
-                    }
-
-                    break;  
-                case SheetOpeningStrategy.FitContent: //TODO: Must respect last snap point ??
-                    y = m_sheetBehaviour.Alignment switch
-                    {
-                        AlignmentOptions.Bottom => Height - SheetContentHeightRequest < 0 ? 0 : Height - SheetContentHeightRequest,
-                        AlignmentOptions.Top => SheetContentHeightRequest > Height ? Height : SheetContentHeightRequest,
-                        _ => throw new ArgumentOutOfRangeException()
-                    };
-                    break;
-                case SheetOpeningStrategy.LastSnapPoint:
-                    y = SheetViewUtility.RatioToYValue(SnapPoints.LastOrDefault(), Height, m_sheetBehaviour.Alignment);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
+            this.FindOpeningY(out var y);
+            
             await TranslateSheet(y);
 
             m_sheetBehaviour.OnShowing();
@@ -231,7 +201,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         {
             var currentPositionRatio = 1 - (Math.Abs(TranslationY) / Height);
 
-            if (TryFindSnapPoint(dragDirection, currentPositionRatio, out var y))
+            if (this.TryFindSnapPoint(dragDirection, currentPositionRatio, m_sheetBehaviour.Alignment, out var y))
             {
                 TranslateSheet(y, velocity);
                 return;
@@ -252,46 +222,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             }
         }
 
-        private bool TryFindSnapPoint(DragDirection dragDirection, double target, out double y)
-        {
-            switch (dragDirection)
-            {
-                case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
-                case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
-                    for (var i = 0; i < SnapPoints.Count; i++)
-                    {
-                        if (SnapPoints[i] < target)
-                        {
-                            continue;
-                        }
-
-                        y = SheetViewUtility.RatioToYValue(SnapPoints[i], Height, m_sheetBehaviour.Alignment);
-                        return true;
-                    }
-
-                    break;
-                case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
-                case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
-                    for (var i = SnapPoints.Count - 1; i >= 0; i--)
-                    {
-                        if (SnapPoints[i] > target)
-                        {
-                            continue;
-                        }
-
-                        y = SheetViewUtility.RatioToYValue(SnapPoints[i], Height, m_sheetBehaviour.Alignment);
-                        return true;
-                    }
-
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(dragDirection), dragDirection, null);
-            }
-
-            y = -1;
-            return false;
-        }
-
         private async Task TranslateSheet(double y, float velocity = 1500)
         {
             var travel = Math.Abs(y - TranslationY);
@@ -306,7 +236,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         private void NotifyPositionChange()
         {
-            m_sheetBehaviour.Position = 1 - SheetViewUtility.YValueToRatio(TranslationY, Height);
+            m_sheetBehaviour.Position = 1 - this.YValueToRatio(TranslationY);
         }
 
         private bool TryFling(DragDirection dragDirection, out float velocity)
@@ -423,7 +353,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         
         internal void MoveTo(double position)
         {
-            var y = SheetViewUtility.RatioToYValue(position, Height, m_sheetBehaviour.Alignment);
+            var y = this.RatioToYValue(position, m_sheetBehaviour.Alignment);
             MoveSheet((float) (y - TranslationY));
         }
     }
