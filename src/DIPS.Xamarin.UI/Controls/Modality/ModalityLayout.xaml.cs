@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

@@ -17,16 +17,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             InitializeComponent();
         }
-
-        private void SheetBehavior_OnOnPositionChanged(object sender, EventArgs e)
-        {
-            if (!(sender is SheetBehavior sheetBehavior))
-            {
-                return;
-            }
-
-            sheetBehavior.Position = 0.9;
-        }
     }
 
     public class SheetPageViewModel : INotifyPropertyChanged
@@ -35,16 +25,10 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private string m_contentColor;
         private string m_handleColor;
         private bool m_hasActionButton;
-        private bool m_hasShadow;
         private string m_headerColor;
         private bool m_isDraggable = true;
         private bool m_isSheetOpen;
-        private double m_maxPosition = 1;
-        private double m_minPosition = 0.05;
         private double m_position;
-
-        private bool m_shouldAutoClose = true;
-        private bool m_shouldRememberPosition;
         private string m_stateText;
         private string m_title = "Title";
         private ContentAlignment m_verticalContentAlignment;
@@ -99,12 +83,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             }
         }
 
-        public bool HasShadow
-        {
-            get => m_hasShadow;
-            set => PropertyChanged.RaiseWhenSet(ref m_hasShadow, value);
-        }
-
         public bool IsDraggable
         {
             get => m_isDraggable;
@@ -122,18 +100,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         {
             get => m_position;
             set => PropertyChanged.RaiseWhenSet(ref m_position, value);
-        }
-
-        public double MaxPosition
-        {
-            get => m_maxPosition;
-            set => PropertyChanged.RaiseWhenSet(ref m_maxPosition, value);
-        }
-
-        public double MinPosition
-        {
-            get => m_minPosition;
-            set => PropertyChanged.RaiseWhenSet(ref m_minPosition, value);
         }
 
         public Func<object> SheetViewModelFactory => () => new InsideSheetViewModel();
@@ -155,19 +121,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             get => m_stateText;
             set => PropertyChanged.RaiseWhenSet(ref m_stateText, value);
         }
-
-        public bool ShouldRememberPosition
-        {
-            get => m_shouldRememberPosition;
-            set => PropertyChanged.RaiseWhenSet(ref m_shouldRememberPosition, value);
-        }
-
-        public bool ShouldAutoClose
-        {
-            get => m_shouldAutoClose;
-            set => PropertyChanged.RaiseWhenSet(ref m_shouldAutoClose, value);
-        }
-
 
         public string ContentColor
         {

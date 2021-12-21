@@ -6,7 +6,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 {
     internal static class SheetViewUtility
     {
-        internal static bool IsThresholdReached(ref (float, long)[] latestDeltas, int threshold)
+        internal static (bool, float) IsThresholdReached(ref (float, long)[] latestDeltas, int threshold)
         {
             var length = 0f;
             var duration = 0L;
@@ -19,7 +19,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
             latestDeltas = new (float, long)[latestDeltas.Length];
 
-            return Math.Abs(length) / duration * 1000 >= threshold;
+            var velocity = Math.Abs(length) / duration * 1000;
+            return (velocity >= threshold, velocity);
         }
 
         internal static SheetView.DragDirection FindLatestDragDirection(ref (float, long)[] latestDeltas)

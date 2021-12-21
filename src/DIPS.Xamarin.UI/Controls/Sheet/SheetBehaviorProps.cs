@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Modality;
-using DIPS.Xamarin.UI.Internal.xaml;
 using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
 using DIPS.Xamarin.UI.Resources.Colors;
 using DIPS.Xamarin.UI.Resources.LocalizedStrings;
@@ -236,7 +235,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(double),
             typeof(SheetBehavior),
             0.0,
-            BindingMode.TwoWay);
+            BindingMode.OneWayToSource);
 
         /// <summary>
         ///     <see cref="BindingContextFactory" />
@@ -769,6 +768,19 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (bool)GetValue(CloseOnOverlayTappedProperty);
             set => SetValue(CloseOnOverlayTappedProperty, value);
+        }
+
+        private static void PositionPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (newvalue is double nD && bindable is SheetBehavior sheetBehavior && oldvalue is double oD)
+            {
+                if (sheetBehavior.PositionChangedCommand is not null && sheetBehavior.PositionChangedCommand.CanExecute(null))
+                {
+                    sheetBehavior.PositionChangedCommand.Execute(null);
+                }
+
+                sheetBehavior.PositionChanged?.Invoke(sheetBehavior, new PositionEventArgs(nD, oD));
+            }
         }
 
         /// <summary>

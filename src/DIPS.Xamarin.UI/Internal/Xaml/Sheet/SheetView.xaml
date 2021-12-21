@@ -6,26 +6,24 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-             xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Controls.Sheet;assembly=DIPS.Xamarin.UI"
+             xmlns:sheet="clr-namespace:DIPS.Xamarin.UI.Controls.Sheet;assembly=DIPS.Xamarin.UI"
              xmlns:local="clr-namespace:DIPS.Xamarin.UI.Internal"
              mc:Ignorable="d dblend"
              x:Class="DIPS.Xamarin.UI.Internal.Xaml.Sheet.SheetView"
-             x:DataType="{x:Type Sheet:SheetBehavior}"
+             x:DataType="{x:Type sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
-             xmlns:MultiValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.MultiValueConverters"
-             dblend:DataContext="{dblend:DesignInstance Sheet:SheetBehavior}">
-    
+             xmlns:valueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
+             xmlns:multiValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.MultiValueConverters"
+             dblend:DataContext="{dblend:DesignInstance sheet:SheetBehavior}">
+
     <Frame x:Name="OuterSheetFrame"
            x:FieldModifier="internal"
            HasShadow="False"
-           CornerRadius="8"
+           CornerRadius="20"
            Padding="0"
            IsClippedToBounds="True"
            BackgroundColor="{Binding ContentColor}">
 
-        <!-- Alignement = Bottom -->
-        <!-- Alignement = Top is set from Initialize() in code behind -->
         <Grid x:Name="SheetGrid"
               RowSpacing="0">
             <Grid.RowDefinitions>
@@ -58,7 +56,7 @@
                       IsClippedToBounds="True">
                     <Grid.IsVisible>
                         <MultiBinding
-                            Converter="{MultiValueConverters:LogicalExpressionConverter
+                            Converter="{multiValueConverters:LogicalExpressionConverter
                                     LogicalGate=Or}">
                             <Binding Source="{x:Reference TitleLabel}"
                                      Path="IsVisible" />
@@ -82,7 +80,7 @@
                            Padding="10"
                            Text="{Binding Title}"
                            TextColor="{Binding TitleColor}"
-                           IsVisible="{Binding Title, Converter={ValueConverters:IsEmptyConverter Inverted=True}}"
+                           IsVisible="{Binding Title, Converter={valueConverters:IsEmptyConverter Inverted=True}}"
                            LineBreakMode="TailTruncation"
                            VerticalOptions="Center" />
                     <local:InternalButton x:Name="cancelButton"
@@ -110,7 +108,7 @@
                                           Clicked="ActionButtonClicked"
                                           HorizontalTextAlignment="End"
                                           VerticalTextAlignment="Center"
-                                          IsVisible="{Binding ActionTitle, Converter={ValueConverters:IsEmptyConverter Inverted=True}}" />
+                                          IsVisible="{Binding ActionTitle, Converter={valueConverters:IsEmptyConverter Inverted=True}}" />
                 </Grid>
 
                 <BoxView x:Name="SeparatorBoxView"
@@ -118,18 +116,18 @@
                          HeightRequest=".6"
                          Color="{Binding TitleSeparatorColor}"
                          IsVisible="{Binding Source={x:Reference titleAndButtonsGrid}, Path=IsVisible}"
-                         Opacity="{Binding IsTitleSeparatorVisible, Converter={ValueConverters:BoolToObjectConverter TrueObject=1.0, FalseObject=0.0}}"
+                         Opacity="{Binding IsTitleSeparatorVisible, Converter={valueConverters:BoolToObjectConverter TrueObject=1.0, FalseObject=0.0}}"
                          android:VisualElement.Elevation="0">
                     <BoxView.Triggers>
                         <DataTrigger TargetType="BoxView"
                                      Binding="{Binding Alignment}"
-                                     Value="{x:Static Sheet:AlignmentOptions.Top}">
+                                     Value="{x:Static sheet:AlignmentOptions.Top}">
                             <Setter Property="BoxView.Margin"
                                     Value="0,0,0,5" />
                         </DataTrigger>
                         <DataTrigger TargetType="BoxView"
                                      Binding="{Binding Alignment}"
-                                     Value="{x:Static Sheet:AlignmentOptions.Bottom}">
+                                     Value="{x:Static sheet:AlignmentOptions.Bottom}">
                             <Setter Property="BoxView.Margin"
                                     Value="0,5,0,0" />
                         </DataTrigger>
@@ -137,7 +135,6 @@
                 </BoxView>
             </Grid>
 
-            <!-- VerticalOptions are set in Initialize() -->
             <Grid x:Name="SheetContentGrid"
                   Grid.Row="1"
                   RowSpacing="0">
@@ -148,9 +145,10 @@
 
                 <ContentView x:Name="sheetContentView"
                              Content="{Binding SheetContent}" />
-                <BoxView Grid.Row="1"
-                         Opacity="0" 
-                         HeightRequest="20"/>
+                <BoxView x:Name="FillerBoxView"
+                         Grid.Row="1"
+                         Opacity="0"
+                         HeightRequest="0"/>
             </Grid>
         </Grid>
     </Frame>

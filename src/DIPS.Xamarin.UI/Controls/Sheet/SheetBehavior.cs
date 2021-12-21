@@ -178,7 +178,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 {
                     SheetContent = (View)SheetContentTemplate.CreateContent();
                 }
-        
+                
                 SetupSheet();
                 
                 m_sheetView.Show();
@@ -205,11 +205,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
             var heightConstraint =
                 Constraint.RelativeToParent(
-                    r => m_modalityLayout.Height +
-                         m_sheetView
-                             .Sheet
-                             .OuterSheetFrame
-                             .CornerRadius); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
+                    r => (m_modalityLayout.Height +
+                          m_sheetView
+                              .Sheet
+                              .OuterSheetFrame
+                              .CornerRadius)); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
 
             m_modalityLayout.Show(this, m_sheetView, widthConstraint: widthConstraint,
                 heightConstraint: heightConstraint);
@@ -231,6 +231,26 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             }
 
             m_sheetView.SheetContentView.Content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
+        }
+
+        internal void OnShowing()
+        {
+            if (OpenedCommand is not null && OpenedCommand.CanExecute(OpenedCommandParameter))
+            {
+                OpenedCommand.Execute(OpenedCommandParameter);
+            }
+            
+            Opened?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void BeforeShowing()
+        {
+            if (BeforeOpenedCommand is not null && BeforeOpenedCommand.CanExecute(BeforeOpenedCommandParameter))
+            {
+                BeforeOpenedCommand.Execute(BeforeOpenedCommandParameter);
+            }
+            
+            BeforeOpened?.Invoke(this, EventArgs.Empty);
         }
     }
 }

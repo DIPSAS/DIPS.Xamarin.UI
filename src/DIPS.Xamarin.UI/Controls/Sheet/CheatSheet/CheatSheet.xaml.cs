@@ -50,6 +50,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet.CheatSheet
             }
         }
 
+        public bool ShouldInterceptScroll { get; }
+
         private void RecordDelta(float distanceY)
         {
             lock (m_lock)

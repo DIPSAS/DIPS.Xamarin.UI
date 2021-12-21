@@ -48,11 +48,6 @@ namespace DIPS.Xamarin.UI.Android
 
         public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
         {
-            if (e1 is null)
-            {
-                return false;
-            }
-
             if (!m_isScrolling)
             {
                 StartScroll(e2);
@@ -63,7 +58,7 @@ namespace DIPS.Xamarin.UI.Android
             {
                 var (x, y) = ToDip(e2.RawX, e2.RawY);
 
-                m_elem?.SendPan(GetTotal(e1.RawX, e2.RawX), GetTotal(e1.RawY, e2.RawY), GetDelta(x, m_prev.x), GetDelta(y, m_prev.y), GestureStatus.Running, m_pointerId);
+                m_elem?.SendPan(GetTotal(m_startX, e2.RawX), GetTotal(m_startY, e2.RawY), GetDelta(x, m_prev.x), GetDelta(y, m_prev.y), GestureStatus.Running, m_pointerId);
 
                 m_prev = (x, y);
             }
@@ -106,7 +101,12 @@ namespace DIPS.Xamarin.UI.Android
                     break;
                 case MotionEventActions.Move:
                     m_moveEvents++;
-                    if (m_moveEvents <= 4) // allow child to process event
+                    if (m_elem.ShouldInterceptScroll)
+                    {
+                        return true;
+                    }
+                    
+                    if (m_moveEvents <= 3) // allow child to process event
                     {
                         return false;
                     }
@@ -119,6 +119,7 @@ namespace DIPS.Xamarin.UI.Android
                         return false;
                     }
                 case MotionEventActions.Down:
+                    OnStart(ToDip(ev.RawX, ev.RawY));
                     return false;
             }
 
@@ -147,7 +148,7 @@ namespace DIPS.Xamarin.UI.Android
         private bool StartScroll(MotionEvent ev)
         {
             var (x, y) = ToDip(ev.RawX, ev.RawY);
-            OnStart(x, y);
+            OnStart((x, y));
             m_prev = (x, y);
             m_isScrolling = true;
             m_elem?.SendPan(0, 0, 0, 0, GestureStatus.Started, m_pointerId);
@@ -164,10 +165,10 @@ namespace DIPS.Xamarin.UI.Android
             m_moveEvents = 0;
         }
 
-        private void OnStart(float x, float y)
+        private void OnStart((float x, float y) tuple)
         {
-            m_startX = x;
-            m_startY = y;
+            m_startX = tuple.x;
+            m_startY = tuple.y;
             m_pointerId = m_random.Next();
         }
 
