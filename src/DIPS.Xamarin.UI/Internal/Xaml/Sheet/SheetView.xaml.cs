@@ -137,9 +137,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             m_sheetBehaviour.IsOpen = false;
         }
 
-        internal void InternalClose()
+        internal Task InternalClose()
         {
-            TranslateSheet(m_sheetBehaviour.Alignment == AlignmentOptions.Bottom ? Height : -Height);
+            return TranslateSheet(m_sheetBehaviour.Alignment == AlignmentOptions.Bottom ? Height : -Height);
         }
 
         private bool ShouldClose(float deltaY)
@@ -196,6 +196,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                         AlignmentOptions.Top => SheetContentHeightRequest > Height ? Height : SheetContentHeightRequest,
                         _ => throw new ArgumentOutOfRangeException()
                     };
+                    break;
+                case SheetOpeningStrategy.LastSnapPoint:
+                    y = SheetViewUtility.RatioToYValue(SnapPoints.LastOrDefault(), Height, m_sheetBehaviour.Alignment);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

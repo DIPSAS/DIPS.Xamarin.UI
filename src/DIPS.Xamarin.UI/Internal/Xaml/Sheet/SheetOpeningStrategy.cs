@@ -3,6 +3,7 @@
     public enum SheetOpeningStrategy
     {
         FirstSnapPoint,
+        LastSnapPoint,
         MostFittingSnapPoint,
         FitContent
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.Modality;
-using DIPS.Xamarin.UI.Internal.xaml;
 using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -24,9 +23,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <inheritdoc />
-        public async Task BeforeRemoval()
+        public Task BeforeRemoval()
         {
-            await Task.Delay(200);
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
@@ -39,16 +38,19 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// Moves the sheet to given <paramref name="position"/>. Sheet must be open.
+        ///     Moves the sheet to given <paramref name="position" />. Sheet must be open.
         /// </summary>
         /// <param name="position">Valid values are: 0.0 -> 1.0 </param>
         public void MoveTo(double position)
         {
-            if (!IsOpen) return;
-            
+            if (!IsOpen)
+            {
+                return;
+            }
+
             m_sheetView?.MoveTo(SheetViewUtility.CoerceRatio(position));
         }
-        
+
         private static object? OpenSheetCommandValueCreator(BindableObject? b)
         {
             if (b is SheetBehavior sheetBehavior)
@@ -77,7 +79,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         internal async void CancelClickedInternal()
         {
             CancelClicked?.Invoke(this, EventArgs.Empty);
-            if (!(CancelCommand is CancelSheetCommand))
+            if (CancelCommand is not CancelSheetCommand)
             {
                 IsOpen = false;
                 return;
@@ -93,7 +95,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private static void OnVerticalContentAlignmentPropertyChanged(BindableObject bindable, object oldvalue,
             object newvalue)
         {
-            if (!(bindable is SheetBehavior sheetBehavior))
+            if (bindable is not SheetBehavior sheetBehavior)
             {
                 return;
             }
@@ -103,7 +105,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private static void OnSheetContentPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (!(bindable is SheetBehavior sheetBehavior))
+            if (bindable is not SheetBehavior sheetBehavior)
             {
                 return;
             }
@@ -140,7 +142,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             }
 
             m_modalityLayout.BindingContextChanged -= OnBindingContextChanged;
-            
+
             ToggleSheetVisibility(IsOpen);
         }
 
@@ -151,27 +153,27 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         private static void IsOpenPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (!(bindable is SheetBehavior sheetBehavior))
+            if (bindable is not SheetBehavior sheetBehavior)
             {
                 return;
             }
 
-            if (!(oldvalue is bool boolOldValue))
+            if (oldvalue is not bool oldValue)
             {
                 return;
             }
 
-            if (!(newvalue is bool boolNewvalue))
+            if (newvalue is not bool shouldOpen)
             {
                 return;
             }
 
-            if (boolOldValue == boolNewvalue)
+            if (oldValue == shouldOpen)
             {
                 return;
             }
 
-            sheetBehavior.ToggleSheetVisibility(boolNewvalue);
+            sheetBehavior.ToggleSheetVisibility(shouldOpen);
         }
 
         private async void ToggleSheetVisibility(bool shouldOpen)
@@ -180,18 +182,18 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             {
                 return;
             }
-            
+
             if (shouldOpen)
             {
                 m_sheetView = new SheetView(this);
-                
+
                 if (SheetContentTemplate != null)
                 {
                     SheetContent = (View)SheetContentTemplate.CreateContent();
                 }
-                
+
                 SetupSheet();
-                
+
                 m_sheetView.Show();
 
                 // Wait until all the bindings are done
@@ -199,15 +201,23 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             }
             else
             {
-                if (m_sheetView == null) return;
-                m_sheetView.InternalClose();
+                if (m_sheetView == null)
+                {
+                    return;
+                }
+
+                BeforeClosing();
+                await m_sheetView.InternalClose();
                 m_modalityLayout.Hide(m_sheetView);
             }
         }
 
         private void SetupSheet()
         {
-            if (m_sheetView == null || m_modalityLayout == null) return;
+            if (m_sheetView == null || m_modalityLayout == null)
+            {
+                return;
+            }
 
             SetBindingContext();
             m_sheetView.Initialize();
@@ -216,15 +226,15 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             var widthConstraint = Constraint.RelativeToParent(r => m_modalityLayout.Width);
             var heightConstraint =
                 Constraint.RelativeToParent(
-                    r => (m_modalityLayout.Height +
-                          m_sheetView
-                              .Sheet
-                              .OuterSheetFrame
-                              .CornerRadius)); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
+                    r => m_modalityLayout.Height +
+                         m_sheetView
+                             .Sheet
+                             .OuterSheetFrame
+                             .CornerRadius); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
 
             m_modalityLayout.Show(this, m_sheetView, widthConstraint: widthConstraint,
                 heightConstraint: heightConstraint);
-            
+
             //Set start position
             m_sheetView.Sheet.TranslationY = Alignment switch
             {
@@ -250,18 +260,28 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             {
                 OpenedCommand.Execute(OpenedCommandParameter);
             }
-            
+
             Opened?.Invoke(this, EventArgs.Empty);
         }
 
-        public void BeforeShowing()
+        internal void BeforeShowing()
         {
             if (BeforeOpenedCommand is not null && BeforeOpenedCommand.CanExecute(BeforeOpenedCommandParameter))
             {
                 BeforeOpenedCommand.Execute(BeforeOpenedCommandParameter);
             }
-            
+
             BeforeOpened?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void BeforeClosing()
+        {
+            if (BeforeClosedCommand is not null && BeforeClosedCommand.CanExecute(BeforeClosedCommandParameter))
+            {
+                BeforeClosedCommand.Execute(BeforeClosedCommandParameter);
+            }
+
+            BeforeClosed?.Invoke(this, EventArgs.Empty);
         }
     }
 }
