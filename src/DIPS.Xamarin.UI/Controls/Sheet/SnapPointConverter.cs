@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,7 +19,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 if (double.TryParse(t, out var d))
                 {
                     d = Math.Abs(d);
-                    doubles.Add(d > 1.0 ? 1 : d);
+                    doubles.Add(SheetViewUtility.CoerceRatio(d));
                 }
             }
 

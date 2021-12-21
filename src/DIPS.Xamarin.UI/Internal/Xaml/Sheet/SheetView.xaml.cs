@@ -417,5 +417,11 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             Up,
             Down
         }
+        
+        internal void MoveTo(double position)
+        {
+            var y = SheetViewUtility.RatioToYValue(position, Height, m_sheetBehaviour.Alignment);
+            MoveSheet((float) (y - TranslationY));
+        }
     }
 }

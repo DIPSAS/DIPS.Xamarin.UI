@@ -37,6 +37,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             return Task.CompletedTask;
         }
+
+        /// <summary>
+        /// Moves the sheet to given <paramref name="position"/>. Sheet must be open.
+        /// </summary>
+        /// <param name="position">Valid values are: 0.0 -> 1.0 </param>
+        public void MoveTo(double position)
+        {
+            if (!IsOpen) return;
+            
+            m_sheetView?.MoveTo(SheetViewUtility.CoerceRatio(position));
+        }
         
         private static object? OpenSheetCommandValueCreator(BindableObject? b)
         {

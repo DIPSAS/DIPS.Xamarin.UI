@@ -45,5 +45,11 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         {
             return y / height;
         }
+
+        internal static double CoerceRatio(double d)
+        {
+            return d > 1.0 ? 1 : d < 0.0 ? 0.0 : d;
+        }
+        
     }
 }
