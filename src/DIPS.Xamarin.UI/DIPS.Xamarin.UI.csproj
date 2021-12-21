@@ -42,10 +42,6 @@
       <Compile Update="Internal\Xaml\ToastView.xaml.cs">
         <DependentUpon>ToastView.xaml</DependentUpon>
       </Compile>
-      <Compile Update="Controls\Sheet\CheatSheet\CheatSheet.xaml.cs">
-        <DependentUpon>CheatSheet.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
       <Compile Update="Controls\Sheet\CancelSheetCommand.cs">
         <DependentUpon>SheetBehavior.cs</DependentUpon>
       </Compile>
