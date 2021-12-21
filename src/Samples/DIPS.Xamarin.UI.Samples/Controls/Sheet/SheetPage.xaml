@@ -21,7 +21,6 @@
                                 VerticalContentAlignment="{Binding VerticalContentAlignment}"
                                 ActionCommand="{Binding ActionCommand}"
                                 ActionTitle="Action"
-                                Alignment="{Binding Alignment}"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                                 CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
                                 ContentColor="{Binding ContentColor}"
@@ -35,7 +34,7 @@
                                 OpenedCommand="{Binding OnOpenCommand}"
                                 OpenedCommandParameter="Opened"
                                 Position="{Binding Position}"
-                                FlingVelocityThreshold="750"
+                                FlingSpeedThreshold="750"
                                 SheetOpeningStrategy="FirstSnapPoint"
                                 SnapPoints=".5,.98">
                 <dxui:SheetBehavior.SheetContentTemplate>
@@ -89,21 +88,6 @@
                            VerticalTextAlignment="Center" />
                     <CheckBox IsChecked="{Binding IsDraggable}" />
                 </StackLayout>
-
-                <StackLayout HorizontalOptions="Fill"
-                             Orientation="Horizontal">
-                    <Label Text="Alignment"
-                           VerticalTextAlignment="Center" />
-                    <Picker SelectedItem="{Binding Alignment}">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type dxui:AlignmentOptions}">
-                                <dxui:AlignmentOptions>Bottom</dxui:AlignmentOptions>
-                                <dxui:AlignmentOptions>Top</dxui:AlignmentOptions>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
-                </StackLayout>
-
 
                 <Grid>
                     <Grid.ColumnDefinitions>

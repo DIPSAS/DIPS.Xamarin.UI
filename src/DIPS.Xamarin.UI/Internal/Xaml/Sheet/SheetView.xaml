@@ -117,21 +117,8 @@
                          Color="{Binding TitleSeparatorColor}"
                          IsVisible="{Binding Source={x:Reference titleAndButtonsGrid}, Path=IsVisible}"
                          Opacity="{Binding IsTitleSeparatorVisible, Converter={valueConverters:BoolToObjectConverter TrueObject=1.0, FalseObject=0.0}}"
-                         android:VisualElement.Elevation="0">
-                    <BoxView.Triggers>
-                        <DataTrigger TargetType="BoxView"
-                                     Binding="{Binding Alignment}"
-                                     Value="{x:Static sheet:AlignmentOptions.Top}">
-                            <Setter Property="BoxView.Margin"
-                                    Value="0,0,0,5" />
-                        </DataTrigger>
-                        <DataTrigger TargetType="BoxView"
-                                     Binding="{Binding Alignment}"
-                                     Value="{x:Static sheet:AlignmentOptions.Bottom}">
-                            <Setter Property="BoxView.Margin"
-                                    Value="0,5,0,0" />
-                        </DataTrigger>
-                    </BoxView.Triggers>
+                         android:VisualElement.Elevation="0"
+                         Margin="0,5,0,0">
                 </BoxView>
             </Grid>
 

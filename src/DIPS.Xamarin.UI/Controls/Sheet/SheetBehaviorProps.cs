@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Modality;
 using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
@@ -166,15 +167,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             string.Empty);
 
         /// <summary>
-        ///     <see cref="Alignment" />
-        /// </summary>
-        public static readonly BindableProperty AlignmentProperty = BindableProperty.Create(
-            nameof(Alignment),
-            typeof(AlignmentOptions),
-            typeof(SheetView),
-            AlignmentOptions.Bottom);
-
-        /// <summary>
         ///     <see cref="IsOpen" />
         /// </summary>
         public static readonly BindableProperty IsOpenProperty = BindableProperty.Create(
@@ -243,7 +235,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         public static readonly BindableProperty IsDraggableProperty = BindableProperty.Create(
             nameof(IsDraggable),
             typeof(bool),
-            typeof(SheetBehavior));
+            typeof(SheetBehavior),
+            defaultValue: true);
 
         /// <summary>
         ///     <see cref="HandleColor" />
@@ -333,10 +326,19 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(SnapPoints),
             typeof(IList<double>),
             typeof(SheetBehavior),
-            new List<double> {.5, 1.0});
+            new List<double> {.5, 1.0},
+            validateValue: ValidateValue);
 
-        public static readonly BindableProperty FlingVelocityThresholdProperty =
-            BindableProperty.Create(nameof(FlingVelocityThreshold), typeof(int), typeof(SheetBehavior), 1000);
+        private static bool ValidateValue(BindableObject bindable, object value)
+        {
+            if (value is not List<double> snapPoints) return false;
+            if (!snapPoints.Any()) return false;
+
+            return true;
+        }
+
+        public static readonly BindableProperty FlingSpeedThresholdProperty =
+            BindableProperty.Create(nameof(FlingSpeedThreshold), typeof(int), typeof(SheetBehavior), 1000);
 
         public static readonly BindableProperty SheetOpeningStrategyProperty =
             BindableProperty.Create(nameof(SheetOpeningStrategy), typeof(SheetOpeningStrategy), typeof(SheetBehavior),
@@ -358,10 +360,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         [TypeConverter(typeof(FlingSensitivityConverter))]
-        public int FlingVelocityThreshold
+        public int FlingSpeedThreshold
         {
-            get => (int)GetValue(FlingVelocityThresholdProperty);
-            set => SetValue(FlingVelocityThresholdProperty, value);
+            get => (int)GetValue(FlingSpeedThresholdProperty);
+            set => SetValue(FlingSpeedThresholdProperty, value);
         }
 
         public SheetOpeningStrategy SheetOpeningStrategy
@@ -558,16 +560,6 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (string)GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
-        }
-
-        /// <summary>
-        ///     Determines the position of the sheet when it appears.
-        ///     This is a bindable property.
-        /// </summary>
-        public AlignmentOptions Alignment
-        {
-            get => (AlignmentOptions)GetValue(AlignmentProperty);
-            set => SetValue(AlignmentProperty, value);
         }
 
         /// <summary>

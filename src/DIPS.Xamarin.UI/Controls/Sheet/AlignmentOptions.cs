@@ -3,7 +3,7 @@
     /// <summary>
     ///     The positions of the sheet when it appears.
     /// </summary>
-    public enum AlignmentOptions
+    internal enum AlignmentOptions
     {
         /// <summary>
         ///     Positions the sheet at the bottom of the screen and will be draggable from bottom to top.

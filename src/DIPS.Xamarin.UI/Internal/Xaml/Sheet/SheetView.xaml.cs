@@ -58,7 +58,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         internal SheetView Sheet => this;
 
         private IList<double> SnapPoints => m_sheetBehaviour.SnapPoints;
-        private int PixelsPerSecond => m_sheetBehaviour.FlingVelocityThreshold;
+        private int PixelsPerSecond => m_sheetBehaviour.FlingSpeedThreshold;
         private bool IsDraggable => m_sheetBehaviour.IsDraggable;
 
         public void SendPan(float totalX, float totalY, float distanceX, float distanceY, GestureStatus status,

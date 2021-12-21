@@ -51,6 +51,8 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             m_sheetView?.MoveTo(SheetViewUtility.CoerceRatio(position));
         }
 
+        internal AlignmentOptions Alignment => AlignmentOptions.Bottom;
+        
         private static object? OpenSheetCommandValueCreator(BindableObject? b)
         {
             if (b is SheetBehavior sheetBehavior)
@@ -236,12 +238,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 heightConstraint: heightConstraint);
 
             //Set start position
-            m_sheetView.Sheet.TranslationY = Alignment switch
-            {
-                AlignmentOptions.Bottom => m_sheetView.Sheet.Height,
-                AlignmentOptions.Top => -m_sheetView.Sheet.Height,
-                _ => throw new ArgumentOutOfRangeException()
-            };
+            m_sheetView.Sheet.TranslationY = m_sheetView.Sheet.Height;
         }
 
         private void SetBindingContext()

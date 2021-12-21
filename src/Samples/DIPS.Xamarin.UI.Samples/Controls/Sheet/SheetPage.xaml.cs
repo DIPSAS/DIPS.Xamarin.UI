@@ -21,7 +21,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
 
     public class SheetPageViewModel : INotifyPropertyChanged
     {
-        private AlignmentOptions m_alignment;
         private string m_contentColor;
         private string m_handleColor;
         private bool m_hasActionButton;
@@ -57,12 +56,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
                 {
                     //Do work when action is pressed
                 });
-        }
-
-        public AlignmentOptions Alignment
-        {
-            get => m_alignment;
-            set => PropertyChanged.RaiseWhenSet(ref m_alignment, value);
         }
 
         public string HandleColor
