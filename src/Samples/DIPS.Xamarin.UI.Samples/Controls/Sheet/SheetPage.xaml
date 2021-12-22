@@ -36,8 +36,8 @@
                                 IsOpen="{Binding IsSheetOpen}"
                                 Position="{Binding Position}"
                                 FlingSpeedThreshold="500"
-                                SheetOpeningStrategy="LastSnapPoint"
-                                SnapPoints=".0,.3,.98">
+                                SheetOpeningStrategy="FirstSnapPoint"
+                                SnapPoints=".0,.5,.99">
                 <dxui:SheetBehavior.SheetContentTemplate>
                     <DataTemplate x:DataType="{x:Type Sheet:InsideSheetViewModel}">
                         <Button Text="HEI"

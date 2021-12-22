@@ -61,7 +61,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         private int PixelsPerSecond => m_sheetBehaviour.FlingSpeedThreshold;
         private bool IsDraggable => m_sheetBehaviour.IsDraggable;
 
-        private SheetState CurrentState { get; set; }
+        private SheetState CurrentState { get; set; } = SheetState.Minimized;
 
         /// <summary>
         /// For internal use.
