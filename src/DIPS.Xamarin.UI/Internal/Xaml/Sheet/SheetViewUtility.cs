@@ -66,6 +66,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                             continue;
                         }
 
+                        if (sheetView.SnapPoints[i] is 0.0) break; // 0.0 should not be treated as a snap point
                         y = RatioToYValue(sheetView, sheetView.SnapPoints[i], alignment);
                         return true;
                     }
@@ -79,7 +80,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                         {
                             continue;
                         }
-
+                        
+                        if (sheetView.SnapPoints[i] is 0.0) break; // 0.0 should not be treated as a snap point
                         y = RatioToYValue(sheetView, sheetView.SnapPoints[i], alignment);
                         return true;
                     }
@@ -98,7 +100,10 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             switch (sheetView.m_sheetBehaviour.SheetOpeningStrategy)
             {
                 case SheetOpeningStrategyEnum.FirstSnapPoint:
-                    y = RatioToYValue(sheetView, sheetView.SnapPoints.FirstOrDefault(),
+                    var ratio = sheetView.SnapPoints.FirstOrDefault() is 0.0
+                        ? sheetView.SnapPoints.Skip(1).FirstOrDefault()
+                        : sheetView.SnapPoints.FirstOrDefault();
+                    y = RatioToYValue(sheetView, ratio,
                         sheetView.m_sheetBehaviour.Alignment);
                     break;
                 case SheetOpeningStrategyEnum.MostFittingSnapPoint:

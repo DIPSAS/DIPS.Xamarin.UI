@@ -329,8 +329,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(SnapPoints),
             typeof(IList<double>),
             typeof(SheetBehavior),
-            new List<double> {.5, .98},
-            validateValue: ValidateSnapPoints
+            new List<double> {.0, .5, .98},
+            validateValue: ValidateSnapPoints,
+            coerceValue: CoerceSnapPoints
         );
 
         /// <summary>
@@ -338,12 +339,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public static readonly BindableProperty FlingSpeedThresholdProperty =
             BindableProperty.Create(nameof(FlingSpeedThreshold), typeof(int), typeof(SheetBehavior), 1000);
-        
+
         /// <summary>
         ///     <see cref="SheetOpeningStrategy" />
         /// </summary>
         public static readonly BindableProperty SheetOpeningStrategyProperty =
-            BindableProperty.Create(nameof(SheetOpeningStrategy), typeof(SheetOpeningStrategyEnum), typeof(SheetBehavior),
+            BindableProperty.Create(nameof(SheetOpeningStrategy), typeof(SheetOpeningStrategyEnum),
+                typeof(SheetBehavior),
                 SheetOpeningStrategyEnum.MostFittingSnapPoint);
 
         private ModalityLayout? m_modalityLayout;
@@ -362,8 +364,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// Decides when the sheet should fling open or closed based on the speed of the drag gesture. Unit is pixels per second. Pre-defined values are <see cref="FlingSensitivity.Low"/>, <see cref="FlingSensitivity.Medium"/> and <see cref="FlingSensitivity.High"/>.
-        /// This is a bindable property.
+        ///     Decides when the sheet should fling open or closed based on the speed of the drag gesture. Unit is pixels per
+        ///     second. Pre-defined values are <see cref="FlingSensitivity.Low" />, <see cref="FlingSensitivity.Medium" /> and
+        ///     <see cref="FlingSensitivity.High" />.
+        ///     This is a bindable property.
         /// </summary>
         /// <remarks>Default value is 1250.</remarks>
         [TypeConverter(typeof(FlingSensitivityConverter))]
@@ -374,10 +378,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// Decides the position the sheet should open in. See <see cref="SheetOpeningStrategyEnum"/>.
-        /// This is a bindable property.
+        ///     Decides the position the sheet should open in. See <see cref="SheetOpeningStrategyEnum" />.
+        ///     This is a bindable property.
         /// </summary>
-        /// <remarks>Default value is <see cref="SheetOpeningStrategyEnum.MostFittingSnapPoint"/></remarks>
+        /// <remarks>Default value is <see cref="SheetOpeningStrategyEnum.MostFittingSnapPoint" /></remarks>
         public SheetOpeningStrategyEnum SheetOpeningStrategy
         {
             get => (SheetOpeningStrategyEnum)GetValue(SheetOpeningStrategyProperty);
@@ -396,8 +400,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        /// Positions that the sheet should snap to when the drag gesture has ended. The last snap point decides the maximum position of the sheet.
-        /// This is a bindable property.
+        ///     Positions that the sheet should snap to when the drag gesture has ended. The last snap point decides the maximum
+        ///     position of the sheet.
+        ///     This is a bindable property.
         /// </summary>
         /// <remarks>Default values are [.5, .98].</remarks>
         [TypeConverter(typeof(SnapPointConverter))]
@@ -758,6 +763,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (bool)GetValue(CloseOnOverlayTappedProperty);
             set => SetValue(CloseOnOverlayTappedProperty, value);
+        }
+
+        private static object CoerceSnapPoints(BindableObject bindable, object value)
+        {
+            if (value is List<double> snapPoints && snapPoints.Any())
+            {
+                return snapPoints.OrderBy(d => d).ToList();
+            }
+
+            return value;
         }
 
         private static bool ValidateSnapPoints(BindableObject bindable, object value)

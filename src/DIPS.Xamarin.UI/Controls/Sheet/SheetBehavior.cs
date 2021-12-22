@@ -196,7 +196,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
                 SetupSheet();
 
-                m_sheetView.Show();
+                m_sheetView.Open();
 
                 // Wait until all the bindings are done
                 await Task.Delay(100);
@@ -209,7 +209,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 }
 
                 BeforeClosing();
-                await m_sheetView.InternalClose();
+                await m_sheetView.Close();
                 m_modalityLayout.Hide(m_sheetView);
             }
         }
@@ -251,7 +251,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             m_sheetView.SheetContentView.Content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
         }
 
-        internal void OnShowing()
+        internal void AfterOpening()
         {
             if (OpenedCommand is not null && OpenedCommand.CanExecute(OpenedCommandParameter))
             {
@@ -261,7 +261,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             Opened?.Invoke(this, EventArgs.Empty);
         }
 
-        internal void BeforeShowing()
+        internal void BeforeOpening()
         {
             if (BeforeOpenedCommand is not null && BeforeOpenedCommand.CanExecute(BeforeOpenedCommandParameter))
             {
