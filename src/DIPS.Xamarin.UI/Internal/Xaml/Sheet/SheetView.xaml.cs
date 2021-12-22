@@ -61,13 +61,18 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         private int PixelsPerSecond => m_sheetBehaviour.FlingSpeedThreshold;
         private bool IsDraggable => m_sheetBehaviour.IsDraggable;
 
+        private SheetState CurrentState { get; set; }
+
         public void SendPan(float totalX, float totalY, float distanceX, float distanceY, GestureStatus status,
             int id) // android
         {
-            if (!IsDraggable) return;
-            
+            if (!IsDraggable)
+            {
+                return;
+            }
+
             Console.WriteLine("PANNING: " + distanceY);
-            
+
             switch (status)
             {
                 case GestureStatus.Started:
@@ -88,11 +93,14 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             }
         }
 
-        public bool ShouldInterceptScroll => TranslationY > this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment) + 20; //TODO: More fine-grained?
+        public bool ShouldInterceptScroll =>
+            false; //TranslationY > this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment) + 20; //TODO: More fine-grained?
 
         private void OnPan(object sender, PanUpdatedEventArgs e) // iOS
         {
-            SendPan((float)e.TotalX, (float)e.TotalY, e.StatusType == GestureStatus.Completed ? 0 : (float)(e.TotalX - m_prevX), e.StatusType == GestureStatus.Completed ? 0 : (float)(e.TotalY - m_prevY),
+            SendPan((float)e.TotalX, (float)e.TotalY,
+                e.StatusType == GestureStatus.Completed ? 0 : (float)(e.TotalX - m_prevX),
+                e.StatusType == GestureStatus.Completed ? 0 : (float)(e.TotalY - m_prevY),
                 e.StatusType, e.GestureId);
             m_prevX = e.TotalX;
             m_prevY = e.TotalY;
@@ -121,7 +129,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                 NotifyClose();
                 return;
             }
-            
+
             var openPosition = this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment);
 
             TranslationY += ShouldOpen(deltaY) ? openPosition - TranslationY : deltaY;
@@ -129,9 +137,11 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             NotifyPositionChange();
         }
 
-        private void Open(float velocity = 1500)
+        private async Task Open(float velocity = 1500)
         {
-            TranslateSheet(this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment), velocity);
+            await TranslateSheet(this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment), velocity);
+
+            SetState(SheetState.FullyExpanded);
         }
 
         private void NotifyClose(float velocity = 1500)
@@ -141,7 +151,18 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         internal Task InternalClose()
         {
+            SetState(SheetState.Minimized);
             return TranslateSheet(m_sheetBehaviour.Alignment == AlignmentOptions.Bottom ? Height : -Height);
+        }
+
+        private void SetState(SheetState state)
+        {
+            OverlayBoxView.InputTransparent = state switch
+            {
+                SheetState.FullyExpanded => true,
+                SheetState.Minimized => false,
+                _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
+            };
         }
 
         private bool ShouldClose(float deltaY)
@@ -173,9 +194,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             FillerBoxView.HeightRequest = (Height * (1 - SnapPoints.LastOrDefault())) + OuterSheetFrame.CornerRadius;
 
             m_sheetBehaviour.BeforeShowing();
-            
+
             this.FindOpeningY(out var y);
-            
+
             await TranslateSheet(y);
 
             m_sheetBehaviour.OnShowing();
@@ -227,11 +248,11 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         private async Task TranslateSheet(double y, float velocity = 1500)
         {
             var travel = Math.Abs(y - TranslationY);
-            var duration = (travel / velocity) * 1000;
-            
+            var duration = travel / velocity * 1000;
+
             duration = duration > 275 ? 275 : duration < 175 ? 175 : duration;
-            
-            await this.TranslateTo(0, y, (uint) duration, Easing.CubicOut);
+
+            await this.TranslateTo(0, y, (uint)duration, Easing.CubicOut);
 
             NotifyPositionChange();
         }
@@ -246,7 +267,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             var (thresholdReached, v) = SheetViewUtility.IsThresholdReached(ref m_latestDeltas, PixelsPerSecond);
 
             velocity = v;
-            
+
             if (thresholdReached)
             {
                 switch (dragDirection)
@@ -327,7 +348,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                         {
                             if (args.PropertyName.Equals(TranslationYProperty.PropertyName))
                             {
-                                var newHeight = Sheet.Height - Sheet.TranslationY - (SheetContentHeightRequest - SheetContentView.Content.Height);
+                                var newHeight = Sheet.Height - Sheet.TranslationY -
+                                                (SheetContentHeightRequest - SheetContentView.Content.Height);
                                 SheetContentGrid.HeightRequest = newHeight;
                             }
                         };
@@ -347,16 +369,34 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             m_sheetBehaviour.ActionClickedInternal();
         }
 
+        internal void MoveTo(double position)
+        {
+            var y = this.RatioToYValue(position, m_sheetBehaviour.Alignment);
+            MoveSheet((float)(y - TranslationY));
+        }
+
+        private void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            // pan until a certain state, then ignore
+
+            if (CurrentState is SheetState.FullyExpanded)
+            {
+                return;
+            }
+
+            OnPan(sender, e);
+        }
+
         internal enum DragDirection
         {
             Up,
             Down
         }
-        
-        internal void MoveTo(double position)
+
+        private enum SheetState
         {
-            var y = this.RatioToYValue(position, m_sheetBehaviour.Alignment);
-            MoveSheet((float) (y - TranslationY));
+            FullyExpanded,
+            Minimized
         }
     }
 }

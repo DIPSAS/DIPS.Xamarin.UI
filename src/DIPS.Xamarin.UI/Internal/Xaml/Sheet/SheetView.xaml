@@ -17,7 +17,6 @@
              dblend:DataContext="{dblend:DesignInstance sheet:SheetBehavior}">
 
     <Frame x:Name="OuterSheetFrame"
-           x:FieldModifier="internal"
            HasShadow="False"
            CornerRadius="20"
            Padding="0"
@@ -118,8 +117,7 @@
                          IsVisible="{Binding Source={x:Reference titleAndButtonsGrid}, Path=IsVisible}"
                          Opacity="{Binding IsTitleSeparatorVisible, Converter={valueConverters:BoolToObjectConverter TrueObject=1.0, FalseObject=0.0}}"
                          android:VisualElement.Elevation="0"
-                         Margin="0,5,0,0">
-                </BoxView>
+                         Margin="0,5,0,0" />
             </Grid>
 
             <Grid x:Name="SheetContentGrid"
@@ -135,8 +133,19 @@
                 <BoxView x:Name="FillerBoxView"
                          Grid.Row="1"
                          Opacity="0"
-                         HeightRequest="0"/>
+                         HeightRequest="0" />
             </Grid>
+            
+            
+            <BoxView x:Name="OverlayBoxView"
+                     Grid.RowSpan="2"
+                     VerticalOptions="Fill"
+                     HorizontalOptions="Fill"
+                     Opacity="0">
+                <BoxView.GestureRecognizers>
+                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
         </Grid>
     </Frame>
 </ContentView>
