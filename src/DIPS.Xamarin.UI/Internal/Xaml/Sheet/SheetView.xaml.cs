@@ -74,8 +74,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                 return;
             }
 
-            Console.WriteLine("PANNING: " + distanceY);
-
             switch (status)
             {
                 case GestureStatus.Started:
@@ -150,7 +148,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             SetState(SheetState.FullyExpanded);
         }
 
-        private void NotifyClose(float velocity = 1500)
+        private void NotifyClose()
         {
             m_sheetBehaviour.IsOpen = false;
         }
@@ -284,7 +282,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                         break;
                     case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
                     case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
-                        NotifyClose(v);
+                        NotifyClose();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(dragDirection), dragDirection, null);
