@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,13 +18,15 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             foreach (var t in strings)
             {
 
-                if (double.TryParse(t.Trim(), System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out var d))
+                if (double.TryParse(t.Trim(),
+                    System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out var d))
                 {
                     d = Math.Abs(d);
                     doubles.Add(SheetViewUtility.CoerceRatio(d));
                 }
             }
-
             return doubles;
         }
     }

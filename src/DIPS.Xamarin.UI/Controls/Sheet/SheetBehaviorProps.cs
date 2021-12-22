@@ -236,7 +236,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(IsDraggable),
             typeof(bool),
             typeof(SheetBehavior),
-            defaultValue: true);
+            true);
 
         /// <summary>
         ///     <see cref="HandleColor" />
@@ -326,16 +326,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(SnapPoints),
             typeof(IList<double>),
             typeof(SheetBehavior),
-            new List<double> {.5, 1.0}
-            );
-
-        private static bool ValidateValue(BindableObject bindable, object value)
-        {
-            if (value is not List<double> snapPoints) return false;
-            if (!snapPoints.Any()) return false;
-
-            return true;
-        }
+            new List<double> {.5, 1.0},
+            validateValue: ValidateSnapPoints
+        );
 
         public static readonly BindableProperty FlingSpeedThresholdProperty =
             BindableProperty.Create(nameof(FlingSpeedThreshold), typeof(int), typeof(SheetBehavior), 1000);
@@ -741,6 +734,21 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (bool)GetValue(CloseOnOverlayTappedProperty);
             set => SetValue(CloseOnOverlayTappedProperty, value);
+        }
+
+        private static bool ValidateSnapPoints(BindableObject bindable, object value)
+        {
+            if (value is not List<double> snapPoints)
+            {
+                return false;
+            }
+
+            if (!snapPoints.Any())
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
