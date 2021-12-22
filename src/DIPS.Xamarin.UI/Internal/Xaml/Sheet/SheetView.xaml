@@ -17,6 +17,7 @@
              dblend:DataContext="{dblend:DesignInstance sheet:SheetBehavior}">
 
     <Frame x:Name="OuterSheetFrame"
+           x:FieldModifier="internal"
            HasShadow="False"
            CornerRadius="20"
            Padding="0"
@@ -141,7 +142,8 @@
                      Grid.RowSpan="2"
                      VerticalOptions="Fill"
                      HorizontalOptions="Fill"
-                     Opacity="0">
+                     Opacity="0"
+                     IsVisible="{x:OnPlatform Android=false}">
                 <BoxView.GestureRecognizers>
                     <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
                 </BoxView.GestureRecognizers>

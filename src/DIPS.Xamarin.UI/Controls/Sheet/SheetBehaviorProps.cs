@@ -322,20 +322,29 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
         internal static readonly BindableProperty OpenCommandProperty = OpenCommandPropertyKey.BindableProperty;
 
+        /// <summary>
+        ///     <see cref="SnapPoints" />
+        /// </summary>
         public static readonly BindableProperty SnapPointsProperty = BindableProperty.Create(
             nameof(SnapPoints),
             typeof(IList<double>),
             typeof(SheetBehavior),
-            new List<double> {.5, 1.0},
+            new List<double> {.5, .98},
             validateValue: ValidateSnapPoints
         );
 
+        /// <summary>
+        ///     <see cref="FlingSpeedThreshold" />
+        /// </summary>
         public static readonly BindableProperty FlingSpeedThresholdProperty =
             BindableProperty.Create(nameof(FlingSpeedThreshold), typeof(int), typeof(SheetBehavior), 1000);
-
+        
+        /// <summary>
+        ///     <see cref="SheetOpeningStrategy" />
+        /// </summary>
         public static readonly BindableProperty SheetOpeningStrategyProperty =
-            BindableProperty.Create(nameof(SheetOpeningStrategy), typeof(SheetOpeningStrategy), typeof(SheetBehavior),
-                SheetOpeningStrategy.MostFittingSnapPoint);
+            BindableProperty.Create(nameof(SheetOpeningStrategy), typeof(SheetOpeningStrategyEnum), typeof(SheetBehavior),
+                SheetOpeningStrategyEnum.MostFittingSnapPoint);
 
         private ModalityLayout? m_modalityLayout;
         private SheetView? m_sheetView;
@@ -352,6 +361,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(TitleSizeProperty, value);
         }
 
+        /// <summary>
+        /// Decides when the sheet should fling open or closed based on the speed of the drag gesture. Unit is pixels per second. Pre-defined values are <see cref="FlingSensitivity.Low"/>, <see cref="FlingSensitivity.Medium"/> and <see cref="FlingSensitivity.High"/>.
+        /// This is a bindable property.
+        /// </summary>
+        /// <remarks>Default value is 1250.</remarks>
         [TypeConverter(typeof(FlingSensitivityConverter))]
         public int FlingSpeedThreshold
         {
@@ -359,9 +373,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(FlingSpeedThresholdProperty, value);
         }
 
-        public SheetOpeningStrategy SheetOpeningStrategy
+        /// <summary>
+        /// Decides the position the sheet should open in. See <see cref="SheetOpeningStrategyEnum"/>.
+        /// This is a bindable property.
+        /// </summary>
+        /// <remarks>Default value is <see cref="SheetOpeningStrategyEnum.MostFittingSnapPoint"/></remarks>
+        public SheetOpeningStrategyEnum SheetOpeningStrategy
         {
-            get => (SheetOpeningStrategy)GetValue(SheetOpeningStrategyProperty);
+            get => (SheetOpeningStrategyEnum)GetValue(SheetOpeningStrategyProperty);
             set => SetValue(SheetOpeningStrategyProperty, value);
         }
 
@@ -376,6 +395,11 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(TitleFontAttributesProperty, value);
         }
 
+        /// <summary>
+        /// Positions that the sheet should snap to when the drag gesture has ended. The last snap point decides the maximum position of the sheet.
+        /// This is a bindable property.
+        /// </summary>
+        /// <remarks>Default values are [.5, .98].</remarks>
         [TypeConverter(typeof(SnapPointConverter))]
         public IList<double> SnapPoints
         {

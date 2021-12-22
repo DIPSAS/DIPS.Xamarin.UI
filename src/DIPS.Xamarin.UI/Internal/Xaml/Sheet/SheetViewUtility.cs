@@ -97,11 +97,11 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         {
             switch (sheetView.m_sheetBehaviour.SheetOpeningStrategy)
             {
-                case SheetOpeningStrategy.FirstSnapPoint:
+                case SheetOpeningStrategyEnum.FirstSnapPoint:
                     y = RatioToYValue(sheetView, sheetView.SnapPoints.FirstOrDefault(),
                         sheetView.m_sheetBehaviour.Alignment);
                     break;
-                case SheetOpeningStrategy.MostFittingSnapPoint:
+                case SheetOpeningStrategyEnum.MostFittingSnapPoint:
                     if (TryFindSnapPoint(sheetView,
                         sheetView.m_sheetBehaviour.Alignment == AlignmentOptions.Bottom
                             ? SheetView.DragDirection.Up
@@ -115,7 +115,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                     }
 
                     break;
-                case SheetOpeningStrategy.FitContent: //TODO: Must respect last snap point ??
+                case SheetOpeningStrategyEnum.FitContent: //TODO: Must respect last snap point ??
                     y = sheetView.m_sheetBehaviour.Alignment switch
                     {
                         AlignmentOptions.Bottom => sheetView.Height - sheetView.SheetContentHeightRequest < 0
@@ -127,7 +127,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                         _ => throw new ArgumentOutOfRangeException()
                     };
                     break;
-                case SheetOpeningStrategy.LastSnapPoint:
+                case SheetOpeningStrategyEnum.LastSnapPoint:
                     y = RatioToYValue(sheetView, sheetView.SnapPoints.LastOrDefault(),
                         sheetView.m_sheetBehaviour.Alignment);
                     break;

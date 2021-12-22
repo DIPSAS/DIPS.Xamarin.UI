@@ -63,6 +63,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         private SheetState CurrentState { get; set; }
 
+        /// <summary>
+        /// For internal use.
+        /// </summary>
         public void SendPan(float totalX, float totalY, float distanceX, float distanceY, GestureStatus status,
             int id) // android
         {
@@ -93,6 +96,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             }
         }
 
+        /// <summary>
+        /// For internal use.
+        /// </summary>
         public bool ShouldInterceptScroll =>
             false; //TranslationY > this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment) + 20; //TODO: More fine-grained?
 
