@@ -163,22 +163,18 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         private async Task Maximize(float velocity = 1500)
         {
             await TranslateSheetTo(this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment), velocity);
-
-            SetState(SheetState.Maximized);
         }
 
         private async Task Minimize(float velocity = 1500)
         {
             if (SnapPoints.FirstOrDefault() is 0.0)
             {
-                m_sheetBehaviour.IsOpen = false;
+                m_sheetBehaviour.IsOpen = false;            
             }
             else
             {
                 await TranslateSheetTo(this.RatioToYValue(SnapPoints.FirstOrDefault(), m_sheetBehaviour.Alignment), velocity);
             }
-
-            SetState(SheetState.NotMaximized);
         }
 
         internal Task Close()
@@ -269,16 +265,6 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             if (this.TryFindSnapPoint(dragDirection, currentPositionRatio, m_sheetBehaviour.Alignment, out var y))
             {
                 await TranslateSheetTo(y, velocity);
-
-                if (this.IndexOfClosestSnapPoint(y) < SnapPoints.Count - 1)
-                {
-                    SetState(SheetState.NotMaximized);
-                }
-                else
-                {
-                    SetState(SheetState.Maximized);
-                }
-
                 return;
             }
 
@@ -306,6 +292,10 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
             await this.TranslateTo(0, y, (uint)duration, Easing.CubicOut);
 
+            SetState(this.IndexOfClosestSnapPoint(y) < SnapPoints.Count - 1
+                ? SheetState.NotMaximized
+                : SheetState.Maximized);
+            
             NotifyPositionChange();
         }
 

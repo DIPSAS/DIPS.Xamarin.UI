@@ -139,10 +139,10 @@
             
             
             <BoxView x:Name="OverlayBoxView"
-                     Grid.RowSpan="2"
+                     Grid.Row="1"
                      VerticalOptions="Fill"
                      HorizontalOptions="Fill"
-                     Opacity="0">
+                     Color="Transparent">
                 <BoxView.GestureRecognizers>
                     <PanGestureRecognizer PanUpdated="OverlayOnPanUpdated" />
                 </BoxView.GestureRecognizers>

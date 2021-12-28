@@ -25,14 +25,19 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         internal static int IndexOfClosestSnapPoint(this SheetView sheetView, double y)
         {
+            var index = 0;
+            var current = sheetView.RatioToYValue(sheetView.SnapPoints.FirstOrDefault(), sheetView.m_sheetBehaviour.Alignment);
             for (var i = 0; i < sheetView.SnapPoints.Count; i++)
             {
                 var snapPoint = sheetView.RatioToYValue(sheetView.SnapPoints[i], sheetView.m_sheetBehaviour.Alignment);
-                if (Math.Abs(y - snapPoint) < 1)
-                    return i;
+                if (Math.Abs(snapPoint - y) < Math.Abs(current - y))
+                {
+                    current = snapPoint;
+                    index = i;
+                } 
             }
 
-            return -1;
+            return index;
         }
 
         internal static SheetView.DragDirection FindLatestDragDirection(ref (float, long)[] latestDeltas)
