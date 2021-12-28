@@ -38,7 +38,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        ///     Moves the sheet to given <paramref name="position" />. Sheet must be open.
+        ///     Moves the sheet to the given <paramref name="position" />. Sheet must be open.
         /// </summary>
         /// <param name="position">Values will be clamped between 0.0 and 1.0 </param>
         public void MoveTo(double position)

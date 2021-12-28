@@ -39,7 +39,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             
             if (Device.RuntimePlatform == Device.iOS)
             {
-                OverlayBoxView.IsVisible = true;
+                OverlayBoxView.IsVisible = m_sheetBehaviour.InterceptDragGesture;
                 var panGestureRecognizer = new PanGestureRecognizer();
                 GestureRecognizers.Add(panGestureRecognizer);
                 panGestureRecognizer.PanUpdated += OnPan;
@@ -52,7 +52,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         private void SheetBehaviorOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName is nameof(SheetBehavior.InterceptDragGesture) && sender is SheetBehavior sheetBehavior && Device.RuntimePlatform == Device.iOS)
+            if (e.PropertyName is nameof(SheetBehavior.InterceptDragGesture) && sender is SheetBehavior sheetBehavior && Device.RuntimePlatform is Device.iOS)
             {
                 OverlayBoxView.IsVisible = sheetBehavior.InterceptDragGesture;
             }

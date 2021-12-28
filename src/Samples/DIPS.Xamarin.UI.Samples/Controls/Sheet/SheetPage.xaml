@@ -35,8 +35,8 @@
                                 IsDraggable="True"
                                 IsOpen="{Binding IsSheetOpen}"
                                 Position="{Binding Position}"
-                                FlingSpeedThreshold="500"
-                                SheetOpeningStrategy="FirstSnapPoint"
+                                FlingSpeedThreshold="1250"
+                                SheetOpeningStrategy="MostFittingSnapPoint"
                                 SnapPoints=".0,.5,.99">
                 <dxui:SheetBehavior.SheetContentTemplate>
                     <DataTemplate x:DataType="{x:Type Sheet:InsideSheetViewModel}">

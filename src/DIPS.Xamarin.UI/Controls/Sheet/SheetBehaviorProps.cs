@@ -370,12 +370,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        ///     Decides when the sheet should fling open or closed based on the speed of the drag gesture. Unit is pixels per
-        ///     second. Pre-defined values are <see cref="FlingSensitivity.Low" />, <see cref="FlingSensitivity.Medium" /> and
-        ///     <see cref="FlingSensitivity.High" />.
+        ///     Decides when the sheet should fling open or closed based on the speed of the drag gesture.
         ///     This is a bindable property.
         /// </summary>
-        /// <remarks>Default value is 1250.</remarks>
+        /// <remarks>Default value is 1250. Unit is pixels per second. Pre-defined values are <see cref="FlingSensitivity.Low" />, <see cref="FlingSensitivity.Medium" /> and <see cref="FlingSensitivity.High" /></remarks>
         [TypeConverter(typeof(FlingSensitivityConverter))]
         public int FlingSpeedThreshold
         {
@@ -406,11 +404,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        ///     Positions that the sheet should snap to when the drag gesture has ended. The last snap point decides the maximum
-        ///     position of the sheet.
+        ///     Positions that the sheet should snap to when the drag gesture has ended. 
         ///     This is a bindable property.
         /// </summary>
-        /// <remarks>Default values are [.5, .98].</remarks>
+        /// <remarks>Comma-separated string of doubles, ex: "0, .5, .99". Values will be clamped between 0 and 1. The last snap point decides the maximum position of the sheet. The first snap point decides the pinned position for the sheet. User interaction can NOT drag the sheet below this pinned position. Default value is "0, .5, .98".</remarks>
         [TypeConverter(typeof(SnapPointConverter))]
         public IList<double> SnapPoints
         {
@@ -730,10 +727,9 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        ///     Determines the position of the sheet when it is visible.
+        ///     The current position of the sheet.
         ///     This is a bindable property.
-        ///     <remarks>This will affect the size of the sheet if <see cref="Position" /> is set to 0</remarks>
-        ///     <remarks>The value have to be between 0 and 1.0 (percentage of the screen)</remarks>
+        ///     <remarks>This is by default <see cref="BindingMode.OneWayToSource"/>. Setting this will NOT move the sheet. Use <see cref="MoveTo"/> to change the sheet's position.</remarks>
         /// </summary>
         public double Position
         {

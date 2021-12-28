@@ -6,17 +6,17 @@
     public enum SheetOpeningStrategyEnum
     {
         /// <summary>
-        /// First value in: <see cref="SheetBehavior.SnapPoints"/>.
+        /// First value in <see cref="SheetBehavior.SnapPoints"/>.
         /// </summary>
         FirstSnapPoint,
         
         /// <summary>
-        /// Last value in: <see cref="SheetBehavior.SnapPoints"/>.
+        /// Last value in <see cref="SheetBehavior.SnapPoints"/>.
         /// </summary>
         LastSnapPoint,
         
         /// <summary>
-        /// The value in: <see cref="SheetBehavior.SnapPoints"/> that will fit all the content.
+        /// The value in <see cref="SheetBehavior.SnapPoints"/> that will fit all the content.
         /// </summary>
         MostFittingSnapPoint,
         
