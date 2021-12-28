@@ -348,6 +348,12 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 typeof(SheetBehavior),
                 SheetOpeningStrategyEnum.MostFittingSnapPoint);
 
+        /// <summary>
+        ///     <see cref="InterceptDragGesture " />
+        /// </summary>
+        public static readonly BindableProperty InterceptDragGestureProperty =
+            BindableProperty.Create(nameof(InterceptDragGesture), typeof(bool), typeof(SheetBehavior), true);
+
         private ModalityLayout? m_modalityLayout;
         private SheetView? m_sheetView;
 
@@ -733,6 +739,18 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (double)GetValue(PositionProperty);
             set => SetValue(PositionProperty, value);
+        }
+
+        /// <summary>
+        ///     Should the sheet intercept drag gestures done on the content. Will always be disabled in the sheet's maximized
+        ///     position.
+        ///     This is a bindable property
+        ///     <remarks>Default is false</remarks>
+        /// </summary>
+        public bool InterceptDragGesture
+        {
+            get => (bool)GetValue(InterceptDragGestureProperty);
+            set => SetValue(InterceptDragGestureProperty, value);
         }
 
         /// <summary>

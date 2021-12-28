@@ -11,10 +11,10 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             var length = 0f;
             var duration = 0L;
 
-            foreach (var deltaTuple in latestDeltas)
+            foreach (var (dLength, dDuration) in latestDeltas)
             {
-                length += deltaTuple.Item1;
-                duration += deltaTuple.Item2;
+                length += dLength;
+                duration += dDuration;
             }
 
             latestDeltas = new (float, long)[latestDeltas.Length];

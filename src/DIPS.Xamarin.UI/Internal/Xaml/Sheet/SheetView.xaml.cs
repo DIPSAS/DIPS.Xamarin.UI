@@ -35,11 +35,26 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             InitializeComponent();
             BindingContext = m_sheetBehaviour = sheetBehavior;
 
+            m_sheetBehaviour.PropertyChanged += SheetBehaviorOnPropertyChanged;
+            
             if (Device.RuntimePlatform == Device.iOS)
             {
+                OverlayBoxView.IsVisible = true;
                 var panGestureRecognizer = new PanGestureRecognizer();
                 GestureRecognizers.Add(panGestureRecognizer);
                 panGestureRecognizer.PanUpdated += OnPan;
+            }
+            else
+            {
+                OverlayBoxView.IsVisible = false;
+            }
+        }
+
+        private void SheetBehaviorOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is nameof(SheetBehavior.InterceptDragGesture) && sender is SheetBehavior sheetBehavior && Device.RuntimePlatform == Device.iOS)
+            {
+                OverlayBoxView.IsVisible = sheetBehavior.InterceptDragGesture;
             }
         }
 
@@ -97,7 +112,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         /// <summary>
         /// For internal use.
         /// </summary>
-        public bool ShouldInterceptScroll => this.IndexOfClosestSnapPoint(TranslationY) < SnapPoints.Count - 1;
+        public bool ShouldInterceptScroll => m_sheetBehaviour.InterceptDragGesture && CurrentState is not SheetState.Maximized;
 
         private void OnPan(object sender, PanUpdatedEventArgs e) // iOS
         {
@@ -168,16 +183,20 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         internal Task Close()
         {
+            m_sheetBehaviour.PropertyChanged -= SheetBehaviorOnPropertyChanged;
             return TranslateSheetTo(m_sheetBehaviour.Alignment == AlignmentOptions.Bottom ? Height : -Height, 1750);
         }
 
         private void SetState(SheetState state)
         {
             CurrentState = state;
+
+            if (Device.RuntimePlatform is Device.Android) return;
+            
             OverlayBoxView.IsVisible = state switch
             {
                 SheetState.Maximized => false,
-                SheetState.NotMaximized => true,
+                SheetState.NotMaximized => m_sheetBehaviour.InterceptDragGesture,
                 _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
             };
         }
@@ -417,7 +436,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             {
                 return;
             }
-
+            
             OnPan(sender, e);
         }
 

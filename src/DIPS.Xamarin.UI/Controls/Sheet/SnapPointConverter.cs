@@ -8,7 +8,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 {
     
     /// <summary>
-    /// Converts a comma-separated string to list of doubles. Values below 0.0 or above 1.0 will be adjusted to 0.0 and 1.0 respectively. 
+    /// Converts a comma-separated string to list of doubles. Values will be clamped between 0 and 1. 
     /// </summary>
     [TypeConversion(typeof(IList<double>))]
     public class SnapPointConverter : TypeConverter
