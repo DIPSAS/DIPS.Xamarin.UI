@@ -22,7 +22,7 @@
         <dxui:ModalityLayout.Behaviors>
             <dxui:SheetBehavior x:Name="SheetBehavior"
                                 Title="{Binding Title}"
-                              
+                                CancelCommand="{Binding CancelCommand}"                              
                                 VerticalContentAlignment="Fill"
                                 ActionCommand="{Binding ActionCommand}"
                                 ActionTitle="Action"

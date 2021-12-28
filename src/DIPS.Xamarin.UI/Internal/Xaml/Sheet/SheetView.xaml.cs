@@ -97,8 +97,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         /// <summary>
         /// For internal use.
         /// </summary>
-        public bool ShouldInterceptScroll =>
-            false; //TranslationY > this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment) + 20; //TODO: More fine-grained?
+        public bool ShouldInterceptScroll => this.IndexOfClosestSnapPoint(TranslationY) < SnapPoints.Count - 1;
 
         private void OnPan(object sender, PanUpdatedEventArgs e) // iOS
         {
@@ -409,7 +408,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             MoveSheet((float)(y - TranslationY));
         }
 
-        private void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        // only used on iOS.
+        private void OverlayOnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
             // pan until a certain state, then ignore
 

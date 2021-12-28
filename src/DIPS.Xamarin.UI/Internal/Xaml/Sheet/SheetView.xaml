@@ -10,11 +10,11 @@
              xmlns:local="clr-namespace:DIPS.Xamarin.UI.Internal"
              mc:Ignorable="d dblend"
              x:Class="DIPS.Xamarin.UI.Internal.Xaml.Sheet.SheetView"
-             x:DataType="{x:Type sheet:SheetBehavior}"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:valueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.ValueConverters"
              xmlns:multiValueConverters="clr-namespace:DIPS.Xamarin.UI.Converters.MultiValueConverters"
-             dblend:DataContext="{dblend:DesignInstance sheet:SheetBehavior}">
+             x:DataType="{x:Type sheet:SheetBehavior}"
+             Opacity="0">
 
     <Frame x:Name="OuterSheetFrame"
            x:FieldModifier="internal"
@@ -145,7 +145,7 @@
                      Opacity="0"
                      IsVisible="{x:OnPlatform Android=false}">
                 <BoxView.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
+                    <PanGestureRecognizer PanUpdated="OverlayOnPanUpdated" />
                 </BoxView.GestureRecognizers>
             </BoxView>
         </Grid>
