@@ -22,8 +22,8 @@
         <dxui:ModalityLayout.Behaviors>
             <dxui:SheetBehavior x:Name="SheetBehavior"
                                 Title="{Binding Title}"
-                                CancelCommand="{Binding CancelCommand}"
-                                VerticalContentAlignment="{Binding VerticalContentAlignment}"
+                              
+                                VerticalContentAlignment="Fill"
                                 ActionCommand="{Binding ActionCommand}"
                                 ActionTitle="Action"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
@@ -40,30 +40,30 @@
                                 SnapPoints=".0,.5,.99">
                 <dxui:SheetBehavior.SheetContentTemplate>
                     <DataTemplate x:DataType="{x:Type Sheet:InsideSheetViewModel}">
-                        <Button Text="HEI"
+                        <!--<Button Text="HEI"
                                FontSize="20"
                                VerticalOptions="Center"
-                               HorizontalOptions="Center"></Button>
-                             <!-- <CollectionView ItemsSource="{Binding Items}"  -->
-                             <!--                 BackgroundColor="White">  -->
-                             <!--     <CollectionView.ItemTemplate>  -->
-                             <!--         <DataTemplate x:DataType="{x:Type Sheet:SomeClass}">  -->
-                             <!--             <Frame Padding="10"  -->
-                             <!--                    BackgroundColor="Azure"  -->
-                             <!--                    HasShadow="False">  -->
-                             <!--                 <Frame.GestureRecognizers>  -->
-                             <!--                     <TapGestureRecognizer Command="{Binding ClickedCommand}" />  -->
-                             <!--                 </Frame.GestureRecognizers>  -->
-                             <!--                 <StackLayout Orientation="Horizontal">  -->
-                             <!--                     <Label Text="Some row title" HorizontalOptions="StartAndExpand"  -->
-                             <!--                            FontSize="20" />  -->
-                             <!--                     <Label Text="Some row end"  -->
-                             <!--                            HorizontalOptions="End" />  -->
-                             <!--                 </StackLayout>  -->
-                             <!--             </Frame>  -->
-                             <!--         </DataTemplate>  -->
-                             <!--     </CollectionView.ItemTemplate>  -->
-                             <!-- </CollectionView>  -->
+                               HorizontalOptions="Center"></Button>-->
+                              <CollectionView ItemsSource="{Binding Items}"  
+                                              BackgroundColor="Blue">  
+                                  <CollectionView.ItemTemplate>  
+                                      <DataTemplate x:DataType="{x:Type Sheet:SomeClass}">  
+                                          <Frame Padding="10"  
+                                                 BackgroundColor="Azure"  
+                                                 HasShadow="False">  
+                                              <Frame.GestureRecognizers>  
+                                                  <TapGestureRecognizer Command="{Binding ClickedCommand}" />  
+                                              </Frame.GestureRecognizers>  
+                                              <StackLayout Orientation="Horizontal">  
+                                                  <Label Text="Some row title" HorizontalOptions="StartAndExpand"  
+                                                         FontSize="20" />  
+                                                  <Label Text="Some row end"  
+                                                         HorizontalOptions="End" />  
+                                              </StackLayout>  
+                                          </Frame>  
+                                      </DataTemplate>  
+                                  </CollectionView.ItemTemplate>  
+                              </CollectionView>  
                     </DataTemplate>
                 </dxui:SheetBehavior.SheetContentTemplate>
             </dxui:SheetBehavior>

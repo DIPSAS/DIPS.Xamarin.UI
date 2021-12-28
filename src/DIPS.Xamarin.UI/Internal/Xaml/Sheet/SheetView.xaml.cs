@@ -61,7 +61,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         private int PixelsPerSecond => m_sheetBehaviour.FlingSpeedThreshold;
         private bool IsDraggable => m_sheetBehaviour.IsDraggable;
 
-        private SheetState CurrentState { get; set; } = SheetState.Minimized;
+        private SheetState CurrentState { get; set; } = SheetState.NotMaximized;
 
         /// <summary>
         /// For internal use.
@@ -148,7 +148,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         private async Task Maximize(float velocity = 1500)
         {
-            await TranslateSheet(this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment), velocity);
+            await TranslateSheetTo(this.RatioToYValue(SnapPoints.LastOrDefault(), m_sheetBehaviour.Alignment), velocity);
 
             SetState(SheetState.Maximized);
         }
@@ -161,24 +161,24 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             }
             else
             {
-                await TranslateSheet(this.RatioToYValue(SnapPoints.FirstOrDefault(), m_sheetBehaviour.Alignment), velocity);
+                await TranslateSheetTo(this.RatioToYValue(SnapPoints.FirstOrDefault(), m_sheetBehaviour.Alignment), velocity);
             }
 
-            SetState(SheetState.Minimized);
+            SetState(SheetState.NotMaximized);
         }
 
         internal Task Close()
         {
-            return TranslateSheet(m_sheetBehaviour.Alignment == AlignmentOptions.Bottom ? Height : -Height);
+            return TranslateSheetTo(m_sheetBehaviour.Alignment == AlignmentOptions.Bottom ? Height : -Height, 1750);
         }
 
         private void SetState(SheetState state)
         {
             CurrentState = state;
-            OverlayBoxView.InputTransparent = state switch
+            OverlayBoxView.IsVisible = state switch
             {
-                SheetState.Maximized => true,
-                SheetState.Minimized => false,
+                SheetState.Maximized => false,
+                SheetState.NotMaximized => true,
                 _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
             };
         }
@@ -213,13 +213,15 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         internal async Task Open()
         {
+            await Task.Delay(50);// to avoid split-second of showing sheet on iOS
+            Opacity = 1;
+
             FillerBoxView.HeightRequest = (Height * (1 - SnapPoints.LastOrDefault())) + OuterSheetFrame.CornerRadius;
 
             m_sheetBehaviour.BeforeOpening();
-
             this.FindOpeningY(out var y);
 
-            await TranslateSheet(y);
+            await TranslateSheetTo(y);
 
             m_sheetBehaviour.AfterOpening();
         }
@@ -242,13 +244,23 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             }
         }
 
-        private void SnapTo(DragDirection dragDirection, float velocity)
+        private async Task SnapTo(DragDirection dragDirection, float velocity)
         {
             var currentPositionRatio = 1 - (Math.Abs(TranslationY) / Height);
 
             if (this.TryFindSnapPoint(dragDirection, currentPositionRatio, m_sheetBehaviour.Alignment, out var y))
             {
-                TranslateSheet(y, velocity); 
+                await TranslateSheetTo(y, velocity);
+
+                if (this.IndexOfClosestSnapPoint(y) < SnapPoints.Count - 1)
+                {
+                    SetState(SheetState.NotMaximized);
+                }
+                else
+                {
+                    SetState(SheetState.Maximized);
+                }
+
                 return;
             }
 
@@ -256,18 +268,18 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             {
                 case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
                 case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
-                    Maximize(velocity);
+                    await Maximize(velocity);
                     break;
                 case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
                 case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
-                    Minimize();
+                    await Minimize(velocity);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dragDirection), dragDirection, null);
             }
         }
 
-        private async Task TranslateSheet(double y, float velocity = 1500)
+        private async Task TranslateSheetTo(double y, float velocity = 1500)
         {
             var travel = Math.Abs(y - TranslationY);
             var duration = travel / velocity * 1000;
@@ -300,7 +312,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                         break;
                     case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
                     case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
-                        Minimize();
+                        Minimize(v);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(dragDirection), dragDirection, null);
@@ -313,7 +325,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         }
 
         internal void Initialize()
-        {
+        { 
             //Flip the grid if alignment is set to top
             if (m_sheetBehaviour.Alignment == AlignmentOptions.Top)
             {
@@ -418,7 +430,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         private enum SheetState
         {
             Maximized,
-            Minimized
+            NotMaximized
         }
     }
 }

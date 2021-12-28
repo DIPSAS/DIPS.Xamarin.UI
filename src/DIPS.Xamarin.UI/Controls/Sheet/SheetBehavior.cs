@@ -196,27 +196,24 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
                 SetupSheet();
 
-                m_sheetView.Open();
-
-                // Wait until all the bindings are done
-                await Task.Delay(100);
+                await m_sheetView.Open();
             }
             else
             {
-                if (m_sheetView == null)
+                if (m_sheetView is null)
                 {
                     return;
                 }
 
                 BeforeClosing();
-                await m_sheetView.Close();
+                m_sheetView.Close();
                 m_modalityLayout.Hide(m_sheetView);
             }
         }
 
         private void SetupSheet()
         {
-            if (m_sheetView == null || m_modalityLayout == null)
+            if (m_sheetView is null || m_modalityLayout is null)
             {
                 return;
             }
@@ -234,16 +231,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                              .OuterSheetFrame
                              .CornerRadius); //Respect the corner radius to make sure that we do not display the corner radius at the "start" of the sheet
 
+
             m_modalityLayout.Show(this, m_sheetView, widthConstraint: widthConstraint,
                 heightConstraint: heightConstraint);
 
-            //Set start position
-            m_sheetView.Sheet.TranslationY = m_sheetView.Sheet.Height;
+            m_sheetView.TranslationY = m_sheetView.Sheet.Height;
         }
 
         private void SetBindingContext()
         {
-            if (m_sheetView?.SheetContentView == null)
+            if (m_sheetView?.SheetContentView is null)
             {
                 return;
             }
