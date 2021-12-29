@@ -200,7 +200,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(HeaderColor),
             typeof(Color),
             typeof(SheetBehavior),
-            Color.White);
+            ColorPalette.LightLight);
 
         /// <summary>
         ///     <see cref="ContentColor" />
@@ -209,7 +209,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(ContentColor),
             typeof(Color),
             typeof(SheetBehavior),
-            Color.White);
+            ColorPalette.LightAir);
 
         /// <summary>
         ///     <see cref="Position" />
