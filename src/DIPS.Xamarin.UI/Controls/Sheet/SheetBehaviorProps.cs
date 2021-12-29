@@ -155,7 +155,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             nameof(TitleColor),
             typeof(Color),
             typeof(SheetBehavior),
-            Label.TextColorProperty.DefaultValue);
+            ColorPalette.Dark);
 
         /// <summary>
         ///     <see cref="Title" />
