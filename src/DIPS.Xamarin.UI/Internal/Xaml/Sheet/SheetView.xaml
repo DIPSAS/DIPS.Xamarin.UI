@@ -136,8 +136,17 @@
                          Opacity="0"
                          HeightRequest="0" />
             </Grid>
-            
-            
+
+            <Frame x:Name="BusyFrame"
+                   Grid.Row="1"
+                   IsVisible="False"
+                   BackgroundColor="{Binding ContentColor}"
+                   Padding="0,40,0,0">
+                <ActivityIndicator IsRunning="True"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Center" />
+            </Frame>
+
             <BoxView x:Name="OverlayBoxView"
                      Grid.Row="1"
                      VerticalOptions="Fill"

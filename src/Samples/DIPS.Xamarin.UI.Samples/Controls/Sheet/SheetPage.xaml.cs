@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Controls.Sheet;
 using DIPS.Xamarin.UI.Extensions;
@@ -36,6 +37,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         private string m_stateText;
         private string m_title = "Title";
         private ContentAlignment m_verticalContentAlignment;
+        private readonly InsideSheetViewModel m_sheetViewModel;
+        private bool m_isBusy;
 
         public SheetPageViewModel()
         {
@@ -61,6 +64,26 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
                 {
                     //Do work when action is pressed
                 });
+
+            InitCommand = new Command(async () => await Init());
+
+            m_sheetViewModel = new InsideSheetViewModel();
+        }
+
+        private async Task Init()
+        {
+            try
+            {
+                IsBusy = true;
+
+                await Task.Delay(2000);
+
+                IsBusy = false;
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
         }
 
         public string HandleColor
@@ -100,7 +123,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             set => PropertyChanged.RaiseWhenSet(ref m_position, value);
         }
 
-        public Func<object> SheetViewModelFactory => () => new InsideSheetViewModel();
+        public Func<object> SheetViewModelFactory => () => m_sheetViewModel;
 
         public ContentAlignment VerticalContentAlignment
         {
@@ -172,6 +195,16 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
             set => PropertyChanged.RaiseWhenSet(ref m_hasActionButton, value);
         }
 
+        public ICommand InitCommand
+        {
+            get;
+        }
+
+        public bool IsBusy
+        {
+            get => m_isBusy;
+            set => PropertyChanged.RaiseWhenSet(ref m_isBusy, value);
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

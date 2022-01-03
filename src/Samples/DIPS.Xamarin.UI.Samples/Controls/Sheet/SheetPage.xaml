@@ -37,7 +37,9 @@
                                 Position="{Binding Position}"
                                 FlingSpeedThreshold="1250"
                                 SheetOpeningStrategy="FirstSnapPoint"
-                                SnapPoints=".0,.5,.99">
+                                SnapPoints=".0,.5,.99"
+                                IsBusy="{Binding IsBusy}"
+                                BeforeOpenedCommand="{Binding InitCommand}">
                 <dxui:SheetBehavior.SheetContentTemplate>
                     <DataTemplate x:DataType="{x:Type Sheet:InsideSheetViewModel}">
                         <!-- <ScrollView> -->

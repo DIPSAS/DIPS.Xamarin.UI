@@ -1,6 +1,4 @@
-﻿
-using DIPS.Xamarin.UI.Controls.Slidable;
-using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
+﻿using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
 using DIPS.Xamarin.UI.iOS;
 using UIKit;
 using Xamarin.Forms;

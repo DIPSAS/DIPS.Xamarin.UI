@@ -178,6 +178,13 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             propertyChanged: IsOpenPropertyChanged);
 
         /// <summary>
+        ///     <see cref="IsBusy" />
+        /// </summary>
+        public static readonly BindableProperty IsBusyProperty =
+            BindableProperty.Create(nameof(IsBusy), typeof(bool), typeof(SheetBehavior), false,
+                propertyChanged: IsBusyPropertyChanged);
+
+        /// <summary>
         ///     <see cref="SheetContent" />
         /// </summary>
         public static readonly BindableProperty SheetContentProperty = BindableProperty.Create(
@@ -358,6 +365,15 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         private SheetView? m_sheetView;
 
         /// <summary>
+        /// Shows an activity indicator over the content of the sheet.
+        /// </summary>
+        public bool IsBusy
+        {
+            get => (bool)GetValue(IsBusyProperty);
+            set => SetValue(IsBusyProperty, value);
+        }
+
+        /// <summary>
         ///     The size of the title label.
         ///     This is a bindable property.
         /// </summary>
@@ -373,7 +389,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     Decides when the sheet should fling open or closed based on the speed of the drag gesture.
         ///     This is a bindable property.
         /// </summary>
-        /// <remarks>Default value is 1250. Unit is pixels per second. Pre-defined values are <see cref="FlingSensitivity.Low" />, <see cref="FlingSensitivity.Medium" /> and <see cref="FlingSensitivity.High" /></remarks>
+        /// <remarks>
+        ///     Default value is 1250. Unit is pixels per second. Pre-defined values are <see cref="FlingSensitivity.Low" />,
+        ///     <see cref="FlingSensitivity.Medium" /> and <see cref="FlingSensitivity.High" />
+        /// </remarks>
         [TypeConverter(typeof(FlingSensitivityConverter))]
         public int FlingSpeedThreshold
         {
@@ -404,10 +423,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         }
 
         /// <summary>
-        ///     Positions that the sheet should snap to when the drag gesture has ended. 
+        ///     Positions that the sheet should snap to when the drag gesture has ended.
         ///     This is a bindable property.
         /// </summary>
-        /// <remarks>Comma-separated string of doubles, ex: "0, .5, .99". Values will be clamped between 0 and 1. The last snap point decides the maximum position of the sheet. The first snap point decides the pinned position for the sheet. User interaction can NOT drag the sheet below this pinned position. Default value is "0, .5, .98".</remarks>
+        /// <remarks>
+        ///     Comma-separated string of doubles, ex: "0, .5, .99". Values will be clamped between 0 and 1. The last snap
+        ///     point decides the maximum position of the sheet. The first snap point decides the pinned position for the sheet.
+        ///     User interaction can NOT drag the sheet below this pinned position. Default value is "0, .5, .98".
+        /// </remarks>
         [TypeConverter(typeof(SnapPointConverter))]
         public IList<double> SnapPoints
         {
@@ -729,7 +752,10 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// <summary>
         ///     The current position of the sheet.
         ///     This is a bindable property.
-        ///     <remarks>This is by default <see cref="BindingMode.OneWayToSource"/>. Setting this will NOT move the sheet. Use <see cref="MoveTo"/> to change the sheet's position.</remarks>
+        ///     <remarks>
+        ///         This is by default <see cref="BindingMode.OneWayToSource" />. Setting this will NOT move the sheet. Use
+        ///         <see cref="MoveTo" /> to change the sheet's position.
+        ///     </remarks>
         /// </summary>
         public double Position
         {
@@ -777,6 +803,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             get => (bool)GetValue(CloseOnOverlayTappedProperty);
             set => SetValue(CloseOnOverlayTappedProperty, value);
+        }
+
+        private static void IsBusyPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (bindable is SheetBehavior sheetBehavior)
+            {
+                sheetBehavior.m_sheetView?.OnBusyChanged(newvalue is true);
+            }
         }
 
         private static object CoerceSnapPoints(BindableObject bindable, object value)

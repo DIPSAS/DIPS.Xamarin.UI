@@ -441,5 +441,18 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             Maximized,
             NotMaximized
         }
+
+        internal async Task OnBusyChanged(bool isBusy)
+        {
+            if (isBusy)
+            {
+                BusyFrame.IsVisible = true;
+            }
+            else
+            {
+                await BusyFrame.FadeTo(0, 150, Easing.CubicIn);
+                BusyFrame.IsVisible = false;
+            }
+        }
     }
 }
