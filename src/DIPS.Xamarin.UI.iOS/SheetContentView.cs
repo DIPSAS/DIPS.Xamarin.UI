@@ -4,11 +4,11 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(SheetView), typeof(PanAwareContentView))]
+[assembly: ExportRenderer(typeof(SheetView), typeof(SheetContentView))]
 
 namespace DIPS.Xamarin.UI.iOS
 {
-    internal class PanAwareContentView : VisualElementRenderer<ContentView>
+    internal class SheetContentView : VisualElementRenderer<ContentView>
     {
         private UIView m_uiView;
 
@@ -27,14 +27,15 @@ namespace DIPS.Xamarin.UI.iOS
             {
                 newElement.StateChanged += OnSheetStateChanged;
             }
-
-            var subviews = m_uiView.Subviews;
-
-            ToggleScrollViews(subviews, false);
         }
 
         private void OnSheetStateChanged(object sender, SheetView.SheetState state)
         {
+            if (sender is SheetView {ShouldInterceptScroll: false})
+            {
+                return;
+            }
+            
             var subviews = m_uiView.Subviews;
             
             ToggleScrollViews(subviews, state is SheetView.SheetState.Maximized);

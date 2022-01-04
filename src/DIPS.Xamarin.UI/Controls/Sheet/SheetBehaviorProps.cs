@@ -767,7 +767,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     Should the sheet intercept drag gestures done on the content. Will always be disabled in the sheet's maximized
         ///     position.
         ///     This is a bindable property
-        ///     <remarks>Default is false</remarks>
+        ///     <remarks>Default is true.</remarks>
         /// </summary>
         public bool InterceptDragGesture
         {

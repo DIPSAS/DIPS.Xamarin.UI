@@ -8,11 +8,11 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using View = Xamarin.Forms.View;
 
-[assembly: ExportRenderer(typeof(SheetView), typeof(PanAwareContentView))]
+[assembly: ExportRenderer(typeof(SheetView), typeof(SheetContentView))]
 
 namespace DIPS.Xamarin.UI.Android
 {
-    internal class PanAwareContentView : ViewRenderer, GestureDetector.IOnGestureListener
+    internal class SheetContentView : ViewRenderer, GestureDetector.IOnGestureListener
     {
         private readonly float m_density;
         private readonly GestureDetector m_detector;
@@ -25,7 +25,7 @@ namespace DIPS.Xamarin.UI.Android
         private (float x, float y) m_prev;
         private float m_startX, m_startY;
 
-        public PanAwareContentView(Context context) : base(context)
+        public SheetContentView(Context context) : base(context)
         {
             m_random = new Random();
             m_detector = new GestureDetector(context, this);
