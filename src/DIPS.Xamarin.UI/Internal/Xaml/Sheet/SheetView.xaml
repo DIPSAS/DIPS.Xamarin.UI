@@ -140,6 +140,7 @@
             <Frame x:Name="BusyFrame"
                    Grid.Row="1"
                    IsVisible="False"
+                   HasShadow="False"
                    BackgroundColor="{Binding ContentColor}"
                    Padding="0,40,0,0">
                 <ActivityIndicator IsRunning="True"
@@ -148,6 +149,7 @@
             </Frame>
 
             <BoxView x:Name="OverlayBoxView"
+                     IsVisible="False"
                      Grid.Row="1"
                      VerticalOptions="Fill"
                      HorizontalOptions="Fill"
