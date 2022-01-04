@@ -31,7 +31,7 @@ namespace DIPS.Xamarin.UI.iOS
 
         private void OnSheetStateChanged(object sender, SheetView.SheetState state)
         {
-            if (sender is SheetView {ShouldInterceptScroll: false})
+            if (sender is SheetView sheetView && sheetView.m_sheetBehaviour.InterceptDragGesture)
             {
                 return;
             }

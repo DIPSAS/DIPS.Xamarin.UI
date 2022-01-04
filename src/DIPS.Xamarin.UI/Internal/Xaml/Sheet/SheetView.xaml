@@ -147,17 +147,6 @@
                                    VerticalOptions="Start"
                                    HorizontalOptions="Center" />
             </Frame>
-
-            <BoxView x:Name="OverlayBoxView"
-                     IsVisible="False"
-                     Grid.Row="1"
-                     VerticalOptions="Fill"
-                     HorizontalOptions="Fill"
-                     Color="Transparent">
-                <BoxView.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="OverlayOnPanUpdated" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
         </Grid>
     </Frame>
 </ContentView>
