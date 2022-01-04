@@ -25,6 +25,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         private double m_prevX, m_prevY;
         private int m_recordCount;
         private Stopwatch m_watch;
+        private SheetState m_currentState = SheetState.NotMaximized;
 
         /// <summary>
         ///     Constructs a <see cref="SheetView" />
@@ -50,6 +51,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             }
         }
 
+        internal event EventHandler<SheetState> StateChanged;
+        
         private void SheetBehaviorOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is nameof(SheetBehavior.InterceptDragGesture) && sender is SheetBehavior sheetBehavior && Device.RuntimePlatform is Device.iOS)
@@ -76,7 +79,15 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         private int PixelsPerSecond => m_sheetBehaviour.FlingSpeedThreshold;
         private bool IsDraggable => m_sheetBehaviour.IsDraggable;
 
-        private SheetState CurrentState { get; set; } = SheetState.NotMaximized;
+        private SheetState CurrentState
+        {
+            get => m_currentState;
+            set
+            {
+                m_currentState = value;
+                StateChanged?.Invoke(this, value);
+            }
+        }
 
         /// <summary>
         /// For internal use.
@@ -187,6 +198,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         {
             CurrentState = state;
 
+            
+            
             if (Device.RuntimePlatform is Device.Android) return;
             
             // OverlayBoxView.IsVisible = state switch
@@ -436,7 +449,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             Down
         }
 
-        private enum SheetState
+        internal enum SheetState
         {
             Maximized,
             NotMaximized
