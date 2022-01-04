@@ -18,7 +18,15 @@ namespace DIPS.Xamarin.UI.iOS
 
             m_uiView = GetControl();
 
-            var uiViewSubviews = m_uiView.Subviews;
+            var subviews = m_uiView.Subviews;
+
+            foreach (var view in subviews)
+            {
+                if (view is UIScrollView scrollView)
+                {
+                    scrollView.ScrollEnabled = false;
+                }
+            }
         }
     }
 }

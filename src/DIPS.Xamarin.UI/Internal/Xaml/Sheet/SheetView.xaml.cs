@@ -110,7 +110,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         }
 
         /// <summary>
-        /// For internal use.
+        /// For internal use on Android.
         /// </summary>
         public bool ShouldInterceptScroll => m_sheetBehaviour.InterceptDragGesture && CurrentState is not SheetState.Maximized;
 
