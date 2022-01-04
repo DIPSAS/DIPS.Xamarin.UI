@@ -8,7 +8,7 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace DIPS.Xamarin.UI.iOS
 {
-    public class PanAwareContentView : VisualElementRenderer<ContentView>
+    internal class PanAwareContentView : VisualElementRenderer<ContentView>
     {
         private UIView m_uiView;
 

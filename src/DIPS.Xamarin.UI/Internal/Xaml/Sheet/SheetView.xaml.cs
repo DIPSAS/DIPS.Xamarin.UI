@@ -446,6 +446,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         {
             if (isBusy)
             {
+                BusyFrame.Opacity = 1;
                 BusyFrame.IsVisible = true;
             }
             else
