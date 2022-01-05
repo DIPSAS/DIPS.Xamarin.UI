@@ -93,12 +93,15 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                     OnDragStarted();
                     break;
                 case GestureStatus.Running:
-                    if (m_isTranslating) return;
+                    if (m_isTranslating)
+                    {
+                        this.CancelAnimations();
+                    }
+                    
                     MoveSheet(distanceY);
                     RecordDelta(distanceY);
                     break;
                 case GestureStatus.Completed:
-                    MoveSheet(distanceY);
                     OnDragEnded();
                     break;
                 case GestureStatus.Canceled:
@@ -231,20 +234,24 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         private void OnDragStarted()
         {
+            m_prevDuration = 0;
             m_watch = Stopwatch.StartNew();
         }
 
-        private void OnDragEnded()
+        private async Task OnDragEnded()
         {
             m_watch.Stop();
 
             var direction = SheetViewUtility.FindLatestDragDirection(ref m_latestDeltas);
+            
+            var (didFling, velocity) = await TryFling(direction);
 
-            if (TryFling(direction, out var velocity)) { }
-            else
+            if (didFling)
             {
-                SnapTo(direction, velocity);
+                return;
             }
+            
+            await SnapTo(direction, velocity);
         }
 
         private async Task SnapTo(DragDirection dragDirection, float velocity)
@@ -282,6 +289,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
             duration = duration > 250 ? 250 : duration < 200 ? 200 : duration;
             
+            this.CancelAnimations();
             await this.TranslateTo(0, y + (dir ? 5 : -5), (uint)duration, Easing.CubicOut);
             await this.TranslateTo(0, y, 225, Easing.CubicOut);
 
@@ -299,11 +307,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             m_sheetBehaviour.Position = 1 - this.YValueToRatio(TranslationY);
         }
 
-        private bool TryFling(DragDirection dragDirection, out float velocity)
+        private async Task<(bool, float)> TryFling(DragDirection dragDirection)
         {
             var (thresholdReached, v) = SheetViewUtility.IsThresholdReached(ref m_latestDeltas, PixelsPerSecond);
-
-            velocity = v;
 
             if (thresholdReached)
             {
@@ -311,20 +317,20 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                 {
                     case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
                     case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
-                        Maximize(v);
+                        await Maximize(v);
                         break;
                     case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
                     case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
-                        Minimize(v);
+                        await Minimize(v);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(dragDirection), dragDirection, null);
                 }
 
-                return true;
+                return (true, v);
             }
 
-            return false;
+            return (false, v);
         }
 
         internal void Initialize()

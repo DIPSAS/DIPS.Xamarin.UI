@@ -345,7 +345,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     <see cref="FlingSpeedThreshold" />
         /// </summary>
         public static readonly BindableProperty FlingSpeedThresholdProperty =
-            BindableProperty.Create(nameof(FlingSpeedThreshold), typeof(int), typeof(SheetBehavior), 1250);
+            BindableProperty.Create(nameof(FlingSpeedThreshold), typeof(int), typeof(SheetBehavior), FlingConstants.s_medium );
 
         /// <summary>
         ///     <see cref="SheetOpeningStrategy" />
@@ -390,7 +390,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     This is a bindable property.
         /// </summary>
         /// <remarks>
-        ///     Default value is 1250. Unit is pixels per second. Pre-defined values are <see cref="FlingSensitivity.Low" />,
+        ///     Default value is 2000 . Unit is pixels per second. Pre-defined values are <see cref="FlingSensitivity.Low" />,
         ///     <see cref="FlingSensitivity.Medium" /> and <see cref="FlingSensitivity.High" />
         /// </remarks>
         [TypeConverter(typeof(FlingSensitivityConverter))]

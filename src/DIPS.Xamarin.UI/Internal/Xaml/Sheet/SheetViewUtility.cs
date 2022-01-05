@@ -20,8 +20,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             latestDeltas = new (float, long)[latestDeltas.Length];
             
             var velocity = Math.Abs(length) / duration * 1000;
-            
-            if (length < 25) return (false, velocity); // must always travel more than this 
+
+            if (duration < 60) return (false, velocity); // must always travel more than this 
 
             return (velocity >= threshold, velocity);
         }
