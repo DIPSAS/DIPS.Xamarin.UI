@@ -271,12 +271,14 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         private async Task TranslateSheetTo(double y, float velocity = 1500)
         {
+            var dir = y - TranslationY > 0; 
             var travel = Math.Abs(y - TranslationY);
             var duration = travel / velocity * 1000;
 
-            duration = duration > 275 ? 275 : duration < 175 ? 175 : duration;
-
-            await this.TranslateTo(0, y, (uint)duration, Easing.CubicOut);
+            duration = duration > 250 ? 250 : duration < 200 ? 200 : duration;
+            
+            await this.TranslateTo(0, y + (dir ? 5 : -5), (uint)duration, Easing.CubicOut);
+            await this.TranslateTo(0, y, 225, Easing.CubicOut);
 
             SetState(this.IndexOfClosestSnapPoint(y) < SnapPoints.Count - 1
                 ? SheetState.NotMaximized
