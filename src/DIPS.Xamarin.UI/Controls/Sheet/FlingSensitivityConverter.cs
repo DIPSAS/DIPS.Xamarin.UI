@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -37,17 +36,17 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 switch (result)
                 {
                     case FlingSensitivity.Low:
-                        return 2500;
+                        return FlingConstants.s_low;
                     case FlingSensitivity.Medium:
-                        return 1250;
+                        return FlingConstants.s_medium;
                     case FlingSensitivity.High:
-                        return 500;
+                        return FlingConstants.s_high;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
             }
-
-            return 1250;
+            
+            return FlingConstants.s_medium;
         }
     }
 }

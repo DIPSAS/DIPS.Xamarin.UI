@@ -6,18 +6,25 @@
     public enum FlingSensitivity
     {
         /// <summary>
-        /// 2500 pixels per second
+        /// 3500 pixels per second
         /// </summary>
         Low,
         
         /// <summary>
-        /// 1250 pixels per second
+        /// 2000 pixels per second
         /// </summary>
         Medium,
         
         /// <summary>
-        /// 500 pixels per second
+        /// 1000 pixels per second
         /// </summary>
         High
+    }
+
+    internal static class FlingConstants
+    {
+        internal static int s_low = 3500;
+        internal static int s_medium = 2000;
+        internal static int s_high = 1000;
     }
 }

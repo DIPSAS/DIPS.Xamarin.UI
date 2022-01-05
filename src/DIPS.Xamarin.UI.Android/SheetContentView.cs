@@ -89,12 +89,10 @@ namespace DIPS.Xamarin.UI.Android
         {
             base.RequestDisallowInterceptTouchEvent(disallowIntercept);
             m_interceptDisallowed = disallowIntercept;
-            Console.WriteLine($"DISALLOW INTERCEPT: {disallowIntercept}");
         }
 
         public override bool OnInterceptTouchEvent(MotionEvent ev)
         {
-            Console.WriteLine($"INTERCEPTING TOUCH EVENT {ev.ActionMasked}");
             switch (ev.ActionMasked)
             {
                 case MotionEventActions.Cancel:
@@ -130,7 +128,6 @@ namespace DIPS.Xamarin.UI.Android
 
         public override bool OnTouchEvent(MotionEvent e)
         {
-            Console.WriteLine($"TOUCH EVENT {e.ActionMasked}");
             var (x, y) = ToDip(e.RawX, e.RawY);
 
             if (e.ActionMasked is MotionEventActions.Up or MotionEventActions.Cancel) // ended gesture
