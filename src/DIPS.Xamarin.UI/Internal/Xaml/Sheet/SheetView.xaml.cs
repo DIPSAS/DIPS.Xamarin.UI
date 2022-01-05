@@ -409,6 +409,9 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         internal async Task MoveTo(double position)
         {
             var y = this.RatioToYValue(position, m_sheetBehaviour.Alignment);
+            
+            if (Math.Abs(y - TranslationY) < 1) return;
+            
             await TranslateSheetTo(y);
         }
 
