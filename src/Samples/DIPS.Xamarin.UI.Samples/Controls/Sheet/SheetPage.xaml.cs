@@ -241,14 +241,23 @@ namespace DIPS.Xamarin.UI.Samples.Controls.Sheet
         public event PropertyChangedEventHandler PropertyChanged;
     }
 
-    public class SomeClass
+    public class SomeClass : INotifyPropertyChanged
     {
-        public string Text { get; set; }
+        private string m_text;
 
-        public ICommand ClickedCommand => new Command(Execute);
-
-        private void Execute()
-         {
+        public string Text
+        {
+            get => m_text;
+            set => PropertyChanged.RaiseWhenSet(ref m_text, value);
         }
+
+        public ICommand ClickedCommand => new Command<SomeClass>(Execute);
+
+        private void Execute(SomeClass someClass)
+        {
+            someClass.Text = "CLICKED!";
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }
