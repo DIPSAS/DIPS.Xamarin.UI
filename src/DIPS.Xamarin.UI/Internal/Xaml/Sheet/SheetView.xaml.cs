@@ -181,7 +181,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         internal Task Close()
         {
-            return TranslateSheetTo(m_sheetBehaviour.Alignment == AlignmentOptions.Bottom ? Height : -Height, 1750);
+            return TranslateSheetTo(m_sheetBehaviour.Alignment == AlignmentOptions.Bottom ? Height : -Height);
         }
 
         private void SetState(SheetState state)
@@ -245,7 +245,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             var direction = SheetViewUtility.FindLatestDragDirection(ref m_latestDeltas);
             
             var (didFling, velocity) = await TryFling(direction);
-
+            
             if (didFling)
             {
                 return;
@@ -318,16 +318,14 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                     case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
                     case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
                         await Maximize(v);
-                        break;
+                        return (true, v);
                     case DragDirection.Down when m_sheetBehaviour.Alignment == AlignmentOptions.Bottom:
                     case DragDirection.Up when m_sheetBehaviour.Alignment == AlignmentOptions.Top:
                         await Minimize(v);
-                        break;
+                        return (true, v);
                     default:
                         throw new ArgumentOutOfRangeException(nameof(dragDirection), dragDirection, null);
                 }
-
-                return (true, v);
             }
 
             return (false, v);
