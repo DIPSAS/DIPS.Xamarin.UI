@@ -406,10 +406,10 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             m_sheetBehaviour.ActionClickedInternal();
         }
 
-        internal void MoveTo(double position)
+        internal async Task MoveTo(double position)
         {
             var y = this.RatioToYValue(position, m_sheetBehaviour.Alignment);
-            MoveSheet((float)(y - TranslationY));
+            await TranslateSheetTo(y);
         }
 
         internal enum DragDirection

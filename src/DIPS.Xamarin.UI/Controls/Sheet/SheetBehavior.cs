@@ -41,14 +41,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     Moves the sheet to the given <paramref name="position" />. Sheet must be open.
         /// </summary>
         /// <param name="position">Values will be clamped between 0.0 and 1.0 </param>
-        public void MoveTo(double position)
+        public Task? MoveTo(double position)
         {
             if (!IsOpen)
             {
-                return;
+                return Task.CompletedTask;
             }
 
-            m_sheetView?.MoveTo(SheetViewUtility.CoerceRatio(position));
+            return m_sheetView?.MoveTo(SheetViewUtility.CoerceRatio(position));
         }
 
         internal AlignmentOptions Alignment => AlignmentOptions.Bottom;
