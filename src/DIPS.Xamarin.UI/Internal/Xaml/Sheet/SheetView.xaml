@@ -48,7 +48,7 @@
                          BackgroundColor="{Binding HandleColor}"
                          HorizontalOptions="Center"
                          VerticalOptions="Center"
-                         IsVisible="{Binding IsDraggable}" />
+                         Opacity="{Binding IsDraggable, Converter={valueConverters:BoolToObjectConverter TrueObject=1.0, FalseObject=0.0}}"/>
 
                 <Grid x:Name="titleAndButtonsGrid"
                       Grid.Row="1"

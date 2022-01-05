@@ -32,7 +32,7 @@
                                 HandleColor="{Binding HandleColor}"
                                 HeaderColor="{Binding HeaderColor}"
                                 IsCancelButtonVisible="True"
-                                IsDraggable="True"
+                                IsDraggable="{Binding IsDraggable}"
                                 IsOpen="{Binding IsSheetOpen}"
                                 Position="{Binding Position}"
                                 FlingSpeedThreshold="1250"

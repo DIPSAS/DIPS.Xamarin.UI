@@ -345,7 +345,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     <see cref="FlingSpeedThreshold" />
         /// </summary>
         public static readonly BindableProperty FlingSpeedThresholdProperty =
-            BindableProperty.Create(nameof(FlingSpeedThreshold), typeof(int), typeof(SheetBehavior), 1000);
+            BindableProperty.Create(nameof(FlingSpeedThreshold), typeof(int), typeof(SheetBehavior), 1250);
 
         /// <summary>
         ///     <see cref="SheetOpeningStrategy" />
