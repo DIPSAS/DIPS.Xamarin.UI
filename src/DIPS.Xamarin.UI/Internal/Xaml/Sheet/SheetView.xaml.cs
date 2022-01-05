@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.Sheet;
 using Xamarin.Forms;
@@ -26,6 +27,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         private int m_recordCount;
         private Stopwatch m_watch;
         private SheetState m_currentState = SheetState.NotMaximized;
+        private bool m_isTranslating;
 
         /// <summary>
         ///     Constructs a <see cref="SheetView" />
@@ -91,6 +93,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                     OnDragStarted();
                     break;
                 case GestureStatus.Running:
+                    if (m_isTranslating) return;
                     MoveSheet(distanceY);
                     RecordDelta(distanceY);
                     break;
@@ -271,6 +274,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
 
         private async Task TranslateSheetTo(double y, float velocity = 1500)
         {
+            m_isTranslating = true;
+            
             var dir = y - TranslationY > 0; 
             var travel = Math.Abs(y - TranslationY);
             var duration = travel / velocity * 1000;
@@ -285,6 +290,8 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                 : SheetState.Maximized);
             
             NotifyPositionChange();
+
+            m_isTranslating = false;
         }
 
         private void NotifyPositionChange()
