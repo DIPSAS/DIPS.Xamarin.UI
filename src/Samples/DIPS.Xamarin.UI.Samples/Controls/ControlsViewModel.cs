@@ -41,7 +41,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                 if (parameter.Equals("Popup"))
                     await m_navigation.PushAsync(new PopupPage {Title = parameter});
                 if (parameter.Equals("Sheet"))
-                    await m_navigation.PushAsync(new SheetPage {Title = parameter});
+                    await m_navigation.PushAsync(new SheetPage() {Title = parameter});
                 if (parameter.Equals("RadioButtonGroup"))
                     await m_navigation.PushAsync(new RadioButtonGroupPage {Title = parameter});
                 if (parameter.Equals("TrendGraph"))

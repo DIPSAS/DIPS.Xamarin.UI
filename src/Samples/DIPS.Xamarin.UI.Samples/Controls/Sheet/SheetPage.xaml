@@ -1,58 +1,91 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage x:Class="DIPS.Xamarin.UI.Samples.Controls.Sheet.SheetPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:Sheet="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.Sheet;assembly=DIPS.Xamarin.UI.Samples"
-             xmlns:System="clr-namespace:System;assembly=netstandard"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:dxui="http://dips.xamarin.ui.com"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              ios:Page.UseSafeArea="true"
              mc:Ignorable="d">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Move"
+                     Clicked="MoveSheet" />
+    </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
         <Sheet:SheetPageViewModel />
     </ContentPage.BindingContext>
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
-            <dxui:SheetBehavior Title="{Binding Title}"
+            <dxui:SheetBehavior x:Name="SheetBehavior"
+                                Title="{Binding Title}"
                                 CancelCommand="{Binding CancelCommand}"
-                                VerticalContentAlignment="{Binding VerticalContentAlignment}"
+                                VerticalContentAlignment="Fill"
                                 ActionCommand="{Binding ActionCommand}"
-                                ActionTitle="{Binding HasActionButton, Converter={dxui:BoolToObjectConverter FalseObject='', TrueObject=CanExecute}}"
-                                Alignment="{Binding Alignment}"
+                                ActionTitle="Action"
                                 BindingContextFactory="{Binding SheetViewModelFactory}"
                                 CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
                                 ContentColor="{Binding ContentColor}"
                                 HandleColor="{Binding HandleColor}"
-                                HasShadow="{Binding HasShadow}"
                                 HeaderColor="{Binding HeaderColor}"
-                                IsCancelButtonVisible="False"
+                                IsCancelButtonVisible="True"
                                 IsDraggable="{Binding IsDraggable}"
                                 IsOpen="{Binding IsSheetOpen}"
-                                MaxPosition="{Binding MaxPosition}"
-                                MinPosition="{Binding MinPosition}"
-                                OnCloseCommand="{Binding OnCloseCommand}"
-                                OnCloseCommandParameter="Closed"
-                                OnOpenCommand="{Binding OnOpenCommand}"
-                                OnOpenCommandParameter="Opened"
                                 Position="{Binding Position}"
-                                ShouldAutoClose="{Binding ShouldAutoClose}"
-                                ShouldRememberPosition="{Binding ShouldRememberPosition}">
+                                FlingSpeedThreshold="1250"
+                                SheetOpeningStrategy="FirstSnapPoint"
+                                SnapPoints=".0,.5,.99"
+                                IsBusy="{Binding IsBusy}"
+                                BeforeOpenedCommand="{Binding InitCommand}">
                 <dxui:SheetBehavior.SheetContentTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding Title}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Label Text="{Binding Source={x:Reference entry}, Path=Text}" />
-                            <Entry x:Name="entry"
-                                   Placeholder="TextEntry" />
-                            <Button dxui:Modality.CloseOnClick="True"
-                                    Text="Close sheet" />
-                        </StackLayout>
+                    <DataTemplate x:DataType="{x:Type Sheet:InsideSheetViewModel}">
+                        <!-- <ScrollView> -->
+                        <!--     <StackLayout BindableLayout.ItemsSource="{Binding Items}"> -->
+                        <!--         <BindableLayout.ItemTemplate> -->
+                        <!--             <DataTemplate x:DataType="{x:Type Sheet:SomeClass}"> -->
+                        <!--                 <Frame Padding="10" -->
+                        <!--                        BackgroundColor="Azure" -->
+                        <!--                        HasShadow="False"> -->
+                        <!--                     <Frame.GestureRecognizers> -->
+                        <!--                         <TapGestureRecognizer Command="{Binding ClickedCommand}" /> -->
+                        <!--                     </Frame.GestureRecognizers> -->
+                        <!--                     <StackLayout Orientation="Horizontal"> -->
+                        <!--                         <Label Text="Some row title" HorizontalOptions="StartAndExpand" -->
+                        <!--                                FontSize="20" /> -->
+                        <!--                         <Label Text="Some row end" -->
+                        <!--                                HorizontalOptions="End" /> -->
+                        <!--                     </StackLayout> -->
+                        <!--                 </Frame> -->
+                        <!--             </DataTemplate> -->
+                        <!--         </BindableLayout.ItemTemplate> -->
+                        <!--     </StackLayout> -->
+                        <!-- </ScrollView> -->
+                        <!-- <Label Text="But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure? But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"></Label> -->
+
+                        <CollectionView ItemsSource="{Binding Items}"
+                                  BackgroundColor="Blue">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type Sheet:SomeClass}">
+                                        <Frame Padding="10"
+                                               BackgroundColor="Azure"
+                                               HasShadow="False">
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ClickedCommand}"
+                                                                      CommandParameter="{Binding .}"/>
+                                            </Frame.GestureRecognizers>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Some row title" HorizontalOptions="StartAndExpand"
+                                                       FontSize="20" />
+                                                <Label Text="{Binding Text}"
+                                                       HorizontalOptions="End" />
+                                            </StackLayout>
+                                        </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </DataTemplate>
                 </dxui:SheetBehavior.SheetContentTemplate>
             </dxui:SheetBehavior>
@@ -68,27 +101,14 @@
                        Text="Sheet properties"
                        VerticalTextAlignment="Center" />
 
+                <Label Text="{Binding Position}" />
+
                 <StackLayout HorizontalOptions="Fill"
                              Orientation="Horizontal">
                     <Label Text="IsDraggable"
                            VerticalTextAlignment="Center" />
                     <CheckBox IsChecked="{Binding IsDraggable}" />
                 </StackLayout>
-
-                <StackLayout HorizontalOptions="Fill"
-                             Orientation="Horizontal">
-                    <Label Text="Alignment"
-                           VerticalTextAlignment="Center" />
-                    <Picker SelectedItem="{Binding Alignment}">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type dxui:AlignmentOptions}">
-                                <dxui:AlignmentOptions>Bottom</dxui:AlignmentOptions>
-                                <dxui:AlignmentOptions>Top</dxui:AlignmentOptions>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
-                </StackLayout>
-
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -104,6 +124,7 @@
                             <x:Array Type="{x:Type dxui:ContentAlignment}">
                                 <dxui:ContentAlignment>Fit</dxui:ContentAlignment>
                                 <dxui:ContentAlignment>Fill</dxui:ContentAlignment>
+                                <dxui:ContentAlignment>SameAsSheet</dxui:ContentAlignment>
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
@@ -169,114 +190,6 @@
                            VerticalTextAlignment="Center" />
                     <CheckBox Grid.Column="1"
                               IsChecked="{Binding HasActionButton}" />
-                </Grid>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0"
-                           Text="HasShadow"
-                           VerticalTextAlignment="Center" />
-                    <CheckBox Grid.Column="1"
-                              IsChecked="{Binding HasShadow}" />
-                </Grid>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0"
-                           Text="Remember position when open / close"
-                           VerticalTextAlignment="Center" />
-                    <CheckBox Grid.Row="0"
-                              Grid.Column="1"
-                              IsChecked="{Binding ShouldRememberPosition}" />
-                    <Label Grid.Row="1"
-                           Grid.Column="0"
-                           Text="Position"
-                           VerticalTextAlignment="Center" />
-                    <Label Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding Position}" />
-                    <Slider Grid.Row="2"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            IsVisible="{Binding ShouldRememberPosition}"
-                            Maximum="1"
-                            MaximumTrackColor="Tomato"
-                            Minimum="0"
-                            MinimumTrackColor="Tomato"
-                            Value="{Binding Position}" />
-                </Grid>
-
-                <Grid ColumnDefinitions="*, *">
-                    <Label Grid.Column="0"
-                           Text="Should auto close"
-                           VerticalTextAlignment="Center" />
-                    <CheckBox Grid.Row="0"
-                              Grid.Column="1"
-                              IsChecked="{Binding ShouldAutoClose}" />
-                </Grid>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0"
-                           Grid.Column="0"
-                           Text="MinPosition"
-                           VerticalTextAlignment="Center" />
-                    <Slider Grid.Row="0"
-                            Grid.Column="1"
-                            Maximum="1"
-                            MaximumTrackColor="Tomato"
-                            Minimum="0"
-                            MinimumTrackColor="Tomato"
-                            Value="{Binding MinPosition}" />
-                    <Label Grid.Row="1"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="2"
-                           Text="{Binding MinPosition}" />
-                </Grid>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0"
-                           Grid.Column="0"
-                           Text="MaxPosition"
-                           VerticalTextAlignment="Center" />
-                    <Slider Grid.Row="0"
-                            Grid.Column="1"
-                            Maximum="1"
-                            MaximumTrackColor="Tomato"
-                            Minimum="0"
-                            MinimumTrackColor="Tomato"
-                            Value="{Binding MaxPosition}" />
-                    <Label Grid.Row="1"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="2"
-                           Text="{Binding MaxPosition}" />
                 </Grid>
 
                 <StackLayout>

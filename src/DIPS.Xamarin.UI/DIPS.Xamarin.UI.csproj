@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-      <LangVersion>8.0</LangVersion>
+      <LangVersion>9</LangVersion>
       <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -42,6 +42,13 @@
       <Compile Update="Internal\Xaml\ToastView.xaml.cs">
         <DependentUpon>ToastView.xaml</DependentUpon>
       </Compile>
+      <Compile Update="Controls\Sheet\CancelSheetCommand.cs">
+        <DependentUpon>SheetBehavior.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Internal\Xaml\Sheet\SheetView.xaml.cs">
+        <DependentUpon>SheetView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -55,9 +62,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\RadioButtonGroup\RadioButtonGroup.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Internal\Xaml\SheetView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\LocalizedStrings\InternalLocalizedStrings.resx">

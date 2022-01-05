@@ -19,8 +19,6 @@
                                 TitleColor="{dxui:DIPSColor ColorPalette=Dark}"
                                 TitleSize="16"
                                 HeaderColor="{x:Static dxui:ColorPalette.LightLight}"
-                                MinPosition=".5"
-                                MaxPosition="0.98"
                                 IsDraggable="True"
                                 VerticalContentAlignment="Fit">
                     <dxui:SheetBehavior.SheetContentTemplate>

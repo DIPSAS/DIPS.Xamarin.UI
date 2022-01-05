@@ -9,7 +9,7 @@
              x:Class="DIPS.Xamarin.Forms.IssuesRepro.NewIssue.Github137">
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
-            <dxui:SheetBehavior MinPosition="0.5"
+            <dxui:SheetBehavior SnapPoints="0.5, .99"
                                 IsOpen="{Binding Source={x:Reference checkBox}, Path=IsChecked}">
                 <ContentView HeightRequest="1000"
                              BackgroundColor="DarkOrange" />

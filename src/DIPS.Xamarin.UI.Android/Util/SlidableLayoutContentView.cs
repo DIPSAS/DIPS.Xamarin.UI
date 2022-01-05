@@ -1,8 +1,7 @@
 ﻿using System;
 using Android.Content;
-using Android.Util;
 using Android.Views;
-using DIPS.Xamarin.UI.Android;
+using DIPS.Xamarin.UI.Android.Util;
 using DIPS.Xamarin.UI.Controls.Slidable;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -10,7 +9,7 @@ using View = Xamarin.Forms.View;
 
 [assembly: ExportRenderer(typeof(SlidableLayout), typeof(SlidableLayoutContentView))]
 
-namespace DIPS.Xamarin.UI.Android
+namespace DIPS.Xamarin.UI.Android.Util
 {
     internal class SlidableLayoutContentView : ViewRenderer, GestureDetector.IOnGestureListener
     {

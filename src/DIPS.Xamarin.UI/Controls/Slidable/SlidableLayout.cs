@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Xamarin.Forms;
-using System.Collections.Generic;
 using DIPS.Xamarin.UI.Util;
-using Xamarin.Essentials;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using DIPS.Xamarin.UI.Vibration;
 
 namespace DIPS.Xamarin.UI.Controls.Slidable

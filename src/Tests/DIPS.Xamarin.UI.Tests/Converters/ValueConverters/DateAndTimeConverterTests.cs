@@ -17,7 +17,10 @@ namespace DIPS.Xamarin.UI.Tests.Converters.ValueConverters
     public class DateAndTimeConverterTests
     {
         private readonly DateTime m_now = new DateTime(1990, 12, 12, 13, 00, 00);
-        private readonly DateAndTimeConverter m_dateAndTimeConverter = new DateAndTimeConverter();
+        private readonly DateAndTimeConverter m_dateAndTimeConverter = new DateAndTimeConverter()
+        {
+            IgnoreLocalTime = true
+        };
 
         [Theory]
         [InlineData(0)]
