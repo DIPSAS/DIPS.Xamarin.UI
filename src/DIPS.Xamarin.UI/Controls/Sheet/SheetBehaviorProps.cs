@@ -353,7 +353,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         public static readonly BindableProperty SheetOpeningStrategyProperty =
             BindableProperty.Create(nameof(SheetOpeningStrategy), typeof(SheetOpeningStrategyEnum),
                 typeof(SheetBehavior),
-                SheetOpeningStrategyEnum.MostFittingSnapPoint);
+                SheetOpeningStrategyEnum.FirstSnapPoint);
 
         /// <summary>
         ///     <see cref="InterceptDragGesture " />
@@ -404,7 +404,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         ///     Decides the position the sheet should open in. See <see cref="SheetOpeningStrategyEnum" />.
         ///     This is a bindable property.
         /// </summary>
-        /// <remarks>Default value is <see cref="SheetOpeningStrategyEnum.MostFittingSnapPoint" /></remarks>
+        /// <remarks>Default value is <see cref="SheetOpeningStrategyEnum.FirstSnapPoint" /></remarks>
         public SheetOpeningStrategyEnum SheetOpeningStrategy
         {
             get => (SheetOpeningStrategyEnum)GetValue(SheetOpeningStrategyProperty);
