@@ -10,6 +10,7 @@ namespace DIPS.Xamarin.UI.iOS
 {
     internal class SheetContentView : VisualElementRenderer<ContentView>
     {
+        private UIScrollView? m_scrollView;
         private UIView m_uiView;
 
         protected override void OnElementChanged(ElementChangedEventArgs<ContentView> e)
@@ -35,19 +36,27 @@ namespace DIPS.Xamarin.UI.iOS
             {
                 return;
             }
-            
+
             var subviews = m_uiView.Subviews;
-            
+
             ToggleScrollViews(subviews, state is SheetView.SheetState.Maximized);
         }
 
-        private static void ToggleScrollViews(UIView[] subviews, bool scrollEnabled)
+        private void ToggleScrollViews(UIView[] subviews, bool scrollEnabled)
         {
+            if (m_scrollView is not null)
+            {
+                m_scrollView.ScrollEnabled = scrollEnabled;
+                return;
+            }
+
             foreach (var view in subviews)
             {
                 if (view is UIScrollView scrollView)
                 {
                     scrollView.ScrollEnabled = scrollEnabled;
+
+                    m_scrollView = scrollView;
 
                     return;
                 }
