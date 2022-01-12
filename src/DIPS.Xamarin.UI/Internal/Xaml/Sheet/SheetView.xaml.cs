@@ -52,13 +52,12 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         ///     The height that the sheet content needs if it should display all of its content
         /// </summary>
         internal double SheetContentHeightRequest =>
-            sheetContentView.Content != null
+            SheetContentView.Content != null
                 ? SheetContentView.Content.Height + HeaderGrid.Height + HeaderGrid.Padding.Top +
                   HeaderGrid.Padding.Bottom +
                   OuterSheetFrame.CornerRadius
                 : 0;
 
-        internal ContentView SheetContentView => sheetContentView;
 
         internal SheetView Sheet => this;
 
@@ -291,12 +290,13 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             
             this.CancelAnimations();
             await this.TranslateTo(0, y + (dir ? 5 : -5), (uint)duration, Easing.CubicOut);
-            await this.TranslateTo(0, y, 225, Easing.CubicOut);
 
             SetState(this.IndexOfClosestSnapPoint(y) < SnapPoints.Count - 1
                 ? SheetState.NotMaximized
                 : SheetState.Maximized);
-            
+
+            await this.TranslateTo(0, y, 225, Easing.CubicOut);
+
             NotifyPositionChange();
 
             m_isTranslating = false;
@@ -351,7 +351,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             SheetGrid.RowDefinitions[0].Height = GridLength.Auto;
             SheetGrid.RowDefinitions[1].Height = GridLength.Star;
             Grid.SetRow(HeaderGrid, 0);
-            Grid.SetRow(SheetContentGrid, 1);
+            Grid.SetRow(SheetContentView, 1);
             Grid.SetRow(HandleBoxView, 0);
             Grid.SetRow(SeparatorBoxView, 2);
         }
@@ -360,7 +360,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
         {
             SheetGrid.RowDefinitions[0].Height = GridLength.Star;
             SheetGrid.RowDefinitions[1].Height = GridLength.Auto;
-            Grid.SetRow(SheetContentGrid, 0);
+            Grid.SetRow(SheetContentView, 0);
             Grid.SetRow(HeaderGrid, 1);
             Grid.SetRow(HandleBoxView, 2);
             Grid.SetRow(SeparatorBoxView, 0);
@@ -371,15 +371,15 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
             switch (m_sheetBehaviour.VerticalContentAlignment)
             {
                 case ContentAlignment.Fit:
-                    SheetContentGrid.VerticalOptions = m_sheetBehaviour.Alignment == AlignmentOptions.Top
+                    SheetContentView.VerticalOptions = m_sheetBehaviour.Alignment == AlignmentOptions.Top
                         ? LayoutOptions.End
                         : LayoutOptions.Start;
                     break;
                 case ContentAlignment.Fill:
-                    SheetContentGrid.VerticalOptions = LayoutOptions.Fill;
+                    SheetContentView.VerticalOptions = LayoutOptions.Fill;
                     break;
                 case ContentAlignment.SameAsSheet:
-                    SheetContentGrid.VerticalOptions = m_sheetBehaviour.Alignment == AlignmentOptions.Top
+                    SheetContentView.VerticalOptions = m_sheetBehaviour.Alignment == AlignmentOptions.Top
                         ? LayoutOptions.End
                         : LayoutOptions.Start;
 
@@ -391,7 +391,7 @@ namespace DIPS.Xamarin.UI.Internal.Xaml.Sheet
                             {
                                 var newHeight = Sheet.Height - Sheet.TranslationY -
                                                 (SheetContentHeightRequest - SheetContentView.Content.Height);
-                                SheetContentGrid.HeightRequest = newHeight;
+                                SheetContentView.HeightRequest = newHeight;
                             }
                         };
                     }

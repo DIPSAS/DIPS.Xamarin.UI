@@ -18,12 +18,11 @@ namespace DIPS.Xamarin.UI.Android
         private readonly GestureDetector m_detector;
         private readonly Random m_random;
         private IPanAware m_elem;
-        private bool m_interceptDisallowed;
         private bool m_isScrolling;
-        private int m_moveEvents;
         private int m_pointerId;
         private (float x, float y) m_prev;
         private float m_startX, m_startY;
+        private (float x, float y) m_prevMoveCoordinates;
 
         public SheetContentView(Context context) : base(context)
         {
@@ -85,12 +84,6 @@ namespace DIPS.Xamarin.UI.Android
             }
         }
 
-        public override void RequestDisallowInterceptTouchEvent(bool disallowIntercept)
-        {
-            base.RequestDisallowInterceptTouchEvent(disallowIntercept);
-            m_interceptDisallowed = disallowIntercept;
-        }
-
         public override bool OnInterceptTouchEvent(MotionEvent ev)
         {
             switch (ev.ActionMasked)
@@ -100,17 +93,12 @@ namespace DIPS.Xamarin.UI.Android
                     Reset();
                     break;
                 case MotionEventActions.Move:
-                    m_moveEvents++;
-                    if (m_elem.ShouldInterceptScroll)
+                    if (Math.Abs(ev.RawY - m_prevMoveCoordinates.y) < 2) // on certain devices a tap event will contain move events without any movement, MUST let the child handle the tap event
                     {
-                        return true;
-                    }
-                    
-                    if (m_moveEvents <= 3) // allow child to process event
-                    {
+                        m_prevMoveCoordinates = (ev.RawX, ev.RawY);
                         return false;
                     }
-                    else if (!m_interceptDisallowed) // this is allowed to scroll
+                    else if (m_elem.ShouldInterceptScroll)// if sheet is not maximized and intercept is enabled
                     {
                         return true;
                     }
@@ -119,7 +107,7 @@ namespace DIPS.Xamarin.UI.Android
                         return false;
                     }
                 case MotionEventActions.Down:
-                    OnStart(ToDip(ev.RawX, ev.RawY));
+                    OnStart(ev.RawX, ev.RawY);
                     return false;
             }
 
@@ -147,8 +135,9 @@ namespace DIPS.Xamarin.UI.Android
 
         private bool StartScroll(MotionEvent ev)
         {
+            OnStart(ev.RawX, ev.RawY);
+
             var (x, y) = ToDip(ev.RawX, ev.RawY);
-            OnStart((x, y));
             m_prev = (x, y);
             m_isScrolling = true;
             m_elem?.SendPan(0, 0, 0, 0, GestureStatus.Started, m_pointerId);
@@ -161,14 +150,15 @@ namespace DIPS.Xamarin.UI.Android
             m_startX = 0;
             m_startY = 0;
             m_prev = (0, 0);
-            m_interceptDisallowed = false;
-            m_moveEvents = 0;
         }
 
-        private void OnStart((float x, float y) tuple)
+        private void OnStart(float x, float y)
         {
-            m_startX = tuple.x;
-            m_startY = tuple.y;
+            m_prevMoveCoordinates = (x, y);
+
+            var (dx, dy) = ToDip(x, y);
+            m_startX = dx;
+            m_startY = dy;
             m_pointerId = m_random.Next();
         }
 

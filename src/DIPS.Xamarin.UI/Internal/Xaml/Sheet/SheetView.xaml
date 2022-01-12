@@ -25,11 +25,9 @@
            BackgroundColor="{Binding ContentColor}">
 
         <Grid x:Name="SheetGrid"
-              RowSpacing="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+              RowSpacing="0"
+              RowDefinitions="Auto,*,Auto">
+
             <Grid x:Name="HeaderGrid"
                   Grid.Row="0"
                   RowSpacing="0"
@@ -39,6 +37,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
+                
                 <BoxView x:Name="HandleBoxView"
                          Grid.Row="0"
                          HeightRequest="5"
@@ -48,7 +47,7 @@
                          BackgroundColor="{Binding HandleColor}"
                          HorizontalOptions="Center"
                          VerticalOptions="Center"
-                         Opacity="{Binding IsDraggable, Converter={valueConverters:BoolToObjectConverter TrueObject=1.0, FalseObject=0.0}}"/>
+                         Opacity="{Binding IsDraggable, Converter={valueConverters:BoolToObjectConverter TrueObject=1.0, FalseObject=0.0}}" />
 
                 <Grid x:Name="titleAndButtonsGrid"
                       Grid.Row="1"
@@ -120,25 +119,21 @@
                          android:VisualElement.Elevation="0"
                          Margin="0,5,0,0" />
             </Grid>
-
-            <Grid x:Name="SheetContentGrid"
-                  Grid.Row="1"
-                  RowSpacing="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <ContentView x:Name="sheetContentView"
-                             Content="{Binding SheetContent}" />
-                <BoxView x:Name="FillerBoxView"
+            
+            <ContentView x:Name="SheetContentView"
+                         x:FieldModifier="internal"
                          Grid.Row="1"
-                         Opacity="0"
-                         HeightRequest="0" />
-            </Grid>
+                         Content="{Binding SheetContent}" />
+
+            <BoxView x:Name="FillerBoxView"
+                     Grid.Row="2"
+                     BackgroundColor="Green"
+                     Opacity="0"
+                     HeightRequest="0" />
 
             <Frame x:Name="BusyFrame"
                    Grid.Row="1"
+                   Grid.RowSpan="2"
                    IsVisible="False"
                    HasShadow="False"
                    BackgroundColor="{Binding ContentColor}"
