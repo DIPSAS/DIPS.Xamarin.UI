@@ -29,6 +29,15 @@ namespace DIPS.Xamarin.UI.Controls.Slidable
             Content = m_container;
             m_container.IsClippedToBounds = true;
         }
+
+        /// <summary>
+        ///     Signals to the control that its content should be redrawn.
+        /// </summary>
+        public void Redraw()
+        {
+            ResetAll();
+        }
+        
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
