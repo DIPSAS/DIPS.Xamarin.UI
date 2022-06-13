@@ -72,22 +72,15 @@ namespace DIPS.Xamarin.UI.Android.Util
 
         private bool StartScroll(MotionEvent ev)
         {
-            try
+            var x = ev.GetX();
+            var delta = m_lastXPosition - x ?? 0.0f;
+            m_lastXPosition = x;
+            
+            if (Math.Abs(delta) > m_scaledTouchSlop) // Increase value if we require a longer drag before scrolling starts.
             {
-                var x = ev.GetX();
-                var delta = m_lastXPosition - x ?? 0.0f;
-                m_lastXPosition = x;
-                
-                if (Math.Abs(delta) > m_scaledTouchSlop) // Increase value if we require a longer drag before scrolling starts.
-                {
-                    m_isScrolling = true;
-                    m_elem?.SendPan(0, 0, GestureStatus.Started, m_pointerId);
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                m_isScrolling = true;
+                m_elem?.SendPan(0, 0, GestureStatus.Started, m_pointerId);
+                return true;
             }
 
             return false;
