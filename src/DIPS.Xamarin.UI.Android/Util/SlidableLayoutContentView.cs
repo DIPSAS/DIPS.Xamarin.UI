@@ -21,6 +21,7 @@ namespace DIPS.Xamarin.UI.Android.Util
         private readonly int m_scaledTouchSlop = 5;
         private float m_startX;
         private float m_density;
+        private float? m_lastXPosition;
 
         public SlidableLayoutContentView(Context context) : base(context)
         {
@@ -71,13 +72,22 @@ namespace DIPS.Xamarin.UI.Android.Util
 
         private bool StartScroll(MotionEvent ev)
         {
-            if (ev.HistorySize < 1) return false;
-            var historicalX = ev.GetHistoricalX(0);
-            if (Math.Abs(historicalX - ev.GetX()) > m_scaledTouchSlop) // Increase value if we require a longer drag before scrolling starts.
+            try
             {
-                m_isScrolling = true;
-                m_elem?.SendPan(0, 0, GestureStatus.Started, m_pointerId);
-                return true;
+                var x = ev.GetX();
+                var delta = m_lastXPosition - x ?? 0.0f;
+                m_lastXPosition = x;
+                
+                if (Math.Abs(delta) > m_scaledTouchSlop) // Increase value if we require a longer drag before scrolling starts.
+                {
+                    m_isScrolling = true;
+                    m_elem?.SendPan(0, 0, GestureStatus.Started, m_pointerId);
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
 
             return false;
@@ -96,6 +106,8 @@ namespace DIPS.Xamarin.UI.Android.Util
                     {
                         m_elem.SendTapped(x, y);
                     }
+
+                    m_isScrolling = false;
                     break;
                 case MotionEventActions.Move:
                     return m_isScrolling || StartScroll(ev);
@@ -110,7 +122,7 @@ namespace DIPS.Xamarin.UI.Android.Util
 
         public override bool OnTouchEvent(MotionEvent e)
         {
-            if (e.ActionMasked == MotionEventActions.Up || e.ActionMasked == MotionEventActions.Cancel)
+            if (e.ActionMasked is MotionEventActions.Up or MotionEventActions.Cancel)
             {
                 var (x, y) = ToDip(e.RawX, e.RawY);
 
