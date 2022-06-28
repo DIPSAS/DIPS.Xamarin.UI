@@ -21,6 +21,9 @@ namespace DIPS.Xamarin.UI.Samples.Converters
         {
             switch (parameter)
             {
+                case "BoolToDouble":
+                    m_navigation.PushAsync(new BoolToDoubleConverterPage(){Title = parameter});
+                    break;
                 case "BoolToObject":
                     m_navigation.PushAsync(new BoolToObjectConverterPage(){Title = parameter});
                     break;
