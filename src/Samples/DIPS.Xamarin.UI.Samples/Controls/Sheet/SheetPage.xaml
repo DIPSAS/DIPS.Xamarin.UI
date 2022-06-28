@@ -9,7 +9,8 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              ios:Page.UseSafeArea="true"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             x:DataType="{x:Type Sheet:SheetPageViewModel}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Move"
@@ -21,12 +22,12 @@
     <dxui:ModalityLayout>
         <dxui:ModalityLayout.Behaviors>
             <dxui:SheetBehavior x:Name="SheetBehavior"
+                                BindingContextSheetContent="{Binding InsideSheetViewModel}"
                                 Title="{Binding Title}"
                                 CancelCommand="{Binding CancelCommand}"
                                 VerticalContentAlignment="Fill"
                                 ActionCommand="{Binding ActionCommand}"
                                 ActionTitle="Action"
-                                BindingContextFactory="{Binding SheetViewModelFactory}"
                                 CloseOnOverlayTapped="{Binding Source={x:Reference ShouldCloseOnOverlayTappedCheckbox}, Path=IsChecked}"
                                 ContentColor="{Binding ContentColor}"
                                 HandleColor="{Binding HandleColor}"
