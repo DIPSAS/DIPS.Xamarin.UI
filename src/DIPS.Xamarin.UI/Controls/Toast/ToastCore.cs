@@ -148,9 +148,14 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
             if (Application.Current.MainPage is Shell shellPage)
             {
-                if (shellPage.Parent is ContentPage shellParent)
+                if (shellPage.CurrentPage.Navigation.ModalStack.LastOrDefault() is ContentPage shellContentPage)
                 {
-                    return shellParent;
+                    return shellContentPage;
+                }
+                
+                if (shellPage.CurrentPage is ContentPage shellCurrentContentPage)
+                {
+                    return shellCurrentContentPage;
                 }
             }
 
