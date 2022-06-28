@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:valueConverters="http://dips.xamarin.ui.com"
+             xmlns:valueConverters1="clr-namespace:DIPS.Xamarin.UI.Samples.Converters.ValueConverters;assembly=DIPS.Xamarin.UI.Samples"
+             x:Class="DIPS.Xamarin.UI.Samples.Converters.ValueConverters.BoolToDoubleConverterPage">
+    <ContentPage.BindingContext>
+        <valueConverters1:BoolToDoubleConverterViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0"
+                         Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding SomeLogicalProperty}" />
+                <Label Text="Set me" VerticalOptions="Center" />
+            </StackLayout>
+
+            <StackLayout Grid.Row="1">
+                <Label
+                    Opacity="{Binding SomeLogicalProperty, Converter={valueConverters:BoolToDoubleConverter TrueDouble=0.5, FalseDouble=1}}"
+                    Text="My opacity changes" />
+                <Label
+                    Opacity="{Binding SomeLogicalProperty, Converter={valueConverters:BoolToDoubleConverter TrueDouble=0.5, FalseDouble=1, Inverted=True}}"
+                    Text="My opacity is inverted" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
