@@ -146,6 +146,19 @@ namespace DIPS.Xamarin.UI.Controls.Toast
                 }
             }
 
+            if (Application.Current.MainPage is Shell shellPage)
+            {
+                if (shellPage.CurrentPage.Navigation.ModalStack.LastOrDefault() is ContentPage shellContentPage)
+                {
+                    return shellContentPage;
+                }
+                
+                if (shellPage.CurrentPage is ContentPage shellCurrentContentPage)
+                {
+                    return shellCurrentContentPage;
+                }
+            }
+
             throw new NotSupportedException(
                 $"Cannot display the Toast. Toast could not find an underlying {typeof(ContentPage)}");
         }
