@@ -9,6 +9,9 @@
     <ContentPage.Content>
         <StackLayout>
             <Button Command="{Binding NavigateToCommand}"
+                    CommandParameter="BoolToDouble"
+                    Text="BoolToDoubleConverter" />
+            <Button Command="{Binding NavigateToCommand}"
                     CommandParameter="BoolToObject"
                     Text="BoolToObjectConverter" />
             <Button Command="{Binding NavigateToCommand}"

@@ -245,7 +245,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
                 return;
             }
 
-            m_sheetView.SheetContentView.Content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContext;
+            m_sheetView.SheetContentView.Content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContextSheetContent ??  BindingContext;
         }
 
         internal void AfterOpening()

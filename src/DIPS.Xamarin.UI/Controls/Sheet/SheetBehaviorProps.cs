@@ -165,6 +165,14 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             typeof(string),
             typeof(SheetBehavior),
             string.Empty);
+        
+        /// <summary>
+        ///     <see cref="BindingContextSheetContent" />
+        /// </summary>
+        public static readonly BindableProperty SheetContentBindingContextProperty = BindableProperty.Create(
+            nameof(BindingContextSheetContent),
+            typeof(object),
+            typeof(SheetBehavior));
 
         /// <summary>
         ///     <see cref="IsOpen" />
@@ -318,7 +326,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         /// </summary>
         public static readonly BindableProperty ActionCommandParameterProperty =
             BindableProperty.Create(nameof(ActionCommandParameter), typeof(object), typeof(SheetBehavior));
-
+        
         internal static readonly BindablePropertyKey OpenCommandPropertyKey = BindableProperty.CreateReadOnly(
             nameof(OpenCommand),
             typeof(ICommand),
@@ -474,6 +482,16 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             set => SetValue(SheetContentTemplateProperty, value);
         }
 
+        /// <summary>
+        ///     Used to set the binding context of the content of the sheet when the sheet opens.
+        ///     This is a bindable property.
+        /// </summary>
+        public object? BindingContextSheetContent
+        {
+            get => (object)GetValue(SheetContentBindingContextProperty);
+            set => SetValue(SheetContentBindingContextProperty, value);
+        }
+        
         /// <summary>
         ///     Parameter passed to <see cref="ActionCommand" />.
         ///     This is a bindable property.
