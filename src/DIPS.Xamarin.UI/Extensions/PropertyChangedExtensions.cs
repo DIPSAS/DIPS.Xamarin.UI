@@ -34,7 +34,7 @@ namespace DIPS.Xamarin.UI.Extensions
             /// <param name="propertyChangedImplementation">The property changed implementation, this is normally a view model </param>
             /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
             /// <param name="propertyName">A nullable property name, if left empty it will pick the caller member name</param>
-            public static void OnPropertyChanged(this INotifyPropertyChanged? propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, [CallerMemberName] string propertyName = "")
+            public static void OnPropertyChanged(this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, [CallerMemberName] string propertyName = "")
         {
             propertyChanged?.Raise(propertyName, propertyChangedImplementation);
         }
@@ -45,7 +45,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <param name="propertyChangedImplementation">The property changed implementation, this is normally a view model</param>
         /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
         /// <param name="properties"></param>
-        public static void OnMultiplePropertiesChanged(this INotifyPropertyChanged? propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, params string[] properties)
+        public static void OnMultiplePropertiesChanged(this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, params string[] properties)
         {
             propertyChanged?.RaiseForEach(propertyChangedImplementation, properties);
 
