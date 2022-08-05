@@ -34,7 +34,7 @@ namespace DIPS.Xamarin.UI.Extensions
             /// <param name="propertyChangedImplementation">The property changed implementation, this is normally a view model </param>
             /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
             /// <param name="propertyName">A nullable property name, if left empty it will pick the caller member name</param>
-            public static void OnPropertyChanged(this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, [CallerMemberName] string propertyName = "")
+            public static void OnPropertyChanged(this INotifyPropertyChanged? propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, [CallerMemberName] string propertyName = "")
         {
             propertyChanged?.Raise(propertyName, propertyChangedImplementation);
         }
@@ -45,7 +45,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <param name="propertyChangedImplementation">The property changed implementation, this is normally a view model</param>
         /// <param name="propertyChanged">The property changed event handler that the propertyChangedImplementation holds</param>
         /// <param name="properties"></param>
-        public static void OnMultiplePropertiesChanged(this INotifyPropertyChanged propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, params string[] properties)
+        public static void OnMultiplePropertiesChanged(this INotifyPropertyChanged? propertyChangedImplementation, PropertyChangedEventHandler? propertyChanged, params string[] properties)
         {
             propertyChanged?.RaiseForEach(propertyChangedImplementation, properties);
 
@@ -58,7 +58,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <param name="propertyName">A nullable property name, if left empty it will pick the caller member name</param>
         /// <param name="sender">The event sender, optional because it is not required for the Xamarin.Forms view to react to a property changed</param>
         /// <remarks>This extension method does not set the event `sender` when notifying property changed. This has not proven to a problem when we created the extension, but be aware of it if you end up with something strange. Set <see cref="sender"/> if you need to make sure that we send the event sender</remarks>
-        public static void Raise(this PropertyChangedEventHandler propertyChanged, [CallerMemberName] string propertyName = "", object? sender = null)
+        public static void Raise(this PropertyChangedEventHandler? propertyChanged, [CallerMemberName] string propertyName = "", object? sender = null)
         {
             propertyChanged?.Invoke(sender, new PropertyChangedEventArgs(propertyName));
         }
@@ -90,7 +90,7 @@ namespace DIPS.Xamarin.UI.Extensions
         /// <remarks>This method does a equality check to see if the value has changed, if you need to notify property changed when the value has not changed, please use <see cref="Raise"/></remarks>
         /// <remarks>This extension method does not set the event `sender` when notifying property changed. This has not proven to a problem when we created the extension, but be aware of it if you end up with something strange. Set <see cref="sender"/> if you need to make sure that we send the event sender</remarks>
         /// <returns>A boolean value to indicate that the property changed has been invoked</returns>
-        public static bool RaiseWhenSet<S>(this PropertyChangedEventHandler propertyChanged, ref S backingStore, S value, object? sender = null, [CallerMemberName] string propertyName = "")
+        public static bool RaiseWhenSet<S>(this PropertyChangedEventHandler? propertyChanged, ref S backingStore, S value, object? sender = null, [CallerMemberName] string propertyName = "")
         {
             if (EqualityComparer<S>.Default.Equals(backingStore, value))
                 return false;
