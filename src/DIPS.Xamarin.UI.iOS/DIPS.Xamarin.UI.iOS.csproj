@@ -69,8 +69,5 @@
   <ItemGroup>
     <BundleResource Include="Resources\Base.lproj\Localizable.strings" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Info.plist" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
