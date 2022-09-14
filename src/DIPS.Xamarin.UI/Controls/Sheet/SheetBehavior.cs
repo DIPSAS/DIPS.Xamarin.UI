@@ -129,8 +129,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             if (IsOpen)
             {
-                IsOpen = false;
-                IsOpen = true;
+                MoveTo(Position);
             }
         }
 
@@ -140,7 +139,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
         {
             if (m_modalityLayout?.CurrentShowingModalityLayout == this)
             {
-                if (m_currentOrientation != DeviceDisplay.MainDisplayInfo.Orientation)
+                if (m_currentOrientation != DisplayOrientation.Landscape && m_sheetView?.Height < m_sheetView?.Width || m_currentOrientation != DisplayOrientation.Portrait && m_sheetView?.Height > m_sheetView?.Width)
                 {
                     m_currentOrientation = DeviceDisplay.MainDisplayInfo.Orientation;
                     OnOrientationChanged();
