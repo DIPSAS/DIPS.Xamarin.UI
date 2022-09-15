@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Controls.Modality;
 using DIPS.Xamarin.UI.Internal.Xaml.Sheet;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -124,10 +125,25 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
             m_modalityLayout.SizeChanged += OnModalityLayoutSizeChanged;
         }
 
+        private void OnOrientationChanged()
+        {
+            if (IsOpen)
+            {
+                MoveTo(Position);
+            }
+        }
+
+        private DisplayOrientation m_currentOrientation = DeviceDisplay.MainDisplayInfo.Orientation;
+
         private void OnModalityLayoutSizeChanged(object sender, EventArgs e)
         {
             if (m_modalityLayout?.CurrentShowingModalityLayout == this)
             {
+                if (m_currentOrientation != DisplayOrientation.Landscape && m_sheetView?.Height < m_sheetView?.Width || m_currentOrientation != DisplayOrientation.Portrait && m_sheetView?.Height > m_sheetView?.Width)
+                {
+                    m_currentOrientation = DeviceDisplay.MainDisplayInfo.Orientation;
+                    OnOrientationChanged();
+                }
                 return; //Jump out of the size changed event if the modality layout size changes and the sheet is currently visible
             }
 
@@ -247,7 +263,7 @@ namespace DIPS.Xamarin.UI.Controls.Sheet
 
             m_sheetView.SheetContentView.Content.BindingContext = BindingContextFactory?.Invoke() ?? BindingContextSheetContent ??  BindingContext;
         }
-
+        
         internal void AfterOpening()
         {
             if (OpenedCommand is not null && OpenedCommand.CanExecute(OpenedCommandParameter))
