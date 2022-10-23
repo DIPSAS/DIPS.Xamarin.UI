@@ -1,0 +1,25 @@
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:samples="clr-namespace:DIPS.Xamarin.UI.Samples;assembly=DIPS.Xamarin.UI.Samples"
+             xmlns:contextMenu="clr-namespace:DIPS.Xamarin.UI.Controls.ContextMenu;assembly=DIPS.Xamarin.UI"
+             xmlns:menu1="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.ContextMenu;assembly=DIPS.Xamarin.UI.Samples"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.ContextMenu.ContextMenuPage"
+             x:DataType="{x:Type menu1:ContextMenuPageViewModel}">
+    <ContentPage.BindingContext>
+        <menu1:ContextMenuPageViewModel />
+    </ContentPage.BindingContext>
+    <contextMenu:ContextMenuButton Text="{Binding Text}"
+                                   Title="Abonner på varslinger"
+                                   Command="{Binding MenuItemCommand}"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Start">
+        <contextMenu:ContextMenuGroup Title="Sortere">
+            <contextMenu:ContextMenuItem Title="Opp" />
+            <contextMenu:ContextMenuItem Title="Ned" />
+        </contextMenu:ContextMenuGroup>
+        <contextMenu:ContextMenuItem Title="Enkelt analyse"
+                                     CommandParameter="Single" />
+        <contextMenu:ContextMenuItem Title="Analyse på tvers av bestillinger"
+                                     CommandParameter="All" />
+    </contextMenu:ContextMenuButton>
+</ContentPage>

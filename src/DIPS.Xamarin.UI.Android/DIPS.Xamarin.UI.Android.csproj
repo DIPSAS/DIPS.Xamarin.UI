@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextMenuButtonRenderer.cs" />
     <Compile Include="SheetContentView.cs" />
     <Compile Include="InternalDatePickerRenderer.cs" />
     <Compile Include="Util\Inspector.cs" />
