@@ -1,31 +1,22 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using DIPS.Xamarin.UI.Controls.ContextMenu;
-using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples.Controls.ContextMenu
 {
-    public class ContextMenuPageViewModel : INotifyPropertyChanged
+    public class ContextMenuPageViewModel
     {
-        private IEnumerable<ContextMenuItem> m_items;
-
         public ContextMenuPageViewModel()
         {
-            ItemClickedCommand = new Command<ContextMenuItem>(MenuItemClicked);
+            MenuItemCommand = new Command<string>(MenuItemClicked);
         }
 
-        private void MenuItemClicked(ContextMenuItem clickedMenuItem)
+        private void MenuItemClicked(string clickedMenuItem)
         {
-            Console.WriteLine(clickedMenuItem.Title);
+            Console.WriteLine();
         }
-        
-        public Command ItemClickedCommand { get; }
-        public Command Test1Command { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public string Text => "test 123";
+
+        public Command MenuItemCommand { get; }
     }
 }

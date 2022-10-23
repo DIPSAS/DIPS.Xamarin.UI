@@ -1,97 +1,25 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:samples="clr-namespace:DIPS.Xamarin.UI.Samples;assembly=DIPS.Xamarin.UI.Samples"
              xmlns:contextMenu="clr-namespace:DIPS.Xamarin.UI.Controls.ContextMenu;assembly=DIPS.Xamarin.UI"
              xmlns:menu1="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.ContextMenu;assembly=DIPS.Xamarin.UI.Samples"
              x:Class="DIPS.Xamarin.UI.Samples.Controls.ContextMenu.ContextMenuPage"
-             x:DataType="{x:Type menu1:ContextMenuPageViewModel}"
-             BackgroundColor="LightGray">
+             x:DataType="{x:Type menu1:ContextMenuPageViewModel}">
     <ContentPage.BindingContext>
         <menu1:ContextMenuPageViewModel />
     </ContentPage.BindingContext>
-    <StackLayout Margin="15">
-        <!-- Single item -->
-        <contextMenu:ContextMenuControl VerticalOptions="Start"
-                                        ItemClickedCommand="{Binding ItemClickedCommand}">
-            <contextMenu:ContextMenuControl.ItemsSource>
-                <contextMenu:ContextMenuItem Title="Item" />
-            </contextMenu:ContextMenuControl.ItemsSource>
-            <Button Text="Single item"
-                    BackgroundColor="White" />
-        </contextMenu:ContextMenuControl>
-
-        <!-- Two items -->
-        <contextMenu:ContextMenuControl VerticalOptions="Start"
-                                        ItemClickedCommand="{Binding ItemClickedCommand}">
-            <contextMenu:ContextMenuControl.ItemsSource>
-                <contextMenu:ContextMenuItem Title="Item 1" />
-                <contextMenu:ContextMenuItem Title="Item 2" />
-            </contextMenu:ContextMenuControl.ItemsSource>
-            <Button Text="Two items"
-                    BackgroundColor="White" />
-        </contextMenu:ContextMenuControl>
-
-        <!--Checkable items (all)-->
-        <contextMenu:ContextMenuControl VerticalOptions="Start"
-                                        ItemClickedCommand="{Binding ItemClickedCommand}">
-            <contextMenu:ContextMenuControl.ItemsSource>
-                <contextMenu:ContextMenuItem Title="Item 1"
-                                             IsCheckable="True" />
-                <contextMenu:ContextMenuItem Title="Test 2"
-                                             IsCheckable="True" />
-            </contextMenu:ContextMenuControl.ItemsSource>
-            <Button Text="Checkable items (all)"
-                    BackgroundColor="White" />
-        </contextMenu:ContextMenuControl>
-
-        <!--Checkable items (single)-->
-        <contextMenu:ContextMenuControl VerticalOptions="Start"
-                                        ItemClickedCommand="{Binding ItemClickedCommand}">
-            <contextMenu:ContextMenuControl.ItemsSource>
-                <contextMenu:ContextMenuGroup IsCheckable="True">
-                    <contextMenu:ContextMenuItem Title="Item 1" />
-                    <contextMenu:ContextMenuItem Title="Item 2" />
-                </contextMenu:ContextMenuGroup>
-            </contextMenu:ContextMenuControl.ItemsSource>
-            <Button Text="Checkable items (single)"
-                    BackgroundColor="White" />
-        </contextMenu:ContextMenuControl>
-
-        <!-- Grouped items -->
-        <contextMenu:ContextMenuControl VerticalOptions="Start"
-                                        ItemClickedCommand="{Binding ItemClickedCommand}">
-            <contextMenu:ContextMenuControl.ItemsSource>
-                <contextMenu:ContextMenuGroup Title="Group 1">
-                    <contextMenu:ContextMenuItem Title="Item 1" />
-                    <contextMenu:ContextMenuItem Title="Item 2" />
-                </contextMenu:ContextMenuGroup>
-                <contextMenu:ContextMenuGroup Title="Group 2">
-                    <contextMenu:ContextMenuItem Title="Item 1" />
-                    <contextMenu:ContextMenuItem Title="Item 2" />
-                </contextMenu:ContextMenuGroup>
-            </contextMenu:ContextMenuControl.ItemsSource>
-            <Button Text="Grouped items"
-                    BackgroundColor="White" />
-        </contextMenu:ContextMenuControl>
-
-        <!-- Checkable grouped items -->
-        <contextMenu:ContextMenuControl VerticalOptions="Start"
-                                        ItemClickedCommand="{Binding ItemClickedCommand}">
-            <contextMenu:ContextMenuControl.ItemsSource>
-                <contextMenu:ContextMenuGroup Title="Group 1"
-                                              IsCheckable="True">
-                    <contextMenu:ContextMenuItem Title="Item 1" />
-                    <contextMenu:ContextMenuItem Title="Item 2" />
-                </contextMenu:ContextMenuGroup>
-                <contextMenu:ContextMenuGroup Title="Group 2"
-                                              IsCheckable="True">
-                    <contextMenu:ContextMenuItem Title="Item 1" />
-                    <contextMenu:ContextMenuItem Title="Item 2" />
-                </contextMenu:ContextMenuGroup>
-            </contextMenu:ContextMenuControl.ItemsSource>
-            <Button Text="Checkable grouped items"
-                    BackgroundColor="White" />
-        </contextMenu:ContextMenuControl>
-    </StackLayout>
-
-
+    <contextMenu:ContextMenuButton Text="{Binding Text}"
+                                   Title="Abonner på varslinger"
+                                   Command="{Binding MenuItemCommand}"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Start">
+        <contextMenu:ContextMenuGroup Title="Sortere">
+            <contextMenu:ContextMenuItem Title="Opp" />
+            <contextMenu:ContextMenuItem Title="Ned" />
+        </contextMenu:ContextMenuGroup>
+        <contextMenu:ContextMenuItem Title="Enkelt analyse"
+                                     CommandParameter="Single" />
+        <contextMenu:ContextMenuItem Title="Analyse på tvers av bestillinger"
+                                     CommandParameter="All" />
+    </contextMenu:ContextMenuButton>
 </ContentPage>

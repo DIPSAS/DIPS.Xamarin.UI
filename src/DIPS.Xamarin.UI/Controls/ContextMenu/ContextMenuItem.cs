@@ -4,15 +4,12 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.ContextMenu
 {
-    /// <summary>
-    /// A context menu item to use in a context menu
-    /// </summary>
-    public partial class ContextMenuItem : BindableObject
+    public partial class ContextMenuItem : View
     {
-        internal void SendClicked(ContextMenuButton contextMenuButton)
+        public event EventHandler Clicked;
+
+        public void Click()
         {
-            contextMenuButton.SendClicked(this);
-            Command?.Execute(CommandParameter);
             Clicked?.Invoke(this, EventArgs.Empty);
         }
     }
