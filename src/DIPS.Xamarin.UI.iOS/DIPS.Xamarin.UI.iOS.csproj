@@ -39,8 +39,8 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Compile Include="ContextMenuButtonRenderer.cs" />
     <Compile Include="SheetContentView.cs" />
     <Compile Include="SlidableLayoutContentView.cs" />
     <Compile Include="InternalDatePickerRenderer.cs" />

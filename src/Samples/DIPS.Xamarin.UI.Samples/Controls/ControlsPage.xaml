@@ -70,10 +70,13 @@
                     CommandParameter="BorderBoxControl"
                     Text="BorderBox" />
                 <Button
-                    
                     Command="{Binding NavigateToCommand}"
                     CommandParameter="Vibration"
                     Text="Vibration" />
+                <Button
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="ContextMenu"
+                    Text="ContextMenu" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

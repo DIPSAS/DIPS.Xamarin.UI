@@ -19,6 +19,7 @@ namespace DIPS.Xamarin.UI.Android
             Inspector.Instance = new Util.Inspector();
             InternalDatePickerRenderer.Initialize();
             InternalButtonRenderer.Initialize();
+            ContextMenuButtonRenderer.Initialize();
 
             var vibrationService = new VibrationService();
             Vibration.Vibration.Initialize(vibrationService);

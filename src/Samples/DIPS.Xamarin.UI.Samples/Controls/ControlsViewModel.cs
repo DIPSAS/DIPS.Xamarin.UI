@@ -2,6 +2,7 @@ using System;
 using System.Windows.Input;
 using DIPS.Xamarin.UI.Samples.Controls.BorderBox;
 using DIPS.Xamarin.UI.Samples.Controls.Content;
+using DIPS.Xamarin.UI.Samples.Controls.ContextMenu;
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;
 using DIPS.Xamarin.UI.Samples.Controls.Popup;
@@ -62,6 +63,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                     await m_navigation.PushAsync(new BorderBoxPage {Title = parameter});
                 if (parameter.Equals("Vibration"))
                     await m_navigation.PushAsync(new VibrationPage() {Title = parameter});
+                if (parameter.Equals("ContextMenu"))
+                    await m_navigation.PushAsync(new ContextMenuPage() {Title = parameter});
             }
             catch (Exception e)
             {
