@@ -70,12 +70,10 @@ namespace DIPS.Xamarin.UI.Android.Util
             if (e.NewElement is SlidableLayout contentView) m_elem = contentView;
         }
 
-        private bool StartScroll(MotionEvent ev)
+        private bool StartScroll(float curX)
         {
-            var x = ev.GetX();
-            var delta = m_lastXPosition - x ?? 0.0f;
-            m_lastXPosition = x;
-            
+            var delta = curX - m_startX;
+
             if (Math.Abs(delta) > m_scaledTouchSlop) // Increase value if we require a longer drag before scrolling starts.
             {
                 m_isScrolling = true;
@@ -103,7 +101,7 @@ namespace DIPS.Xamarin.UI.Android.Util
                     m_isScrolling = false;
                     break;
                 case MotionEventActions.Move:
-                    return m_isScrolling || StartScroll(ev);
+                    return m_isScrolling || StartScroll(x);
                 case MotionEventActions.Down: // This case is the only case that is always intercepted no matter the view hierarchy. (I think) 
                     m_startX = x;
                     m_pointerId = m_random.Next();
@@ -130,7 +128,7 @@ namespace DIPS.Xamarin.UI.Android.Util
 
             if (!m_isScrolling && e.ActionMasked == MotionEventActions.Move) // Is needed when this does not contain any children that can handle touch events. 
             {
-                StartScroll(e);
+                StartScroll(ToDip(e.RawX, e.RawY).Item1);
             }
 
             return m_detector.OnTouchEvent(e);

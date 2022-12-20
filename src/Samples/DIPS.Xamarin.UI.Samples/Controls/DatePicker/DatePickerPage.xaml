@@ -13,7 +13,8 @@
         <DatePicker:DatePickerPageViewModel />
     </ContentPage.BindingContext>
     <dxui:DatePicker Date="{Binding Date}"
-                     LabelColor="{AppThemeBinding Dark=white, Light=black}"
+                     BackgroundColor="Aquamarine"
+                     LabelColor="Green"
                      HorizontalOptions="CenterAndExpand"
                      VerticalOptions="CenterAndExpand"
                      ExtraButtonCommand="{Binding SetTodayDateCommand}"
