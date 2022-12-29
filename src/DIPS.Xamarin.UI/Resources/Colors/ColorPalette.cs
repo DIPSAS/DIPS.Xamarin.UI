@@ -31,6 +31,8 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         public static Color Accent = Color.FromHex("#AB69BF");
         public static Color AccentLight = Color.FromHex("#D297E3");
         public static Color AccentAir = Color.FromHex("#F4DDFA");
+
+        public static Color Aqua = Color.FromHex("#129DDB");
 #pragma warning restore 1591
 
         /// <summary>
@@ -60,6 +62,7 @@ namespace DIPS.Xamarin.UI.Resources.Colors
                 Identifier.Accent => Accent,
                 Identifier.AccentLight => AccentLight,
                 Identifier.AccentAir => AccentAir,
+                Identifier.Aqua => Aqua,
                 _ => throw new System.NotImplementedException()
             };
         }
@@ -87,6 +90,7 @@ namespace DIPS.Xamarin.UI.Resources.Colors
             Accent,
             AccentLight,
             AccentAir,
+            Aqua
 #pragma warning restore 1591
         }
     }
