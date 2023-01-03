@@ -60,7 +60,6 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
             var theTappedSharedItem = m_menuItems?.FirstOrDefault(m => m.Value == theTappedNativeItem).Key;
             if (theTappedSharedItem != null)
             {
-                
                 if (theTappedNativeItem.IsCheckable) //check the item
                 {
                     m_menuItems.ForEach(pair => pair.Value.SetChecked(false));
