@@ -18,5 +18,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls.ContextMenu
         public string Text => "test 123";
 
         public Command MenuItemCommand { get; }
+        public bool EditShouldBeVisible => false;
     }
 }

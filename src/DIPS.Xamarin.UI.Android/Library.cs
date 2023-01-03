@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using DIPS.Xamarin.UI.Android.ContextMenu;
 using DIPS.Xamarin.UI.Internal.Utilities;
 
 namespace DIPS.Xamarin.UI.Android

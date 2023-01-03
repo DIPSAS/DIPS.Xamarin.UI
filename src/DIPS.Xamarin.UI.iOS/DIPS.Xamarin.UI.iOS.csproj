@@ -40,7 +40,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContextMenuButtonRenderer.cs" />
+    <Compile Include="ContextMenu\ContextMenuButtonRenderer.cs" />
+    <Compile Include="ContextMenu\ContextMenuContentPageRenderer.cs" />
+    <Compile Include="ContextMenu\ContextMenuHelper.cs" />
     <Compile Include="SheetContentView.cs" />
     <Compile Include="SlidableLayoutContentView.cs" />
     <Compile Include="InternalDatePickerRenderer.cs" />
