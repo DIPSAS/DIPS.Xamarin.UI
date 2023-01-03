@@ -31,14 +31,23 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                 {
                     {
                         Control.Menu = CreateMenu(); //Create the menu the first time so it shows up the first time the user taps the button
-                        Control.TouchDown += (sender, args) =>
-                        {
-                            Control.Menu = CreateMenu(); //Recreate the menu so the visuals of the items of the menu are able to change between each time the user opens the menu
-                        };
+                        Control.TouchDown += OnTouchDown;
                         Control.ShowsMenuAsPrimaryAction = true;
                     }
                 }
             }
+            else
+            {
+                if (Control != null)
+                {
+                    Control.TouchDown -= OnTouchDown;    
+                }
+            }
+        }
+
+        private void OnTouchDown(object sender, EventArgs e)
+        {
+            Control.Menu = CreateMenu(); //Recreate the menu so the visuals of the items of the menu are able to change between each time the user opens the menu
         }
 
         private UIMenu CreateMenu()
