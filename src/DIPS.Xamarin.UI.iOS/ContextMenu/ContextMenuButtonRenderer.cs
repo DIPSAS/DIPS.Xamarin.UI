@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using CoreGraphics;
 using DIPS.Xamarin.UI.Controls.ContextMenu;
 using DIPS.Xamarin.UI.iOS.ContextMenu;
+using ObjCRuntime;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -15,7 +17,7 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
 {
     public class ContextMenuButtonRenderer : ButtonRenderer
     {
-        private Dictionary<ContextMenuItem, UIMenuElement> m_contextMenuDict;
+        private ContextMenuButton m_contextMenuButton;
         internal static void Initialize() { }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
@@ -24,48 +26,27 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
 
             if (e.NewElement is ContextMenuButton contextMenuButton)
             {
+                m_contextMenuButton = contextMenuButton;
                 if (Control != null)
                 {
                     {
-                        m_contextMenuDict = ContextMenuHelper.CreateMenuItems(contextMenuButton.Children.Reverse(),
-                            contextMenuButton);
-                        SubscribeToPropertyChangedForAllMenuItems();
-                        var uiMenuElements = m_contextMenuDict.Select(k => k.Value).ToArray();
-                        Control.Menu = UIMenu.Create(contextMenuButton.Title, uiMenuElements);
+                        Control.Menu = CreateMenu(); //Create the menu the first time so it shows up the first time the user taps the button
+                        Control.TouchDown += (sender, args) =>
+                        {
+                            Control.Menu = CreateMenu(); //Recreate the menu so the visuals of the items of the menu are able to change between each time the user opens the menu
+                        };
                         Control.ShowsMenuAsPrimaryAction = true;
                     }
                 }
             }
-            else
-            {
-                UnSubscribeToPropertyChangedForAllMenuItems();
-            }
-        }
-        private void SubscribeToPropertyChangedForAllMenuItems()
-        {
-            m_contextMenuDict.Select(k => k.Key).ForEach(menuItem => menuItem.PropertyChanged += OnMenuItemPropertyChanged);
         }
 
-        private void OnMenuItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private UIMenu CreateMenu()
         {
-            if (sender is ContextMenuItem theContextMenuItem)
-            {
-                if (!theContextMenuItem.IsVisible)
-                {
-                    var (contextMenuItem,uiMenuElement) = m_contextMenuDict.FirstOrDefault(kv => kv.Key == theContextMenuItem);
-                    if (contextMenuItem != null)
-                    {
-                        if (uiMenuElement != null)
-                        {
-                        }
-                    } 
-                }
-            }
-        }
-
-        private void UnSubscribeToPropertyChangedForAllMenuItems()
-        {
-            m_contextMenuDict.Select(k => k.Key).ForEach(menuItem => menuItem.PropertyChanged -= OnMenuItemPropertyChanged);
+            var dict = ContextMenuHelper.CreateMenuItems(
+                m_contextMenuButton.Children.Reverse(),
+                m_contextMenuButton);
+            return UIMenu.Create(m_contextMenuButton.Title, dict.Select(k => k.Value).ToArray());
         }
     }
 }
