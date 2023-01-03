@@ -28,14 +28,13 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                 {
                     var uiElements = ContextMenuHelper.CreateMenuItems(contextMenuButton.Children, contextMenuButton)
                         .Select(k => k.Value).ToArray();
+                    var item = new UIBarButtonItem()
+                    {
+                        Title = contextMenuButton.Title, Menu = UIMenu.Create(uiElements), PrimaryAction = null
+                    };
                     NavigationController.TopViewController.NavigationItem.RightBarButtonItems = new[]
                     {
-                        new UIBarButtonItem()
-                        {
-                            Title = contextMenuButton.Title,
-                            Menu = UIMenu.Create(uiElements),
-                            PrimaryAction = null
-                        }
+                       item
                     };
                 }
             }

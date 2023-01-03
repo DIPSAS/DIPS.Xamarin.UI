@@ -1,13 +1,30 @@
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace DIPS.Xamarin.UI.Controls.ContextMenu
 {
     [ContentProperty(nameof(Children))]
 
-    public class ContextMenuGroup : ContextMenuItem
+    public partial class ContextMenuGroup : ContextMenuItem
     {
-        private readonly List<ContextMenuItem> m_children = new();
-        public IList<ContextMenuItem> Children => m_children;
+        public int Id { get; internal set; }
+        public IEnumerable<ContextMenuItem> Children { get; private set; } = new List<ContextMenuItem>();
+
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+            Children.ForEach(c => c.BindingContext = BindingContext);
+        }
+        
+        private static void OnItemsSourceChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (bindable is not ContextMenuGroup contextMenuGroup) return;
+            if (contextMenuGroup.ItemsSource != null && contextMenuGroup.ItemsSource.Any())
+            {
+                contextMenuGroup.Children = contextMenuGroup.ItemsSource;
+            }
+        }
     }
 }
