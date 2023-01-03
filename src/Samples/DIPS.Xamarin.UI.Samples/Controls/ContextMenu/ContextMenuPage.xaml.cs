@@ -11,5 +11,14 @@ namespace DIPS.Xamarin.UI.Samples.Controls.ContextMenu
         {
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (BindingContext is ContextMenuPageViewModel contextMenuPageViewModel)
+            {
+                _ = contextMenuPageViewModel.Initialize();
+            }
+        }
     }
 }

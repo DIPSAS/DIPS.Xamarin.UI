@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace DIPS.Xamarin.UI.Controls.ContextMenu
 {
@@ -12,5 +13,11 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
     {
         private readonly List<ContextMenuItem> m_children = new List<ContextMenuItem>();
         public IList<ContextMenuItem> Children => m_children;
+
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+            Children.ForEach(c => c.BindingContext = BindingContext);
+        }
     }
 }

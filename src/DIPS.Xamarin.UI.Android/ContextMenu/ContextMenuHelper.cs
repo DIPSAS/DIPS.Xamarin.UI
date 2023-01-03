@@ -35,6 +35,7 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
                 {
                     var menuItem = popupMenu.Menu.Add(groupIndex, index, Menu.None, contextMenuItem.Title);
                     menuItem?.SetCheckable(contextMenuItem.IsCheckable);
+                    menuItems.ForEach(m => m.IsChecked = false); //Reset every checked menu item as it can only be one that is checked
                     menuItem?.SetChecked(contextMenuItem.IsChecked);
                     dict.Add(contextMenuItem, menuItem);
                 }

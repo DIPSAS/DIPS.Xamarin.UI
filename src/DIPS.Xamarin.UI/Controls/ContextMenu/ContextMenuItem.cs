@@ -4,12 +4,11 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.ContextMenu
 {
-    public partial class ContextMenuItem : View
+    public partial class ContextMenuItem : BindableObject
     {
         internal void SendClicked(ContextMenuButton contextMenuButton)
         {
-            var commandParameter = CommandParameter ?? Title;
-            contextMenuButton.ContextItemClickedCommand?.Execute(commandParameter);
+            contextMenuButton.ContextItemClickedCommand?.Execute(this);
             Clicked?.Invoke(this, EventArgs.Empty);
         }
     }

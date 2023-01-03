@@ -7,30 +7,13 @@
     <ContentPage.BindingContext>
         <menu1:ContextMenuPageViewModel />
     </ContentPage.BindingContext>
-    <!-- <pages:ContextMenuContentPage.ContextMenuToolbarButton> -->
-    <!--     <contextMenu:ContextMenuButton Title="..." -->
-    <!--                                    Command="{Binding MenuItemCommand}" -->
-    <!--                                    HorizontalOptions="End" -->
-    <!--                                    VerticalOptions="Start"> -->
-    <!--         <contextMenu:ContextMenuItem Title="Rediger" -->
-    <!--                                      CommandParameter="Rediger" /> -->
-    <!--         <contextMenu:ContextMenuItem Title="PDF-visning" -->
-    <!--                                      CommandParameter="Single" /> -->
-    <!--         <contextMenu:ContextMenuItem Title="Tilpasset visning" -->
-    <!--                                      CommandParameter="All" /> -->
-    <!--     </contextMenu:ContextMenuButton> -->
-    <!-- </pages:ContextMenuContentPage.ContextMenuToolbarButton> -->
     <Grid RowDefinitions="Auto,*">
         <contextMenu:ContextMenuButton Text="Hit me"
                                        ContextItemClickedCommand="{Binding MenuItemCommand}"
                                        HorizontalOptions="End">
-            <contextMenu:ContextMenuGroup Title="Options" IsCheckable="True">
-                <contextMenu:ContextMenuItem Title="Option 1"  />
-                <contextMenu:ContextMenuItem Title="Option 2" />
-                <contextMenu:ContextMenuItem Title="Option 3" />
-                <contextMenu:ContextMenuItem Title="Option 4" />
-                <contextMenu:ContextMenuItem Title="Option 5" />
-            </contextMenu:ContextMenuGroup>
+            <contextMenu:ContextMenuGroup Title="Options" 
+                                          IsCheckable="True"
+                                          ItemsSource="{Binding Items}"/>
         </contextMenu:ContextMenuButton>
     </Grid>
 </ContentPage>

@@ -24,18 +24,30 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                 {
                     //Inherit isCheckable context menu group group to all menu items in the group
                     contextMenuGroup.Children.ForEach(c => c.IsCheckable = contextMenuGroup.IsCheckable);
+
+                    //If an item is checked, every other item should be reset
+                    var lastCheckedItem = contextMenuGroup.Children.LastOrDefault(i => i.IsChecked);
+                    contextMenuGroup.Children.ForEach(i =>
+                    {
+                        if (i != lastCheckedItem && i.IsChecked)
+                        {
+                            i.IsChecked = false;
+                        }
+                    });
                     
                     var newDict = CreateMenuItems(contextMenuGroup.Children, contextMenuButton, contextMenuGroup);
-                    if (items.Count(i => i is ContextMenuGroup) > 1) //If there is more than one group, add the group title and group the items
+                    if (items.Count(i => i is ContextMenuGroup) >
+                        1) //If there is more than one group, add the group title and group the items
                     {
-                        uiMenuElement = UIMenu.Create(contextMenuGroup.Title,newDict.Select(k => k.Value).ToArray());    
+                        uiMenuElement = UIMenu.Create(contextMenuGroup.Title, newDict.Select(k => k.Value).ToArray());
                     }
                     else //Only one group, add this to the root of the menu so the user does not have to tap an extra time to get to the items.
                     {
                         newDict.ForEach(newD => dict.Add(newD.Key, newD.Value));
-                        continue; 
+                        continue;
                     }
                 }
+
                 else
                 {
                     var uiAction = UIAction.Create(contextMenuItem.Title, null, null, (uiAction) =>
@@ -44,19 +56,23 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                         {
                             if (menuGroup != null) //The item belonged to a group
                             {
-                                menuGroup.Children.ForEach(c => c.IsChecked = false); //Reset the other items checked stat
+                                menuGroup.Children.ForEach(c =>
+                                    c.IsChecked = false); //Reset the other items checked stat
                             }
-                            contextMenuItem.IsChecked = !contextMenuItem.IsChecked; //Can not change the visuals when the menu is showing as the items are immutable when they are showing
+
+                            contextMenuItem.IsChecked =
+                                !contextMenuItem
+                                    .IsChecked; //Can not change the visuals when the menu is showing as the items are immutable when they are showing
                         }
-                        
+
                         contextMenuItem.SendClicked(contextMenuButton);
                     });
-                    
+
                     SetCorrectUiActionState(contextMenuItem, uiAction); //Setting the correct check mark if it can
 
                     uiMenuElement = uiAction;
                 }
-                
+
                 dict.Add(contextMenuItem, uiMenuElement);
             }
 
