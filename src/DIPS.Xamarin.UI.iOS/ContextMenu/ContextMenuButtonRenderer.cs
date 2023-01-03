@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using CoreGraphics;
 using DIPS.Xamarin.UI.Controls.ContextMenu;
 using DIPS.Xamarin.UI.iOS.ContextMenu;
-using ObjCRuntime;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -15,9 +13,9 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace DIPS.Xamarin.UI.iOS.ContextMenu
 {
-    internal class ContextMenuButtonRenderer : ButtonRenderer
+    public class ContextMenuButtonRenderer : ButtonRenderer
     {
-        private ContextMenuButton m_contextMenuButton;
+        private Dictionary<ContextMenuItem, UIMenuElement> m_contextMenuDict;
         internal static void Initialize() { }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
@@ -26,63 +24,48 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
 
             if (e.NewElement is ContextMenuButton contextMenuButton)
             {
-                m_contextMenuButton = contextMenuButton;
                 if (Control != null)
                 {
                     {
-                        this.SetNativeControl(new ContextMenuUIButton(m_contextMenuButton));
-                        Control.Menu =
-                            CreateMenu(); //Create the menu the first time so it shows up the first time the user taps the button
-                        Control.TouchDown += OnTouchDown;
+                        m_contextMenuDict = ContextMenuHelper.CreateMenuItems(contextMenuButton.Children.Reverse(),
+                            contextMenuButton);
+                        SubscribeToPropertyChangedForAllMenuItems();
+                        var uiMenuElements = m_contextMenuDict.Select(k => k.Value).ToArray();
+                        Control.Menu = UIMenu.Create(contextMenuButton.Title, uiMenuElements);
                         Control.ShowsMenuAsPrimaryAction = true;
                     }
                 }
             }
             else
             {
-                if (Control != null)
+                UnSubscribeToPropertyChangedForAllMenuItems();
+            }
+        }
+        private void SubscribeToPropertyChangedForAllMenuItems()
+        {
+            m_contextMenuDict.Select(k => k.Key).ForEach(menuItem => menuItem.PropertyChanged += OnMenuItemPropertyChanged);
+        }
+
+        private void OnMenuItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender is ContextMenuItem theContextMenuItem)
+            {
+                if (!theContextMenuItem.IsVisible)
                 {
-                    Control.TouchDown -= OnTouchDown;
+                    var (contextMenuItem,uiMenuElement) = m_contextMenuDict.FirstOrDefault(kv => kv.Key == theContextMenuItem);
+                    if (contextMenuItem != null)
+                    {
+                        if (uiMenuElement != null)
+                        {
+                        }
+                    } 
                 }
             }
         }
 
-        private void OnTouchDown(object sender, EventArgs e)
+        private void UnSubscribeToPropertyChangedForAllMenuItems()
         {
-            Control.Menu =
-                CreateMenu(); //Recreate the menu so the visuals of the items of the menu are able to change between each time the user opens the menu
-            m_contextMenuButton.SendContextMenuOpened();
-        }
-
-        private UIMenu CreateMenu()
-        {
-            if (m_contextMenuButton.ItemsSource == null) return null;
-            
-            var dict = ContextMenuHelper.CreateMenuItems(
-                m_contextMenuButton.ItemsSource,
-                m_contextMenuButton);
-            return  UIMenu.Create(m_contextMenuButton.Title, dict.Select(k => k.Value).ToArray());
-        }
-    }
-
-    internal class ContextMenuUIButton : UIButton
-    {
-        private readonly ContextMenuButton m_contextMenuButton;
-
-        public ContextMenuUIButton(ContextMenuButton contextMenuButton)
-        {
-            m_contextMenuButton = contextMenuButton;
-        }
-
-        public override CGPoint GetMenuAttachmentPoint(UIContextMenuConfiguration configuration)
-        {
-            var original = base.GetMenuAttachmentPoint(configuration);
-            return m_contextMenuButton.ContextMenuHorizontalOptions switch
-            {
-                ContextMenuHorizontalOptions.Right => new CGPoint(9999, original.Y),
-                ContextMenuHorizontalOptions.Left => new CGPoint(0, original.Y),
-                _ => new CGPoint(9999, original.Y)
-            };
+            m_contextMenuDict.Select(k => k.Key).ForEach(menuItem => menuItem.PropertyChanged -= OnMenuItemPropertyChanged);
         }
     }
 }

@@ -6,10 +6,10 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
 {
     public partial class ContextMenuItem : View
     {
-        public event EventHandler Clicked;
-
-        public void Click()
+        internal void SendClicked(ContextMenuButton contextMenuButton)
         {
+            var commandParameter = CommandParameter ?? Title;
+            contextMenuButton.ContextItemClickedCommand?.Execute(commandParameter);
             Clicked?.Invoke(this, EventArgs.Empty);
         }
     }

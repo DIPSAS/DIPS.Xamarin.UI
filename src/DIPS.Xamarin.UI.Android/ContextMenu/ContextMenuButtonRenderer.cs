@@ -14,7 +14,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace DIPS.Xamarin.UI.Android.ContextMenu
 {
-    internal class ContextMenuButtonRenderer : ButtonRenderer, PopupMenu.IOnMenuItemClickListener
+    public class ContextMenuButtonRenderer : ButtonRenderer, PopupMenu.IOnMenuItemClickListener
     {
         private readonly Context m_context;
         private ContextMenuButton m_contextMenuButton;
@@ -49,41 +49,27 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
 
         private void OpenContextMenu(object sender, EventArgs e)
         {
-            var popupMenu = new PopupMenu(m_context, Control, (m_contextMenuButton.ContextMenuHorizontalOptions == ContextMenuHorizontalOptions.Right)
-                ? (int)GravityFlags.Right   
-                : (int)GravityFlags.Left);
-            m_menuItems = ContextMenuHelper.CreateMenuItems(m_contextMenuButton.ItemsSource, m_contextMenuButton, popupMenu);
+            var popupMenu = new PopupMenu(m_context, Control);
+            m_menuItems = ContextMenuHelper.CreateMenuItems(m_contextMenuButton.Children, m_contextMenuButton, popupMenu);
             popupMenu.SetOnMenuItemClickListener(this);
             popupMenu.Show();
-            m_contextMenuButton.SendContextMenuOpened();
         }
 
         public bool OnMenuItemClick(IMenuItem theTappedNativeItem)
         {
-            var contextMenuItem = m_menuItems?.FirstOrDefault(m => m.Value == theTappedNativeItem).Key;
-            if (contextMenuItem != null)
+            var theTappedSharedItem = m_menuItems?.FirstOrDefault(m => m.Value == theTappedNativeItem).Key;
+            if (theTappedSharedItem != null)
             {
+                
                 if (theTappedNativeItem.IsCheckable) //check the item
                 {
-                    if (contextMenuItem.Parent is ContextMenuGroup && theTappedNativeItem.IsChecked) //You are unchecking a grouped item, which means its single mode and it should not be able to uncheck
-                    {
-                        return true;
-                    }
-                    
-                    m_menuItems.ForEach(pair =>
-                    {
-                        if (pair.Value.GroupId == theTappedNativeItem.GroupId) //Uncheck previous items
-                        {
-                            pair.Value.SetChecked(false);    
-                        }
-                    });
-                    
-                    m_contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
-                    contextMenuItem.IsChecked = !contextMenuItem.IsChecked;
-                    theTappedNativeItem.SetChecked(contextMenuItem.IsChecked);
+                    m_menuItems.ForEach(pair => pair.Value.SetChecked(false));
+                    m_menuItems?.ForEach(pair => pair.Key.IsChecked = false);
+                    theTappedSharedItem.IsChecked = true;
+                    theTappedNativeItem.SetChecked(true);
                 }
                 
-                contextMenuItem.SendClicked(m_contextMenuButton);
+                theTappedSharedItem.SendClicked(m_contextMenuButton);
                 return true;
             }
 
