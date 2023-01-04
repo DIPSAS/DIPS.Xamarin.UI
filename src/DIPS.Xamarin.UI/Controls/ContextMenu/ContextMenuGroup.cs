@@ -9,8 +9,7 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
 
     public partial class ContextMenuGroup : ContextMenuItem
     {
-        public int Id { get; internal set; }
-        public IEnumerable<ContextMenuItem> Children { get; private set; } = new List<ContextMenuItem>();
+        public IList<ContextMenuItem> Children { get; private set; } = new List<ContextMenuItem>();
 
         protected override void OnBindingContextChanged()
         {
@@ -23,7 +22,7 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
             if (bindable is not ContextMenuGroup contextMenuGroup) return;
             if (contextMenuGroup.ItemsSource != null && contextMenuGroup.ItemsSource.Any())
             {
-                contextMenuGroup.Children = contextMenuGroup.ItemsSource;
+                contextMenuGroup.Children = contextMenuGroup.ItemsSource.ToList();
             }
         }
     }

@@ -57,18 +57,25 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
 
         public bool OnMenuItemClick(IMenuItem theTappedNativeItem)
         {
-            var theTappedSharedItem = m_menuItems?.FirstOrDefault(m => m.Value == theTappedNativeItem).Key;
-            if (theTappedSharedItem != null)
+            var contextMenuItem = m_menuItems?.FirstOrDefault(m => m.Value == theTappedNativeItem).Key;
+            if (contextMenuItem != null)
             {
                 if (theTappedNativeItem.IsCheckable) //check the item
                 {
-                    m_menuItems.ForEach(pair => pair.Value.SetChecked(false));
-                    m_menuItems?.ForEach(pair => pair.Key.IsChecked = false);
-                    theTappedSharedItem.IsChecked = true;
-                    theTappedNativeItem.SetChecked(true);
+                    m_menuItems.ForEach(pair =>
+                    {
+                        if (pair.Value.GroupId == theTappedNativeItem.GroupId) //Uncheck previous items
+                        {
+                            pair.Value.SetChecked(false);    
+                        }
+                    });
+                    
+                    m_contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
+                    contextMenuItem.IsChecked = !contextMenuItem.IsChecked;
+                    theTappedNativeItem.SetChecked(contextMenuItem.IsChecked);
                 }
                 
-                theTappedSharedItem.SendClicked(m_contextMenuButton);
+                contextMenuItem.SendClicked(m_contextMenuButton);
                 return true;
             }
 

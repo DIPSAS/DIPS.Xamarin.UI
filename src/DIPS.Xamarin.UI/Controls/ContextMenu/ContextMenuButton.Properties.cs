@@ -21,20 +21,20 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
         }
 
         /// <summary>
-        /// <see cref="ContextItemClickedCommand"/>
+        /// <see cref="ItemClickedCommand"/>
         /// </summary>
-        public static readonly BindableProperty ContextItemClickedCommandProperty = BindableProperty.Create(
-            nameof(ContextItemClickedCommand),
+        public static readonly BindableProperty ItemClickedCommandProperty = BindableProperty.Create(
+            nameof(ItemClickedCommand),
             typeof(ICommand),
             typeof(ContextMenuButton));
         
         /// <summary>
         /// Command that gets invoked with a paramter when a <see cref="ContextMenuItem"/> was clicked by the user
         /// </summary>
-        public ICommand? ContextItemClickedCommand
+        public ICommand? ItemClickedCommand
         {
-            get => (ICommand)GetValue(ContextItemClickedCommandProperty);
-            set => SetValue(ContextItemClickedCommandProperty, value);
+            get => (ICommand)GetValue(ItemClickedCommandProperty);
+            set => SetValue(ItemClickedCommandProperty, value);
         }
     }
 }
