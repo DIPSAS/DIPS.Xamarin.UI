@@ -25,16 +25,6 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                     //Inherit isCheckable context menu group group to all menu items in the group
                     contextMenuGroup.Children.ForEach(c => c.IsCheckable = contextMenuGroup.IsCheckable);
 
-                    //If an item is checked, every other item should be reset
-                    var lastCheckedItem = contextMenuGroup.Children.LastOrDefault(i => i.IsChecked);
-                    contextMenuGroup.Children.ForEach(i =>
-                    {
-                        if (i != lastCheckedItem && i.IsChecked)
-                        {
-                            i.IsChecked = false;
-                        }
-                    });
-                    
                     var newDict = CreateMenuItems(contextMenuGroup.Children, contextMenuButton, contextMenuGroup);
                     if (items.Count(i => i is ContextMenuGroup) >
                         1) //If there is more than one group, add the group title and group the items
@@ -54,19 +44,18 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                     {
                         if (contextMenuItem.IsCheckable)
                         {
-                            if (menuGroup != null) //The item belonged to a group
-                            {
-                                menuGroup.Children.ForEach(c =>
-                                    c.IsChecked = false); //Reset the other items checked stat
-                            }
+                            contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
 
-                            contextMenuItem.IsChecked =
-                                !contextMenuItem
-                                    .IsChecked; //Can not change the visuals when the menu is showing as the items are immutable when they are showing
+                            contextMenuItem.IsChecked = !contextMenuItem.IsChecked; //Can not change the visuals when the menu is showing as the items are immutable when they are showing
                         }
 
                         contextMenuItem.SendClicked(contextMenuButton);
                     });
+
+                    if (contextMenuItem.IsChecked)
+                    {
+                        contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
+                    }
 
                     SetCorrectUiActionState(contextMenuItem, uiAction); //Setting the correct check mark if it can
 

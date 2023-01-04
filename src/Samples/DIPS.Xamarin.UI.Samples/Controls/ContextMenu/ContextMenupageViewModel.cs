@@ -15,17 +15,22 @@ namespace DIPS.Xamarin.UI.Samples.Controls.ContextMenu
 
         public ContextMenuPageViewModel()
         {
-            MenuItemCommand = new Command<ContextMenuItem>(MenuItemClicked);
+            ItemClickedCommand = new Command<ContextMenuItem>(MenuItemClicked);
+            Test1Command = new Command(Test1Clicked);
+        }
+
+        private void Test1Clicked()
+        {
+            
         }
 
         private void MenuItemClicked(ContextMenuItem clickedMenuItem)
         {
             Console.WriteLine();
         }
-
-        public string Text => "test 123";
-
-        public Command MenuItemCommand { get; }
+        
+        public Command ItemClickedCommand { get; }
+        public Command Test1Command { get; }
         public IEnumerable<ContextMenuItem> Items
         {
             get => m_items;

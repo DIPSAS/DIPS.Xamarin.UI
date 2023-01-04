@@ -9,11 +9,19 @@
     </ContentPage.BindingContext>
     <Grid RowDefinitions="Auto,*">
         <contextMenu:ContextMenuButton Text="Hit me"
-                                       ContextItemClickedCommand="{Binding MenuItemCommand}"
+                                       ItemClickedCommand="{Binding ItemClickedCommand}"
                                        HorizontalOptions="End">
-            <contextMenu:ContextMenuGroup Title="Options" 
+            <contextMenu:ContextMenuGroup Title="Edit"
                                           IsCheckable="True"
                                           ItemsSource="{Binding Items}"/>
+            <contextMenu:ContextMenuGroup Title="Tests"
+                                          IsCheckable="True">
+                <contextMenu:ContextMenuItem Title="Test1" Command="{Binding Test1Command}"/>
+                <contextMenu:ContextMenuItem Title="Test2"/>
+                <contextMenu:ContextMenuItem Title="Test3"/>
+                <contextMenu:ContextMenuItem Title="Test4"/>
+                <contextMenu:ContextMenuItem Title="Test5"/>
+            </contextMenu:ContextMenuGroup>
         </contextMenu:ContextMenuButton>
     </Grid>
 </ContentPage>
