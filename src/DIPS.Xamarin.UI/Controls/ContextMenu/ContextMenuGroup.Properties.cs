@@ -10,16 +10,16 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
         /// </summary>
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
             nameof(ItemsSource),
-            typeof(IEnumerable<ContextMenuItem>),
-            typeof(ContextMenuGroup), defaultValue: new List<ContextMenuItem>(), propertyChanged:OnItemsSourceChanged);
+            typeof(IList<ContextMenuItem>),
+            typeof(ContextMenuGroup), defaultValueCreator:(bindable => new List<ContextMenuItem>()));
 
         /// <summary>
         /// Items to be used as context menu items for the group
         /// </summary>
         /// <remarks>Changes to the items source will only apply the moment when the context menu is opened. If it changes when its open it will not apply until its re-opened.</remarks>
-        public IEnumerable<ContextMenuItem>? ItemsSource
+        public IList<ContextMenuItem>? ItemsSource
         {
-            get => (IEnumerable<ContextMenuItem>)GetValue(ItemsSourceProperty);
+            get => (IList<ContextMenuItem>)GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
     }

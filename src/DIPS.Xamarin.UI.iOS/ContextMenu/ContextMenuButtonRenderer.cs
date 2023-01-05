@@ -30,7 +30,9 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                 if (Control != null)
                 {
                     {
-                        Control.Menu = CreateMenu(); //Create the menu the first time so it shows up the first time the user taps the button
+                        this.SetNativeControl(new ContextMenuUIButton(m_contextMenuButton));
+                        Control.Menu =
+                            CreateMenu(); //Create the menu the first time so it shows up the first time the user taps the button
                         Control.TouchDown += OnTouchDown;
                         Control.ShowsMenuAsPrimaryAction = true;
                     }
@@ -40,22 +42,47 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
             {
                 if (Control != null)
                 {
-                    Control.TouchDown -= OnTouchDown;    
+                    Control.TouchDown -= OnTouchDown;
                 }
             }
         }
 
         private void OnTouchDown(object sender, EventArgs e)
         {
-            Control.Menu = CreateMenu(); //Recreate the menu so the visuals of the items of the menu are able to change between each time the user opens the menu
+            Control.Menu =
+                CreateMenu(); //Recreate the menu so the visuals of the items of the menu are able to change between each time the user opens the menu
+            m_contextMenuButton.SendContextMenuOpened();
         }
 
         private UIMenu CreateMenu()
         {
+            if (m_contextMenuButton.ItemsSource == null) return null;
+            
             var dict = ContextMenuHelper.CreateMenuItems(
-                m_contextMenuButton.Children.Reverse(),
+                m_contextMenuButton.ItemsSource,
                 m_contextMenuButton);
             return UIMenu.Create(m_contextMenuButton.Title, dict.Select(k => k.Value).ToArray());
+        }
+    }
+
+    internal class ContextMenuUIButton : UIButton
+    {
+        private readonly ContextMenuButton m_contextMenuButton;
+
+        public ContextMenuUIButton(ContextMenuButton contextMenuButton)
+        {
+            m_contextMenuButton = contextMenuButton;
+        }
+
+        public override CGPoint GetMenuAttachmentPoint(UIContextMenuConfiguration configuration)
+        {
+            var original = base.GetMenuAttachmentPoint(configuration);
+            return m_contextMenuButton.ContextMenuHorizontalOptions switch
+            {
+                ContextMenuHorizontalOptions.Right => new CGPoint(9999, original.Y),
+                ContextMenuHorizontalOptions.Left => new CGPoint(0, original.Y),
+                _ => new CGPoint(9999, original.Y)
+            };
         }
     }
 }

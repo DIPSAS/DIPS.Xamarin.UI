@@ -23,9 +23,9 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                 if (contextMenuItem is ContextMenuGroup contextMenuGroup) //Recursively add menu items from a group
                 {
                     //Inherit isCheckable context menu group group to all menu items in the group
-                    contextMenuGroup.Children.ForEach(c => c.IsCheckable = contextMenuGroup.IsCheckable);
+                    contextMenuGroup.ItemsSource.ForEach(c => c.IsCheckable = contextMenuGroup.IsCheckable);
 
-                    var newDict = CreateMenuItems(contextMenuGroup.Children, contextMenuButton, contextMenuGroup);
+                    var newDict = CreateMenuItems(contextMenuGroup.ItemsSource, contextMenuButton, contextMenuGroup);
                     if (items.Count(i => i is ContextMenuGroup) >
                         1) //If there is more than one group, add the group title and group the items
                     {
@@ -40,18 +40,8 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
 
                 else
                 {
-                    var uiAction = UIAction.Create(contextMenuItem.Title, null, null, (uiAction) =>
-                    {
-                        if (contextMenuItem.IsCheckable)
-                        {
-                            contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
-
-                            contextMenuItem.IsChecked = !contextMenuItem.IsChecked; //Can not change the visuals when the menu is showing as the items are immutable when they are showing
-                        }
-
-                        contextMenuItem.SendClicked(contextMenuButton);
-                    });
-
+                    var uiAction = UIAction.Create(contextMenuItem.Title, null, null, uiAction => OnMenuItemClick(uiAction, contextMenuItem, contextMenuButton));
+                    
                     if (contextMenuItem.IsChecked)
                     {
                         contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
@@ -68,9 +58,24 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
             return dict;
         }
 
+        private static void OnMenuItemClick(UIAction action, ContextMenuItem contextMenuItem, ContextMenuButton contextMenuButton)
+        {
+            if (contextMenuItem.IsCheckable)
+            {
+                contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
+
+                contextMenuItem.IsChecked = !contextMenuItem.IsChecked; //Can not change the visuals when the menu is showing as the items are immutable when they are showing
+            }
+
+            contextMenuItem.SendClicked(contextMenuButton);
+        }
+
         private static void SetCorrectUiActionState(ContextMenuItem contextMenuItem, UIAction uiAction)
         {
-            uiAction.State = contextMenuItem.IsChecked ? UIMenuElementState.On : UIMenuElementState.Off;
+            if (contextMenuItem.IsCheckable)
+            {
+                uiAction.State = contextMenuItem.IsChecked ? UIMenuElementState.On : UIMenuElementState.Off;    
+            }
         }
     }
 }
