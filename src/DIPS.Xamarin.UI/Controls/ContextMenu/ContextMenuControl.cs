@@ -9,13 +9,32 @@ using Xamarin.Forms.Xaml;
 
 namespace DIPS.Xamarin.UI.Controls.ContextMenu
 {
+    /// <summary>
+    /// Creates a control with a content that has context menu items attached to it
+    /// </summary>
     [ContentProperty(nameof(TheContent))]
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ContextMenuControl : IContextMenu
+    public partial class ContextMenuControl : ContentView, IContextMenu
     {
+        /// <summary/>
         public ContextMenuControl()
         {
-            InitializeComponent();
+            m_contextMenuButton = new ContextMenuButton();
+            m_contextMenuButton.SetBinding(ContextMenuButton.ContextMenuHorizontalOptionsProperty,
+                new Binding(nameof(ContextMenuHorizontalOptions), source: this));
+            m_contextMenuButton.SetBinding(ContextMenuButton.TitleProperty,
+                new Binding(nameof(TheContent), source: this));
+            m_contextMenuButton.SetBinding(ContextMenuButton.ItemsSourceProperty,
+                new Binding(nameof(ItemsSource), source: this));
+            m_contextMenuButton.SetBinding(ContextMenuButton.ItemClickedCommandProperty,
+                new Binding(nameof(ItemClickedCommand), source: this));
+            m_contextMenuButton.ContextMenuOpened += ContextMenuButton_OnContextMenuOpened;
+            m_contextMenuButton.ItemClicked += ContextMenuButton_OnItemClicked;
+
+            m_theContentView = new ContentView();
+            m_theContentView.SetBinding(ContentProperty, new Binding(nameof(TheContent), source: this));
+            m_theContentView.InputTransparent = true;
+            Content = new Grid() {Children = {m_contextMenuButton, m_theContentView}};
         }
 
         /// <summary>
@@ -24,16 +43,10 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
         public static readonly BindableProperty TheContentProperty = BindableProperty.Create(
             nameof(TheContent),
             typeof(View),
-            typeof(ContextMenuControl), propertyChanged:TheContentPropertyChanged);
+            typeof(ContextMenuControl), propertyChanged: OnContentPropertyChanged);
 
-        private static void TheContentPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        private static void OnContentPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (bindable is not ContextMenuControl contextMenuControl) return;
-            if (newvalue is not View theView) return;
-            theView.SizeChanged += (sender, args) =>
-            {
-                contextMenuControl.ContextMenuButton.MenuPosition = theView.Bounds;
-            };
         }
 
         /// <summary>
@@ -69,7 +82,7 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
             nameof(ItemsSource),
             typeof(IList<ContextMenuItem>),
-            typeof(ContextMenuControl), defaultValueCreator:(bindable => new List<ContextMenuItem>()));
+            typeof(ContextMenuControl), defaultValueCreator: (bindable => new List<ContextMenuItem>()));
 
         /// <summary>
         /// <inheritdoc cref="IContextMenu"/>
@@ -107,6 +120,12 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
             typeof(ContextMenuControl),
             defaultValue: ContextMenuButton.ContextMenuHorizontalOptionsProperty.DefaultValue);
 
+        private readonly ContextMenuButton m_contextMenuButton;
+        private readonly ContentView m_theContentView;
+
+        /// <summary>
+        /// <inheritdoc cref="IContextMenu"/>
+        /// </summary>
         public event EventHandler? ItemClicked;
 
         /// <summary>

@@ -13,13 +13,16 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
     [ContentProperty(nameof(ItemsSource))]
     public partial class ContextMenuButton : Button
     {
+        /// <summary>
+        /// <inheritdoc cref="Button"/>
+        /// </summary>
         protected override void OnBindingContextChanged()
         {
             base.OnBindingContextChanged();
             ItemsSource?.ForEach(c => c.BindingContext = BindingContext);
         }
 
-        public void ResetIsCheckedForTheRest(ContextMenuItem contextMenuItem)
+        internal void ResetIsCheckedForTheRest(ContextMenuItem contextMenuItem)
         {
             if (ItemsSource.Contains(contextMenuItem)) //its on the root, and others on the root should not be resetted
             {
