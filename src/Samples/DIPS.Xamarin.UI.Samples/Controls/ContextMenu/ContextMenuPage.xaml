@@ -17,88 +17,64 @@
                     BackgroundColor="White" />
         </contextMenu:ContextMenuControl>
         
-        <!-- <contextMenu:ContextMenuControl VerticalOptions="Start"> -->
-        <!--     <contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--         <contextMenu:ContextMenuItem Title="Item 1" /> -->
-        <!--         <contextMenu:ContextMenuItem Title="Item 2" /> -->
-        <!--     </contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--     <Button Text="Two items" -->
-        <!--             BackgroundColor="White" /> -->
-        <!-- </contextMenu:ContextMenuControl> -->
+        <contextMenu:ContextMenuControl VerticalOptions="Start">
+            <contextMenu:ContextMenuControl.ItemsSource>
+                <contextMenu:ContextMenuItem Title="Item 1" />
+                <contextMenu:ContextMenuItem Title="Item 2" />
+            </contextMenu:ContextMenuControl.ItemsSource>
+            <Button Text="Two items"
+                    BackgroundColor="White" />
+        </contextMenu:ContextMenuControl>
         
-        <!-- <contextMenu:ContextMenuControl VerticalOptions="Start"> -->
-        <!--     <contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--         <contextMenu:ContextMenuItem Title="Item 1" IsCheckable="True"/> -->
-        <!--         <contextMenu:ContextMenuItem Title="Test 2" IsCheckable="True"/> -->
-        <!--     </contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--     <Button Text="Checkable items (all)" -->
-        <!--             BackgroundColor="White" /> -->
-        <!-- </contextMenu:ContextMenuControl> -->
-        <!-- -->
-        <!-- <contextMenu:ContextMenuControl VerticalOptions="Start"> -->
-        <!--     <contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--         <contextMenu:ContextMenuGroup IsCheckable="True"> -->
-        <!--             <contextMenu:ContextMenuItem Title="Very long item name bla1 bla2 bla3 bla4 bla5 bla6 bla7"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2" IsCheckable="True"/> -->
-        <!--         </contextMenu:ContextMenuGroup> -->
-        <!--     </contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--     <Button Text="Checkable items (single)" -->
-        <!--             BackgroundColor="White" /> -->
-        <!-- </contextMenu:ContextMenuControl> -->
-        <!-- -->
-        <!-- <contextMenu:ContextMenuControl VerticalOptions="Start"> -->
-        <!--     <contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--         <contextMenu:ContextMenuGroup Title="Group 1"> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 1"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2"/> -->
-        <!--         </contextMenu:ContextMenuGroup> -->
-        <!--         <contextMenu:ContextMenuGroup Title="Group 2"> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 1"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2"/> -->
-        <!--         </contextMenu:ContextMenuGroup> -->
-        <!--     </contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--     <Button Text="Grouped items" -->
-        <!--             BackgroundColor="White" /> -->
-        <!-- </contextMenu:ContextMenuControl> -->
-        <!-- -->
-        <!-- <contextMenu:ContextMenuControl VerticalOptions="Start"> -->
-        <!--     <contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--         <contextMenu:ContextMenuGroup Title="Group 1" IsCheckable="True"> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 1"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2"/> -->
-        <!--         </contextMenu:ContextMenuGroup> -->
-        <!--         <contextMenu:ContextMenuGroup Title="Group 2" IsCheckable="True"> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 1"/> -->
-        <!--             <contextMenu:ContextMenuItem Title="Item 2"/> -->
-        <!--         </contextMenu:ContextMenuGroup> -->
-        <!--     </contextMenu:ContextMenuControl.ItemsSource> -->
-        <!--     <Button Text="Checkable grouped items" -->
-        <!--             BackgroundColor="White" /> -->
-        <!-- </contextMenu:ContextMenuControl> -->
+        <contextMenu:ContextMenuControl VerticalOptions="Start">
+            <contextMenu:ContextMenuControl.ItemsSource>
+                <contextMenu:ContextMenuItem Title="Item 1" IsCheckable="True"/>
+                <contextMenu:ContextMenuItem Title="Test 2" IsCheckable="True"/>
+            </contextMenu:ContextMenuControl.ItemsSource>
+            <Button Text="Checkable items (all)"
+                    BackgroundColor="White" />
+        </contextMenu:ContextMenuControl>
+        
+        <contextMenu:ContextMenuControl VerticalOptions="Start">
+            <contextMenu:ContextMenuControl.ItemsSource>
+                <contextMenu:ContextMenuGroup IsCheckable="True">
+                    <contextMenu:ContextMenuItem Title="Item 1" />
+                    <contextMenu:ContextMenuItem Title="Item 2" />
+                </contextMenu:ContextMenuGroup>
+            </contextMenu:ContextMenuControl.ItemsSource>
+            <Button Text="Checkable items (single)"
+                    BackgroundColor="White" />
+        </contextMenu:ContextMenuControl>
+        
+        <contextMenu:ContextMenuControl VerticalOptions="Start">
+            <contextMenu:ContextMenuControl.ItemsSource>
+                <contextMenu:ContextMenuGroup Title="Group 1">
+                    <contextMenu:ContextMenuItem Title="Item 1"/>
+                    <contextMenu:ContextMenuItem Title="Item 2"/>
+                </contextMenu:ContextMenuGroup>
+                <contextMenu:ContextMenuGroup Title="Group 2">
+                    <contextMenu:ContextMenuItem Title="Item 1"/>
+                    <contextMenu:ContextMenuItem Title="Item 2"/>
+                </contextMenu:ContextMenuGroup>
+            </contextMenu:ContextMenuControl.ItemsSource>
+            <Button Text="Grouped items"
+                    BackgroundColor="White" />
+        </contextMenu:ContextMenuControl>
+        
+        <contextMenu:ContextMenuControl VerticalOptions="Start">
+            <contextMenu:ContextMenuControl.ItemsSource>
+                <contextMenu:ContextMenuGroup Title="Group 1" IsCheckable="True">
+                    <contextMenu:ContextMenuItem Title="Item 1"/>
+                    <contextMenu:ContextMenuItem Title="Item 2"/>
+                </contextMenu:ContextMenuGroup>
+                <contextMenu:ContextMenuGroup Title="Group 2" IsCheckable="True">
+                    <contextMenu:ContextMenuItem Title="Item 1"/>
+                    <contextMenu:ContextMenuItem Title="Item 2"/>
+                </contextMenu:ContextMenuGroup>
+            </contextMenu:ContextMenuControl.ItemsSource>
+            <Button Text="Checkable grouped items"
+                    BackgroundColor="White" />
+        </contextMenu:ContextMenuControl>
     </StackLayout>
     
     

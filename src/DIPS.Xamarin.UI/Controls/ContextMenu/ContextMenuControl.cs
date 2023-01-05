@@ -23,7 +23,7 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
             m_contextMenuButton.SetBinding(ContextMenuButton.ContextMenuHorizontalOptionsProperty,
                 new Binding(nameof(ContextMenuHorizontalOptions), source: this));
             m_contextMenuButton.SetBinding(ContextMenuButton.TitleProperty,
-                new Binding(nameof(TheContent), source: this));
+                new Binding(nameof(Title), source: this));
             m_contextMenuButton.SetBinding(ContextMenuButton.ItemsSourceProperty,
                 new Binding(nameof(ItemsSource), source: this));
             m_contextMenuButton.SetBinding(ContextMenuButton.ItemClickedCommandProperty,
