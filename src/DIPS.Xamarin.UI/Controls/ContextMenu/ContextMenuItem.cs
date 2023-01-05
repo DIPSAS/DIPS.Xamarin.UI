@@ -8,7 +8,7 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
     {
         internal void SendClicked(ContextMenuButton contextMenuButton)
         {
-            contextMenuButton.ItemClickedCommand?.Execute(this);
+            contextMenuButton.SendClicked(this);
             Command?.Execute(CommandParameter);
             Clicked?.Invoke(this, EventArgs.Empty);
         }

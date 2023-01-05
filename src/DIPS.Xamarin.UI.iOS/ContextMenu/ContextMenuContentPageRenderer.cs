@@ -26,7 +26,7 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                 var contextMenuButton = contextMenuContentPage.ContextMenuToolbarButton;
                 if (NavigationController != null && contextMenuButton != null)
                 {
-                    var uiElements = ContextMenuHelper.CreateMenuItems(contextMenuButton.Children, contextMenuButton)
+                    var uiElements = ContextMenuHelper.CreateMenuItems(contextMenuButton.ItemsSource, contextMenuButton)
                         .Select(k => k.Value).ToArray();
                     var item = new UIBarButtonItem()
                     {
