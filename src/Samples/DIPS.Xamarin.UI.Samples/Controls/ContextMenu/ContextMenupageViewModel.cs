@@ -16,38 +16,15 @@ namespace DIPS.Xamarin.UI.Samples.Controls.ContextMenu
         public ContextMenuPageViewModel()
         {
             ItemClickedCommand = new Command<ContextMenuItem>(MenuItemClicked);
-            Test1Command = new Command(Test1Clicked);
-        }
-
-        private void Test1Clicked()
-        {
-            
         }
 
         private void MenuItemClicked(ContextMenuItem clickedMenuItem)
         {
-            Console.WriteLine();
+            Console.WriteLine(clickedMenuItem.Title);
         }
         
         public Command ItemClickedCommand { get; }
         public Command Test1Command { get; }
-        public IEnumerable<ContextMenuItem> Items
-        {
-            get => m_items;
-            private set => PropertyChanged?.RaiseWhenSet(ref m_items, value);
-        }
-
-        public async Task Initialize()
-        {
-            await Task.Delay(1000);
-            Items = new[]
-            {
-                new ContextMenuItem(){Title = "Option 1", IsChecked = true, IsCheckable = true},
-                new ContextMenuItem(){Title = "Option 2", IsChecked = true, IsCheckable = true},
-                new ContextMenuItem(){Title = "Option 3"},
-                new ContextMenuItem(){Title = "Option 4"}
-            };
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
