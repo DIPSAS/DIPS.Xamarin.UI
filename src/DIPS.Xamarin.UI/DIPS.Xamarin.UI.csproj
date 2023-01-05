@@ -79,5 +79,6 @@
 
   <ItemGroup>
     <Folder Include="Controls\Skeleton\" />
+    <Folder Include="Pages" />
   </ItemGroup>
 </Project>

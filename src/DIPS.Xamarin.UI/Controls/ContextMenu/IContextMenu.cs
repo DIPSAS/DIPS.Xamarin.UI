@@ -5,6 +5,9 @@ using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Controls.ContextMenu
 {
+    /// <summary>
+    /// A shared abstraction of the native context menu
+    /// </summary>
     public interface IContextMenu
     {
         /// <summary>
@@ -32,6 +35,9 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
         /// </summary>
         public event EventHandler? ItemClicked;
 
+        /// <summary>
+        /// <inheritdoc cref="ContextMenuHorizontalOptions"/>
+        /// </summary>
         public ContextMenuHorizontalOptions ContextMenuHorizontalOptions { get; set; }
     }
 }
