@@ -15,7 +15,7 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace DIPS.Xamarin.UI.iOS.ContextMenu
 {
-    public class ContextMenuButtonRenderer : ButtonRenderer
+    internal class ContextMenuButtonRenderer : ButtonRenderer
     {
         private ContextMenuButton m_contextMenuButton;
         internal static void Initialize() { }

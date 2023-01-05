@@ -79,8 +79,6 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
             set => SetValue(ContextMenuHorizontalOptionsProperty, value);
         }
 
-        public Rectangle MenuPosition { get; internal set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -91,14 +89,5 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
             ItemClickedCommand?.Execute(item);
             ItemClicked?.Invoke(item, EventArgs.Empty);
         }
-    }
-
-    /// <summary>
-    /// The horizontal options for the context menu
-    /// </summary>
-    public enum ContextMenuHorizontalOptions
-    {
-        Right = 0,
-        Left
     }
 }
