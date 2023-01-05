@@ -14,7 +14,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace DIPS.Xamarin.UI.Android.ContextMenu
 {
-    public class ContextMenuButtonRenderer : ButtonRenderer, PopupMenu.IOnMenuItemClickListener
+    internal class ContextMenuButtonRenderer : ButtonRenderer, PopupMenu.IOnMenuItemClickListener
     {
         private readonly Context m_context;
         private ContextMenuButton m_contextMenuButton;
