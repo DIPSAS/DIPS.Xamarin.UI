@@ -49,10 +49,13 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
 
         private void OpenContextMenu(object sender, EventArgs e)
         {
-            var popupMenu = new PopupMenu(m_context, Control);
-            m_menuItems = ContextMenuHelper.CreateMenuItems(m_contextMenuButton.Children, m_contextMenuButton, popupMenu);
+            var popupMenu = new PopupMenu(m_context, Control, (m_contextMenuButton.ContextMenuHorizontalOptions == ContextMenuHorizontalOptions.Right)
+                ? (int)GravityFlags.Right   
+                : (int)GravityFlags.Left);
+            m_menuItems = ContextMenuHelper.CreateMenuItems(m_contextMenuButton.ItemsSource, m_contextMenuButton, popupMenu);
             popupMenu.SetOnMenuItemClickListener(this);
             popupMenu.Show();
+            m_contextMenuButton.SendContextMenuOpened();
         }
 
         public bool OnMenuItemClick(IMenuItem theTappedNativeItem)

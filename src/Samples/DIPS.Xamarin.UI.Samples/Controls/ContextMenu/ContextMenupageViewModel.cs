@@ -42,8 +42,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls.ContextMenu
             await Task.Delay(1000);
             Items = new[]
             {
-                new ContextMenuItem(){Title = "Option 1", IsChecked = true},
-                new ContextMenuItem(){Title = "Option 2", IsChecked = true},
+                new ContextMenuItem(){Title = "Option 1", IsChecked = true, IsCheckable = true},
+                new ContextMenuItem(){Title = "Option 2", IsChecked = true, IsCheckable = true},
                 new ContextMenuItem(){Title = "Option 3"},
                 new ContextMenuItem(){Title = "Option 4"}
             };
