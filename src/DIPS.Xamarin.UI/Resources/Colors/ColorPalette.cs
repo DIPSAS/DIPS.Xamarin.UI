@@ -38,7 +38,7 @@ namespace DIPS.Xamarin.UI.Resources.Colors
         /// <summary>
         /// Returns a <see cref="Theme"/> Color from it's enum
         /// </summary>
-        /// <param name="colorPaletteEnum">The enum to get the color from<</param>
+        /// <param name="colorPaletteEnum">The enum to get the color from</param>
         /// <returns>A theme color</returns>
         public static Color FromIdentifier(this Identifier colorPaletteEnum)
         {

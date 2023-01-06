@@ -38,7 +38,7 @@ namespace DIPS.Xamarin.UI.Controls.Toast
 
         /// <summary>
         ///     Hide the toast automatically after the given milliseconds
-        ///     <remarks>If value is negative (<0), toast won't be hidden automatically. Default value is 3000 ms</remarks>
+        ///     <remarks>If value is negative ,toast won't be hidden automatically. Default value is 3000 ms</remarks>
         /// </summary>
         public int Duration { get; set; } = 3000;
     }

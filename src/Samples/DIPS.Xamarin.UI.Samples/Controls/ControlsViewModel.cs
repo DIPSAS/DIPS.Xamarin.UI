@@ -7,6 +7,7 @@ using DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;
 using DIPS.Xamarin.UI.Samples.Controls.Popup;
 using DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;
 using DIPS.Xamarin.UI.Samples.Controls.Sheet;
+using DIPS.Xamarin.UI.Samples.Controls.SheetPage;
 using DIPS.Xamarin.UI.Samples.Controls.Skeleton;
 using DIPS.Xamarin.UI.Samples.Controls.SlideLayout;
 using DIPS.Xamarin.UI.Samples.Controls.Tag;
@@ -41,7 +42,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                 if (parameter.Equals("Popup"))
                     await m_navigation.PushAsync(new PopupPage {Title = parameter});
                 if (parameter.Equals("Sheet"))
-                    await m_navigation.PushAsync(new SheetPage() {Title = parameter});
+                    await m_navigation.PushAsync(new Sheet.SheetPage() {Title = parameter});
                 if (parameter.Equals("RadioButtonGroup"))
                     await m_navigation.PushAsync(new RadioButtonGroupPage {Title = parameter});
                 if (parameter.Equals("TrendGraph"))
@@ -62,6 +63,8 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                     await m_navigation.PushAsync(new BorderBoxPage {Title = parameter});
                 if (parameter.Equals("Vibration"))
                     await m_navigation.PushAsync(new VibrationPage() {Title = parameter});
+                if (parameter.Equals("SheetPage"))
+                    await m_navigation.PushAsync(new SheetPagePage() {Title = parameter});
             }
             catch (Exception e)
             {
