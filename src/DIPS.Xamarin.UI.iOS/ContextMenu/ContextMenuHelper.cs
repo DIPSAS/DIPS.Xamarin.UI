@@ -22,6 +22,7 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                 UIMenuElement uiMenuElement;
                 if (contextMenuItem is ContextMenuGroup contextMenuGroup) //Recursively add menu items from a group
                 {
+                    contextMenuGroup.Parent = contextMenuButton;
                     //Inherit isCheckable context menu group group to all menu items in the group
                     contextMenuGroup.ItemsSource.ForEach(c => c.IsCheckable = contextMenuGroup.IsCheckable);
 
@@ -33,15 +34,19 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                     }
                     else //Only one group, add this to the root of the menu so the user does not have to tap an extra time to get to the items.
                     {
-                        newDict.ForEach(newD => dict.Add(newD.Key, newD.Value));
+                        newDict.ForEach(newD =>
+                        {
+                            dict.Add(newD.Key, newD.Value);
+                        });
                         continue;
                     }
                 }
 
                 else
                 {
-                    var uiAction = UIAction.Create(contextMenuItem.Title, null, null, uiAction => OnMenuItemClick(uiAction, contextMenuItem, contextMenuButton));
-                    
+                    var uiAction = UIAction.Create(contextMenuItem.Title, null, null,
+                        uiAction => OnMenuItemClick(uiAction, contextMenuItem, contextMenuButton));
+
                     if (contextMenuItem.IsChecked)
                     {
                         contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
@@ -50,6 +55,15 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                     SetCorrectUiActionState(contextMenuItem, uiAction); //Setting the correct check mark if it can
 
                     uiMenuElement = uiAction;
+
+                    if (menuGroup != null)
+                    {
+                        contextMenuItem.Parent = menuGroup;
+                    }
+                    else
+                    {
+                        contextMenuItem.Parent = contextMenuButton;
+                    }
                 }
 
                 dict.Add(contextMenuItem, uiMenuElement);
@@ -58,13 +72,20 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
             return dict;
         }
 
-        private static void OnMenuItemClick(UIAction action, ContextMenuItem contextMenuItem, ContextMenuButton contextMenuButton)
+        private static void OnMenuItemClick(UIAction action, ContextMenuItem contextMenuItem,
+            ContextMenuButton contextMenuButton)
         {
+            
             if (contextMenuItem.IsCheckable)
             {
-                contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
+                if (contextMenuItem.Parent is not ContextMenuGroup || !contextMenuItem.IsChecked)
+                { //Only check if if unchecked if its a part of a group
+                    contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
 
-                contextMenuItem.IsChecked = !contextMenuItem.IsChecked; //Can not change the visuals when the menu is showing as the items are immutable when they are showing
+                    contextMenuItem.IsChecked =
+                        !contextMenuItem
+                            .IsChecked; //Can not change the visuals when the menu is showing as the items are immutable when they are showing    
+                }
             }
 
             contextMenuItem.SendClicked(contextMenuButton);
@@ -74,7 +95,7 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
         {
             if (contextMenuItem.IsCheckable)
             {
-                uiAction.State = contextMenuItem.IsChecked ? UIMenuElementState.On : UIMenuElementState.Off;    
+                uiAction.State = contextMenuItem.IsChecked ? UIMenuElementState.On : UIMenuElementState.Off;
             }
         }
     }

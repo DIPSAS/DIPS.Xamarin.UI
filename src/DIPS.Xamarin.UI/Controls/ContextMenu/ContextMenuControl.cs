@@ -25,6 +25,7 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
                 new Binding(nameof(ItemClickedCommand), source: this));
             m_contextMenuButton.ContextMenuOpened += ContextMenuButton_OnContextMenuOpened;
             m_contextMenuButton.ItemClicked += ContextMenuButton_OnItemClicked;
+            m_contextMenuButton.BackgroundColor = Color.Transparent;
 
             m_theContentView = new ContentView();
             m_theContentView.SetBinding(ContentProperty, new Binding(nameof(TheContent), source: this));
