@@ -9,15 +9,15 @@
         <menu1:ContextMenuPageViewModel />
     </ContentPage.BindingContext>
     <StackLayout Margin="15">
-<!-- Single item -->
-<contextMenu:ContextMenuControl VerticalOptions="Start"
-                                ItemClickedCommand="{Binding ItemClickedCommand}">
-    <contextMenu:ContextMenuControl.ItemsSource>
-        <contextMenu:ContextMenuItem Title="Item" />
-    </contextMenu:ContextMenuControl.ItemsSource>
-    <Button Text="Single item"
-            BackgroundColor="White" />
-</contextMenu:ContextMenuControl>
+        <!-- Single item -->
+        <contextMenu:ContextMenuControl VerticalOptions="Start"
+                                        ItemClickedCommand="{Binding ItemClickedCommand}">
+            <contextMenu:ContextMenuControl.ItemsSource>
+                <contextMenu:ContextMenuItem Title="Item" />
+            </contextMenu:ContextMenuControl.ItemsSource>
+            <Button Text="Single item"
+                    BackgroundColor="White" />
+        </contextMenu:ContextMenuControl>
 
         <!-- Two items -->
         <contextMenu:ContextMenuControl VerticalOptions="Start"
