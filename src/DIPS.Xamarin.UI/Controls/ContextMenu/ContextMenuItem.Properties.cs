@@ -59,5 +59,10 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
         /// Determines if the item should be default checked when its opened for the first time
         /// </summary>
         public bool IsChecked { get; set; }
+        
+        /// <summary>
+        /// The parent of the context menu item
+        /// </summary>
+        public object Parent { get; internal set; }
     }
 }

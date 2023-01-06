@@ -65,6 +65,11 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
             {
                 if (theTappedNativeItem.IsCheckable) //check the item
                 {
+                    if (contextMenuItem.Parent is ContextMenuGroup && theTappedNativeItem.IsChecked) //You are unchecking a grouped item, which means its single mode and it should not be able to uncheck
+                    {
+                        return true;
+                    }
+                    
                     m_menuItems.ForEach(pair =>
                     {
                         if (pair.Value.GroupId == theTappedNativeItem.GroupId) //Uncheck previous items

@@ -24,6 +24,7 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
                 var index = items.IndexOf(contextMenuItem);
                 if (contextMenuItem is ContextMenuGroup contextMenuGroup)
                 {
+                    contextMenuGroup.Parent = contextMenuButton;
                     groupIndex += 1;
                     
                     if (items.Count(i => i is ContextMenuGroup) >
@@ -40,6 +41,7 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
                             var contextMenuItemInGroupIndex = contextMenuGroup.ItemsSource.IndexOf(contextMenuItemInGroup);
                             var menuItem = groupMenu.Add(groupIndex, contextMenuItemInGroupIndex, Menu.None, contextMenuItemInGroup.Title);
                             TrySetChecked(contextMenuButton, menuItem, contextMenuItemInGroup);
+                            contextMenuItemInGroup.Parent = contextMenuGroup;
                             dict.Add(contextMenuItemInGroup, menuItem);
                         }
 
@@ -53,7 +55,12 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
                     {
                         var newDict = CreateMenuItems(contextMenuGroup.ItemsSource, contextMenuButton, popupMenu,
                             groupIndex);
-                        newDict.ForEach(pair => dict.Add(pair.Key, pair.Value));
+                        newDict.ForEach(pair =>
+                        {
+                            var contextMenuItemInGroup = pair.Key;
+                            contextMenuItemInGroup.Parent = contextMenuGroup;
+                            dict.Add(contextMenuItemInGroup, pair.Value);
+                        });
                         if (contextMenuGroup.IsCheckable)
                         {
                             popupMenu.Menu.SetGroupCheckable(groupIndex, contextMenuGroup.IsCheckable, false);
@@ -64,6 +71,10 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
                 {
                     var menuItem = popupMenu.Menu.Add(groupIndex, index, Menu.None, contextMenuItem.Title);
                     TrySetChecked(contextMenuButton, menuItem, contextMenuItem);
+                    if (groupIndex == 0) //Not in a group
+                    {
+                        contextMenuItem.Parent = contextMenuButton;
+                    }
                     dict.Add(contextMenuItem, menuItem);
                 }
             }
@@ -81,7 +92,6 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
             {
                 contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
             }
-
             menuItem?.SetChecked(contextMenuItem.IsChecked);
         }
     }
