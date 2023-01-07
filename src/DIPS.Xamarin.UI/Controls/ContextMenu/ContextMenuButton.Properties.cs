@@ -16,6 +16,7 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
         /// <summary>
         /// The title of the context menu button
         /// </summary>
+        /// <remarks>Only works on iOS</remarks>
         public string Title
         {
             get => (string)GetValue(TitleProperty);

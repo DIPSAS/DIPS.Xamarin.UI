@@ -61,7 +61,7 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
             var dict = ContextMenuHelper.CreateMenuItems(
                 m_contextMenuButton.ItemsSource,
                 m_contextMenuButton);
-            return UIMenu.Create(m_contextMenuButton.Title, dict.Select(k => k.Value).ToArray());
+            return  UIMenu.Create(m_contextMenuButton.Title, dict.Select(k => k.Value).ToArray());
         }
     }
 
