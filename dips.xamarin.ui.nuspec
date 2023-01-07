@@ -11,7 +11,7 @@
         <tags>xamarin forms xamarinforms xamarin.forms xamarinui xaml mvvm mvvm-ios mvvm-android dips design ui uikit ui-components loosely-coupled-design loosely-coupled mobile dotnet e-health</tags>
         <license type="file">LICENSE</license>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
-        <copyright>2020 © DIPS AS. All rights reserved.</copyright>
+        <copyright>2023 © DIPS AS. All rights reserved.</copyright>
         <description>A shared UI library that DIPS use and maintain for their mobile applications. The library contains different components that can be used by any Xamarin.Forms app. The visual parts of the library is created in collaboration with our internal UX team.</description>
         <dependencies>
             <group targetFramework="netstandard2.0">

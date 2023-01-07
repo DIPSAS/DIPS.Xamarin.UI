@@ -1,4 +1,5 @@
-﻿using DIPS.Xamarin.UI.iOS.Util;
+﻿using DIPS.Xamarin.UI.iOS.ContextMenu;
+using DIPS.Xamarin.UI.iOS.Util;
 using Foundation;
 using UIKit;
 
@@ -19,6 +20,7 @@ namespace DIPS.Xamarin.UI.iOS
             if (s_isInitialized) return;
             DIPS.Xamarin.UI.Internal.Utilities.Inspector.Instance = new Inspector();
             InternalDatePickerRenderer.Initialize();
+            ContextMenuButtonRenderer.Initialize();
             
             var vibrationService = new VibrationService();
             Vibration.Vibration.Initialize(vibrationService);

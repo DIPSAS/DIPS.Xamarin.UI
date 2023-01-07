@@ -17,7 +17,7 @@ namespace DIPS.Xamarin.UI.iOS.Util
         /// </summary>
         public static Action<UIView> OnInspectingViewCallback { get; set; }
 
-        void IInspector.Inspect(View view)
+       void IInspector.Inspect(View view)
         {
             var renderer = Platform.CreateRenderer(view);
             var nativeView = renderer?.NativeView;
