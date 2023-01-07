@@ -64,5 +64,11 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
         /// The parent of the context menu item
         /// </summary>
         public object Parent { get; internal set; }
+        
+        /// <summary>
+        /// The subtitle of the menu item
+        /// </summary>
+        /// <remarks>Only works on iOS</remarks>
+        public string? Subtitle { get; set; }
     }
 }
