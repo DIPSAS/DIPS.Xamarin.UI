@@ -45,10 +45,17 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                 else
                 {
                     UIImage image = null;
-                    if(!string.IsNullOrEmpty(contextMenuItem.iOSOptions.SystemIconName))
+
+                    if (!string.IsNullOrEmpty(contextMenuItem.Icon))
+                    {
+                        image = new UIImage(contextMenuItem.Icon);
+                    }
+                    
+                    if(!string.IsNullOrEmpty(contextMenuItem.iOSOptions.SystemIconName)) //Override image with SF Symbols if this is what the consumer wants
                     {
                         image = UIImage.GetSystemImage(contextMenuItem.iOSOptions.SystemIconName);
                     }
+                    
                     var uiAction = UIAction.Create(contextMenuItem.Title, image, null,
                         uiAction => OnMenuItemClick(uiAction, contextMenuItem, contextMenuButton));
 

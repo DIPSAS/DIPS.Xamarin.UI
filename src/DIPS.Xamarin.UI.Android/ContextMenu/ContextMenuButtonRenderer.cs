@@ -51,16 +51,16 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
 
         private void OpenContextMenu(object sender, EventArgs e)
         {
-            var popupMenu = new PopupMenu(m_context, Control,
-                (m_contextMenuButton.ContextMenuHorizontalOptions == ContextMenuHorizontalOptions.Right)
-                    ? (int)GravityFlags.Right
-                    : (int)GravityFlags.Left);
-            m_menuItems = ContextMenuHelper.CreateMenuItems(m_context, m_contextMenuButton.ItemsSource,
+            var gravity = (m_contextMenuButton.ContextMenuHorizontalOptions == ContextMenuHorizontalOptions.Right)
+                ? (int)GravityFlags.Right
+                : (int)GravityFlags.Left;
+            var popupMenu = new PopupMenu(m_context, Control);
+                m_menuItems = ContextMenuHelper.CreateMenuItems(m_context, m_contextMenuButton.ItemsSource,
                 m_contextMenuButton, popupMenu);
             popupMenu.SetOnMenuItemClickListener(this);
             var menuHelper = new MenuPopupHelper(Context,(MenuBuilder) popupMenu.Menu, Control);
-            menuHelper.Gravity = popupMenu.Gravity;
-            menuHelper.SetForceShowIcon(true);
+            menuHelper.Gravity = gravity;
+            menuHelper.SetForceShowIcon(m_menuItems.Keys.Any(contextMenuItem => !string.IsNullOrEmpty(contextMenuItem.Icon))); //Show icons if there is any context menu items with a icon added
             menuHelper.Show();
             m_contextMenuButton.SendContextMenuOpened();
         }
