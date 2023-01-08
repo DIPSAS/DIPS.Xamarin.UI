@@ -85,7 +85,7 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
         /// <summary>
         /// The icon to be used as a image with the context menu item
         /// </summary>
-        public string? Icon { get; set; }
+        public FileImageSource? Icon { get; set; }
     }
 
     /// <summary>

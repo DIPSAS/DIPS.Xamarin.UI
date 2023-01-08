@@ -6,8 +6,10 @@ using Android.Support.V4.View;
 using Android.Views;
 using AndroidX.AppCompat.Widget;
 using DIPS.Xamarin.UI.Controls.ContextMenu;
+using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Shapes;
+using Menu = Android.Views.Menu;
 
 namespace DIPS.Xamarin.UI.Android.ContextMenu
 {
@@ -89,8 +91,11 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
         {
             if (!string.IsNullOrEmpty(contextMenuItem.Icon))
             {
-                var id = context.Resources.GetIdentifier(contextMenuItem.Icon, "drawable", context.PackageName);
-                menuItem.SetIcon(id);
+                var id = context.Resources?.GetIdentifier(contextMenuItem.Icon, "drawable", context.PackageName);
+                if (id != null)
+                {
+                    menuItem.SetIcon((int)id);    
+                }
             }
 
             TrySetChecked(contextMenuButton, menuItem, contextMenuItem);

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using CoreFoundation;
 using DIPS.Xamarin.UI.Controls.ContextMenu;
 using DIPS.Xamarin.UI.Extensions;
 using UIKit;
@@ -48,12 +49,14 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
 
                     if (!string.IsNullOrEmpty(contextMenuItem.Icon))
                     {
-                        image = new UIImage(contextMenuItem.Icon);
+                        image = UIImage.FromBundle(contextMenuItem.Icon.File);
                     }
                     
                     if(!string.IsNullOrEmpty(contextMenuItem.iOSOptions.SystemIconName)) //Override image with SF Symbols if this is what the consumer wants
                     {
-                        image = UIImage.GetSystemImage(contextMenuItem.iOSOptions.SystemIconName);
+
+                        var systemImage = UIImage.GetSystemImage(contextMenuItem.iOSOptions.SystemIconName);
+                        image = systemImage ?? image;
                     }
                     
                     var uiAction = UIAction.Create(contextMenuItem.Title, image, null,
