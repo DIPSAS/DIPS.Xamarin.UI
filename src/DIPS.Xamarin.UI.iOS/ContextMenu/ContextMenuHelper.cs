@@ -44,7 +44,12 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
 
                 else
                 {
-                    var uiAction = UIAction.Create(contextMenuItem.Title, null, null,
+                    UIImage image = null;
+                    if(!string.IsNullOrEmpty(contextMenuItem.iOSOptions.SystemIconName))
+                    {
+                        image = UIImage.GetSystemImage(contextMenuItem.iOSOptions.SystemIconName);
+                    }
+                    var uiAction = UIAction.Create(contextMenuItem.Title, image, null,
                         uiAction => OnMenuItemClick(uiAction, contextMenuItem, contextMenuButton));
 
                     if (contextMenuItem.IsChecked)

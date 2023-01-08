@@ -13,7 +13,8 @@
         <contextMenu:ContextMenuControl VerticalOptions="Start"
                                         ItemClickedCommand="{Binding ItemClickedCommand}">
             <contextMenu:ContextMenuControl.ItemsSource>
-                <contextMenu:ContextMenuItem Title="Item" />
+                <!-- Downloaded https://fonts.google.com/icons?selected=Material+Icons&icon.platform=android&icon.query=edit and put it in the android -> resources -> drawable and resource assets on iOS -->
+                <contextMenu:ContextMenuItem Title="Edit" Icon="edit" />
             </contextMenu:ContextMenuControl.ItemsSource>
             <Button Text="Single item"
                     BackgroundColor="White" />
@@ -23,7 +24,11 @@
         <contextMenu:ContextMenuControl VerticalOptions="Start"
                                         ItemClickedCommand="{Binding ItemClickedCommand}">
             <contextMenu:ContextMenuControl.ItemsSource>
-                <contextMenu:ContextMenuItem Title="Item 1" />
+                <contextMenu:ContextMenuItem Title="Item 1">
+                    <contextMenu:ContextMenuItem.iOSOptions>
+                        <contextMenu:iOSContextMenuItemOptions SystemIconName="asd" />
+                    </contextMenu:ContextMenuItem.iOSOptions>
+                </contextMenu:ContextMenuItem>
                 <contextMenu:ContextMenuItem Title="Item 2" />
             </contextMenu:ContextMenuControl.ItemsSource>
             <Button Text="Two items"
@@ -79,7 +84,7 @@
             <contextMenu:ContextMenuControl.ItemsSource>
                 <contextMenu:ContextMenuGroup Title="Group 1"
                                               IsCheckable="True">
-                    <contextMenu:ContextMenuItem Title="Item 1" />
+                    <contextMenu:ContextMenuItem Title="Item 1" Icon="edit"/>
                     <contextMenu:ContextMenuItem Title="Item 2" />
                 </contextMenu:ContextMenuGroup>
                 <contextMenu:ContextMenuGroup Title="Group 2"
