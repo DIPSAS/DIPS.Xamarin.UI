@@ -93,6 +93,11 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
     /// </summary>
     public class AndroidContextMenuItemOptions
     {
+        /// <summary>
+        /// Set this to override the Context menu item icon with a Android Resource  
+        /// </summary>
+        /// <remarks>This can be any resource in your Resources drawable, but you can also check out Android.Resource.Drawable.icon-name which is built in</remarks>
+        public string IconResourceName { get; set; }
     }
 
     /// <summary>
@@ -101,7 +106,7 @@ namespace DIPS.Xamarin.UI.Controls.ContextMenu
     public class iOSContextMenuItemOptions
     {
         /// <summary>
-        /// Set this to override the Context menu item icon with a  SF Symbol 
+        /// Set this to override the Context menu item icon with a SF Symbol 
         /// </summary>
         /// <remarks>To see all SF Symbols go to https://developer.apple.com/sf-symbols/</remarks>
         public string SystemIconName { get; set; }

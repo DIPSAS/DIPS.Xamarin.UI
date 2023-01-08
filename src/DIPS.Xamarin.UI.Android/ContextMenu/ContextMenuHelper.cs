@@ -92,9 +92,11 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
             if (!string.IsNullOrEmpty(contextMenuItem.Icon))
             {
                 var id = context.Resources?.GetIdentifier(contextMenuItem.Icon, "drawable", context.PackageName);
+                var androidResourceId = context.Resources?.GetIdentifier(contextMenuItem.AndroidOptions.IconResourceName, "drawable",context.PackageName);
+                id = androidResourceId ?? id;
                 if (id != null)
                 {
-                    menuItem.SetIcon((int)id);    
+                    menuItem.SetIcon((int)id);   
                 }
             }
 
