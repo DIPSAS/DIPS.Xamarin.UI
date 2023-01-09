@@ -24,7 +24,7 @@ namespace DIPS.Xamarin.UI.Samples.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-
+            
             Essentials.Platform.Init(this, savedInstanceState); //Xamarin essentials
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

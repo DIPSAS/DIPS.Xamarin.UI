@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Android.Content;
-using Android.Support.V7.Widget;
+using Android.Support.V7.View.Menu;
 using Android.Views;
+using AndroidX.AppCompat.Widget;
 using DIPS.Xamarin.UI.Android.ContextMenu;
 using DIPS.Xamarin.UI.Controls.ContextMenu;
+using Java.Lang.Reflect;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Android;
@@ -49,12 +51,17 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
 
         private void OpenContextMenu(object sender, EventArgs e)
         {
-            var popupMenu = new PopupMenu(m_context, Control, (m_contextMenuButton.ContextMenuHorizontalOptions == ContextMenuHorizontalOptions.Right)
-                ? (int)GravityFlags.Right   
-                : (int)GravityFlags.Left);
-            m_menuItems = ContextMenuHelper.CreateMenuItems(m_contextMenuButton.ItemsSource, m_contextMenuButton, popupMenu);
+            var gravity = (m_contextMenuButton.ContextMenuHorizontalOptions == ContextMenuHorizontalOptions.Right)
+                ? (int)GravityFlags.Right
+                : (int)GravityFlags.Left;
+            var popupMenu = new PopupMenu(m_context, Control);
+                m_menuItems = ContextMenuHelper.CreateMenuItems(m_context, m_contextMenuButton.ItemsSource,
+                m_contextMenuButton, popupMenu);
             popupMenu.SetOnMenuItemClickListener(this);
-            popupMenu.Show();
+            var menuHelper = new MenuPopupHelper(Context,(MenuBuilder) popupMenu.Menu, Control);
+            menuHelper.Gravity = gravity;
+            menuHelper.SetForceShowIcon(m_menuItems.Keys.Any(contextMenuItem => !string.IsNullOrEmpty(contextMenuItem.Icon) || !string.IsNullOrEmpty(contextMenuItem.AndroidOptions.IconResourceName))); //Show icons if there is any context menu items with a icon added
+            menuHelper.Show();
             m_contextMenuButton.SendContextMenuOpened();
         }
 
@@ -65,24 +72,26 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
             {
                 if (theTappedNativeItem.IsCheckable) //check the item
                 {
-                    if (contextMenuItem.Parent is ContextMenuGroup && theTappedNativeItem.IsChecked) //You are unchecking a grouped item, which means its single mode and it should not be able to uncheck
+                    if (contextMenuItem.Parent is ContextMenuGroup &&
+                        theTappedNativeItem
+                            .IsChecked) //You are unchecking a grouped item, which means its single mode and it should not be able to uncheck
                     {
                         return true;
                     }
-                    
+
                     m_menuItems.ForEach(pair =>
                     {
                         if (pair.Value.GroupId == theTappedNativeItem.GroupId) //Uncheck previous items
                         {
-                            pair.Value.SetChecked(false);    
+                            pair.Value.SetChecked(false);
                         }
                     });
-                    
+
                     m_contextMenuButton.ResetIsCheckedForTheRest(contextMenuItem);
                     contextMenuItem.IsChecked = !contextMenuItem.IsChecked;
                     theTappedNativeItem.SetChecked(contextMenuItem.IsChecked);
                 }
-                
+
                 contextMenuItem.SendClicked(m_contextMenuButton);
                 return true;
             }
