@@ -6,6 +6,7 @@ using Android.OS;
 using System.ComponentModel;
 using DIPS.Xamarin.UI.Android;
 using DIPS.Xamarin.UI.Internal;
+using Google.Android.Material.BottomSheet;
 
 [assembly: ExportRenderer(typeof(InternalDatePicker), typeof(InternalDatePickerRenderer))]
 namespace DIPS.Xamarin.UI.Android
@@ -29,7 +30,7 @@ namespace DIPS.Xamarin.UI.Android
             {
                 //Dispose
             }
-
+            
             if (e.NewElement is InternalDatePicker newDatePicker && Control != null)
             {
                 m_datepickerWithExtraButton = newDatePicker;

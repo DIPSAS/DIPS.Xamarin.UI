@@ -9,7 +9,6 @@ namespace DIPS.Xamarin.UI.Samples.Controls
         public ControlsPage()
         {
             BindingContext = new ControlsViewModel(Application.Current.MainPage.Navigation);
-
             InitializeComponent();
         }
     }

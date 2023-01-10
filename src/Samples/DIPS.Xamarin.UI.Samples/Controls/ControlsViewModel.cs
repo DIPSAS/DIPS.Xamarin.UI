@@ -4,10 +4,10 @@ using DIPS.Xamarin.UI.Samples.Controls.BorderBox;
 using DIPS.Xamarin.UI.Samples.Controls.Content;
 using DIPS.Xamarin.UI.Samples.Controls.DatePicker;
 using DIPS.Xamarin.UI.Samples.Controls.FloatingActionMenu;
+using DIPS.Xamarin.UI.Samples.Controls.NativeSheet;
 using DIPS.Xamarin.UI.Samples.Controls.Popup;
 using DIPS.Xamarin.UI.Samples.Controls.RadioButtonGroup;
 using DIPS.Xamarin.UI.Samples.Controls.Sheet;
-using DIPS.Xamarin.UI.Samples.Controls.SheetPage;
 using DIPS.Xamarin.UI.Samples.Controls.Skeleton;
 using DIPS.Xamarin.UI.Samples.Controls.SlideLayout;
 using DIPS.Xamarin.UI.Samples.Controls.Tag;
@@ -64,7 +64,7 @@ namespace DIPS.Xamarin.UI.Samples.Controls
                 if (parameter.Equals("Vibration"))
                     await m_navigation.PushAsync(new VibrationPage() {Title = parameter});
                 if (parameter.Equals("SheetPage"))
-                    await m_navigation.PushAsync(new SheetPagePage() {Title = parameter});
+                    await m_navigation.PushAsync(new NativeSheetPage() {Title = parameter});
             }
             catch (Exception e)
             {

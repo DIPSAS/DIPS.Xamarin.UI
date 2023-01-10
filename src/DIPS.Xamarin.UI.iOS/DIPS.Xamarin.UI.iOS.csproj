@@ -39,10 +39,10 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="SheetContentView.cs" />
     <Compile Include="SheetPageRenderer.cs" />
+    <Compile Include="BottomSheet\iOSBottomSheet.cs" />
     <Compile Include="SlidableLayoutContentView.cs" />
     <Compile Include="InternalDatePickerRenderer.cs" />
     <Compile Include="Util\Inspector.cs" />

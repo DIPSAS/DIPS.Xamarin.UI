@@ -1,0 +1,10 @@
+<controls:SheetPage xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:DIPS.Xamarin.UI.Controls;assembly=DIPS.Xamarin.UI"
+                    xmlns:system="clr-namespace:System;assembly=netstandard"
+                    xmlns:nativeSheet="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.NativeSheet;assembly=DIPS.Xamarin.UI.Samples"
+                    x:Class="DIPS.Xamarin.UI.Samples.Controls.NativeSheet.NativeSheetPage"
+                    x:Name="sheetPage">
+    <Button Text="Open sheet"
+            Clicked="OpenSheet" />
+</controls:SheetPage>

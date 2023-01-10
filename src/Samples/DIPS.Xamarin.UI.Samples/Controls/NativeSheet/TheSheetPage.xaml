@@ -1,0 +1,14 @@
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:nativeSheet="clr-namespace:DIPS.Xamarin.UI.Samples.Controls.NativeSheet;assembly=DIPS.Xamarin.UI.Samples"
+             x:Class="DIPS.Xamarin.UI.Samples.Controls.NativeSheet.TheSheetPage">
+    <ContentPage.BindingContext>
+        <nativeSheet:TheSheetPageViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout>
+        <Label Text="{Binding LabelText}" />
+        <Button Text="Change label text"
+                Command="{Binding ChangeLabelCommand}" />
+        <ListView ItemsSource="{Binding Items}" />
+    </StackLayout>
+</ContentPage>

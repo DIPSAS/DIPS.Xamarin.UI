@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using DIPS.Xamarin.UI.Android.BottomSheet;
 using DIPS.Xamarin.UI.Internal.Utilities;
 
 namespace DIPS.Xamarin.UI.Android
@@ -17,6 +18,7 @@ namespace DIPS.Xamarin.UI.Android
         {
             if (s_isInitialized) return;
             Inspector.Instance = new Util.Inspector();
+            UI.BottomSheet.BottomSheet.Instance = new AndroidBottomSheet(activity);
             InternalDatePickerRenderer.Initialize();
             InternalButtonRenderer.Initialize();
 

@@ -41,6 +41,7 @@ namespace DIPS.Xamarin.UI.iOS
             
             var viewController = m_sheetPage.m_sheetPage.CreateViewController();
 
+            
             viewController.ModalPresentationStyle = UIModalPresentationStyle.PageSheet;
             var sheet = viewController.SheetPresentationController;
             if (sheet != null)
@@ -57,7 +58,7 @@ namespace DIPS.Xamarin.UI.iOS
                 sheet.WidthFollowsPreferredContentSizeWhenEdgeAttached = true;
 
             }
-            currentViewController.PresentViewController(viewController, true, null);
+            PresentViewController(viewController, true, null);
         }
     }
 
