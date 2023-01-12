@@ -31,7 +31,8 @@
     <files>
         <!-- License-->
         <file src="LICENSE" target="LICENSE " />
-        
+
+        <!-- DIPS.Xamarin.UI -->
         <!-- Cross-platform reference assemblies -->
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.dll" target="lib\netstandard2.0\DIPS.Xamarin.UI.dll" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.pdb" target="lib\netstandard2.0\DIPS.Xamarin.UI.pdb" />
@@ -47,7 +48,7 @@
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.xml" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" target="lib\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" target="lib\xamarinios10\no\DIPS.Xamarin.UI.resources.dll" />
-        
+
 
 
         <!-- Android reference assemblies -->
@@ -59,5 +60,33 @@
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\DIPS.Xamarin.UI.xml" target="lib\netstandard2.0\DIPS.Xamarin.UI.xml" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" target="lib\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" />
         <file src="src\DIPS.Xamarin.UI\bin\Release\netstandard2.0\no\DIPS.Xamarin.UI.resources.dll" target="lib\monoandroid81\no\DIPS.Xamarin.UI.resources.dll" />
+        
+        <!-- DIPS.Mobile.UI -->
+        <!-- Cross-platform reference assemblies -->
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\DIPS.Mobile.UI.dll" target="lib\netstandard2.0\DIPS.Mobile.UI.dll" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\DIPS.Mobile.UI.pdb" target="lib\netstandard2.0\DIPS.Mobile.UI.pdb" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\DIPS.Mobile.UI.xml" target="lib\netstandard2.0\DIPS.Mobile.UI.xml" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\no\DIPS.Mobile.UI.resources.dll" target="lib\netstandard2.0\no\DIPS.Mobile.UI.resources.dll" />
+
+        <!-- iOS reference assemblies -->
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI.iOS\bin\Release\DIPS.Mobile.UI.iOS.dll" target="lib\xamarinios10\DIPS.Mobile.UI.iOS.dll" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI.iOS\bin\Release\DIPS.Mobile.UI.iOS.pdb" target="lib\xamarinios10\DIPS.Mobile.UI.iOS.pdb" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI.iOS\bin\Release\DIPS.Mobile.UI.iOS.xml" target="lib\DIPS.Mobile.UI.iOS.xml" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\DIPS.Mobile.UI.dll" target="lib\xamarinios10\DIPS.Mobile.UI.dll" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\DIPS.Mobile.UI.pdb" target="lib\xamarinios10\DIPS.Mobile.UI.pdb" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\DIPS.Mobile.UI.xml" target="lib\netstandard2.0\DIPS.Mobile.UI.xml" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\no\DIPS.Mobile.UI.resources.dll" target="lib\netstandard2.0\no\DIPS.Mobile.UI.resources.dll" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\no\DIPS.Mobile.UI.resources.dll" target="lib\xamarinios10\no\DIPS.Mobile.UI.resources.dll" />
+
+
+        <!-- Android reference assemblies -->
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI.Android\bin\Release\DIPS.Mobile.UI.Android.dll" target="lib\monoandroid81\DIPS.Mobile.UI.Android.dll" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI.Android\bin\Release\DIPS.Mobile.UI.Android.pdb" target="lib\monoandroid81\DIPS.Mobile.UI.Android.pdb" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI.Android\bin\Release\DIPS.Mobile.UI.Android.xml" target="lib\monoandroid81\DIPS.Mobile.UI.Android.xml" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\DIPS.Mobile.UI.dll" target="lib\monoandroid81\DIPS.Mobile.UI.dll" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\DIPS.Mobile.UI.pdb" target="lib\monoandroid81\DIPS.Mobile.UI.pdb" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\DIPS.Mobile.UI.xml" target="lib\netstandard2.0\DIPS.Mobile.UI.xml" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\no\DIPS.Mobile.UI.resources.dll" target="lib\netstandard2.0\no\DIPS.Mobile.UI.resources.dll" />
+        <file src="src\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Release\netstandard2.0\no\DIPS.Mobile.UI.resources.dll" target="lib\monoandroid81\no\DIPS.Mobile.UI.resources.dll" />
     </files>
 </package>

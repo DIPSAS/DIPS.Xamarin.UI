@@ -51,3 +51,7 @@ The library will be maintained by DIPS AS, but the public is always welcome to c
 
 - [Norwegian national news of DIPS Visit](https://tv.nrk.no/serie/dagsrevyen-21/202107/NNFA21070121#t=489s)
 - [Microsoft .Net Conf 2020](https://m.youtube.com/watch?v=QFNmLE7pVl4&t=18458s)
+
+## DIPS.Mobile.UI
+We are in a transitional period where DIPS.Xamarin.UI will be renamed to DIPS.Mobile.UI. This means that all new components will be developed in DIPS.Mobile.UI.
+DIPS.Mobile.UI is packaged and available from DIPS.Xamarin.UI nuget package, this means that its automatically included in your app project.
