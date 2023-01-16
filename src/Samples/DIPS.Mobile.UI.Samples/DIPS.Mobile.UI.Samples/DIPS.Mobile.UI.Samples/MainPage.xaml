@@ -2,16 +2,17 @@
     version="1.0"
     encoding="utf-8"?>
 
-<pages:ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:colors="clr-namespace:DIPS.Mobile.UI.Resources.Colors;assembly=DIPS.Mobile.UI"
-                xmlns:pages="clr-namespace:DIPS.Mobile.UI.Components.Pages;assembly=DIPS.Mobile.UI"
-                x:Class="DIPS.Mobile.UI.Samples.MainPage"
-                Title="Home">
+<dui:ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:dui="http://dips.com/mobile.ui"
+                 x:Class="DIPS.Mobile.UI.Samples.MainPage"
+                 Title="Home">
     <StackLayout>
         <!-- Place new controls here -->
-       <Button Text="Switch color" Clicked="Button_OnClicked"/>
-        <BoxView HeightRequest="25" WidthRequest="25" x:Name="BoxView" />
+        <dui:Button Text="NESTE"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Padding="20,18" />
     </StackLayout>
 
-</pages:ContentPage>
+</dui:ContentPage>

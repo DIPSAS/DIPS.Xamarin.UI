@@ -1,15 +1,16 @@
 using DIPS.Mobile.UI.Resources.Colors;
 using Xamarin.Forms;
 
-namespace DIPS.Mobile.UI.Components.Pages
+namespace DIPS.Mobile.UI.Components.Buttons
 {
-    public class ContentPage : Xamarin.Forms.ContentPage
+    public class Button : Xamarin.Forms.Button
     {
-        public ContentPage()
+        public Button()
         {
             SetColors(Application.Current.RequestedTheme);
+            ContentLayout = new ButtonContentLayout(ButtonContentLayout.ImagePosition.Left, 5);
             Application.Current.RequestedThemeChanged += OnRequestedThemeChanged;
-            }
+        }
 
         private void OnRequestedThemeChanged(object sender, AppThemeChangedEventArgs e)
         {
@@ -18,13 +19,8 @@ namespace DIPS.Mobile.UI.Components.Pages
 
         private void SetColors(OSAppTheme osAppTheme)
         {
-            BackgroundColor = Colors.GetColor(ColorName.color_secondary_light_secondary_70);
-        }
-
-        protected override void OnDisappearing()
-        {
-            Application.Current.RequestedThemeChanged -= OnRequestedThemeChanged;
-            base.OnDisappearing();
+            BackgroundColor = Colors.GetColor(ColorName.color_primary_light_primary_100);
+            TextColor = Color.White;
         }
     }
 }

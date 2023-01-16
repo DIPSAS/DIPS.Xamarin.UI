@@ -37,9 +37,6 @@
         <Reference Include="Xamarin.iOS" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Resources\" />
-    </ItemGroup>
-    <ItemGroup>
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

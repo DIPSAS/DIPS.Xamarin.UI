@@ -74,5 +74,31 @@
     <ItemGroup>
       <Folder Include="Resources\values" />
     </ItemGroup>
+    <ItemGroup>
+      <AndroidResource Include="Resources\drawable-hdpi\edit.png">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      </AndroidResource>
+      <AndroidResource Include="Resources\drawable-mdpi\edit.png">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      </AndroidResource>
+      <AndroidResource Include="Resources\drawable-xhdpi\edit.png">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      </AndroidResource>
+      <AndroidResource Include="Resources\drawable-xxhdpi\edit.png">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      </AndroidResource>
+      <AndroidResource Include="Resources\drawable-xxxhdpi\edit.png">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      </AndroidResource>
+      <AndroidResource Include="Resources\drawable\edit.png">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      </AndroidResource>
+    </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

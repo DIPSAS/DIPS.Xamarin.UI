@@ -14,11 +14,5 @@ namespace DIPS.Mobile.UI.Samples
         {
             InitializeComponent();
         }
-
-        private void Button_OnClicked(object sender, EventArgs e)
-        {
-            var color = Colors.GetColor(ColorName.color_primary_light_primary_100);
-            BoxView.BackgroundColor = color;
-        }
     }
 }

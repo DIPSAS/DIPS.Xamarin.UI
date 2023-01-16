@@ -94,6 +94,8 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
+        <ImageAsset Include="Assets.xcassets\edit.imageset\Contents.json" />
+        <ImageAsset Include="Assets.xcassets\edit.imageset\edit.png" />
         <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
             <Visible>false</Visible>
