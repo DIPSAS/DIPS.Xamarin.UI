@@ -113,6 +113,10 @@
           <Project>{07237015-3b29-43ec-9d6a-bba648cad4fe}</Project>
           <Name>DIPS.Mobile.UI.iOS</Name>
         </ProjectReference>
+        <ProjectReference Include="..\..\..\..\DIPS.Mobile.UI\DIPS.Mobile.UI\DIPS.Mobile.UI.csproj">
+          <Project>{741f10d8-5728-426c-ab9c-f3145af21265}</Project>
+          <Name>DIPS.Mobile.UI</Name>
+        </ProjectReference>
         <ProjectReference Include="..\DIPS.Mobile.UI.Samples\DIPS.Mobile.UI.Samples.csproj">
             <Project>{5F3B7E2F-D9D0-4065-B9C1-9D3ACFECAD02}</Project>
             <Name>DIPS.Mobile.UI.Samples</Name>

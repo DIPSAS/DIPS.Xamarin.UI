@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly
+  Generated on Mon, 16 Jan 2023 18:03:21 GMT
+-->
+<resources>
+  <color name="color_primary_light_primary_100">#ff047f89</color>
+  <color name="color_primary_light_primary_90">#ff65868f</color>
+  <color name="color_primary_light_primary_80">#ff98b2ae</color>
+  <color name="color_secondary_light_secondary_100">#ff97c8cd</color>
+  <color name="color_secondary_light_secondary_70">#ffecf3f4</color>
+  <color name="color_secondary_light_secondary_80">#ffdadada</color>
+  <color name="color_system_black">#ff000000</color>
+  <color name="color_system_white">#ffffffff</color>
+
+</resources>

@@ -1,0 +1,18 @@
+<!--
+Do not edit directly,
+generated 16/01/2023 13:25:17 from DIPS.Mobile.DesignTokens
+-->
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="DIPS.Mobile.UI.Resources.Colors.Colors">
+    <Color x:Key="color_primary_light_primary_100">#ff047f89</Color>
+    <Color x:Key="color_primary_dark_primary_100">#ff101010</Color>
+    <Color x:Key="color_primary_light_primary_90">#ff65868f</Color>
+    <Color x:Key="color_primary_light_primary_80">#ff98b2ae</Color>
+    <Color x:Key="color_secondary_light_secondary_100">#ff97c8cd</Color>
+    <Color x:Key="color_secondary_light_secondary_70">#ffecf3f4</Color>
+    <Color x:Key="color_secondary_light_secondary_80">#fff0f5f7</Color>
+    <Color x:Key="color_secondary_light_secondary_90">#ffecf3f4</Color>
+    <Color x:Key="color_system_black">#ff000000</Color>
+    <Color x:Key="color_system_white">#ffffffff</Color>
+</ResourceDictionary>

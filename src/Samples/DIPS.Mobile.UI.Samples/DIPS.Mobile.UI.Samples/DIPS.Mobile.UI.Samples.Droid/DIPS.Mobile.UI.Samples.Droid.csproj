@@ -14,7 +14,6 @@
         <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
         <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
         <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-        <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
         <TargetFrameworkVersion>v12.0</TargetFrameworkVersion>
         <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     </PropertyGroup>
@@ -59,20 +58,21 @@
         <None Include="Properties\AndroidManifest.xml" />
     </ItemGroup>
     <ItemGroup>
-        <AndroidResource Include="Resources\layout\Tabbar.axml" />
-        <AndroidResource Include="Resources\layout\Toolbar.axml" />
-        <AndroidResource Include="Resources\values\styles.xml" />
-        <AndroidResource Include="Resources\values\colors.xml" />
-    </ItemGroup>
-    <ItemGroup>
         <ProjectReference Include="..\..\..\..\DIPS.Mobile.UI\DIPS.Mobile.UI.Droid\DIPS.Mobile.UI.Droid.csproj">
           <Project>{a8503ec9-5acb-4636-b0f0-02def6e15a71}</Project>
           <Name>DIPS.Mobile.UI.Droid</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\..\DIPS.Mobile.UI\DIPS.Mobile.UI\DIPS.Mobile.UI.csproj">
+          <Project>{741f10d8-5728-426c-ab9c-f3145af21265}</Project>
+          <Name>DIPS.Mobile.UI</Name>
         </ProjectReference>
         <ProjectReference Include="..\DIPS.Mobile.UI.Samples\DIPS.Mobile.UI.Samples.csproj">
             <Project>{5F3B7E2F-D9D0-4065-B9C1-9D3ACFECAD02}</Project>
             <Name>DIPS.Mobile.UI.Samples</Name>
         </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Resources\values" />
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

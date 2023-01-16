@@ -5,10 +5,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using DIPS.Mobile.UI.Resources.Colors;
+using Xamarin.Forms.Platform.Android;
 
 namespace DIPS.Mobile.UI.Samples.Droid
 {
-    [Activity(Label = "DIPS.Mobile.UI.Samples", Theme = "@style/MainTheme", MainLauncher = true,
+    [Activity(Label = "DIPS.Mobile.UI.Samples", Theme = "@style/DIPS.Mobile.UI.Style", MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
@@ -20,6 +22,8 @@ namespace DIPS.Mobile.UI.Samples.Droid
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+            var asd = Colors.GetColor(ColorName.color_primary_light_primary_100);
+
         }
     }
 }

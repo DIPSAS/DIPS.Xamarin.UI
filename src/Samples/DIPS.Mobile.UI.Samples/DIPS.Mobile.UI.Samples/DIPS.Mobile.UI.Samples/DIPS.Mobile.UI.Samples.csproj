@@ -14,6 +14,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="DIPS.Mobile.UI">
+        <HintPath>..\..\..\..\DIPS.Mobile.UI\DIPS.Mobile.UI\bin\Debug\netstandard2.0\DIPS.Mobile.UI.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\..\..\..\DIPS.Mobile.UI\DIPS.Mobile.UI\DIPS.Mobile.UI.csproj" />
     </ItemGroup>
 </Project>

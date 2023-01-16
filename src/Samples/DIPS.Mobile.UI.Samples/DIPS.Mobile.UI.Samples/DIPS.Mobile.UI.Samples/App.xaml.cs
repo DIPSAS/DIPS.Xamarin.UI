@@ -1,6 +1,7 @@
-﻿using System;
+﻿using DIPS.Mobile.UI.Components.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using NavigationPage = DIPS.Mobile.UI.Components.Pages.NavigationPage;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
@@ -11,8 +12,7 @@ namespace DIPS.Mobile.UI.Samples
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

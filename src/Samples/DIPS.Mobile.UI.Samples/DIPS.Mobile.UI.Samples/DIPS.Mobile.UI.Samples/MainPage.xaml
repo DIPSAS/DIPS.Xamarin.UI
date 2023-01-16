@@ -1,14 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:DIPS.Mobile.UI.Samples"
-             x:Class="DIPS.Mobile.UI.Samples.MainPage">
+﻿<?xml
+    version="1.0"
+    encoding="utf-8"?>
 
+<pages:ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:colors="clr-namespace:DIPS.Mobile.UI.Resources.Colors;assembly=DIPS.Mobile.UI"
+                xmlns:pages="clr-namespace:DIPS.Mobile.UI.Components.Pages;assembly=DIPS.Mobile.UI"
+                x:Class="DIPS.Mobile.UI.Samples.MainPage"
+                Title="Home">
     <StackLayout>
         <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+       <Button Text="Switch color" Clicked="Button_OnClicked"/>
+        <BoxView HeightRequest="25" WidthRequest="25" x:Name="BoxView" />
     </StackLayout>
 
-</ContentPage>
+</pages:ContentPage>
