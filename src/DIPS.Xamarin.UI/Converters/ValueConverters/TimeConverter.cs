@@ -14,7 +14,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
     /// </summary>
     public class TimeConverter : IMarkupExtension, IValueConverter
     {
-        private IServiceProvider m_serviceProvider;
+        private IServiceProvider? m_serviceProvider;
 
         /// <summary>
         ///     The converter format that is used to change the format of the time <see cref="TimeConverter" />
@@ -49,27 +49,17 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dateTimeInput = DateTime.MinValue;
-            if (value == null) return string.Empty;
-            if (!(value is DateTime) && !(value is TimeSpan))
-                throw new XamlParseException("The input has to be of type DateTime or TimeSpan").WithXmlLineInfo(
-                    m_serviceProvider);
-
-            switch (value)
+            if (value == null)
             {
-                case TimeSpan timeSpanInput:
-                    dateTimeInput += timeSpanInput;
-                    break;
-                case DateTime dateTimeValue:
-                    dateTimeInput = IgnoreLocalTime ? dateTimeValue : dateTimeValue.ToLocalTime();
-                    break;
+                return string.Empty;
             }
 
-            return Format switch
+            if (value is not DateTime && value is not TimeSpan)
             {
-                TimeConverterFormat.Default => ConvertToDefaultFormat(dateTimeInput, culture),
-                _ => string.Empty
-            };
+                throw new XamlParseException("The input has to be of type DateTime or TimeSpan").WithXmlLineInfo(m_serviceProvider);
+            }
+            
+            return DateTimeFormatter.FormatTime(value, culture, IgnoreLocalTime, Format);
         }
 
         /// <inheritdoc />
@@ -77,24 +67,6 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
-        }
-
-        private static string ConvertToDefaultFormat(DateTime dateTimeInput, CultureInfo culture)
-        {
-            var time = dateTimeInput.ToString("HH:mm", culture);
-            if (culture.IsNorwegian())
-            {
-                var hour = dateTimeInput.ToString("HH", culture);
-                var minutes = dateTimeInput.ToString("mm", culture);
-                time = $"{hour}:{minutes}";
-            }
-
-            if (culture.ThreeLetterWindowsLanguageName.Equals("ENU"))
-            {
-                time = dateTimeInput.ToString("hh:mm tt", culture);
-            }
-
-            return time;
         }
     }
 }

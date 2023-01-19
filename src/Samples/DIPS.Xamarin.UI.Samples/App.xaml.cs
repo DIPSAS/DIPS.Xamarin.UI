@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using DIPS.Xamarin.UI.Converters.ValueConverters;
+using Xamarin.Forms;
 
 namespace DIPS.Xamarin.UI.Samples
 {
