@@ -14,6 +14,8 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
     /// </summary>
     public class TimeConverter : IMarkupExtension, IValueConverter
     {
+        private IServiceProvider? m_serviceProvider;
+
         /// <summary>
         ///     The converter format that is used to change the format of the time <see cref="TimeConverter" />
         /// </summary>
@@ -40,12 +42,23 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         [ExcludeFromCodeCoverage]
         public object ProvideValue(IServiceProvider serviceProvider)
         {
+            m_serviceProvider = serviceProvider;
             return this;
         }
 
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+            {
+                return string.Empty;
+            }
+
+            if (value is not DateTime dateTimeInput)
+            {
+                throw new XamlParseException("The input has to be of type DateTime").WithXmlLineInfo(m_serviceProvider);
+            }
+            
             return DateTimeFormatter.FormatTime(value, culture, IgnoreLocalTime, Format);
         }
 

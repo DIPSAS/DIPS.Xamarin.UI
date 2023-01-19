@@ -7,14 +7,13 @@ using DIPS.Xamarin.UI.Resources.LocalizedStrings;
 namespace DIPS.Xamarin.UI
 {
     /// <summary>
-    /// 
     /// </summary>
     public class DateTimeFormatter
     {
         private const string Space = " ";
 
         /// <summary>
-        /// 
+        ///     Converts the Date and TimeSpan of the given DateTime to the correct short or text format.
         /// </summary>
         /// <param name="dateTime"></param>
         /// <param name="culture"></param>
@@ -22,44 +21,51 @@ namespace DIPS.Xamarin.UI
         /// <param name="format"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static string FormatDateAndTime(DateTime dateTime, CultureInfo culture, bool ignoreLocalTime, DateAndTimeConverter.DateAndTimeConverterFormat format)
+        public static string FormatDateAndTime(DateTime dateTime, CultureInfo culture, bool ignoreLocalTime = false,
+            DateAndTimeConverter.DateAndTimeConverterFormat format =
+                DateAndTimeConverter.DateAndTimeConverterFormat.Default)
         {
             return format switch
             {
-                DateAndTimeConverter.DateAndTimeConverterFormat.Short => FormatShortDateAndTime(dateTime, culture, ignoreLocalTime),
-                DateAndTimeConverter.DateAndTimeConverterFormat.Text => FormatTextDateAndTime(dateTime, culture, ignoreLocalTime),
+                DateAndTimeConverter.DateAndTimeConverterFormat.Short => FormatShortDateAndTime(dateTime, culture,
+                    ignoreLocalTime),
+                DateAndTimeConverter.DateAndTimeConverterFormat.Text => FormatTextDateAndTime(dateTime, culture,
+                    ignoreLocalTime),
                 _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
             };
         }
 
         /// <summary>
-        /// 
+        ///     Converts the Date of the given DateTime to the correct short or text format.
         /// </summary>
         /// <param name="dateTime"></param>
         /// <param name="cultureInfo"></param>
         /// <param name="ignoreLocalTime"></param>
         /// <param name="dateFormat"></param>
         /// <returns></returns>
-        public static string FormatDate(DateTime dateTime, CultureInfo cultureInfo, bool ignoreLocalTime, DateConverter.DateConverterFormat dateFormat)
+        public static string FormatDate(DateTime dateTime, CultureInfo cultureInfo, bool ignoreLocalTime = false,
+            DateConverter.DateConverterFormat dateFormat = DateConverter.DateConverterFormat.Default)
         {
             return dateFormat switch
             {
-                DateConverter.DateConverterFormat.Short => ConvertToDefaultDateTime(dateTime, cultureInfo, ignoreLocalTime),
+                DateConverter.DateConverterFormat.Short => ConvertToDefaultDateTime(dateTime, cultureInfo,
+                    ignoreLocalTime),
                 DateConverter.DateConverterFormat.Text => ConvertDateTimeAsText(dateTime, cultureInfo, ignoreLocalTime),
                 _ => string.Empty
             };
         }
 
         /// <summary>
-        /// 
+        ///     Converts the given DateTime or TimeSpan to the correct default format.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">Must be either a <see cref="DateTime" /> or <see cref="TimeSpan" /></param>
         /// <param name="cultureInfo"></param>
         /// <param name="ignoreLocalTime"></param>
         /// <param name="format"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public static string FormatTime(object value, CultureInfo cultureInfo, bool ignoreLocalTime, TimeConverter.TimeConverterFormat format)
+        public static string FormatTime(object value, CultureInfo cultureInfo, bool ignoreLocalTime = false,
+            TimeConverter.TimeConverterFormat format = TimeConverter.TimeConverterFormat.Default)
         {
             if (value == null)
             {
@@ -90,7 +96,7 @@ namespace DIPS.Xamarin.UI
         }
 
         /// <summary>
-        /// 
+        ///     Converts the given DateTime to the correct time string.
         /// </summary>
         /// <param name="dateTime"></param>
         /// <param name="culture"></param>
@@ -202,7 +208,7 @@ namespace DIPS.Xamarin.UI
         {
             var date = FormatDate(dateTimeInput, culture, ignoreLocalTime, DateConverter.DateConverterFormat.Text);
 
-            var time = FormatTime(dateTimeInput, culture, ignoreLocalTime, TimeConverter.TimeConverterFormat.Default);
+            var time = FormatTime(dateTimeInput, culture, ignoreLocalTime);
 
             if (culture.IsNorwegian())
             {
@@ -219,8 +225,8 @@ namespace DIPS.Xamarin.UI
 
         private static string FormatShortDateAndTime(DateTime dateTimeInput, CultureInfo culture, bool ignoreLocalTime)
         {
-            var date = FormatDate(dateTimeInput, culture, ignoreLocalTime, DateConverter.DateConverterFormat.Short);
-            var time = FormatTime(dateTimeInput, culture, ignoreLocalTime, TimeConverter.TimeConverterFormat.Default);
+            var date = FormatDate(dateTimeInput, culture, ignoreLocalTime);
+            var time = FormatTime(dateTimeInput, culture, ignoreLocalTime);
 
             return culture.IsNorwegian() ? $"{date}{Space}kl{Space}{time}" : $"{date}{Space}{time}";
         }
