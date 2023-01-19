@@ -6,10 +6,22 @@ using DIPS.Xamarin.UI.Resources.LocalizedStrings;
 
 namespace DIPS.Xamarin.UI
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DateTimeFormatter
     {
         private const string Space = " ";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="culture"></param>
+        /// <param name="ignoreLocalTime"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static string FormatDateAndTime(DateTime dateTime, CultureInfo culture, bool ignoreLocalTime, DateAndTimeConverter.DateAndTimeConverterFormat format)
         {
             return format switch
@@ -20,6 +32,14 @@ namespace DIPS.Xamarin.UI
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="cultureInfo"></param>
+        /// <param name="ignoreLocalTime"></param>
+        /// <param name="dateFormat"></param>
+        /// <returns></returns>
         public static string FormatDate(DateTime dateTime, CultureInfo cultureInfo, bool ignoreLocalTime, DateConverter.DateConverterFormat dateFormat)
         {
             return dateFormat switch
@@ -30,6 +50,15 @@ namespace DIPS.Xamarin.UI
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="cultureInfo"></param>
+        /// <param name="ignoreLocalTime"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static string FormatTime(object value, CultureInfo cultureInfo, bool ignoreLocalTime, TimeConverter.TimeConverterFormat format)
         {
             if (value == null)
@@ -60,6 +89,12 @@ namespace DIPS.Xamarin.UI
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public static string FormatTime(DateTime dateTime, CultureInfo culture)
         {
             var time = dateTime.ToString("HH:mm", culture);
