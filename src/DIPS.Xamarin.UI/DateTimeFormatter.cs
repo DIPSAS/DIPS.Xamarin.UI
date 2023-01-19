@@ -34,6 +34,20 @@ namespace DIPS.Xamarin.UI
                 _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
             };
         }
+        
+        /// <summary>
+        /// <see cref="FormatDateAndTime(System.DateTime,System.Globalization.CultureInfo,bool,DIPS.Xamarin.UI.Converters.ValueConverters.DateAndTimeConverter.DateAndTimeConverterFormat)"/> with <see cref="CultureInfo.CurrentCulture"/>.
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="ignoreLocalTime"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static string FormatDateAndTime(DateTime dateTime, bool ignoreLocalTime = false,
+            DateAndTimeConverter.DateAndTimeConverterFormat format =
+                DateAndTimeConverter.DateAndTimeConverterFormat.Default)
+        {
+            return FormatDateAndTime(dateTime, CultureInfo.CurrentCulture, ignoreLocalTime, format);
+        }
 
         /// <summary>
         ///     Converts the Date of the given DateTime to the correct short or text format.
@@ -53,6 +67,19 @@ namespace DIPS.Xamarin.UI
                 DateConverter.DateConverterFormat.Text => ConvertDateTimeAsText(dateTime, cultureInfo, ignoreLocalTime),
                 _ => string.Empty
             };
+        }
+        
+        /// <summary>
+        /// <see cref="FormatDate(System.DateTime,System.Globalization.CultureInfo,bool,DIPS.Xamarin.UI.Converters.ValueConverters.DateConverter.DateConverterFormat)"/> with <see cref="CultureInfo.CurrentCulture"/>
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="ignoreLocalTime"></param>
+        /// <param name="dateFormat"></param>
+        /// <returns></returns>
+        public static string FormatDate(DateTime dateTime, bool ignoreLocalTime = false,
+            DateConverter.DateConverterFormat dateFormat = DateConverter.DateConverterFormat.Default)
+        {
+            return FormatDate(dateTime, CultureInfo.CurrentCulture, ignoreLocalTime, dateFormat);
         }
 
         /// <summary>
@@ -94,6 +121,20 @@ namespace DIPS.Xamarin.UI
                 _ => string.Empty
             };
         }
+        
+        /// <summary>
+        /// <see cref="FormatTime(object,System.Globalization.CultureInfo,bool,DIPS.Xamarin.UI.Converters.ValueConverters.TimeConverter.TimeConverterFormat)"/> with <see cref="CultureInfo.CurrentCulture"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="ignoreLocalTime"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static string FormatTime(object value,  bool ignoreLocalTime = false,
+            TimeConverter.TimeConverterFormat format = TimeConverter.TimeConverterFormat.Default)
+        {
+            return FormatTime(value, CultureInfo.CurrentCulture, ignoreLocalTime, format);
+        }
 
         /// <summary>
         ///     Converts the given DateTime to the correct time string.
@@ -103,6 +144,30 @@ namespace DIPS.Xamarin.UI
         /// <returns></returns>
         public static string FormatTime(DateTime dateTime, CultureInfo culture)
         {
+            var time = dateTime.ToString("HH:mm", culture);
+            if (culture.IsNorwegian())
+            {
+                var hour = dateTime.ToString("HH", culture);
+                var minutes = dateTime.ToString("mm", culture);
+                time = $"{hour}:{minutes}";
+            }
+
+            if (culture.ThreeLetterWindowsLanguageName.Equals("ENU"))
+            {
+                time = dateTime.ToString("hh:mm tt", culture);
+            }
+
+            return time;
+        }
+        
+        /// <summary>
+        /// <see cref="FormatTime(object,System.Globalization.CultureInfo,bool,DIPS.Xamarin.UI.Converters.ValueConverters.TimeConverter.TimeConverterFormat)"/> with <see cref="CultureInfo.CurrentCulture"/>
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static string FormatTime(DateTime dateTime)
+        {
+            var culture = CultureInfo.CurrentCulture;
             var time = dateTime.ToString("HH:mm", culture);
             if (culture.IsNorwegian())
             {
