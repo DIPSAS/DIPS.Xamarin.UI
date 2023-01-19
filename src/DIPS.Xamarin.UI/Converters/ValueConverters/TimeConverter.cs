@@ -54,7 +54,7 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
                 return string.Empty;
             }
 
-            if (value is not DateTime || value is not TimeSpan)
+            if (value is not DateTime && value is not TimeSpan)
             {
                 throw new XamlParseException("The input has to be of type DateTime or TimeSpan").WithXmlLineInfo(m_serviceProvider);
             }
