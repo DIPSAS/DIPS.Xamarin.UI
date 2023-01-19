@@ -39,9 +39,8 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// <summary>
         ///     Ignores the conversion to local timezone
         /// </summary>
-        public bool IgnoreLocalTime { get; set; } = false;
+        public bool IgnoreLocalTime { get; set; }
 
-        private const string Space = " ";
         private IServiceProvider m_serviceProvider;
 
         /// <summary>
@@ -60,16 +59,17 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null) return string.Empty;
-            if (!(value is DateTime dateTimeInput))
-                throw new XamlParseException("The input has to be of type DateTime").WithXmlLineInfo(m_serviceProvider);
-            return Format switch
+            if (value == null)
             {
-                DateAndTimeConverterFormat.Short => ConvertToShortFormat(dateTimeInput, culture, IgnoreLocalTime),
-                DateAndTimeConverterFormat.Text
-                    => ConvertToTextFormat(dateTimeInput, culture, IgnoreLocalTime),
-                _ => string.Empty
-            };
+                return string.Empty;
+            }
+
+            if (value is not DateTime dateTimeInput)
+            {
+                throw new XamlParseException("The input has to be of type DateTime").WithXmlLineInfo(m_serviceProvider);
+            }
+
+            return DateTimeFormatter.FormatDateAndTime(dateTimeInput, culture, IgnoreLocalTime, Format);
         }
 
         /// <inheritdoc />
@@ -77,36 +77,6 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
-        }
-
-        private static string ConvertToTextFormat(DateTime dateTimeInput, CultureInfo culture, bool ignoreLocalTime)
-        {
-            var date = new DateConverter {Format = DateConverter.DateConverterFormat.Text, IgnoreLocalTime = ignoreLocalTime}.Convert(dateTimeInput, null,
-                null, culture);
-            var time = new TimeConverter {Format = TimeConverter.TimeConverterFormat.Default, IgnoreLocalTime = ignoreLocalTime}.Convert(dateTimeInput,
-                null, null, culture);
-
-            if (culture.IsNorwegian())
-            {
-                if (dateTimeInput.IsToday() || dateTimeInput.IsTomorrow() || dateTimeInput.IsYesterday())
-                {
-                    return $"{date},{Space}kl{Space}{time}";
-                }
-
-                return $"{date}{Space}kl{Space}{time}";
-            }
-
-            return $"{date}{Space}{time}";
-        }
-
-        private static string ConvertToShortFormat(DateTime dateTimeInput, CultureInfo culture, bool ignoreLocalTime)
-        {
-            var date = new DateConverter {Format = DateConverter.DateConverterFormat.Short, IgnoreLocalTime = ignoreLocalTime}.Convert(dateTimeInput, null,
-                null, culture);
-            var time = new TimeConverter {Format = TimeConverter.TimeConverterFormat.Default, IgnoreLocalTime = ignoreLocalTime}.Convert(dateTimeInput,
-                null, null, culture);
-
-            return culture.IsNorwegian() ? $"{date}{Space}kl{Space}{time}" : $"{date}{Space}{time}";
         }
     }
 }
