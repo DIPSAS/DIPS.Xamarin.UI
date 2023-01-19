@@ -40,6 +40,9 @@ namespace DIPS.Xamarin.UI.Converters.ValueConverters
         }
         private IServiceProvider m_serviceProvider;
         
+        /// <summary>
+        /// 
+        /// </summary>
         public DateConverterFormat Format { get; set; }
         
         /// <summary>
