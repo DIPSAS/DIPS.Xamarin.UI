@@ -1,9 +1,10 @@
 using System;
 using System.Globalization;
+using DIPS.Xamarin.UI.Converters.ValueConverters;
 using DIPS.Xamarin.UI.Extensions;
 using DIPS.Xamarin.UI.Resources.LocalizedStrings;
 
-namespace DIPS.Xamarin.UI.Converters.ValueConverters
+namespace DIPS.Xamarin.UI
 {
     public class DateTimeFormatter
     {
