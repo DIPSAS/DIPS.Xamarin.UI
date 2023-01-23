@@ -5,6 +5,7 @@ using System.Linq;
 using CoreGraphics;
 using DIPS.Xamarin.UI.Controls.ContextMenu;
 using DIPS.Xamarin.UI.iOS.ContextMenu;
+using Foundation;
 using ObjCRuntime;
 using UIKit;
 using Xamarin.Forms;
@@ -35,6 +36,11 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                             CreateMenu(); //Create the menu the first time so it shows up the first time the user taps the button
                         Control.TouchDown += OnTouchDown;
                         Control.ShowsMenuAsPrimaryAction = true;
+                        NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidEnterBackgroundNotification, notification =>
+                        {
+                            Control.Menu = null;
+                            Control.Menu = CreateMenu(); //Recreate the menu to close it, and to make it possible to re-open it in one tap after it went to the background
+                        });
                     }
                 }
             }
@@ -43,6 +49,7 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                 if (Control != null)
                 {
                     Control.TouchDown -= OnTouchDown;
+                    NSNotificationCenter.DefaultCenter.RemoveObserver(UIApplication.DidEnterBackgroundNotification);
                 }
             }
         }

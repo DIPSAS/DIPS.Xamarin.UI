@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Android.App;
 using Android.Content;
+using Android.OS;
 using Android.Support.V7.View.Menu;
 using Android.Views;
 using AndroidX.AppCompat.Widget;
@@ -11,16 +13,18 @@ using Java.Lang.Reflect;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Android;
+using Application = Android.App.Application;
 
 [assembly: ExportRenderer(typeof(ContextMenuButton), typeof(ContextMenuButtonRenderer))]
 
 namespace DIPS.Xamarin.UI.Android.ContextMenu
 {
-    internal class ContextMenuButtonRenderer : ButtonRenderer, PopupMenu.IOnMenuItemClickListener
+    internal class ContextMenuButtonRenderer : ButtonRenderer, PopupMenu.IOnMenuItemClickListener, Application.IActivityLifecycleCallbacks
     {
         private readonly Context m_context;
         private ContextMenuButton m_contextMenuButton;
         private Dictionary<ContextMenuItem, IMenuItem> m_menuItems;
+        private MenuPopupHelper? m_menuHelper; //Might be null if the user never tapped the button to open it
 
         public ContextMenuButtonRenderer(Context context) : base(context)
         {
@@ -40,11 +44,13 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
                 {
                     {
                         contextMenuButton.Clicked += OpenContextMenu;
+                        (((Activity)Context!)).RegisterActivityLifecycleCallbacks(this);
                     }
                 }
                 else
                 {
                     contextMenuButton.Clicked -= OpenContextMenu;
+                    (((Activity)Context!)).UnregisterActivityLifecycleCallbacks(this);
                 }
             }
         }
@@ -58,10 +64,10 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
                 m_menuItems = ContextMenuHelper.CreateMenuItems(m_context, m_contextMenuButton.ItemsSource,
                 m_contextMenuButton, popupMenu);
             popupMenu.SetOnMenuItemClickListener(this);
-            var menuHelper = new MenuPopupHelper(Context,(MenuBuilder) popupMenu.Menu, Control);
-            menuHelper.Gravity = gravity;
-            menuHelper.SetForceShowIcon(m_menuItems.Keys.Any(contextMenuItem => !string.IsNullOrEmpty(contextMenuItem.Icon) || !string.IsNullOrEmpty(contextMenuItem.AndroidOptions.IconResourceName))); //Show icons if there is any context menu items with a icon added
-            menuHelper.Show();
+            m_menuHelper = new MenuPopupHelper(Context,(MenuBuilder) popupMenu.Menu, Control);
+            m_menuHelper.Gravity = gravity;
+            m_menuHelper.SetForceShowIcon(m_menuItems.Keys.Any(contextMenuItem => !string.IsNullOrEmpty(contextMenuItem.Icon) || !string.IsNullOrEmpty(contextMenuItem.AndroidOptions.IconResourceName))); //Show icons if there is any context menu items with a icon added
+            m_menuHelper.Show();
             m_contextMenuButton.SendContextMenuOpened();
         }
 
@@ -97,6 +103,39 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
             }
 
             return false;
+        }
+
+        public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
+        {
+            
+        }
+
+        public void OnActivityDestroyed(Activity activity)
+        {
+        }
+
+        public void OnActivityPaused(Activity activity)
+        {
+            if (m_menuHelper is {IsShowing: true})
+            {
+                m_menuHelper.Dismiss();    
+            }
+        }
+
+        public void OnActivityResumed(Activity activity)
+        {
+        }
+
+        public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
+        {
+        }
+
+        public void OnActivityStarted(Activity activity)
+        {
+        }
+
+        public void OnActivityStopped(Activity activity)
+        {
         }
     }
 }
