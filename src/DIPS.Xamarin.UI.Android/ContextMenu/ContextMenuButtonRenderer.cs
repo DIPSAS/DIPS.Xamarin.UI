@@ -37,9 +37,9 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
         {
             base.OnElementChanged(e);
 
-            if (e.NewElement is ContextMenuButton m_contextMenuButton)
+            if (e.NewElement is ContextMenuButton contextMenuButton)
             {
-                m_contextMenuButton = m_contextMenuButton;
+                m_contextMenuButton = contextMenuButton;
                 if (Control != null)
                 {
                     {
