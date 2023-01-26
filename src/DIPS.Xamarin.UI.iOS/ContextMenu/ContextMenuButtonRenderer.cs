@@ -19,6 +19,7 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
     internal class ContextMenuButtonRenderer : ButtonRenderer
     {
         private ContextMenuButton m_contextMenuButton;
+        private NSObject m_didEnterBackgroundNotificationObserver;
         internal static void Initialize() { }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
@@ -36,7 +37,7 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                             CreateMenu(); //Create the menu the first time so it shows up the first time the user taps the button
                         Control.TouchDown += OnTouchDown;
                         Control.ShowsMenuAsPrimaryAction = true;
-                        NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidEnterBackgroundNotification, notification =>
+                        m_didEnterBackgroundNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidEnterBackgroundNotification, notification =>
                         {
                             Control.Menu = null;
                             Control.Menu = CreateMenu(); //Recreate the menu to close it, and to make it possible to re-open it in one tap after it went to the background
@@ -44,14 +45,13 @@ namespace DIPS.Xamarin.UI.iOS.ContextMenu
                     }
                 }
             }
-            else
-            {
-                if (Control != null)
-                {
-                    Control.TouchDown -= OnTouchDown;
-                    NSNotificationCenter.DefaultCenter.RemoveObserver(UIApplication.DidEnterBackgroundNotification);
-                }
-            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            Control.TouchDown -= OnTouchDown;
+            NSNotificationCenter.DefaultCenter.RemoveObserver(m_didEnterBackgroundNotificationObserver);
+            base.Dispose(disposing);
         }
 
         private void OnTouchDown(object sender, EventArgs e)

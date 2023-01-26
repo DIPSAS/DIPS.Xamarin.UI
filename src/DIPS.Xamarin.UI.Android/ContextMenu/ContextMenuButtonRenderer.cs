@@ -37,22 +37,24 @@ namespace DIPS.Xamarin.UI.Android.ContextMenu
         {
             base.OnElementChanged(e);
 
-            if (e.NewElement is ContextMenuButton contextMenuButton)
+            if (e.NewElement is ContextMenuButton m_contextMenuButton)
             {
-                m_contextMenuButton = contextMenuButton;
+                m_contextMenuButton = m_contextMenuButton;
                 if (Control != null)
                 {
                     {
-                        contextMenuButton.Clicked += OpenContextMenu;
+                        m_contextMenuButton.Clicked += OpenContextMenu;
                         (((Activity)Context!)).RegisterActivityLifecycleCallbacks(this);
                     }
                 }
-                else
-                {
-                    contextMenuButton.Clicked -= OpenContextMenu;
-                    (((Activity)Context!)).UnregisterActivityLifecycleCallbacks(this);
-                }
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            m_contextMenuButton.Clicked -= OpenContextMenu;
+            (((Activity)Context!)).UnregisterActivityLifecycleCallbacks(this);
+            base.Dispose(disposing);
         }
 
         private void OpenContextMenu(object sender, EventArgs e)
