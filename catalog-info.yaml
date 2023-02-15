@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dips-xamarin-ui
+  title: DIPS Xamarin UI
+  description: A shared UI library that DIPS uses and maintains for their mobile applications.
+  tags:
+    - xamarin
+  links:
+      - title: Github
+        url: https://github.com/DIPSAS/DIPS.Xamarin.UI
+spec:
+  type: library
+  owner: team-awesomesauce
+  lifecycle: production
