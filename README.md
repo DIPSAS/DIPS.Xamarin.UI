@@ -1,3 +1,9 @@
+# Obsolete ⚠️ 
+This repository is not active due to the development teams transition to .NET MAUI.
+To use this library in your .NET MAUI project, head over to [DIPS.Mobile.UI](https://github.com/DIPSAS/DIPS.Mobile.UI).
+
+----
+
 ![dips.com](https://img.shields.io/badge/http%3A%2F%2Fdips.com-ENABLING%20EFFICIENT%20HEALTHCARE-red)
 
 
